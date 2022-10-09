@@ -1,13 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "~antd/dist/antd.css";
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.2);
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+body::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, 0.9);
+}
+#root {
+  height: 100%;
+}
+.edit-button,
+.create-team-button,
+.logout-button,
+.back-button {
+  background: #06f;
+  transition: all 0.2s ease;
+}
+.edit-button:hover,
+.create-team-button:hover,
+.logout-button:hover,
+.back-button:hover {
+  background: #005ce6;
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #ffff;
+}
+
+input:checked ~ .block {
+  background-color: #48bb78;
+}
+
+.ant-drawer-body {
+  padding: 0 !important;
+  background: #001529;
 }
