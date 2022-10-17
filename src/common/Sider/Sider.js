@@ -64,7 +64,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         <img
           className="w-5/6 mt-3 mb-1"
           style={{ objectFit: "cover", width: "50px", height: "50px" }}
-          src={require("../../../assets/logo.png")}
+          src={require("../../assets/logo.png")}
           alt="icon avatar"
         ></img>
       </div>

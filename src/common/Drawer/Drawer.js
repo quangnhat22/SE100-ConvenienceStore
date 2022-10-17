@@ -54,7 +54,7 @@ const DrawerCustomed = ({ setCollapsed, collapsed }) => {
       <div className="logo" style={{ background: "#001529" }}>
         <img
           className="w-25 p-5"
-          src={require("../../../assets/logo.png")}
+          src={require("../../assets/logo.png")}
           alt="avatar 1"
         ></img>
       </div>

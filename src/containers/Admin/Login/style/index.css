@@ -5,26 +5,27 @@
     overflow: hidden;
   }
   .container-form {
-    max-width: 440px;
+    max-width: 500px;
     padding: 0 20px;
     margin: 124px auto;
   }
+  
   .wrapper {
     width: 100%;
     background: #fff;
-    border-radius: 5px;
+    border-radius: 10px;
   }
   .wrapper .title {
     line-height: 80px;
     text-align: center;
-    border-radius: 5px 5px 0 0;
+    border-radius: 10px 10px 0 0;
     background: #1890ff;
     color: #fff;
     font-size: 25px;
     font-weight: 600;
   }
   .wrapper form {
-    padding: 30px 25px 25px 25px;
+    padding: 30px 30px 30px 30px;
   }
   .wrapper form .row {
     height: 45px;
@@ -34,13 +35,14 @@
   }
   .wrapper form .row.button {
     margin-bottom: 0;
+    border-radius: 10px;
   }
   .wrapper form .row input {
     height: 100%;
     width: 100%;
     outline: none;
     padding-left: 60px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid lightgrey;
     font-size: 16px;
     transition: all 0.3s ease;
@@ -60,7 +62,7 @@
     justify-content: center;
     color: #fff;
     font-size: 18px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 10px 0 0 10px;
   }
   .wrapper form .button input {
     color: #fff;

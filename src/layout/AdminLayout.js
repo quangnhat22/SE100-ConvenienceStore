@@ -2,9 +2,9 @@ import { MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import { Content, Header } from 'antd/lib/layout/layout';
 import React, { useState } from 'react';
-import { Route, useLocation, useNavigate } from "react-router-dom";
-import DrawerCustomed from '../components/common/Drawer/Drawer';
-import SiderCustomed from '../components/common/Sider/Sider';
+import { Redirect, Route } from "react-router-dom";
+import DrawerCustomed from '../common/Drawer/Drawer';
+import SiderCustomed from '../common/Sider/Sider';
 
 const AdminLayout = (props) => {
   // const location = useLocation();
@@ -48,14 +48,18 @@ export default function AdminTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={(propsComponent) => {
+        console.log(localStorage.getItem("role"))
+        if(localStorage.getItem("token") && localStorage.getItem("role") === '"superadmin"') {
           return (
             <AdminLayout>
               <Component {...propsComponent} />
             </AdminLayout>
           );
+        }
+          
 
         // return to auth page
-        //return <Redirect to="/" />;
+        return <Redirect to="/" />;
       }}
     />
   );
