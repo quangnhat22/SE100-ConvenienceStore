@@ -2,38 +2,25 @@ import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
 import { ErrorMessage, Formik } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 import { object, string } from "yup";
+import AlertCustom from "../../../../common/Notification/Alert";
 import "../style/index.css";
 
 const LoginForm = () => {
-    const history = useHistory();
+  const history = useHistory();
   const handleSubmit = (values) => {
-    let {username, password} = values;
+    let { username, password } = values;
     try {
-     if (username === 'superadmin' && password === '12345678') {
-      localStorage.setItem("token", JSON.stringify(username));
-      localStorage.setItem("role", JSON.stringify('superadmin'));
-      history.replace("/dash-board");
-     } else {
-        alert('có cl nè, nhập cho đúng tk mk nào!')
-     }
-    //   Swal.fire({
-    //     width: "400",
-    //     icon: "success",
-    //     title: "Đăng nhập thành công",
-    //     showConfirmButton: false,
-    //     timer: 1000,
-    //     timerProgressBar: true,
-    //   });
+      if (username === "superadmin" && password === "12345678") {
+        localStorage.setItem("token", JSON.stringify(username));
+        localStorage.setItem("role", JSON.stringify("superadmin"));
+        AlertCustom({type: 'success',title: 'Đăng nhập thành công'})
+        history.replace("/dash-board");
+      } else {
+        AlertCustom({type: 'error',title: 'Có cl nè, nhập cho đúng mật khẩu, tài khoản đi rồi hẳn nói chuyện :)'})
+      }
     } catch (error) {
-    //   Swal.fire({
-    //     width: "400",
-    //     icon: "error",
-    //     title: error.response.data.message,
-    //     showConfirmButton: false,
-    //     timer: 2500,
-    //     timerProgressBar: true,
-    //   });
     }
   };
 

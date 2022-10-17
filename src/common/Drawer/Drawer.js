@@ -8,45 +8,46 @@ import {
   ExportOutlined,
 } from "@ant-design/icons";
 import { useLocation, useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 
 const DrawerCustomed = ({ setCollapsed, collapsed }) => {
   const location = useLocation();
-  console.log(location);
   const history = useHistory();
   const onClose = () => {
     setCollapsed(false);
   };
-  //   const handleLogout = () => {
-  //     Swal.fire({
-  //       title: "Bạn có chắc muốn đăng xuất?",
-  //       text: "",
-  //       icon: "question",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#d33",
-  //       cancelButtonColor: "#9b9b9b",
-  //       confirmButtonText: "Đăng xuất",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         Swal.fire({
-  //           width: "400",
-  //           height: "100",
-  //           backdrop: "none",
-  //           icon: "success",
-  //           title: "Đăng xuất thành công",
-  //           showConfirmButton: false,
-  //           timer: 1000,
-  //           timerProgressBar: true,
-  //         });
-  //         localStorage.removeItem("token");
-  //         history.replace("/");
-  //       }
-  //     });
-  //   };
+    const handleLogout = () => {
+      Swal.fire({
+        title: "Bạn có chắc muốn đăng xuất?",
+        text: "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#9b9b9b",
+        confirmButtonText: "Đăng xuất",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            width: "400",
+            height: "100",
+            backdrop: "none",
+            icon: "success",
+            title: "Đăng xuất thành công",
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+          });
+          localStorage.removeItem("token");
+          localStorage.removeItem("role");
+          history.replace("/");
+        }
+      });
+    };
   return (
     <Drawer
       onClose={onClose}
-      visible={collapsed}
+      open={collapsed}
       placement="left"
       width={220}
       closable={false}

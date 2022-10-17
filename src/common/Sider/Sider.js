@@ -11,38 +11,31 @@ import {
   LineChartOutlined,
 } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
+import AlertCustom from "../Notification/Alert";
 // import Swal from "sweetalert2";
 
 const SiderCustomed = ({ setVisibleButton }) => {
   const location = useLocation();
   const history = useHistory();
-  //   const handleLogout = () => {
-  //     Swal.fire({
-  //       title: "Bạn có chắc muốn đăng xuất?",
-  //       text: "",
-  //       icon: "question",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#d33",
-  //       cancelButtonColor: "#9b9b9b",
-  //       confirmButtonText: "Đăng xuất",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         Swal.fire({
-  //           width: "400",
-  //           height: "100",
-  //           backdrop: "none",
-  //           icon: "success",
-  //           title: "Đăng xuất thành công",
-  //           showConfirmButton: false,
-  //           timer: 1000,
-  //           timerProgressBar: true,
-  //         });
-  //         localStorage.removeItem("token");
-  //         localStorage.removeItem("role");
-  //         history.replace("/");
-  //       }
-  //     });
-  //   };
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Bạn có chắc muốn đăng xuất?",
+      text: "",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#9b9b9b",
+      confirmButtonText: "Đăng xuất",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        AlertCustom({ type: "success", title: "Đăng xuất thành công" });
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        history.replace("/");
+      }
+    });
+  };
   return (
     <Layout.Sider
       className="hidden md:block"
@@ -134,7 +127,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Cài đặt
         </Menu.Item>
-        <Menu.Item key="6" icon={<ExportOutlined />}>
+        <Menu.Item key="6" icon={<ExportOutlined />} onClick={handleLogout}>
           Đăng xuất
         </Menu.Item>
       </Menu>

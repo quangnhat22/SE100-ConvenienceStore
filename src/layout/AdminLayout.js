@@ -48,7 +48,6 @@ export default function AdminTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={(propsComponent) => {
-        console.log(localStorage.getItem("role"))
         if(localStorage.getItem("token") && localStorage.getItem("role") === '"superadmin"') {
           return (
             <AdminLayout>
