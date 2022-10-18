@@ -4,7 +4,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { object, string } from "yup";
-import AlertCustom from "../../../../common/Notification/Alert";
+import AlertCustom from "../../../common/Notification/Alert";
 import "../style/index.css";
 
 const LoginForm = () => {

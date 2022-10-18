@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import LoginPage from "./containers/Admin/Login";
+import LoginPage from "./containers/Login";
 import AdminTemplate from "./layout/AdminLayout";
 import { routesAdmin } from "./routes/AdminRoutes";
 import "./index.css";
+import ForgotPasswordPage from "./containers/ForgotPassword";
 
 function App() {
   const renderRoutesAdmin = (routes) => {
@@ -23,6 +24,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LoginPage} />
+        <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         {renderRoutesAdmin(routesAdmin)}
         {/* <Route component={PageNotFound}></Route> */}
       </Switch>

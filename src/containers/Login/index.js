@@ -1,5 +1,3 @@
-import { UnlockOutlined, UserOutlined } from '@ant-design/icons'
-import { Footer } from 'antd/lib/layout/layout'
 import React from 'react'
 import LoginForm from './components/LoginForm'
 import './style/index.css'

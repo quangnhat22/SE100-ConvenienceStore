@@ -1,14 +1,14 @@
+import DashBoard from "../containers/Admin/DashBoard";
 import FinancialPage from "../containers/Admin/Financial";
 import ProductsPage from "../containers/Admin/Products";
 import SettingPage from "../containers/Admin/Setting";
 import StaffsPage from "../containers/Admin/Staffs";
-import PageTest from "../pages/pagetest";
 
 const routesAdmin = [
     {
       exact: false,
       path: "/dash-board",
-      component: PageTest,
+      component: DashBoard,
     },
     {
       exact: false,
