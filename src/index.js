@@ -1,12 +1,15 @@
 import React from "react";
-import LoginForm from "./containers/Admin/LoginPage/components/LoginForm";
+// import LoginForm from "./containers/Admin/LoginPage/components/LoginForm";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
+import LoginForm from "./containers/Admin/LoginPage/components/LoginForm";
+import ProductPage from "./containers/Admin/ManagementProducts/components/ProductPage";
 
 function App() {
   return (
     <div className="App">
-      <LoginForm />
+      {/* <LoginForm /> */}
+      <ProductPage />
     </div>
   );
 }

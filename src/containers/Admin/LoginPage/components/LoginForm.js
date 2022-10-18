@@ -1,9 +1,9 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import "./LoginForm.css";
+import "../styles/LoginForm.css";
 
 function LoginForm() {
   const formik = useFormik({
