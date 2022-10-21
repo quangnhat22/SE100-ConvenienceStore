@@ -14,13 +14,16 @@ import {
   Checkbox,
   Upload,
 } from "antd";
+const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-const AddProductForm = () => {
+const AddStaffForm = () => {
   const validateMessages = {
     required: "Cần nhập ${label}!",
+    // pattern: "${label} không hợp lệ",
     types: {
-      number: "",
+      email: "${label} không hợp lệ!",
+      number: "${label} không hợp!",
     },
     number: {
       min: "${label} phải ít nhất từ ${min} trở lên",
@@ -44,125 +47,104 @@ const AddProductForm = () => {
           <Radio value="pear"> Pear </Radio>
         </Radio.Group>
       </Form.Item> */}
-      <Form.Item label="Mã sản phẩm">
+      <Form.Item label="Mã nhân viên">
         <Input
           style={{
             width: "80%",
           }}
-          placeholder="Mã sản phẩm"
+          placeholder="Mã nhân viên"
           disabled="true"
         />
       </Form.Item>
       <Form.Item
-        name={["product", "name"]}
-        label="Tên sản phẩm"
+        name={["staff", "name"]}
+        label="Họ và tên"
         rules={[
           {
             required: true,
           },
         ]}
       >
-        <Input placeholder="Tên sản phẩm" />
+        <Input placeholder="Họ và tên" />
       </Form.Item>
       <Form.Item
-        name={["product", "buyprice"]}
-        label="Giá nhập"
+        name={["staff", "birth"]}
+        label="Ngày sinh"
         rules={[
           {
             required: true,
-            type: "number",
-            min: 1,
           },
         ]}
       >
-        <InputNumber
-          addonAfter={"VNĐ"}
+        <DatePicker placeholder="Ngày sinh" format="DD-MM-YYYY" />
+      </Form.Item>
+      <Form.Item
+        name={["staff", "id"]}
+        label="CCCD"
+        rules={[
+          {
+            pattern: "^([-]?[0-9]*|0)$",
+            message: "CCCD không hợp lệ",
+          },
+          { required: true },
+        ]}
+      >
+        <Input placeholder="CCCD" />
+      </Form.Item>
+      <Form.Item
+        name={["staff", "gender"]}
+        label="Giới tính"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Select
+          placeholder="Giới tính"
+          allowClear
           style={{
-            width: "50%",
+            width: "40%",
           }}
-          placeholder="Giá nhập"
-        />
+        >
+          <Option value="male">Nam</Option>
+          <Option value="female">Nữ</Option>
+          <Option value="other">Khác</Option>
+        </Select>
       </Form.Item>
       <Form.Item
-        name={["product", "sellprice"]}
-        label="Giá bán"
+        name={["staff", "phoneNumber"]}
+        label="Số Điện Thoại"
         rules={[
           {
-            required: true,
-            type: "number",
-            min: 1,
+            pattern: "^([-]?[0-9]*|0)$",
+            message: "Số Điện Thoại không hợp lệ",
           },
+          { required: true },
         ]}
       >
-        <InputNumber
-          addonAfter={"VNĐ"}
-          style={{
-            width: "50%",
-          }}
-          placeholder="Giá bán"
-        />
+        <Input placeholder="Số điện thoại" />
       </Form.Item>
       <Form.Item
-        name={["product", "tax"]}
-        label="Thuế"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 0,
-            max: 100,
-          },
-        ]}
+        name={["staff", "email"]}
+        label="Email"
+        rules={[{ type: "email", required: true }]}
       >
-        <InputNumber
-          addonAfter={"%"}
-          style={{
-            width: "30%",
-          }}
-          placeholder="Thuế"
-        />
+        <Input placeholder="Email" />
       </Form.Item>
       <Form.Item
-        name={["product", "expiry date"]}
-        label="Thời hạn"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        name={["staff", "address "]}
+        label="Địa chỉ"
+        rules={[{ required: true }]}
       >
-        <RangePicker
-          style={{
-            width: "100%",
-          }}
-          placeholder={["Ngày sản xuất", "Ngày hết hạn"]}
-          format="DD-MM-YYYY"
-        />
+        <TextArea rows={2} placeholder="Địa chỉ" />
+      </Form.Item>
+      <Form.Item name={["staff", "otherInfomation "]} label="Khác">
+        <TextArea rows={2} placeholder="Khác" />
       </Form.Item>
       <Form.Item
-        name={["product", "quantity"]}
-        label="Số lượng"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 1,
-          },
-        ]}
-      >
-        <InputNumber
-          style={{
-            width: "30%",
-          }}
-          placeholder="Số lượng"
-        />
-      </Form.Item>
-      <Form.Item name={["product", "description "]} label="Mô tả">
-        <TextArea rows={4} placeholder="Mô tả" />
-      </Form.Item>
-      <Form.Item
-        name={["product", "images "]}
-        label="Ảnh sản phẩm"
+        name={["staff", "image"]}
+        label="Ảnh nhân viên"
         valuePropName="fileList"
       >
         <Upload action="/upload.do" listType="picture-card">
@@ -189,4 +171,4 @@ const AddProductForm = () => {
     </Form>
   );
 };
-export default () => <AddProductForm />;
+export default () => <AddStaffForm />;

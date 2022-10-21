@@ -1,6 +1,7 @@
 import { Modal } from "antd";
 import React from "react";
 import AddProductForm from "../containers/Admin/Products/components/AddProductForm";
+import AddStaffForm from "../containers/Admin/Staffs/components/AddStaffForm";
 
 const ModalForm = () => {
   return (
@@ -11,7 +12,7 @@ const ModalForm = () => {
       footer={null}
       destroyOnClose={true}
     >
-      <AddProductForm />
+      <AddStaffForm />
     </Modal>
   );
 };
