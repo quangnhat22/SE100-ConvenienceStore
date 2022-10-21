@@ -14,6 +14,7 @@ import {
   Checkbox,
   Upload,
 } from "antd";
+import "../../../../common/style/form.css";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const AddProductForm = () => {
