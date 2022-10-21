@@ -102,7 +102,7 @@ const columns = [
         </div>
         <Popconfirm
           placement="top"
-          title="Bạn có chắc muốn xóa dản phẩm này?"
+          title="Bạn có chắc muốn xóa sản phẩm này?"
           okText="Xác nhận"
           cancelText="Hủy"
           //   onConfirm={() => handleRemoveTeam(record)}
