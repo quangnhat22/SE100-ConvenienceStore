@@ -1,18 +1,19 @@
-import { Modal } from 'antd'
-import React from 'react'
+import { Modal } from "antd";
+import React from "react";
+import AddProductForm from "../containers/Admin/Products/components/AddProductForm";
 
 const ModalForm = () => {
   return (
     <Modal
-        open={false}
-        //onCancel={handleCancel}
-        closable={true}
-        footer={null}
-        destroyOnClose = {true}
-      >
-        {/* {ComponentContent} */}
-      </Modal>
-  )
-}
+      open={true}
+      //onCancel={handleCancel}
+      closable={true}
+      footer={null}
+      destroyOnClose={true}
+    >
+      <AddProductForm />
+    </Modal>
+  );
+};
 
-export default ModalForm
+export default ModalForm;
