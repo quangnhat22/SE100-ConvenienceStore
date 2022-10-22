@@ -1,7 +1,7 @@
 import { Table, Popconfirm, Space } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
-import "../../Products/components/TableProducts.css";
+import "../../../../common/style/table.css";
 
 const columns = [
   {
@@ -60,7 +60,10 @@ const columns = [
     align: "center",
     render: (text, record, index) => (
       <Space size="middle" key={index}>
-        <div className=" hover:cursor-pointer hover:text-blue-600 text-blue-500 inline-flex">
+        <div
+          className="hover:cursor-pointer hover:text-blue-600 text-blue-500 inline-flex"
+          //  onClick={() => handleViewStaff(record)}
+        >
           Xem chi tiết
         </div>
         <Popconfirm
@@ -68,7 +71,16 @@ const columns = [
           title="Bạn có chắc muốn xóa nhân viên này?"
           okText="Xác nhận"
           cancelText="Hủy"
-          //   onConfirm={() => handleRemoveStaff(record)}
+          okType="default"
+          okButtonProps={{
+            className:
+              "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
+          }}
+          cancelButtonProps={{
+            className:
+              "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
+          }}
+          //  onConfirm={() => handleRemoveStaff(record)}
         >
           <div className="hover:text-red-700 hover:underline hover:cursor-pointer text-red-500 inline-flex align-center">
             Xóa
@@ -136,6 +148,11 @@ const TableStaffs = () => {
     <>
       <Table
         pagination={{ pageSize: 12, showSizeChanger: false }}
+        locale={{
+          triggerDesc: "Nhấp để sắp xếp giảm dần",
+          triggerAsc: "Nhấp để sắp xếp tăng dần",
+          cancelSort: "Trở về mặc định",
+        }}
         rowKey={"id"}
         className="header-style m-3 drop-shadow-lg"
         size="middle"

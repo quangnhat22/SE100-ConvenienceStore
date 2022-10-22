@@ -1,7 +1,8 @@
-import { Table, Tag, Popconfirm, Space } from "antd";
+import { hover } from "@testing-library/user-event/dist/hover";
+import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
-import "./TableProducts.css";
+import "../../../../common/style/table.css";
 
 const columns = [
   {
@@ -97,7 +98,10 @@ const columns = [
     align: "center",
     render: (text, record, index) => (
       <Space size="middle" key={index}>
-        <div className=" hover:cursor-pointer hover:text-blue-600 text-blue-500 inline-flex">
+        <div
+          className=" hover:cursor-pointer hover:text-blue-600 text-blue-500 inline-flex"
+          //  onClick={() => handleViewProduct(reco6rd)}
+        >
           Xem chi tiết
         </div>
         <Popconfirm
@@ -105,7 +109,16 @@ const columns = [
           title="Bạn có chắc muốn xóa sản phẩm này?"
           okText="Xác nhận"
           cancelText="Hủy"
-          //   onConfirm={() => handleRemoveTeam(record)}
+          okType="default"
+          okButtonProps={{
+            className:
+              "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
+          }}
+          cancelButtonProps={{
+            className:
+              "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
+          }}
+          //   onConfirm={() => handleRemoveProduct(record)}
         >
           <div className="hover:text-red-700 hover:underline hover:cursor-pointer text-red-500 inline-flex align-center">
             Xóa
@@ -170,6 +183,11 @@ const TableProducts = () => {
     <>
       <Table
         pagination={{ pageSize: 12, showSizeChanger: false }}
+        locale={{
+          triggerDesc: "Nhấp để sắp xếp giảm dần",
+          triggerAsc: "Nhấp để sắp xếp tăng dần",
+          cancelSort: "Trở về mặc định",
+        }}
         rowKey={"id"}
         className="header-style m-3 drop-shadow-lg"
         size="middle"
@@ -177,7 +195,7 @@ const TableProducts = () => {
         rowClassName={(record, index) =>
           index % 2 === 0 ? "table-row-light" : "table-row-dark"
         }
-        //dataSource={teamListSearched}
+        //dataSource={productListSearched}
         dataSource={dataSource}
         //onChange={handleChange}
         scroll={{ x: 1100 }}
