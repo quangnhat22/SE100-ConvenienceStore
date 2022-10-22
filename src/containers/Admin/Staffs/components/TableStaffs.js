@@ -1,4 +1,4 @@
-import { Table, Tag, Popconfirm, Space } from "antd";
+import { Table, Popconfirm, Space } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import "../../Products/components/TableProducts.css";
@@ -79,7 +79,7 @@ const columns = [
   },
 ];
 
-const TableProducts = () => {
+const TableStaffs = () => {
   // Data Demo
   const [dataSource, setDataSource] = useState([
     {
@@ -153,4 +153,4 @@ const TableProducts = () => {
   );
 };
 
-export default TableProducts;
+export default TableStaffs;
