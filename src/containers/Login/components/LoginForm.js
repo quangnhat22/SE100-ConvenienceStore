@@ -12,7 +12,7 @@ const LoginForm = () => {
   const handleSubmit = (values) => {
     let { username, password } = values;
     try {
-      if (username === "admin" && password === "12345678") {
+      if (username === "superadmin" && password === "12345678") {
         localStorage.setItem("token", JSON.stringify(username));
         localStorage.setItem("role", JSON.stringify("superadmin"));
         AlertCustom({type: 'success',title: 'Đăng nhập thành công'})
