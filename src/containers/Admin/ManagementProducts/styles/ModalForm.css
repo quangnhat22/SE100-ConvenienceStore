@@ -1,0 +1,17 @@
+.ant-modal-content {
+  border-radius: 20px;
+}
+
+.ant-modal-header {
+  background-color: #007acc;
+  text-align: center;
+  border-radius: 20px 20px 0 0;
+}
+
+.ant-modal-body {
+  height: fit-content;
+}
+
+.ant-modal-footer {
+  margin: 0;
+}
