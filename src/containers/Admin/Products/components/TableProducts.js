@@ -3,7 +3,6 @@ import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
-import "../../../../common/style/table.css";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 
 const columns = [
