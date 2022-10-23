@@ -14,37 +14,12 @@ import {
   Checkbox,
   Upload,
 } from "antd";
-import "../../../../common/style/form.css";
+import FormCustomed from "../../../../common/Form/FormCustomed";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const AddProductForm = () => {
-  const validateMessages = {
-    required: "Cần nhập ${label}!",
-    types: {
-      number: "",
-    },
-    number: {
-      min: "${label} phải ít nhất từ ${min} trở lên",
-      range: "${label} phải trong khoảng từ ${min} đến ${max}",
-    },
-  };
   return (
-    <Form
-      labelCol={{
-        span: 6,
-      }}
-      wrapperCol={{
-        span: 20,
-      }}
-      layout="horizontal"
-      validateMessages={validateMessages}
-    >
-      {/* <Form.Item label="Radio">
-        <Radio.Group>
-          <Radio value="apple"> Apple </Radio>
-          <Radio value="pear"> Pear </Radio>
-        </Radio.Group>
-      </Form.Item> */}
+    <FormCustomed>
       <Form.Item label="Mã sản phẩm">
         <Input
           style={{
@@ -187,7 +162,7 @@ const AddProductForm = () => {
       >
         <Button htmlType="submit">Submit</Button>
       </Form.Item>
-    </Form>
+    </FormCustomed>
   );
 };
 export default AddProductForm;
