@@ -172,4 +172,4 @@ const AddStaffForm = () => {
     </Form>
   );
 };
-export default () => <AddStaffForm />;
+export default AddStaffForm;

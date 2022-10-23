@@ -190,4 +190,4 @@ const AddProductForm = () => {
     </Form>
   );
 };
-export default () => <AddProductForm />;
+export default AddProductForm;

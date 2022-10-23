@@ -1,6 +1,7 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
 import TableProducts from "./components/TableProducts";
+import ModalForm from "../../../HOC/ModalForm";
 
 const ProductsPage = () => {
   return (
@@ -42,7 +43,7 @@ const ProductsPage = () => {
         </div>
       </div>
       <TableProducts />
-      {/* <ModalForm /> */}
+      <ModalForm isOpen={false} />
     </>
   );
 };

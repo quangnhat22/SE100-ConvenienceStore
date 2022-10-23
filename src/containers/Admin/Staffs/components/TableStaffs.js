@@ -144,6 +144,8 @@ const TableStaffs = () => {
     },
   ]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
       <Table
@@ -165,7 +167,7 @@ const TableStaffs = () => {
         //onChange={handleChange}
         scroll={{ x: 1100 }}
       />
-      <ModalForm />
+      <ModalForm isModalOpen={isOpen} />
     </>
   );
 };

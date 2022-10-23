@@ -3,16 +3,16 @@ import React from "react";
 import AddProductForm from "../containers/Admin/Products/components/AddProductForm";
 import AddStaffForm from "../containers/Admin/Staffs/components/AddStaffForm";
 
-const ModalForm = () => {
+const ModalForm = ({isOpen}) => {
   return (
     <Modal
-      open={true}
+      open={isOpen}
       //onCancel={handleCancel}
       closable={true}
       footer={null}
       destroyOnClose={true}
     >
-      <AddStaffForm />
+      <AddProductForm />
     </Modal>
   );
 };

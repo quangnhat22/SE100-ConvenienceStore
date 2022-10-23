@@ -1,6 +1,7 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
 import TableStaffs from "./components/TableStaffs";
+import ModalForm from "../../../HOC/ModalForm";
 
 const StaffsPage = () => {
   return (
@@ -42,7 +43,7 @@ const StaffsPage = () => {
         </div>
       </div>
       <TableStaffs />
-      {/* <ModalForm /> */}
+      <ModalForm isOpen={false} />
     </>
   );
 };
