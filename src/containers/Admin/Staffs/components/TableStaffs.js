@@ -2,7 +2,6 @@ import { Table, Popconfirm, Space } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
-import "../../../../common/style/table.css";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 
 const columns = [
