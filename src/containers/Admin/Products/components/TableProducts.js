@@ -1,8 +1,10 @@
 import { hover } from "@testing-library/user-event/dist/hover";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import "../../../../common/style/table.css";
+import TableTemplate from "../../../../common/Table/TableTemplate";
 
 const columns = [
   {
@@ -98,12 +100,13 @@ const columns = [
     align: "center",
     render: (text, record, index) => (
       <Space size="middle" key={index}>
-        <div
-          className=" hover:cursor-pointer hover:text-blue-600 text-blue-500 inline-flex"
-          //  onClick={() => handleViewProduct(reco6rd)}
+        <button
+          type="button"
+          className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
+          //   onClick={() => handleViewProduct(record)}
         >
-          Xem chi tiết
-        </div>
+          <EditFilled />
+        </button>
         <Popconfirm
           placement="top"
           title="Bạn có chắc muốn xóa sản phẩm này?"
@@ -120,9 +123,12 @@ const columns = [
           }}
           //   onConfirm={() => handleRemoveProduct(record)}
         >
-          <div className="hover:text-red-700 hover:underline hover:cursor-pointer text-red-500 inline-flex align-center">
-            Xóa
-          </div>
+          <button
+            type="button"
+            className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
+          >
+            <DeleteFilled />
+          </button>
         </Popconfirm>
       </Space>
     ),
@@ -183,28 +189,8 @@ const TableProducts = () => {
 
   return (
     <>
-      <Table
-        pagination={{ pageSize: 12, showSizeChanger: false }}
-        locale={{
-          triggerDesc: "Nhấp để sắp xếp giảm dần",
-          triggerAsc: "Nhấp để sắp xếp tăng dần",
-          cancelSort: "Trở về mặc định",
-        }}
-        rowKey={"id"}
-        className="header-style m-3 drop-shadow-lg"
-        size="middle"
-        columns={columns}
-        rowClassName={(record, index) =>
-          index % 2 === 0 ? "table-row-light" : "table-row-dark"
-        }
-        //dataSource={productListSearched}
-        dataSource={dataSource}
-        //onChange={handleChange}
-        scroll={{ x: 1100 }}
-      />
-      <ModalForm
-        isModalOpen={isOpen}
-      />
+      <TableTemplate columns={columns} dataSource={dataSource} />
+      <ModalForm isModalOpen={isOpen} />
     </>
   );
 };

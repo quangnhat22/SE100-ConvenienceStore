@@ -1,7 +1,9 @@
 import { Table, Popconfirm, Space } from "antd";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import "../../../../common/style/table.css";
+import TableTemplate from "../../../../common/Table/TableTemplate";
 
 const columns = [
   {
@@ -60,12 +62,13 @@ const columns = [
     align: "center",
     render: (text, record, index) => (
       <Space size="middle" key={index}>
-        <div
-          className="hover:cursor-pointer hover:text-blue-600 text-blue-500 inline-flex"
-          //  onClick={() => handleViewStaff(record)}
+        <button
+          type="button"
+          className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
+          //   onClick={() => handleViewStaff(record)}
         >
-          Xem chi tiết
-        </div>
+          <EditFilled />
+        </button>
         <Popconfirm
           placement="top"
           title="Bạn có chắc muốn xóa nhân viên này?"
@@ -80,11 +83,14 @@ const columns = [
             className:
               "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
           }}
-          //  onConfirm={() => handleRemoveStaff(record)}
+          //   onConfirm={() => handleRemoveStaff(record)}
         >
-          <div className="hover:text-red-700 hover:underline hover:cursor-pointer text-red-500 inline-flex align-center">
-            Xóa
-          </div>
+          <button
+            type="button"
+            className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
+          >
+            <DeleteFilled />
+          </button>
         </Popconfirm>
       </Space>
     ),
@@ -148,25 +154,7 @@ const TableStaffs = () => {
 
   return (
     <>
-      <Table
-        pagination={{ pageSize: 12, showSizeChanger: false }}
-        locale={{
-          triggerDesc: "Nhấp để sắp xếp giảm dần",
-          triggerAsc: "Nhấp để sắp xếp tăng dần",
-          cancelSort: "Trở về mặc định",
-        }}
-        rowKey={"id"}
-        className="header-style m-3 drop-shadow-lg"
-        size="middle"
-        columns={columns}
-        rowClassName={(record, index) =>
-          index % 2 === 0 ? "table-row-light" : "table-row-dark"
-        }
-        //dataSource={staffListSearched}
-        dataSource={dataSource}
-        //onChange={handleChange}
-        scroll={{ x: 1100 }}
-      />
+      <TableTemplate dataSource={dataSource} columns={columns} />
       <ModalForm isModalOpen={isOpen} />
     </>
   );
