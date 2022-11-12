@@ -2,15 +2,14 @@ import axios from "axios";
 import * as UrlApi from '../url';
 
 export const UserService = {
-    getAuthLogin: (email, password) => {
-        return axios.get(
-            UrlApi.URL_AUTH_LOGIN,
-            {
-                data: {
-                    "email": email,
-                    "password": password
-                }
+    postAuthLogin: (email, password) => {
+        return axios({
+            url: UrlApi.URL_AUTH_LOGIN,
+            method: 'POST',
+            data: {
+                'email': email,
+                'password': password
             }
-        )
-    }
+        });
+    },
 }

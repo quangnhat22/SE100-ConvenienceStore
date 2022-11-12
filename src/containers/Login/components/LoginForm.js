@@ -16,13 +16,13 @@ const LoginForm = () => {
   const handleSubmit = (values) => {
     let { username, password } = values;
     console.log(username, password);
-    dispatch({
-      type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
-      data: {
-        username: username,
-        password: password
-      }
-    })
+    // dispatch({
+    //   type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
+    //   data: {
+    //     username: username,
+    //     password: password
+    //   }
+    // })
     // try {
     //   if (username === "superadmin" && password === "12345678") {
     //     localStorage.setItem("token", JSON.stringify(username));

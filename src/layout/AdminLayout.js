@@ -48,17 +48,22 @@ export default function AdminTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={(propsComponent) => {
-        if(localStorage.getItem("token") && localStorage.getItem("role") === '"superadmin"') {
-          return (
-            <AdminLayout>
-              <Component {...propsComponent} />
-            </AdminLayout>
-          );
-        }
-          
+        // && localStorage.getItem("role") === '"superadmin"'
+        // console.log("here")
+        // if(true) {
+         
+        //   return (
+        //     <AdminLayout>
+        //       <Component {...propsComponent} />
+        //     </AdminLayout>
+        //   );
+        // }
+        <AdminLayout>
+          <Component {...propsComponent} />
+        </AdminLayout>
 
         // return to auth page
-        return <Redirect to="/" />;
+        // return <Redirect to="/" />;
       }}
     />
   );
