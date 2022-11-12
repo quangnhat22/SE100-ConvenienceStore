@@ -1,11 +1,8 @@
 import {all} from "redux-saga/effects";
+import * as AuthenticationSaga from './sagaActions/AuthenticationSaga';
 
 export default function * rootSaga() {
     yield all ([
-        // AutheticationSaga.followActLoginWithGoogle(),
-        // AutheticationSaga.followActLoginWithEmailAndPassword(),
-        // AutheticationSaga.followActSignUpWithEmailAndPassword(),
-        // AutheticationSaga.followActResetPassword(),
-        // AutheticationSaga.followActChangeUserPassword(),
+        AuthenticationSaga.followActLoginWithEmailAndPassword(),
     ]);
 }

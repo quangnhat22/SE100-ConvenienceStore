@@ -13,16 +13,6 @@ const LoginPage = () => {
           <LoginForm/>
         </div>
       </div>
-      {/* <Footer
-        className="fixed  bottom-0 left-0 right-0 flex justify-center"
-        style={{ textAlign: "center" }}
-      > */}
-        {/* <img
-          src={require("../../../assets/img/Asset 2.png")}
-          alt="icon footer"
-          className="w-15 h-7"
-        ></img> */}
-      {/* </Footer> */}
     </div>
   )
 }
