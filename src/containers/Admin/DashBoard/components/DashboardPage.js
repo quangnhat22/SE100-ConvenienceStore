@@ -124,7 +124,7 @@ const DashboardPage = () => {
 
           {/* Biểu đồ */}
           <div className="m-5 box-border flex flex-wrap gap-y-10 gap-x-20">
-            <div className="mr-auto inline-block flex flex-col w-full lg:w-3/5 h-96 gap-y-10">
+            <div className="mr-auto inline-block flex flex-col w-full h-96 gap-y-10">
               <div className="text-lg font-bold">Xu hướng bán chạy</div>
               <Chart />
             </div>
