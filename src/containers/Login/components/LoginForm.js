@@ -1,7 +1,7 @@
 import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
 import { ErrorMessage, Formik } from "formik";
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { object, string } from "yup";
@@ -12,29 +12,24 @@ import "../style/index.css";
 const LoginForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const {isLoggedIn} = useSelector(state => state.authSlice)
 
   const handleSubmit = (values) => {
     let { username, password } = values;
-    console.log(username, password);
-    // dispatch({
-    //   type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
-    //   data: {
-    //     username: username,
-    //     password: password
-    //   }
-    // })
-    // try {
-    //   if (username === "superadmin" && password === "12345678") {
-    //     localStorage.setItem("token", JSON.stringify(username));
-    //     localStorage.setItem("role", JSON.stringify("superadmin"));
-    //     AlertCustom({type: 'success',title: 'Đăng nhập thành công'})
-    //     history.replace("/dash-board");
-    //   } else {
-    //     AlertCustom({type: 'error',title: 'Có cl nè, nhập cho đúng mật khẩu, tài khoản đi rồi hẳn nói chuyện :)'})
-    //   }
-    // } catch (error) {
-    // }
+    dispatch({
+      type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
+      data: {
+        username: username,
+        password: password
+      }
+    })
   };
+
+  useEffect(() => {
+    if (isLoggedIn && localStorage.getItem("access_token") != null) {
+      history.replace("/dash-board");
+    }
+  }, [isLoggedIn])
 
   const RegisterValidation = object().shape({
     username: string().max(255).required("Valid username required"),

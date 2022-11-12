@@ -1,13 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
 import rootSaga from "./rootSaga";
 import createSagaMiddleware from 'redux-saga';
-import userSlice from "./reducer/userSlice";
+import authSlice from "./reducer/authSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
-    authentication: userSlice,
-//   forgotRouter: forgotRouterReducer,
+    authSlice,
 }
 
 export const store =  configureStore({
