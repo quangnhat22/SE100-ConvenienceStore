@@ -2,8 +2,22 @@ import Search from "antd/lib/input/Search";
 import React from "react";
 import TableStaffs from "./components/TableStaffs";
 import ModalForm from "../../../HOC/ModalForm";
+import { useSelector, useDispatch } from "react-redux";
+import { modalActions } from "../../../redux/reducer/ModalReducer";
+import AddStaffForm from "./components/AddStaffForm";
 
 const StaffsPage = () => {
+  const dispatch = useDispatch();
+  const { visible } = useSelector((state) => state.modalSlice);
+
+  const handleAddStaff = () => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: <AddStaffForm />,
+      })
+    );
+  }
+
   return (
     <>
       <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row">
@@ -22,7 +36,7 @@ const StaffsPage = () => {
                       bg-blue-500 h-8 w-60 p-2 ml-2 text-white  
                       mt-3 md:mt-0 hover:bg-blue-600 shadow-lg"
 
-            // onClick={handleAddStaff}
+            onClick={handleAddStaff}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +57,7 @@ const StaffsPage = () => {
         </div>
       </div>
       <TableStaffs />
-      <ModalForm isOpen={false} />
+      <ModalForm />
     </>
   );
 };

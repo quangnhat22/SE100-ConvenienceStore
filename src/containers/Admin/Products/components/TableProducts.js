@@ -4,6 +4,7 @@ import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
+import { useDispatch, useSelector } from "react-redux";
 
 const columns = [
   {
@@ -15,8 +16,8 @@ const columns = [
   },
   {
     title: "Mã sản phẩm",
-    dataIndex: "id",
-    key: "id",
+    dataIndex: "maSanPham",
+    key: "maSanPham",
     width: "10%",
     //defaultSortOrder: ["descend"],
     sorter: (item1, item2) => item1.id.localeCompare(item2.id),
@@ -26,24 +27,24 @@ const columns = [
   },
   {
     title: "Tên sản phẩm",
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "tenSanPham",
+    key: "tenSanPham",
     width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
   },
   {
     title: "Giá nhập",
-    dataIndex: "import_price",
-    key: "import_price",
+    dataIndex: "giaNhap",
+    key: "giaNhap",
     width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
   },
   {
     title: "Giá bán",
-    dataIndex: "sale_price",
-    key: "sale_price",
+    dataIndex: "giaBan",
+    key: "giaBan",
     showOnResponse: true,
     showOnDesktop: true,
     width: "15%",
@@ -51,8 +52,8 @@ const columns = [
   },
   {
     title: "Số lượng",
-    dataIndex: "quantum",
-    key: "quantum",
+    dataIndex: "soLuong",
+    key: "soLuong",
     showOnResponse: true,
     showOnDesktop: true,
     width: "10%",
@@ -60,16 +61,16 @@ const columns = [
   },
   {
     title: "Trạng thái",
-    dataIndex: "status",
-    key: "status",
+    dataIndex: "soLuong",
+    key: "soLuong",
     showOnResponse: true,
     showOnDesktop: true,
     ellipsis: true,
     width: "10%",
     render: (text, record, index) => {
-      let colorTag = text === 0 ? "red" : text === 1 ? "green" : "yellow";
+      let colorTag = text === 0 ? "red" : text === 1 ? "yellow" : "green";
       let contentTag =
-        text === 0 ? "Hết hàng" : text === 1 ? "Còn hàng" : "Sắp hết hàng";
+        text === 0 ? "Hết hàng" : text === 1 ? "Sắp hết hàng" : "Còn hàng";
       return (
         <Tag
           key={index}
@@ -135,60 +136,14 @@ const columns = [
 ];
 
 const TableProducts = () => {
-  // Data Demo
-  const [dataSource, setDataSource] = useState([
-    {
-      id: `A1`,
-      name: `Sản phẩm 1`,
-      import_price: 26000,
-      sale_price: 30000,
-      quantum: 19,
-      vat: "10",
-      status: 2,
-    },
-    {
-      id: `A2`,
-      name: `Sản phẩm 2`,
-      import_price: 90000,
-      sale_price: 100000,
-      quantum: 23,
-      vat: "10",
-      status: 1,
-    },
-    {
-      id: `A3`,
-      name: `Sản phẩm 3`,
-      import_price: 16000,
-      sale_price: 18000,
-      quantum: 101,
-      vat: "10",
-      status: 1,
-    },
-    {
-      id: `A4`,
-      name: `Sản phẩm 4`,
-      import_price: 27000,
-      sale_price: 31000,
-      quantum: 59,
-      vat: "10",
-      status: 1,
-    },
-    {
-      id: `A5`,
-      name: `Sản phẩm 5`,
-      import_price: 28000,
-      sale_price: 32000,
-      quantum: 0,
-      vat: "10",
-      status: 0,
-    },
-  ]);
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.productSlice);
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <TableTemplate columns={columns} dataSource={dataSource} />
+      <TableTemplate columns={columns} dataSource={products} />
       <ModalForm isModalOpen={isOpen} />
     </>
   );

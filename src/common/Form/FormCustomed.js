@@ -15,7 +15,7 @@ const FormCustomed = (props) => {
   return (
     <Form
       labelCol={{
-        span: 6,
+        span: 8,
       }}
       wrapperCol={{
         span: 20,
@@ -26,6 +26,7 @@ const FormCustomed = (props) => {
       name={props.name}
       form={props.form}
       onFinish={props.onFinish}
+      className="p-8"
     >
       {props.children}
     </Form>

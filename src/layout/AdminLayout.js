@@ -48,14 +48,13 @@ export default function AdminTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={(propsComponent) => {
-        if(localStorage.getItem("token") && localStorage.getItem("role") === '"superadmin"') {
+        if(localStorage.getItem("access_token") != null) {
           return (
             <AdminLayout>
               <Component {...propsComponent} />
             </AdminLayout>
           );
         }
-          
 
         // return to auth page
         return <Redirect to="/" />;
