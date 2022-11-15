@@ -7,3 +7,15 @@
 .table-row-dark {
   background-color: #fbfbfb;
 }
+
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
+.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row) > td,
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
+  background: unset;
+}
+
+.customTable .ant-table-tbody > tr > td {
+  border: none;
+  background: unset;
+}

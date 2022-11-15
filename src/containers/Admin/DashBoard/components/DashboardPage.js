@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Card, Space, DatePicker, Segmented } from "antd";
+import { Card, Space, DatePicker, Segmented, Table } from "antd";
 import moment from "moment";
 import "../../../../common/Segmented/Segmented.css";
 import Chart from "./Chart";
+import "../../../../common/Table/TableTemplate.css";
 
 const { RangePicker } = DatePicker;
 
@@ -13,6 +14,91 @@ const DashboardPage = () => {
   const [outOfStock, setOutOfStock] = useState(null);
   const [numberOfStaff, setNumberOfStaff] = useState(null);
   const [totalRevenue, setTotalRevenue] = useState(null);
+
+  const columnsTopSale = [
+    {
+      align: "left",
+      render: (text, record, index) => {
+        return (
+          <div className="bg-red-400 w-7 h-7 rounded-full flex items-center justify-center">
+            {index + 1}
+          </div>
+        );
+      },
+    },
+    {
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      dataIndex: "number",
+      key: "number",
+    },
+  ];
+
+  //Data Demo
+  const [dataTopSale, setDataTopSale] = useState([
+    {
+      id: 1,
+      name: "Bánh tráng",
+      number: 124,
+    },
+    {
+      id: 2,
+      name: "Cải",
+      number: 122,
+    },
+    {
+      id: 3,
+      name: "Snack bí đỏ",
+      number: 100,
+    },
+    {
+      id: 4,
+      name: "Kem chuối",
+      number: 96,
+    },
+    {
+      id: 5,
+      name: "Nước suối",
+      number: 84,
+    },
+    {
+      id: 6,
+      name: "Kem dừa",
+      number: 67,
+    },
+    {
+      id: 7,
+      name: "Nước tăng lực redbull",
+      number: 50,
+    },
+    {
+      id: 8,
+      name: "Pepsi",
+      number: 45,
+    },
+    {
+      id: 9,
+      name: "Coca Cola",
+      number: 40,
+    },
+    {
+      id: 10,
+      name: "Cool air",
+      number: 35,
+    },
+    {
+      id: 11,
+      name: "Cool air",
+      number: 35,
+    },
+    {
+      id: 12,
+      name: "Cool air",
+      number: 35,
+    },
+  ]);
 
   // List Option
   const [listOptions, setOptions] = useState([
@@ -124,14 +210,22 @@ const DashboardPage = () => {
 
           {/* Biểu đồ */}
           <div className="m-5 box-border flex flex-wrap gap-y-10 gap-x-20">
-            <div className="mr-auto inline-block flex flex-col w-full h-96 gap-y-10">
+            <div className="mr-auto inline-block flex flex-col grow gap-y-10">
               <div className="text-lg font-bold">Xu hướng bán chạy</div>
               <Chart />
             </div>
-            {/* <div className="inline-block flex flex-col grow bg-red-200">
+            <div className="inline-block flex flex-col grow w-fit">
               <div className="text-lg font-bold">Bảng xếp hạng</div>
-              <div></div>
-            </div> */}
+              <Table
+                className="customTable w-fit mt-2"
+                rowKey={"id"}
+                size="small"
+                showHeader={false}
+                pagination={false}
+                columns={columnsTopSale}
+                dataSource={dataTopSale.slice(dataTopSale.length - 10)}
+              />
+            </div>
           </div>
         </div>
       </div>

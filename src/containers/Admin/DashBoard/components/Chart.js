@@ -45,14 +45,6 @@ const Chart = () => {
     data,
     xField: "name",
     yField: "number",
-    label: {
-      position: "middle",
-      style: {
-        fill: "#ffffff",
-        opacity: 0.8,
-      },
-      cursor: "pointer",
-    },
     columnStyle: {
       fill: "#1890FF",
       stroke: "gray",
@@ -63,6 +55,7 @@ const Chart = () => {
       shadowBlur: 5,
       shadowOffsetX: 3,
       shadowOffsetY: 3,
+      cursor: "pointer",
     },
     xAxis: {
       label: {
@@ -91,22 +84,3 @@ const Chart = () => {
 };
 
 export default Chart;
-
-// import React, {useState} from "react";
-// import { Bar } from "react-chartjs-2";
-
-// const data = {
-//   labels: ["Red", "Blue", "Green", "Yellow", "Purple"],
-//   datasets: [
-//     {
-//       data: [12, 19, 13, 5, 7],
-//       backgroundColor: "#1890FF",
-//     },
-//   ],
-// };
-
-// const Chart = (dataSource) => {
-//   return <Bar data={data} />;
-// };
-
-// export default Chart;
