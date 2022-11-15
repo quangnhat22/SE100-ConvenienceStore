@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {modalActions} from "../redux/reducer/ModalReducer";
 
 const ModalForm = () => {
-  const { visible, ComponentContent } = useSelector(
+  const { visible, ComponentContent, title } = useSelector(
     (state) => state.modalSlice
   );
   const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const ModalForm = () => {
 
   return (
     <Modal
+      title = {title}
       open={visible}
       onCancel={handleCancel}
       closable={true}

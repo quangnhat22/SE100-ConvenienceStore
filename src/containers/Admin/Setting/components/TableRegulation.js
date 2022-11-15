@@ -8,13 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const columns = [
   {
-    title: "STT",
-    dataIndex: "",
-    width: "5%",
-    key: "",
-    render: (text, record, index) => index + 1,
-  },
-  {
     title: "Mã trạng thái",
     dataIndex: "maTrangThai",
     key: "maTrangThai",
@@ -35,19 +28,39 @@ const columns = [
   },
   {
     title: "Giá trị tối thiểu",
-    dataIndex: "Giá trị tối đa",
-    key: "giaNhap",
+    dataIndex: "min",
+    key: "min",
     width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
   },
   {
     title: "Giá trị tối đa",
-    dataIndex: "Giá trị tối đa",
-    key: "giaNhap",
+    dataIndex: "max",
+    key: "max",
     width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
+  },
+  {
+    title: "Màu sắc",
+    dataIndex: "color",
+    key: "color",
+    showOnResponse: true,
+    showOnDesktop: true,
+    ellipsis: true,
+    width: "10%",
+    render: (text, record, index) => {
+      return (
+        <Tag
+          key={index}
+          color={text}
+          className="w-2/4 min-w-max text-center"
+        >
+          Demo
+        </Tag>
+      );
+    },
   },
   {
     title: "Thao tác",
@@ -97,7 +110,7 @@ const columns = [
 
 const TableRegulation = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.productSlice);
+  const { regulations } = useSelector((state) => state.regulationSlice);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -117,7 +130,7 @@ const TableRegulation = () => {
         rowClassName={(record, index) =>
           index % 2 === 0 ? "table-row-light" : "table-row-dark"
         }
-        dataSource={products}
+        dataSource={regulations}
         //  onChange={handleChange}
         scroll={{ x: 1100 }}
       />

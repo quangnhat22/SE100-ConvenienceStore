@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  title: '',
   visible: false,
   ComponentContent: <p>nội dung mặc định</p>
 };
@@ -11,10 +12,12 @@ const modalSlice = createSlice({
   reducers: {
     showModal: (state, action) => {
       state.visible = true;
+      state.title = action.payload.title;
       state.ComponentContent = action.payload.ComponentContent;
     },
     hideModal: (state, action) => {
       state.visible = false;
+      state.title = '';
       state.ComponentContent = <p>nội dung mặc định</p>;
     },
   },

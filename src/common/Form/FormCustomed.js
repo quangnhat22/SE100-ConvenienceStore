@@ -26,7 +26,6 @@ const FormCustomed = (props) => {
       name={props.name}
       form={props.form}
       onFinish={props.onFinish}
-      className="p-8"
     >
       {props.children}
     </Form>

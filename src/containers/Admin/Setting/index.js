@@ -5,6 +5,7 @@ import RegualtionForm from './components/RegulationForm';
 import ModalForm from '../../../HOC/ModalForm';
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import { useDispatch } from 'react-redux';
+import TableOtherRegulation from './components/TableOtherRegulation';
 
 const SettingPage = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const SettingPage = () => {
   const handleAddNewRegulation = () => {
     dispatch(
       modalActions.showModal({
+        title: "Thêm trạng thái",
         ComponentContent: <RegualtionForm />,
       })
     );
@@ -19,7 +21,7 @@ const SettingPage = () => {
 
   return (
     <>
-      <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row">
+      <div className="ml-4 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row">
         <p className="font-semibold text-base">Quy định trạng thái hàng hoá</p>
 
         <div className="search-container flex flex-col items-center md:flex-row">
@@ -45,12 +47,16 @@ const SettingPage = () => {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            Thêm quy định
+            Thêm trạng thái
           </button>
         </div>
       </div>
       <TableRegulation/>
 
+      <p className="ml-4 mt-5 font-semibold text-base">Quy định khác</p>
+
+      <TableOtherRegulation/>
+      
       <ModalForm/>
     </>
   )

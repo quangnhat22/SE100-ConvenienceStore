@@ -14,7 +14,7 @@ const RegualtionForm = () => {
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
       <Form.Item
-        name="product_name"
+        name="tenTrangThai"
         label="Tên trạng thái"
         rules={[
           {
@@ -22,10 +22,10 @@ const RegualtionForm = () => {
           },
         ]}
       >
-        <Input placeholder="Tên sản phẩm" />
+        <Input placeholder="Tên trạng thái" />
       </Form.Item>
       <Form.Item
-        name="product_buyprice"
+        name="min"
         label="Số lượng tối thiểu"
         rules={[
           {
@@ -39,11 +39,11 @@ const RegualtionForm = () => {
           style={{
             width: "50%",
           }}
-          placeholder="Giá nhập"
+          placeholder="Số lượng tối thiểu"
         />
       </Form.Item>
       <Form.Item
-        name="product_sellprice"
+        name="max"
         label="Số lượng tối đa"
         rules={[
           {
@@ -57,16 +57,12 @@ const RegualtionForm = () => {
           style={{
             width: "50%",
           }}
-          placeholder="Giá bán"
+          placeholder="Số lượng tối đa"
         />
       </Form.Item>
 
-      <Form.Item label={"Colorpicker"} name={`color`}>
-        <Colorpicker
-          onChange={(value) => {
-            console.log(value);
-          }}
-        />
+      <Form.Item name="color" label={"Colorpicker"}>
+        <Colorpicker/>
       </Form.Item>
 
       <Form.Item

@@ -60,8 +60,8 @@ const columns = [
     ellipsis: true,
   },
   {
-    title: "Trạng thái",
-    dataIndex: "soLuong",
+    title: "Màu sắc",
+    dataIndex: "color",
     key: "soLuong",
     showOnResponse: true,
     showOnDesktop: true,
