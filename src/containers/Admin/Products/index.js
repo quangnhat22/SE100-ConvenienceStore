@@ -8,7 +8,6 @@ import { modalActions } from "../../../redux/reducer/ModalReducer";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
-  const { visible } = useSelector((state) => state.modalSlice);
 
   const handleAddProduct = () => {
     dispatch(
