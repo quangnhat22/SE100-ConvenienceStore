@@ -3,6 +3,7 @@ import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
+import { useDispatch, useSelector } from "react-redux";
 
 const columns = [
   {
@@ -14,8 +15,8 @@ const columns = [
   },
   {
     title: "Mã nhân viên",
-    dataIndex: "id",
-    key: "id",
+    dataIndex: "maNhanVien",
+    key: "maNhanVien",
     width: "10%",
     //defaultSortOrder: ["descend"],
     sorter: (item1, item2) => item1.id.localeCompare(item2.id),
@@ -25,8 +26,8 @@ const columns = [
   },
   {
     title: "Họ và tên",
-    dataIndex: "name",
-    key: "name",
+    dataIndex: "hoTen",
+    key: "hoTen",
     width: "15%",
     showOnResponse: true,
     showOnDesktop: true,
@@ -34,8 +35,8 @@ const columns = [
   },
   {
     title: "Số điện thoại",
-    dataIndex: "phone",
-    key: "phone",
+    dataIndex: "soDienThoai",
+    key: "soDienThoai",
     width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
@@ -97,63 +98,14 @@ const columns = [
 ];
 
 const TableStaffs = () => {
-  // Data Demo
-  const [dataSource, setDataSource] = useState([
-    {
-      id: `NV1`,
-      name: `Nguyễn Quang Hải`,
-      phone: "0986668886",
-      email: "haicon@gmail.com",
-    },
-    {
-      id: `NV2`,
-      name: `Nguyễn Công Phượng`,
-      phone: "0358546654",
-      email: "phuong1m6@gmail.com",
-    },
-    {
-      id: `NV3`,
-      name: `Đặng Văn Lâm`,
-      phone: "0335680919",
-      email: "lamtay@gmail.com",
-    },
-    {
-      id: `NV4`,
-      name: `Đỗ Hùng Dũng`,
-      phone: "0862836475",
-      email: "dungnhieutien@gmail.com",
-    },
-    {
-      id: `NV5`,
-      name: `Nguyễn Hoàng Đức`,
-      phone: "0358263549",
-      email: "ducsatgai@gmail.com",
-    },
-    {
-      id: `NV6`,
-      name: `Trần Đình Trọng`,
-      phone: "0949876866",
-      email: "trongdeptrai@gmail.com",
-    },
-    {
-      id: `NV7`,
-      name: `Quế Ngọc Hải`,
-      phone: "0396453726",
-      email: "haibodoi@gmail.com",
-    },
-    {
-      id: `NV8`,
-      name: `Hồ Tấn Tài`,
-      phone: "0387635473",
-      email: "taikhongdoituoi@gmail.com",
-    },
-  ]);
+  const dispatch = useDispatch();
+  const { staffs } = useSelector((state) => state.staffsSlice);
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <TableTemplate dataSource={dataSource} columns={columns} />
+      <TableTemplate dataSource={staffs} columns={columns} />
       <ModalForm isModalOpen={isOpen} />
     </>
   );

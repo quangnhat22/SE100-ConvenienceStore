@@ -3,6 +3,7 @@ import { Card, Space, DatePicker, Segmented } from "antd";
 import moment from "moment";
 import "../../../../common/Segmented/Segmented.css";
 import Chart from "./Chart";
+import { Link } from "react-router-dom";
 
 const { RangePicker } = DatePicker;
 
@@ -26,7 +27,7 @@ const DashboardPage = () => {
 
   return (
     <>
-      <div className="mt-2 mx-2 md:mt-12 md:mx-12">
+      <div className="mt-2 mx-2 md:mt-6 md:mx-12">
         <div className="flex flex-wrap justify-between gap-y-10">
           {/* Card sản phẩm */}
           <Card
@@ -35,12 +36,13 @@ const DashboardPage = () => {
             title="Sản phẩm"
             headStyle={{ fontWeight: "bold", fontSize: "18px" }}
             extra={
-              <div
+              <Link
                 /* onClick={() => handleCardProductDetail(source)} */
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
+                to = "products"
               >
                 Chi tiết
-              </div>
+              </Link>
             }
           >
             <div className="font-bold text-2xl py-2">
@@ -58,12 +60,13 @@ const DashboardPage = () => {
             title="Nhân viên"
             headStyle={{ fontWeight: "bold", fontSize: "18px" }}
             extra={
-              <div
+              <Link
                 /* onClick={() => handleCardStaffDetail(source)} */
+                to="/staffs"
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
               >
                 Chi tiết
-              </div>
+              </Link>
             }
           >
             <div className="font-bold text-2xl py-2">
@@ -77,12 +80,13 @@ const DashboardPage = () => {
             title="Tổng doanh thu"
             headStyle={{ fontWeight: "bold", fontSize: "18px" }}
             extra={
-              <div
+              <Link
                 /* onClick={() => handleCardRevenueDetail(source)} */
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
+                to = "financial"
               >
                 Chi tiết
-              </div>
+              </Link>
             }
           >
             <div className="font-bold text-2xl py-2">
@@ -92,7 +96,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Bảng biểu */}
-        <div className="bg-white mt-10 md:mt-32 flex flex-col border-box shadow-md">
+        <div className="bg-white mt-10 md:mt-12 flex flex-col border-box shadow-md">
           {/* Lọc và tiêu đề */}
           <div className="flex flex-col items-center justify-end lg:flex-row border-0 border-b border-gray-200 border-solid px-5">
             <div className="inline-block text-blue-500 p-2 lg:p-0 lg:mr-auto text-xl">
@@ -124,7 +128,7 @@ const DashboardPage = () => {
 
           {/* Biểu đồ */}
           <div className="m-5 box-border flex flex-wrap gap-y-10 gap-x-20">
-            <div className="mr-auto inline-block flex flex-col w-full lg:w-3/5 h-96 gap-y-10">
+            <div className="mr-auto flex flex-col w-full lg:w-3/5 h-96 gap-y-10">
               <div className="text-lg font-bold">Xu hướng bán chạy</div>
               <Chart />
             </div>
