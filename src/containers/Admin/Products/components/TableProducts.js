@@ -12,7 +12,7 @@ import ProductInforDetail from "./ProductInforDetail";
 const TableProducts = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productSlice);
-
+  const [page, setPage] = React.useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const columns = [
     {
@@ -20,15 +20,15 @@ const TableProducts = () => {
       dataIndex: "",
       width: "5%",
       key: "",
-      render: (text, record, index) => index + 1,
+      render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
     {
       title: "Mã sản phẩm",
       dataIndex: "maSanPham",
       key: "maSanPham",
       width: "10%",
-      //defaultSortOrder: ["descend"],
-      sorter: (item1, item2) => item1.id.localeCompare(item2.id),
+      // defaultSortOrder: ["descend"],
+      sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
       //sortOrder: sortedInfo.columnKey === "id" && sortedInfo.order,
       showOnResponse: true,
       showOnDesktop: true,
@@ -90,12 +90,18 @@ const TableProducts = () => {
         );
       },
       filters: [
-        { text: "Còn hàng", value: 1 },
-        { text: "Sắp hết hàng", value: 2 },
+        { text: "Còn hàng", value: 2 },
+        { text: "Sắp hết hàng", value: 1 },
         { text: "Hết hàng", value: 0 },
       ],
       //filteredValue: filteredInfo.fee_status || null,
-      onFilter: (value, record) => record.status === value,
+      onFilter: (value, record) => {
+        if (value === 2) {
+          return record.soLuong >= value;
+        } else {
+          return record.soLuong === value;
+        }
+      },
     },
     {
       title: "Thao tác",
@@ -111,7 +117,7 @@ const TableProducts = () => {
           <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            //   onClick={() => handleViewProduct(record)}
+            onClick={() => handleEditProduct(record)}
           >
             <EditFilled />
           </button>
@@ -142,12 +148,33 @@ const TableProducts = () => {
       ),
     },
   ];
+  const handleEditProduct = (product) => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: (
+          <ProductInforDetail product={product}></ProductInforDetail>
+        ),
+      })
+    );
+  };
   const handleRemoveProduct = (product) => {
     dispatch(productActions.removeProduct(product));
   };
   return (
     <>
-      <TableTemplate columns={columns} dataSource={products} />
+      <TableTemplate
+        columns={columns}
+        dataSource={products}
+        pagination={{
+          onChange(current) {
+            setPage(current);
+          },
+          defaultPageSize: 6,
+          showSizeChanger: false,
+          pageSizeOptions: ["6"],
+        }}
+        rowKey={"maSanPham"}
+      />
       {/* <ModalForm isModalOpen={isOpen} /> */}
     </>
   );

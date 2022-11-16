@@ -16,10 +16,14 @@ import {
   Upload,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
+import { useSelector, useDispatch } from "react-redux";
+import { productActions } from "../../../../redux/reducer/ProductReducer";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
-const ProductInforDetail = () => {
+const ProductInforDetail = ({ product }) => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -34,41 +38,51 @@ const ProductInforDetail = () => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    let newProduct = {
+      maSanPham: values.product_id,
+      tenSanPham: values.product_name,
+      giaNhap: values.product_buyprice,
+      giaBan: values.product_sellprice,
+      thue: values.product_tax,
+      ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
+      thoiHan: values.product_expiry_date[1].format(dateFormat),
+      soLuong: values.product_quantity,
+      moTa: values.product_description,
+    };
+    console.log(newProduct);
+    dispatch(productActions.editProduct(newProduct));
+    //auto close modal
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
   };
 
   const handleModify = () => {};
 
-  const handleClose = () => {};
+  const handleClose = () => {
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
+  };
   const onReset = () => {
     form.resetFields();
-  };
-  let product = {
-    id: "1",
-    name: "bánh",
-    buyprice: 10000,
-    sellprice: 11000,
-    tax: 10,
-    expirydate: [
-      moment("1-11-2020", dateFormat),
-      moment("2-12-2022", dateFormat),
-    ],
-    quantity: 20,
-    description: "đây là mô tả",
   };
 
   return (
     <FormCustomed
       name="product_infor_form"
       initialValues={{
-        product_id: product.id,
-        product_name: product.name,
-        product_buyprice: product.buyprice,
-        product_sellprice: product.sellprice,
-        product_tax: product.tax,
-        product_expiry_date: product.expirydate,
-        product_quantity: product.quantity,
-        product_description: product.description,
+        product_id: product.maSanPham,
+        product_name: product.tenSanPham,
+        product_buyprice: product.giaNhap,
+        product_sellprice: product.giaBan,
+        product_tax: product.thue,
+        product_expiry_date: [
+          moment(product.ngaySanXuat, dateFormat),
+          moment(product.thoiHan, dateFormat),
+        ],
+        product_quantity: product.soLuong,
+        product_description: product.moTa,
       }}
       form={form}
       onFinish={onFinish}
@@ -179,7 +193,7 @@ const ProductInforDetail = () => {
           {
             required: true,
             type: "number",
-            min: 1,
+            min: 0,
           },
         ]}
       >
@@ -227,7 +241,7 @@ const ProductInforDetail = () => {
           }}
         >
           <Button
-            className="edit-product-button mr-4 rounded-md sm:text-yellow-600 hover:border-green-500"
+            className="edit-reader-button mr-4"
             onClick={handleEnableModify}
           >
             Chỉnh sửa
@@ -243,7 +257,12 @@ const ProductInforDetail = () => {
             textAlign: "end",
           }}
         >
-          <Button onClick={handleCancel}>Hủy</Button>
+          <Button
+            className="cancel-edit-reader-button mr-4"
+            onClick={handleCancel}
+          >
+            Hủy
+          </Button>
           <Button onClick={handleModify} htmlType="submit">
             Lưu
           </Button>
