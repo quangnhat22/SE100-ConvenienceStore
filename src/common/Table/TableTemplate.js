@@ -16,7 +16,7 @@ const TableTemplate = (props) => {
       columns={props.columns}
       dataSource={props.dataSource}
       // onChange={handleChange}
-      // scroll={{ x: 1100 }}
+      scroll={{ x: 1100 }}
     />
   );
 };
