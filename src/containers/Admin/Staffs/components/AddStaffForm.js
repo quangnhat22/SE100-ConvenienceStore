@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Form,
@@ -15,25 +16,35 @@ import {
   Upload,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
+import { useSelector, useDispatch } from "react-redux";
+import { staffActions } from "../../../../redux/reducer/StaffReducer";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 const AddStaffForm = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const onFinish = (values) => {
-    console.log(values);
+    let newStaff = {
+      maNhanVien: moment().valueOf(),
+      hoTen: values.staff_name,
+      ngaySinh: values.staff_birth.format(dateFormat),
+      CCCD: values.staff_cccd,
+      gioiTinh: values.staff_gender,
+      soDienThoai: values.staff_phone_number,
+      email: values.staff_email,
+      diaChi: values.staff_address,
+      khac: values.staff_other_information,
+    };
+    console.log(newStaff);
+    dispatch(staffActions.addNewStaffs(newStaff));
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
   };
   return (
     <FormCustomed name="add_staff_form" form={form} onFinish={onFinish}>
-      <Form.Item name="staff_id" label="Mã nhân viên">
-        <Input
-          style={{
-            width: "80%",
-          }}
-          placeholder="Mã nhân viên"
-          disabled={true}
-        />
-      </Form.Item>
       <Form.Item
         name="staff_name"
         label="Họ và tên"
@@ -54,7 +65,11 @@ const AddStaffForm = () => {
           },
         ]}
       >
-        <DatePicker placeholder="Ngày sinh" format={dateFormat} />
+        <DatePicker
+          placeholder="Ngày sinh"
+          format={dateFormat}
+          disabledDate={(current) => current.isAfter(moment())}
+        />
       </Form.Item>
       <Form.Item
         name="staff_cccd"

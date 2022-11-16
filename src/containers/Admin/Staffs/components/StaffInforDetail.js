@@ -16,10 +16,14 @@ import {
   Upload,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
+import { useSelector, useDispatch } from "react-redux";
+import { staffActions } from "../../../../redux/reducer/StaffReducer";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
-const StaffInforDetail = () => {
+const StaffInforDetail = ({ staff }) => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -34,41 +38,60 @@ const StaffInforDetail = () => {
   };
 
   const onFinish = (values) => {
-    console.log(values);
+    let newStaff = {
+      maNhanVien: values.staff_id,
+      hoTen: values.staff_name,
+      ngaySinh: values.staff_birth.format(dateFormat),
+      CCCD: values.staff_cccd,
+      gioiTinh: values.staff_gender,
+      soDienThoai: values.staff_phone_number,
+      email: values.staff_email,
+      diaChi: values.staff_address,
+      khac: values.staff_other_information,
+    };
+    console.log(newStaff);
+    dispatch(staffActions.editStaffs(newStaff));
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
   };
 
   const handleModify = () => {};
 
-  const handleClose = () => {};
+  const handleClose = () => {
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
+  };
   const onReset = () => {
     form.resetFields();
   };
-  let staff = {
-    id: "1",
-    name: "Nguyễn Văn A",
-    birth: moment("1-11-2020", dateFormat),
-    cccd: "091230192039",
-    gender: "male",
-    phoneNumber: "1231231312",
-    email: "123@gmail.com",
-    address: "KTX khu A",
-    ortherInfor: "nothing",
-  };
+  // let staff = {
+  //   id: "1",
+  //   name: "Nguyễn Văn A",
+  //   birth: moment("1-11-2020", dateFormat),
+  //   cccd: "091230192039",
+  //   gender: "male",
+  //   phoneNumber: "1231231312",
+  //   email: "123@gmail.com",
+  //   address: "KTX khu A",
+  //   ortherInfor: "nothing",
+  // };
   return (
     <FormCustomed
       name="staff_infor_detail_form"
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_id: staff.id,
-        staff_name: staff.name,
-        staff_birth: staff.birth,
-        staff_cccd: staff.cccd,
-        staff_gender: staff.gender,
-        staff_phone_number: staff.phoneNumber,
+        staff_id: staff.maNhanVien,
+        staff_name: staff.hoTen,
+        staff_birth: moment(staff.ngaySinh, dateFormat),
+        staff_cccd: staff.CCCD,
+        staff_gender: staff.gioiTinh,
+        staff_phone_number: staff.soDienThoai,
         staff_email: staff.email,
-        staff_address: staff.address,
-        staff_other_information: staff.ortherInfor,
+        staff_address: staff.diaChi,
+        staff_other_information: staff.khac,
       }}
     >
       <Form.Item name="staff_id" label="Mã nhân viên">
@@ -202,7 +225,12 @@ const StaffInforDetail = () => {
             textAlign: "end",
           }}
         >
-          <Button onClick={handleEnableModify}>Chỉnh sửa</Button>
+          <Button
+            className="edit-reader-button mr-4"
+            onClick={handleEnableModify}
+          >
+            Chỉnh sửa
+          </Button>
           <Button onClick={handleClose}>Đóng</Button>
         </Form.Item>
       ) : (
@@ -214,7 +242,12 @@ const StaffInforDetail = () => {
             textAlign: "end",
           }}
         >
-          <Button onClick={handleCancel}>Hủy</Button>
+          <Button
+            className="cancel-edit-reader-button mr-4"
+            onClick={handleCancel}
+          >
+            Hủy
+          </Button>
           <Button onClick={handleModify} htmlType="submit">
             Lưu
           </Button>

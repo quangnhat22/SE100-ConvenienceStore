@@ -18,6 +18,7 @@ import {
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
@@ -38,6 +39,9 @@ const AddProductForm = () => {
     };
     console.log(newProduct);
     dispatch(productActions.addNewProduct(newProduct));
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
