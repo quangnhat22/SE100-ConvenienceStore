@@ -15,13 +15,17 @@ const FormCustomed = (props) => {
   return (
     <Form
       labelCol={{
-        span: 6,
+        span: 8,
       }}
       wrapperCol={{
         span: 20,
       }}
       layout="horizontal"
       validateMessages={validateMessages}
+      initialValues={props.initialValues}
+      name={props.name}
+      form={props.form}
+      onFinish={props.onFinish}
     >
       {props.children}
     </Form>

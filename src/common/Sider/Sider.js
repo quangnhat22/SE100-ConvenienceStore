@@ -30,8 +30,8 @@ const SiderCustomed = ({ setVisibleButton }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         AlertCustom({ type: "success", title: "Đăng xuất thành công" });
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
+        localStorage.removeItem("access_token");
+        // localStorage.removeItem("role");
         history.replace("/");
       }
     });
@@ -76,8 +76,10 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "3"
             : location.pathname === "/financial"
             ? "4"
-            : location.pathname === "/setting"
+            : location.pathname === "/profile"
             ? "5"
+            : location.pathname === "/setting"
+            ? "6"
             : "-1",
         ]}
       >
@@ -120,6 +122,15 @@ const SiderCustomed = ({ setVisibleButton }) => {
         </Menu.Item>
         <Menu.Item
           key="5"
+          icon={<UserOutlined />}
+          onClick={() => {
+            history.push("/profile");
+          }}
+        >
+          Thay đổi thông tin
+        </Menu.Item>
+        <Menu.Item
+          key="6"
           icon={<SettingOutlined />}
           onClick={() => {
             history.push("/setting");
@@ -127,7 +138,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Cài đặt
         </Menu.Item>
-        <Menu.Item key="6" icon={<ExportOutlined />} onClick={handleLogout}>
+        <Menu.Item key="7" icon={<ExportOutlined />} onClick={handleLogout}>
           Đăng xuất
         </Menu.Item>
       </Menu>

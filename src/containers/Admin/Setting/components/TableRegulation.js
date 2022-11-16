@@ -1,5 +1,6 @@
-import { Table, Popconfirm, Space } from "antd";
+import { hover } from "@testing-library/user-event/dist/hover";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
@@ -7,16 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 const columns = [
   {
-    title: "STT",
-    dataIndex: "",
-    width: "5%",
-    key: "",
-    render: (text, record, index) => index + 1,
-  },
-  {
-    title: "Mã nhân viên",
-    dataIndex: "maNhanVien",
-    key: "maNhanVien",
+    title: "Mã trạng thái",
+    dataIndex: "maTrangThai",
+    key: "maTrangThai",
     width: "10%",
     //defaultSortOrder: ["descend"],
     sorter: (item1, item2) => item1.id.localeCompare(item2.id),
@@ -25,35 +19,52 @@ const columns = [
     showOnDesktop: true,
   },
   {
-    title: "Họ và tên",
-    dataIndex: "hoTen",
-    key: "hoTen",
-    width: "15%",
-    showOnResponse: true,
-    showOnDesktop: true,
-    sorter: (item1, item2) => item1.id.localeCompare(item2.id),
-  },
-  {
-    title: "Số điện thoại",
-    dataIndex: "soDienThoai",
-    key: "soDienThoai",
+    title: "Tên trạng thái",
+    dataIndex: "tenTrangThai",
+    key: "tenTrangThai",
     width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
   },
   {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
+    title: "Giá trị tối thiểu",
+    dataIndex: "min",
+    key: "min",
+    width: "10%",
     showOnResponse: true,
     showOnDesktop: true,
-    width: "15%",
+  },
+  {
+    title: "Giá trị tối đa",
+    dataIndex: "max",
+    key: "max",
+    width: "10%",
+    showOnResponse: true,
+    showOnDesktop: true,
+  },
+  {
+    title: "Màu sắc",
+    dataIndex: "color",
+    key: "color",
+    showOnResponse: true,
+    showOnDesktop: true,
     ellipsis: true,
+    width: "10%",
+    render: (text, record, index) => {
+      return (
+        <Tag
+          key={index}
+          color={text}
+          className="w-2/4 min-w-max text-center"
+        >
+          Demo
+        </Tag>
+      );
+    },
   },
   {
     title: "Thao tác",
     key: "action",
-    id: "action",
     ellipsis: true,
     width: "10%",
     showOnResponse: true,
@@ -65,13 +76,13 @@ const columns = [
         <button
           type="button"
           className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-          //   onClick={() => handleViewStaff(record)}
+          //   onClick={() => handleViewProduct(record)}
         >
           <EditFilled />
         </button>
         <Popconfirm
           placement="top"
-          title="Bạn có chắc muốn xóa nhân viên này?"
+          title="Bạn có chắc muốn xóa sản phẩm này?"
           okText="Xác nhận"
           cancelText="Hủy"
           okType="default"
@@ -83,7 +94,7 @@ const columns = [
             className:
               "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
           }}
-          //   onConfirm={() => handleRemoveStaff(record)}
+          //   onConfirm={() => handleRemoveProduct(record)}
         >
           <button
             type="button"
@@ -97,18 +108,35 @@ const columns = [
   },
 ];
 
-const TableStaffs = () => {
+const TableRegulation = () => {
   const dispatch = useDispatch();
-  const { staffs } = useSelector((state) => state.staffsSlice);
+  const { regulations } = useSelector((state) => state.regulationSlice);
 
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <TableTemplate dataSource={staffs} columns={columns} />
+      <Table
+        pagination={{ pageSize: 3, showSizeChanger: false }}
+        locale={{
+          triggerDesc: "Nhấp để sắp xếp giảm dần",
+          triggerAsc: "Nhấp để sắp xếp tăng dần",
+          cancelSort: "Trở về mặc định",
+        }}
+        rowKey={"id"}
+        className="header-style m-3 drop-shadow-lg"
+        size="middle"
+        columns={columns}
+        rowClassName={(record, index) =>
+          index % 2 === 0 ? "table-row-light" : "table-row-dark"
+        }
+        dataSource={regulations}
+        //  onChange={handleChange}
+        scroll={{ x: 1100 }}
+      />
       <ModalForm isModalOpen={isOpen} />
     </>
   );
 };
 
-export default TableStaffs;
+export default TableRegulation;
