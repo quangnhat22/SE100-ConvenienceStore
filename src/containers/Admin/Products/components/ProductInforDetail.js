@@ -33,10 +33,6 @@ const ProductInforDetail = () => {
     onReset();
   };
 
-  const onFinish = (values) => {
-    console.log(values);
-  };
-
   const handleModify = () => {};
 
   const handleClose = () => {};
@@ -71,7 +67,6 @@ const ProductInforDetail = () => {
         product_description: product.description,
       }}
       form={form}
-      onFinish={onFinish}
     >
       <Form.Item name="product_id" label="Mã sản phẩm">
         <Input
