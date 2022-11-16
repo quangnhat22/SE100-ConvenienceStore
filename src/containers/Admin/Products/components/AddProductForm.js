@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import { PlusOutlined } from "@ant-design/icons";
 import {
   Form,
@@ -15,17 +16,32 @@ import {
   Upload,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
+import { useSelector, useDispatch } from "react-redux";
+import { productActions } from "../../../../redux/reducer/ProductReducer";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 const AddProductForm = () => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    console.log(values);
+    let newProduct = {
+      maSanPham: moment().valueOf(),
+      tenSanPham: values.product_name,
+      giaNhap: values.product_buyprice,
+      giaBan: values.product_sellprice,
+      thue: values.product_tax,
+      ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
+      thoiHan: values.product_expiry_date[1].format(dateFormat),
+      soLuong: values.product_quantity,
+      moTa: values.product_description,
+    };
+    console.log(newProduct);
+    dispatch(productActions.addNewProduct(newProduct));
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
-      <Form.Item name="product_id" label="Mã sản phẩm">
+      {/* <Form.Item name="product_id" label="Mã sản phẩm">
         <Input
           style={{
             width: "80%",
@@ -33,7 +49,7 @@ const AddProductForm = () => {
           placeholder="Mã sản phẩm"
           disabled={true}
         />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         name="product_name"
         label="Tên sản phẩm"
@@ -59,7 +75,7 @@ const AddProductForm = () => {
         <InputNumber
           addonAfter={"VNĐ"}
           style={{
-            width: "50%",
+            width: "60%",
           }}
           placeholder="Giá nhập"
         />
@@ -78,7 +94,7 @@ const AddProductForm = () => {
         <InputNumber
           addonAfter={"VNĐ"}
           style={{
-            width: "50%",
+            width: "60%",
           }}
           placeholder="Giá bán"
         />
@@ -98,7 +114,7 @@ const AddProductForm = () => {
         <InputNumber
           addonAfter={"%"}
           style={{
-            width: "30%",
+            width: "40%",
           }}
           placeholder="Thuế"
         />
