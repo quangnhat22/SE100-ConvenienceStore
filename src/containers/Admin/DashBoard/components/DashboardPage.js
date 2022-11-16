@@ -132,10 +132,10 @@ const DashboardPage = () => {
             <div className="font-bold text-2xl py-2">
               {productTypes + " loại"}
             </div>
-            <div className="text-gray-400">
+            <div className="text-yellow-400 opacity-80">
               {"Sắp hết hạn: " + productNearExpirationDate}
             </div>
-            <div className="text-gray-400">{"Hết hàng: " + outOfStock}</div>
+            <div className="text-red-600 opacity-60">{"Hết hàng: " + outOfStock}</div>
           </Card>
           {/* Card nhân viên */}
           <Card
@@ -178,7 +178,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Bảng biểu */}
-        <div className="bg-white mt-10 md:mt-32 flex flex-col border-box shadow-md">
+        <div className="bg-white my-10 md:mt-32 flex flex-col border-box shadow-md">
           {/* Lọc và tiêu đề */}
           <div className="flex flex-col items-center justify-end lg:flex-row border-0 border-b border-gray-200 border-solid px-5">
             <div className="inline-block text-blue-500 p-2 lg:p-0 lg:mr-auto text-xl">
@@ -223,7 +223,7 @@ const DashboardPage = () => {
                 showHeader={false}
                 pagination={false}
                 columns={columnsTopSale}
-                dataSource={dataTopSale.slice(dataTopSale.length - 10)}
+                dataSource={dataTopSale.slice(0, 10)}
               />
             </div>
           </div>
