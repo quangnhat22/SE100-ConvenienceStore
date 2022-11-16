@@ -76,9 +76,9 @@ const TableProducts = () => {
       ellipsis: true,
       width: "10%",
       render: (text, record, index) => {
-        let colorTag = text === 0 ? "red" : text === 1 ? "yellow" : "green";
+        let colorTag = text === 0 ? "red" : text < 10 ? "yellow" : "green";
         let contentTag =
-          text === 0 ? "Hết hàng" : text === 1 ? "Sắp hết hàng" : "Còn hàng";
+          text === 0 ? "Hết hàng" : text < 10 ? "Sắp hết hàng" : "Còn hàng";
         return (
           <Tag
             key={index}
@@ -97,9 +97,11 @@ const TableProducts = () => {
       //filteredValue: filteredInfo.fee_status || null,
       onFilter: (value, record) => {
         if (value === 2) {
-          return record.soLuong >= value;
+          return record.soLuong >= 10;
+        } else if (value === 1) {
+          return record.soLuong < 10 && record.soLuong > 0;
         } else {
-          return record.soLuong === value;
+          return record.soLuong === 0;
         }
       },
     },
