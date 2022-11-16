@@ -1,11 +1,8 @@
 .ant-table-thead .ant-table-cell {
   font-weight: bold;
 }
-.table-row-light {
-  background-color: #ffffff;
-}
-.table-row-dark {
-  background-color: #fbfbfb;
+.table-striped-rows tr:nth-child(2n) td {
+  background-color: #fbfbfbfb;
 }
 
 .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,

@@ -15,14 +15,14 @@ const ProductsPage = () => {
         ComponentContent: <AddProductForm />,
       })
     );
-  }
+  };
 
   return (
     <>
-      <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row">
+      <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row gap-y-2">
         <p className="font-semibold text-base">Danh sách sản phẩm</p>
 
-        <div className="search-container flex flex-col items-center md:flex-row">
+        <div className="search-container flex flex-col items-center md:flex-row gap-x-4 gap-y-2">
           <Search
             name="search"
             placeholder="Tìm kiếm..."
@@ -32,9 +32,8 @@ const ProductsPage = () => {
           {/* button search */}
           <button
             className="flex items-center justify-center
-                    bg-blue-500 h-8 w-60 p-2 ml-2 text-white  
-                    mt-3 md:mt-0 hover:bg-blue-600 shadow-lg"
-
+                    bg-blue-500 h-8 w-60 p-2 text-white  
+                    md:mt-0 hover:bg-blue-600 shadow-lg"
             onClick={handleAddProduct}
           >
             <svg
@@ -56,7 +55,7 @@ const ProductsPage = () => {
         </div>
       </div>
       <TableProducts />
-      <ModalForm/>
+      <ModalForm />
     </>
   );
 };
