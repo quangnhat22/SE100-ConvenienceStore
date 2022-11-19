@@ -1,17 +1,40 @@
 import React, { useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Select, DatePicker, Upload } from "antd";
+import { PlusOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Select, DatePicker, Upload, Modal } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
+import * as moment from "moment";
+
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
-const EditProfileForm = () => {
+const EditProfileForm = ({ account }) => {
   const [form] = Form.useForm();
+
+  // const [listImage, setListimage] = useState(account.images);
+  // const handleChange = (info) => {
+  //   let listImage = [...info.listImage];
+  //   listImage = listImage.slice(-1);
+  //   setListimage(listImage);
+  const handleSave = () => {
+    Modal.confirm({
+      title: "Xác nhận",
+      icon: <ExclamationCircleOutlined />,
+      content: "Xác nhận thay đổi?",
+      okText: "Ok",
+      cancelText: "Hủy",
+      destroyOnClose: true,
+      centered: true,
+      maskClosable: true,
+      // onOk: () => {},
+      // onCancel: () => {},
+    });
+  };
+
   return (
     <div className="flex justify-center items-center">
       <div className="h-fit lg:w-1/2 xl:w-1/3 mx-10 bg-white shadow-md px-10">
         <FormCustomed name="edit_profile" form={form}>
-          <Form.Item name="staff_id" label="Mã nhân viên">
+          <Form.Item name="id" label="Mã nhân viên" initialValue={account.id}>
             <Input
               style={{
                 width: "80%",
@@ -21,8 +44,9 @@ const EditProfileForm = () => {
             />
           </Form.Item>
           <Form.Item
-            name="staff_name"
+            name="name"
             label="Họ và tên"
+            initialValue={account.name}
             rules={[
               {
                 required: true,
@@ -32,8 +56,9 @@ const EditProfileForm = () => {
             <Input placeholder="Họ và tên" />
           </Form.Item>
           <Form.Item
-            name="staff_birth"
+            name="birth"
             label="Ngày sinh"
+            initialValue={moment(account.birth)}
             rules={[
               {
                 required: true,
@@ -43,8 +68,9 @@ const EditProfileForm = () => {
             <DatePicker placeholder="Ngày sinh" format={dateFormat} />
           </Form.Item>
           <Form.Item
-            name="staff_cccd"
+            name="cccd"
             label="CCCD"
+            initialValue={account.cccd}
             rules={[
               {
                 pattern: "^([-]?[0-9]*|0)$",
@@ -56,8 +82,9 @@ const EditProfileForm = () => {
             <Input placeholder="CCCD" />
           </Form.Item>
           <Form.Item
-            name="staff_gender"
+            name="gender"
             label="Giới tính"
+            initialValue={account.gender}
             rules={[
               {
                 required: true,
@@ -77,8 +104,9 @@ const EditProfileForm = () => {
             </Select>
           </Form.Item>
           <Form.Item
-            name="staff_phone_number"
+            name="phone_number"
             label="Số Điện Thoại"
+            initialValue={account.phone_number}
             rules={[
               {
                 pattern: "^([-]?[0-9]*|0)$",
@@ -90,28 +118,42 @@ const EditProfileForm = () => {
             <Input placeholder="Số điện thoại" />
           </Form.Item>
           <Form.Item
-            name="staff_email"
+            name="email"
             label="Email"
+            initialValue={account.email}
             rules={[{ type: "email", required: true }]}
           >
             <Input placeholder="Email" />
           </Form.Item>
           <Form.Item
-            name="staff_address"
+            name="address"
             label="Địa chỉ"
+            initialValue={account.address}
             rules={[{ required: true }]}
           >
             <TextArea rows={2} placeholder="Địa chỉ" />
           </Form.Item>
-          <Form.Item name="staff_other_information" label="Khác">
+          <Form.Item
+            name="other_infor"
+            initialValue={account.other_infor}
+            label="Khác"
+          >
             <TextArea rows={2} placeholder="Khác" />
           </Form.Item>
           <Form.Item
-            name="staff_image"
+            name="images"
             label="Ảnh nhân viên"
+            initialValue={account.images}
             valuePropName="fileList"
           >
-            <Upload action="/upload.do" listType="picture-card">
+            <Upload
+              accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+              action="/upload.do"
+              listType="picture-card"
+              // onPreview={() => {}}
+              // onRemove={() => {}}
+              // onChange={handleChange}
+            >
               <div>
                 <PlusOutlined />
                 <div
@@ -125,7 +167,11 @@ const EditProfileForm = () => {
             </Upload>
           </Form.Item>
           <Form.Item className="flex justify-end">
-            <Button className="border-blue-200" htmlType="submit">
+            <Button
+              className="border-gray-300"
+              htmlType="submit"
+              onClick={handleSave}
+            >
               Lưu
             </Button>
           </Form.Item>
