@@ -5,6 +5,7 @@ import {
   TeamOutlined,
   SettingOutlined,
   SolutionOutlined,
+  ProfileOutlined,
   ExportOutlined,
   DashboardOutlined,
   ShopOutlined,
@@ -80,6 +81,8 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "5"
             : location.pathname === "/setting"
             ? "6"
+            : location.pathname === "/providers"
+            ? "8"
             : "-1",
         ]}
       >
@@ -119,6 +122,15 @@ const SiderCustomed = ({ setVisibleButton }) => {
           }}
         >
           Quản lý tài chính
+        </Menu.Item>
+        <Menu.Item
+          key="8"
+          icon={<ProfileOutlined />}
+          onClick={() => {
+            history.push("/providers");
+          }}
+        >
+          Đơn vị cung cấp
         </Menu.Item>
         <Menu.Item
           key="5"

@@ -1,26 +1,31 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
-import TableProducts from "./components/TableProducts";
-import ModalForm from "../../../HOC/ModalForm";
-import { useSelector, useDispatch } from "react-redux";
-import AddProductForm from "./components/AddProductForm";
-import { modalActions } from "../../../redux/reducer/ModalReducer";
+import { Button, Space } from "antd";
 import {
   DownloadOutlined,
-  TeamOutlined,
   UploadOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
-import { Button, Space } from "antd";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import AddProductForm from "../Products/components/AddProductForm";
+import { modalActions } from "../../../redux/reducer/ModalReducer";
+import TableProvider from "./components/TableProvider";
 
-const ProductsPage = () => {
+const ProvidersPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const handleAddProduct = () => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: <AddProductForm />,
-      })
-    );
+  const handleEditProvider = (record) => {
+    history.push("/detail_provider/" + record.id);
+  };
+
+  const handleAddProvider = () => {
+    // dispatch(
+    //   modalActions.showModal({
+    //     ComponentContent: <AddProductForm />,
+    //   })
+    // );
   };
 
   return (
@@ -42,7 +47,7 @@ const ProductsPage = () => {
             className="flex items-center justify-center
                     bg-blue-500 h-8 w-fit p-2 text-white
                     md:mt-0 hover:bg-blue-600 shadow-lg rounded whitespace-nowrap"
-            onClick={handleAddProduct}
+            onClick={handleAddProvider}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +63,7 @@ const ProductsPage = () => {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            Thêm sản phẩm
+            Thêm nhà cung cấp
           </button>
         </div>
         <Space className="mt-3">
@@ -87,15 +92,14 @@ const ProductsPage = () => {
             size="small"
             //onClick={handleGroupProvider}
           >
-            Nhóm dòng sản phẩm
+            Nhóm nhà cung cấp
           </Button>
         </Space>
       </div>
 
-      <TableProducts />
-      <ModalForm />
+      <TableProvider />
     </>
   );
 };
 
-export default ProductsPage;
+export default ProvidersPage;

@@ -23,6 +23,15 @@ const TableProducts = () => {
       render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
     {
+      title: "Ảnh",
+      dataIndex: "image",
+      key: "image",
+      width: "5%",
+      render: (value, record) => {
+        return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
+      },
+    },
+    {
       title: "Mã sản phẩm",
       dataIndex: "maSanPham",
       key: "maSanPham",
@@ -48,6 +57,15 @@ const TableProducts = () => {
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
+      render: (value, record) => {
+        return (
+          <div>
+            {record.giaBan.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+          </div>
+        );
+      },
     },
     {
       title: "Giá bán",
@@ -57,6 +75,15 @@ const TableProducts = () => {
       showOnDesktop: true,
       width: "15%",
       ellipsis: true,
+      render: (value, record) => {
+        return (
+          <div>
+            {record.giaBan.toLocaleString(undefined, {
+              maximumFractionDigits: 2,
+            })}
+          </div>
+        );
+      },
     },
     {
       title: "Số lượng",

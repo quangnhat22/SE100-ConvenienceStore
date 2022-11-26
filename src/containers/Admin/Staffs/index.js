@@ -21,7 +21,9 @@ const StaffsPage = () => {
   return (
     <>
       <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row gap-y-2">
-        <p className="font-semibold text-base">Danh sách nhân viên</p>
+        <p className="font-semibold  text-2xl whitespace-nowrap">
+          Danh sách nhân viên
+        </p>
 
         <div className="search-container flex flex-col items-center md:flex-row gap-x-4 gap-y-2">
           <Search
@@ -33,8 +35,8 @@ const StaffsPage = () => {
           {/* button search */}
           <button
             className="flex items-center justify-center
-                      bg-blue-500 h-8 w-60 p-2 text-white  
-                      md:mt-0 hover:bg-blue-600 shadow-lg"
+                      bg-blue-500 h-8 w-fit p-2 text-white  
+                      md:mt-0 hover:bg-blue-600 shadow-lg rounded whitespace-nowrap"
             onClick={handleAddStaff}
           >
             <svg
