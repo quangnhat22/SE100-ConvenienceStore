@@ -6,8 +6,11 @@ import { authActions } from "../reducer/authSlice";
 function* actLoginWithEmailAndPassword(payload) {
   try {
     yield put(authActions.requestLog());
+
     const { username, password } = payload.data;
+
     let res = yield call(() => UserService.postAuthLogin(username, password));
+    
     if (res.status === 201) {
       localStorage.setItem("access_token", res.data["access_token"]);
       yield put(authActions.requestLogSuccess());

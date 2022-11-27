@@ -5,6 +5,9 @@ import ModalForm from "../../../HOC/ModalForm";
 import { useSelector, useDispatch } from "react-redux";
 import AddProductForm from "./components/AddProductForm";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
+import { useEffect } from "react";
+import { type } from "@testing-library/user-event/dist/type";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -16,6 +19,10 @@ const ProductsPage = () => {
       })
     );
   };
+
+  useEffect(() => {
+    dispatch({type: SagaActionTypes.GET_LIST_PRODUCT_SAGA })
+  }, [])
 
   return (
     <>
