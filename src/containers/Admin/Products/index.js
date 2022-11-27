@@ -11,6 +11,9 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import { Button, Space } from "antd";
+import { useEffect } from "react";
+import { type } from "@testing-library/user-event/dist/type";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,10 @@ const ProductsPage = () => {
       })
     );
   };
+
+  useEffect(() => {
+    dispatch({type: SagaActionTypes.GET_LIST_PRODUCT_SAGA })
+  }, [])
 
   return (
     <>

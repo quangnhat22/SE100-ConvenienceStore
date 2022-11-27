@@ -12,7 +12,7 @@ const sagaMiddleware = createSagaMiddleware();
 const rootReducer = {
     authSlice,
     modalSlice,
-    productSlice,
+    productSlice, // danh mục sản phẩm
     staffsSlice,
     regulationSlice
 }
