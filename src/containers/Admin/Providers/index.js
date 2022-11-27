@@ -12,20 +12,58 @@ import AddProductForm from "../Products/components/AddProductForm";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import TableProvider from "./components/TableProvider";
 
+
+
+//Data Demo
+const providers = [
+  {
+    maNhaCungCap: "NCC1",
+    tenNhaCungCap: "TẠP HÓA CHỊ HUYỀN",
+    nhomNhaCungCap: "MACDINH",
+    email: "huynhhgt@gnmail.com",
+    soDienThoai: "0967654554",
+    trangThai: true,
+  },
+  {
+    maNhaCungCap: "NCC2",
+    tenNhaCungCap: "NHÀ PHÂN PHỐI ĐÔNG BA",
+    nhomNhaCungCap: "MACDINH",
+    email: "dongbacoop@gmail.com",
+    soDienThoai: "0978654654",
+    trangThai: true,
+  },
+  {
+    maNhaCungCap: "NCC3",
+    tenNhaCungCap: "SIÊU THỊ CẨM THƠ",
+    nhomNhaCungCap: "MACDINH",
+    email: "camtho.super@gmail.com",
+    soDienThoai: "0387656734",
+    trangThai: false,
+  },
+  {
+    maNhaCungCap: "NCC4",
+    tenNhaCungCap: "NƯỚC NGỌT SÀI THÀNH",
+    nhomNhaCungCap: "MACDINH",
+    email: "saithanhdrinking@gmail.com",
+    soDienThoai: "0987678654",
+    trangThai: true,
+  },
+  {
+    maNhaCungCap: "NCC5",
+    tenNhaCungCap: "NƯỚC NGỌT VĨNH HẢO",
+    nhomNhaCungCap: "MACDINH",
+    email: "vinhhao.tphcm@gmail.com",
+    soDienThoai: "0988989345",
+    trangThai: true,
+  },
+];
+
 const ProvidersPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleEditProvider = (record) => {
-    history.push("/detail_provider/" + record.id);
-  };
-
   const handleAddProvider = () => {
-    // dispatch(
-    //   modalActions.showModal({
-    //     ComponentContent: <AddProductForm />,
-    //   })
-    // );
+    history.push("/add_provider");
   };
 
   return (
@@ -97,7 +135,7 @@ const ProvidersPage = () => {
         </Space>
       </div>
 
-      <TableProvider />
+      <TableProvider listProviders={providers}/>
     </>
   );
 };

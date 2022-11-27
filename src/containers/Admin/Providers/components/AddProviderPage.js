@@ -2,8 +2,10 @@ import React from "react";
 import { Form, Input, Select, Space } from "antd";
 import { InfoCircleTwoTone } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
+import { useHistory } from "react-router-dom";
 
 const AddProviderPage = ({ data }) => {
+  const history = useHistory();
   const [form] = Form.useForm();
   const validateMessages = {
     required: "Vui lòng nhập ${label}!",
@@ -33,7 +35,9 @@ const AddProviderPage = ({ data }) => {
     },
   ];
 
-  const handleExit = () => {};
+  const handleExit = () => {
+    history.push("/providers");
+  };
 
   const handleSave = () => {};
 

@@ -81,7 +81,9 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "5"
             : location.pathname === "/setting"
             ? "6"
-            : location.pathname === "/providers"
+            : location.pathname === "/providers" ||
+              location.pathname === "/add_provider" ||
+              location.pathname.indexOf("detail_provider") !== -1
             ? "8"
             : "-1",
         ]}

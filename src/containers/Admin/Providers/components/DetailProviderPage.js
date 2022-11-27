@@ -2,8 +2,42 @@ import React, { useState } from "react";
 import { Form, Input, Select, Space } from "antd";
 import { InfoCircleTwoTone } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
+import { useHistory } from "react-router-dom";
 
-const DetailProviderPage = ({ data }) => {
+const DetailProviderPage = (props) => {
+  const history = useHistory();
+  const [form] = Form.useForm();
+  const validateMessages = {
+    required: "Vui lòng nhập ${label}!",
+  };
+
+  //Set view
+  const [isView, setIsView] = useState(true);
+
+  const handleExit = () => {
+    history.push("/providers");
+  };
+
+  const handleSetView = () => {
+    setIsView(true);
+  };
+
+  const handleSetEdit = () => {
+    setIsView(false);
+  };
+
+  const handleSave = () => {};
+
+  /////////////////
+  const dataDemo = {
+    maNhaCungCap: "NCC1",
+    tenNhaCungCap: "TẠP HÓA CHỊ HUYỀN",
+    nhomNhaCungCap: "MACDINH",
+    email: "huynhhgt@gnmail.com",
+    soDienThoai: "0967654554",
+    trangThai: true,
+    diaChi: "Xóm nam, Khu A, Phường WC, Quận HongKong, TP.Vũng Lầy",
+  };
   //Danh sách nhóm nhà cung cấp
   const listProviders = [
     {
@@ -16,14 +50,6 @@ const DetailProviderPage = ({ data }) => {
     },
   ];
 
-  const [form] = Form.useForm();
-  const validateMessages = {
-    required: "Vui lòng nhập ${label}!",
-  };
-
-  //Cài dữ liệu ban đầu
-  const setInitialData = (data) => {};
-
   //Danh sách nhân viên
   const listStaffs = [
     {
@@ -35,18 +61,6 @@ const DetailProviderPage = ({ data }) => {
       label: "Nguyễn Văn A",
     },
   ];
-
-  //Set view
-  const [isView, setIsView] = useState(true);
-  const handleExit = () => {};
-  const handleSetView = () => {
-    setInitialData(data);
-    setIsView(true);
-  };
-  const handleSetEdit = () => {
-    setIsView(false);
-  };
-  const handleSave = () => {};
 
   return (
     <div className="flex justify-center items-center">
@@ -62,6 +76,7 @@ const DetailProviderPage = ({ data }) => {
               form={form}
               layout="vertical"
               validateMessages={validateMessages}
+              initialValues={{}}
             >
               <Form.Item
                 name="tenNhaCungCap"
@@ -127,6 +142,7 @@ const DetailProviderPage = ({ data }) => {
               form={form}
               layout="vertical"
               validateMessages={validateMessages}
+              initialValues={dataDemo}
             >
               <Form.Item
                 name="diaChi"
