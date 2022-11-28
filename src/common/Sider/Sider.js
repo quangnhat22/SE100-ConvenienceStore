@@ -10,6 +10,7 @@ import {
   DashboardOutlined,
   ShopOutlined,
   LineChartOutlined,
+  CodeSandboxOutlined,
 } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -80,12 +81,12 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "5"
             : location.pathname === "/setting"
             ? "6"
-            : location.pathname === "/productlines"
-            ? "9"
             : location.pathname === "/providers" ||
               location.pathname === "/add_provider" ||
-              location.pathname.indexOf("detail_provider")
+              location.pathname.includes("/detail_provider")
             ? "8"
+            : location.pathname === "/productlines"
+            ? "9"
             : "-1",
         ]}
         defaultOpenKeys={["sub1"]}
@@ -101,36 +102,33 @@ const SiderCustomed = ({ setVisibleButton }) => {
           Trang chủ
         </Menu.Item>
         <Menu.SubMenu
-          title="Quản lý đầu sách"
-          icon={<ShopOutlined />}
+          title="Sản phẩm"
+          icon={<CodeSandboxOutlined />}
           key="sub1"
         >
           <Menu.Item
             key="2"
-            icon={<ShopOutlined />}
             onClick={() => {
               history.push("/products");
             }}
           >
-            Quản lý sản phẩm
-          </Menu.Item>
-          <Menu.Item
-            key="8"
-            icon={<ProfileOutlined />}
-            onClick={() => {
-              history.push("/providers");
-            }}
-          >
-            Đơn vị cung cấp
+            Danh sách sản phẩm
           </Menu.Item>
           <Menu.Item
             key="9"
-            icon={<ProfileOutlined />}
             onClick={() => {
               history.push("/productlines");
             }}
           >
             Dòng sản phẩm
+          </Menu.Item>
+          <Menu.Item
+            key="8"
+            onClick={() => {
+              history.push("/providers");
+            }}
+          >
+            Nhà cung cấp
           </Menu.Item>
         </Menu.SubMenu>
 
