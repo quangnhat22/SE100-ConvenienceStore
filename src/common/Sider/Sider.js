@@ -70,8 +70,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         selectedKeys={[
           location.pathname === "/dash-board"
             ? "1"
-            : location.pathname === "/products" ||
-              location.pathname.indexOf("team-detail") !== -1
+            : location.pathname === "/products"
             ? "2"
             : location.pathname === "/staffs"
             ? "3"
@@ -81,12 +80,15 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "5"
             : location.pathname === "/setting"
             ? "6"
+            : location.pathname === "/productlines"
+            ? "9"
             : location.pathname === "/providers" ||
               location.pathname === "/add_provider" ||
-              location.pathname.indexOf("detail_provider") !== -1
+              location.pathname.indexOf("detail_provider")
             ? "8"
             : "-1",
         ]}
+        defaultOpenKeys={["sub1"]}
       >
         {/* <div className="logo"></div> */}
         <Menu.Item
@@ -98,15 +100,40 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Trang chủ
         </Menu.Item>
-        <Menu.Item
-          key="2"
+        <Menu.SubMenu
+          title="Quản lý đầu sách"
           icon={<ShopOutlined />}
-          onClick={() => {
-            history.push("/products");
-          }}
+          key="sub1"
         >
-          Quản lý sản phẩm
-        </Menu.Item>
+          <Menu.Item
+            key="2"
+            icon={<ShopOutlined />}
+            onClick={() => {
+              history.push("/products");
+            }}
+          >
+            Quản lý sản phẩm
+          </Menu.Item>
+          <Menu.Item
+            key="8"
+            icon={<ProfileOutlined />}
+            onClick={() => {
+              history.push("/providers");
+            }}
+          >
+            Đơn vị cung cấp
+          </Menu.Item>
+          <Menu.Item
+            key="9"
+            icon={<ProfileOutlined />}
+            onClick={() => {
+              history.push("/productlines");
+            }}
+          >
+            Dòng sản phẩm
+          </Menu.Item>
+        </Menu.SubMenu>
+
         <Menu.Item
           key="3"
           icon={<TeamOutlined />}
@@ -125,15 +152,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Quản lý tài chính
         </Menu.Item>
-        <Menu.Item
-          key="8"
-          icon={<ProfileOutlined />}
-          onClick={() => {
-            history.push("/providers");
-          }}
-        >
-          Đơn vị cung cấp
-        </Menu.Item>
+
         <Menu.Item
           key="5"
           icon={<UserOutlined />}

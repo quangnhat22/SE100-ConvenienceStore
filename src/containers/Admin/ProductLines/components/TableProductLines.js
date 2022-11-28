@@ -56,7 +56,8 @@ const TableProductLines = () => {
       title: "Mã dòng sản phẩm",
       dataIndex: "maDongSanPham",
       key: "maDongSanPham",
-      sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
+      sorter: (item1, item2) =>
+        item1.maDongSanPham.localeCompare(item2.maDongSanPham),
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -87,9 +88,7 @@ const TableProductLines = () => {
       key: "ngayKhoiTao",
       showOnResponse: true,
       showOnDesktop: true,
-      render: (text, record, index) => {
-        return <div>{moment(record.ngayKhoiTao).format("DD/MM/YYYY")}</div>;
-      },
+      render: (ngayKhoiTao) => `${moment(ngayKhoiTao).format("DD/MM/YYYY")}`,
     },
   ];
   return (
