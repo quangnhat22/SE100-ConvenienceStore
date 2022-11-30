@@ -1,16 +1,11 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
-import { Button, Space } from "antd";
-import {
-  DownloadOutlined,
-  UploadOutlined,
-  TeamOutlined,
-} from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TableProvider from "./components/TableProvider";
-
-
+import { modalActions } from "../../../redux/reducer/ModalReducer";
+import AddProviderForm from "./components/AddProviderForm";
+import ModalForm from "../../../HOC/ModalForm";
 
 //Data Demo
 const providers = [
@@ -61,7 +56,11 @@ const ProvidersPage = () => {
   const history = useHistory();
 
   const handleAddProvider = () => {
-    history.push("/add_provider");
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: <AddProviderForm />,
+      })
+    );
   };
 
   return (
@@ -104,7 +103,8 @@ const ProvidersPage = () => {
         </div>
       </div>
 
-      <TableProvider listProviders={providers}/>
+      <TableProvider listProviders={providers} />
+      <ModalForm />
     </>
   );
 };

@@ -16,23 +16,10 @@ const ProductLinesForm = () => {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    dispatch ({type: SagaActionTypes.POST_PRODUCTS_SAGA, values});
+    dispatch({ type: SagaActionTypes.POST_PRODUCTS_SAGA, values });
   };
-  //const initialValues = { color: { r: 26, g: 14, b: 85, a: 1 } };
-
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
-      {/* <Form.Item
-        label="Mã dòng sản phẩm"
-        name="maDongSanPham"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input placeholder="Mã dòng sản phẩm" />
-      </Form.Item> */}
       <Form.Item
         label="Tên dòng sản phẩm"
         name="title"
@@ -44,16 +31,13 @@ const ProductLinesForm = () => {
       >
         <Input placeholder="Tên dòng sản phẩm" />
       </Form.Item>
-      {/* <Form.Item label="Mô tả" name="moTa">
-        <TextArea rows={4} placeholder="Mô tả dòng sản phẩm" />
-      </Form.Item> */}
       <Form.Item
         wrapperCol={{
           span: 20,
           offset: 20,
         }}
       >
-        <Button htmlType="submit">Submit</Button>
+        <Button htmlType="submit">Lưu</Button>
       </Form.Item>
     </FormCustomed>
   );
