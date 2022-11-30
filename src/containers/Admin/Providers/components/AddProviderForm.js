@@ -1,21 +1,19 @@
 import React from "react";
 import { Form, Input, Select, Button, InputNumber } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import FormCustomed from "../../../../common/Form/FormCustomed";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const AddProviderForm = ({ data }) => {
+const AddProviderForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [form] = Form.useForm();
   const onFinish = (values) => {
     let newProvider = {
-      maSanPham: moment().valueOf(),
-      tenSanPham: values.product_name,
+      name: values.product_name,
       giaNhap: values.product_buyprice,
       giaBan: values.product_sellprice,
       thue: values.product_tax,
@@ -30,8 +28,6 @@ const AddProviderForm = ({ data }) => {
       dispatch(modalActions.hideModal());
     }, 300);
   };
-
-  const handleSave = () => {};
 
   return (
     <FormCustomed name="add_provider_form" form={form} onFinish={onFinish}>

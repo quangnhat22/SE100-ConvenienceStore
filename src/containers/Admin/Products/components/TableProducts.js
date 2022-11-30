@@ -13,7 +13,6 @@ const TableProducts = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productsSlice);
   const [page, setPage] = React.useState(1);
-  const [isOpen, setIsOpen] = useState(false);
   const columns = [
     {
       title: "STT",
@@ -36,9 +35,7 @@ const TableProducts = () => {
       dataIndex: "maSanPham",
       key: "maSanPham",
       width: "10%",
-      // defaultSortOrder: ["descend"],
       sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
-      //sortOrder: sortedInfo.columnKey === "id" && sortedInfo.order,
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -57,15 +54,6 @@ const TableProducts = () => {
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
-      // render: (value, record) => {
-      //   return (
-      //     <div>
-      //       {record.giaBan.toLocaleString(undefined, {
-      //         maximumFractionDigits: 2,
-      //       })}
-      //     </div>
-      //   );
-      // },
     },
     {
       title: "Giá bán",
@@ -75,15 +63,6 @@ const TableProducts = () => {
       showOnDesktop: true,
       width: "15%",
       ellipsis: true,
-      // render: (value, record) => {
-      //   return (
-      //     <div>
-      //       {record.giaBan.toLocaleString(undefined, {
-      //         maximumFractionDigits: 2,
-      //       })}
-      //     </div>
-      //   );
-      // },
     },
     {
       title: "Số lượng",
@@ -121,7 +100,6 @@ const TableProducts = () => {
         { text: "Sắp hết hàng", value: 1 },
         { text: "Hết hàng", value: 0 },
       ],
-      //filteredValue: filteredInfo.fee_status || null,
       onFilter: (value, record) => {
         if (value === 2) {
           return record.soLuong >= 10;
@@ -204,7 +182,6 @@ const TableProducts = () => {
         }}
         rowKey={"maSanPham"}
       />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
     </>
   );
 };

@@ -1,22 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 import { PlusOutlined } from "@ant-design/icons";
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-  Checkbox,
-  Upload,
-} from "antd";
+import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 const { RangePicker } = DatePicker;

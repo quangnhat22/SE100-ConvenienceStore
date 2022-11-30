@@ -3,10 +3,10 @@ import { Form, Input, Select, Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
-import { productActions } from "../../../../redux/reducer/ProductReducer";
+import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 
-const DetailProviderForm = (props) => {
+const DetailProviderForm = ({ provider }) => {
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -32,7 +32,7 @@ const DetailProviderForm = (props) => {
   };
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    let newProduct = {
+    let newProvider = {
       maSanPham: values.product_id,
       tenSanPham: values.product_name,
       giaNhap: values.product_buyprice,
@@ -43,8 +43,13 @@ const DetailProviderForm = (props) => {
       soLuong: values.product_quantity,
       moTa: values.product_description,
     };
-    console.log(newProduct);
-    dispatch(productActions.editProduct(newProduct));
+    // dispatch({
+    //   type: SagaActionTypes.POST_USER_SAGA,
+    //   values: newStaff,
+    // });
+    // dispatch(staffActions.editStaffs(newStaff));
+    console.log(newProvider);
+    dispatch(providerActions.editProvider(newProvider));
     //auto close modal
     setTimeout(() => {
       dispatch(modalActions.hideModal());
@@ -55,6 +60,7 @@ const DetailProviderForm = (props) => {
     <FormCustomed
       name="edit_provider_form"
       form={form}
+      onFinish={onFinish}
       initialValues={
         {
           // product_id: product.maSanPham,

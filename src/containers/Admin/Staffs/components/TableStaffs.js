@@ -1,7 +1,6 @@
-import { Table, Popconfirm, Space } from "antd";
+import { Popconfirm, Space } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import React, { useState } from "react";
-import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
@@ -12,7 +11,6 @@ const TableStaffs = () => {
   const dispatch = useDispatch();
   const { staffs } = useSelector((state) => state.staffsSlice);
   const [page, setPage] = React.useState(1);
-  const [isOpen, setIsOpen] = useState(false);
 
   const columns = [
     {

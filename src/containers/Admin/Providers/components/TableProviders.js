@@ -1,19 +1,17 @@
-
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import { Tag, Space, Popconfirm } from "antd";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Space, Popconfirm } from "antd";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
-import { useHistory } from "react-router-dom";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProviderForm from "./DetailProviderForm";
 
-const TableProvider = (props) => {
+const TableProviders = (props) => {
   const dispatch = useDispatch();
-  // const { products } = useSelector((state) => state.productSlice);
-  const history = useHistory();
+  const { providers } = useSelector((state) => state.providerSlice);
   const [page, setPage] = React.useState(1);
+
   const columns = [
     {
       title: "STT",
@@ -23,30 +21,18 @@ const TableProvider = (props) => {
     },
     {
       title: "Mã nhà cung cấp",
-      dataIndex: "maNhaCungCap",
-      key: "maNhaCungCap",
-      sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
+      dataIndex: "id",
+      key: "id",
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
       title: "Tên nhà cung cấp",
-      dataIndex: "tenNhaCungCap",
-      key: "tenNhaCungCap",
+      dataIndex: "name",
+      key: "name",
+      sorter: (item1, item2) => item1.name.localeCompare(item2.name),
       showOnResponse: true,
       showOnDesktop: true,
-    },
-    {
-      title: "Nhóm nhà cung cấp",
-      dataIndex: "nhomNhaCungCap",
-      key: "nhomNhaCungCap",
-      showOnResponse: true,
-      showOnDesktop: true,
-      render: (value, record) => {
-        if (record.nhomNhaCungCap === "MACDINH") {
-          return <div>Khác</div>;
-        }
-      },
     },
     {
       title: "Email",
@@ -54,50 +40,17 @@ const TableProvider = (props) => {
       key: "email",
       showOnResponse: true,
       showOnDesktop: true,
-      ellipsis: true,
     },
     {
-      title: "Số điện thoại",
-      dataIndex: "soDienThoai",
-      key: "soDienThoai",
+      title: "Địa chỉ",
+      dataIndex: "address",
+      key: "address",
       showOnResponse: true,
       showOnDesktop: true,
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "trangThai",
-      key: "trangThai",
-      showOnResponse: true,
-      showOnDesktop: true,
-      ellipsis: true,
-      render: (text, record, index) => {
-        let colorTag = text === false ? "red" : "green";
-        let contentTag = text === true ? "Đang giao dịch" : "Ngưng cung cấp";
-        return (
-          <Tag
-            key={index}
-            color={colorTag}
-            className="w-2/4 min-w-max text-center"
-          >
-            {contentTag}
-          </Tag>
-        );
-      },
-      filters: [
-        { text: "Đang giao dịch", value: true },
-        { text: "Ngưng cung cấp", value: false },
-      ],
-      onFilter: (value, record) => {
-        if (value === true) {
-          return record.trangThai === true;
-        } else {
-          return record.trangThai === false;
-        }
-      },
     },
     {
       title: "Thao tác",
-      key: "thaoTac",
+      key: "action",
       ellipsis: true,
       showOnResponse: true,
       showOnDesktop: true,
@@ -126,7 +79,7 @@ const TableProvider = (props) => {
               className:
                 "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
             }}
-            onConfirm={() => handleRemoveProviders(record)}
+            onConfirm={() => handleRemoveProvider(record)}
           >
             <button
               type="button"
@@ -149,15 +102,15 @@ const TableProvider = (props) => {
       })
     );
   };
-  const handleRemoveProviders = (provider) => {
-    dispatch(providerActions.removeProduct(provider));
+  const handleRemoveProvider = (provider) => {
+    dispatch(providerActions.removeProvider(provider));
   };
 
   return (
     <>
       <TableTemplate
         columns={columns}
-        dataSource={props.listProviders}
+        dataSource={providers}
         pagination={{
           onChange(current) {
             setPage(current);
@@ -166,11 +119,10 @@ const TableProvider = (props) => {
           showSizeChanger: false,
           pageSizeOptions: ["6"],
         }}
-        rowKey={"maNhaCungCap"}
+        rowKey={"id"}
       />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
     </>
   );
 };
 
-export default TableProvider;
+export default TableProviders;
