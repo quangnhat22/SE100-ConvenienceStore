@@ -21,7 +21,7 @@ import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-;const { Option } = Select;
+const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 const AddStaffForm = () => {
@@ -29,19 +29,22 @@ const AddStaffForm = () => {
   const dispatch = useDispatch();
   const onFinish = (values) => {
     let newStaff = {
-      hoTen: values.staff_name,
-      ngaySinh: values.staff_birth.format(dateFormat),
-      CCCD: values.staff_cccd,
-      gioiTinh: values.staff_gender,
-      soDienThoai: values.staff_phone_number,
+      fullname: values.staff_name,
+      birthday: values.staff_birth.toISOString(),
+      identityNumber: values.staff_cccd,
+      gender: values.staff_gender,
+      phoneNumber: values.staff_phone_number,
       email: values.staff_email,
-      diaChi: values.staff_address,
-      khac: values.staff_other_information,
+      address: values.staff_address,
+      other: values.staff_other_information,
+      password: "12345678",
+      avatar: "http://example.com/a.jpg",
+      role: "MANAGER",
     };
     console.log(newStaff);
     dispatch({
       type: SagaActionTypes.POST_USER_SAGA,
-      value: newStaff,
+      values: newStaff,
     });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
@@ -104,9 +107,9 @@ const AddStaffForm = () => {
             width: "40%",
           }}
         >
-          <Option value="male">Nam</Option>
-          <Option value="female">Nữ</Option>
-          <Option value="other">Khác</Option>
+          <Option value="MALE">Nam</Option>
+          <Option value="FEMALE">Nữ</Option>
+          <Option value="OTHER">Khác</Option>
         </Select>
       </Form.Item>
       <Form.Item

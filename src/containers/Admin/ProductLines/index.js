@@ -12,7 +12,7 @@ const ProductLinesPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { products } = useSelector(state => state.productsSlice)
+  const { products } = useSelector((state) => state.productsSlice);
   console.log(products);
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import ProvidersPage from "../containers/Admin/Providers";
 import DetailProviderPage from "../containers/Admin/Providers/components/DetailProviderPage";
 import AddProviderPage from "../containers/Admin/Providers/components/AddProviderPage";
 import ProductLinesPage from "../containers/Admin/ProductLines";
+import DeliveryNotes from "../containers/Admin/DeliveryNotes";
 
 const routesAdmin = [
   {
@@ -59,6 +60,11 @@ const routesAdmin = [
     exact: false,
     path: "/productlines",
     component: ProductLinesPage,
+  },
+  {
+    exact: false,
+    path: "/delivery_notes",
+    component: DeliveryNotes,
   },
 ];
 

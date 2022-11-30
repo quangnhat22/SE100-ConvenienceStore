@@ -19,6 +19,8 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
@@ -39,18 +41,23 @@ const StaffInforDetail = ({ staff }) => {
 
   const onFinish = (values) => {
     let newStaff = {
-      maNhanVien: values.staff_id,
-      hoTen: values.staff_name,
-      ngaySinh: values.staff_birth.format(dateFormat),
-      CCCD: values.staff_cccd,
-      gioiTinh: values.staff_gender,
-      soDienThoai: values.staff_phone_number,
+      fullname: values.staff_name,
+      birthday: values.staff_birth.toISOString(),
+      identityNumber: values.staff_cccd,
+      gender: values.staff_gender,
+      phoneNumber: values.staff_phone_number,
       email: values.staff_email,
-      diaChi: values.staff_address,
-      khac: values.staff_other_information,
+      address: values.staff_address,
+      other: values.staff_other_information,
+      avatar: staff.avatar,
+      role: staff.role,
     };
     console.log(newStaff);
-    dispatch(staffActions.editStaffs(newStaff));
+    // dispatch({
+    //   type: SagaActionTypes.POST_USER_SAGA,
+    //   values: newStaff,
+    // });
+    // dispatch(staffActions.editStaffs(newStaff));
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);
@@ -83,15 +90,15 @@ const StaffInforDetail = ({ staff }) => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        staff_id: staff.maNhanVien,
-        staff_name: staff.hoTen,
-        staff_birth: moment(staff.ngaySinh, dateFormat),
-        staff_cccd: staff.CCCD,
-        staff_gender: staff.gioiTinh,
-        staff_phone_number: staff.soDienThoai,
+        staff_id: staff.id,
+        staff_name: staff.fullname,
+        staff_birth: moment(staff.birthday),
+        staff_cccd: staff.identityNumber,
+        staff_gender: staff.gender,
+        staff_phone_number: staff.phoneNumber,
         staff_email: staff.email,
-        staff_address: staff.diaChi,
-        staff_other_information: staff.khac,
+        staff_address: staff.address,
+        staff_other_information: staff.other,
       }}
     >
       <Form.Item name="staff_id" label="Mã nhân viên">
@@ -159,9 +166,9 @@ const StaffInforDetail = ({ staff }) => {
           }}
           disabled={componentDisabled}
         >
-          <Option value="male">Nam</Option>
-          <Option value="female">Nữ</Option>
-          <Option value="other">Khác</Option>
+          <Option value="MALE">Nam</Option>
+          <Option value="FEMALE">Nữ</Option>
+          <Option value="OTHER">Khác</Option>
         </Select>
       </Form.Item>
       <Form.Item

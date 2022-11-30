@@ -87,6 +87,8 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "8"
             : location.pathname === "/productlines"
             ? "9"
+            : location.pathname === "/delivery_notes"
+            ? "10"
             : "-1",
         ]}
         defaultOpenKeys={["sub1"]}
@@ -129,6 +131,14 @@ const SiderCustomed = ({ setVisibleButton }) => {
             }}
           >
             Nhà cung cấp
+          </Menu.Item>
+          <Menu.Item
+            key="10"
+            onClick={() => {
+              history.push("/delivery_notes");
+            }}
+          >
+            Phiếu nhập kho
           </Menu.Item>
         </Menu.SubMenu>
 
