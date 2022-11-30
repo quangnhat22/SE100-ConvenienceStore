@@ -5,8 +5,6 @@ import ProfilePage from "../containers/Admin/Profile";
 import SettingPage from "../containers/Admin/Setting";
 import StaffsPage from "../containers/Admin/Staffs";
 import ProvidersPage from "../containers/Admin/Providers";
-import DetailProviderPage from "../containers/Admin/Providers/components/DetailProviderPage";
-import AddProviderPage from "../containers/Admin/Providers/components/AddProviderPage";
 import ProductLinesPage from "../containers/Admin/ProductLines";
 import DeliveryNotes from "../containers/Admin/DeliveryNotes";
 
@@ -45,16 +43,6 @@ const routesAdmin = [
     exact: false,
     path: "/providers",
     component: ProvidersPage,
-  },
-  {
-    exact: false,
-    path: "/detail_provider/:id",
-    component: DetailProviderPage,
-  },
-  {
-    exact: false,
-    path: "/add_provider",
-    component: AddProviderPage,
   },
   {
     exact: false,
