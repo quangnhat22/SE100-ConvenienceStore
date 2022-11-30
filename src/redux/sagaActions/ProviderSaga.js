@@ -11,7 +11,7 @@ function* actGetListProvider() {
     let { status, data } = res;
     if (status === 200) {
       yield put(
-        deliveryNotesActions.getDeliveryNotesSuccess({ providers: data })
+        providerActions.getListProviderSuccess({ providers: data })
       );
     } else {
       //yield put(authActions.requestLogFailed());
