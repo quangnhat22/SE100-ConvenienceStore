@@ -40,8 +40,9 @@ function* actPostProvider(action) {
 function* actPutProvider(action) {
   try {
     let { id, provider } = action;
+    
+    console.log(action);
     yield put(providerActions.getListProviderLoading());
-
     let res = yield call(() => ProviderService.putProviders(id, provider));
     if (res.status === 200) {
       yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });

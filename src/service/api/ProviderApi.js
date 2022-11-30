@@ -21,7 +21,7 @@ export const ProviderService = {
   },
   putProviders: (id, provider) => {
     let { name, email, address } = provider;
-    return Axios.put(UrlApi.URL_PROVIDERS(id), {
+    return Axios.put(UrlApi.URL_PROVIDERS_ID(id), {
       name: name,
       email: email,
       address: address,

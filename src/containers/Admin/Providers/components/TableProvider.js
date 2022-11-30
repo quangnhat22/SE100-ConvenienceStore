@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProviderForm from "./DetailProviderForm";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { type } from "@testing-library/user-event/dist/type";
 
 const TableProvider = (props) => {
   const dispatch = useDispatch();
@@ -127,17 +129,17 @@ const TableProvider = (props) => {
     },
   ];
 
-  const handleEditProvider = (provider) => {
+  const handleEditProvider = (record) => {
     dispatch(
       modalActions.showModal({
         ComponentContent: (
-          <DetailProviderForm provider={provider}></DetailProviderForm>
+          <DetailProviderForm provider={record}></DetailProviderForm>
         ),
       })
     );
   };
   const handleRemoveProviders = (provider) => {
-    dispatch(providerActions.removeProduct(provider));
+    dispatch({ type: SagaActionTypes.DELETE_PROVIDER, id: provider.id });
   };
 
   return (

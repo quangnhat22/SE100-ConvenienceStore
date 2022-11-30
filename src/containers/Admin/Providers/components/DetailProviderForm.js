@@ -5,8 +5,9 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const DetailProviderForm = (props) => {
+const DetailProviderForm = ({ provider }) => {
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -32,20 +33,18 @@ const DetailProviderForm = (props) => {
   };
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    let newProduct = {
-      maSanPham: values.product_id,
-      tenSanPham: values.product_name,
-      giaNhap: values.product_buyprice,
-      giaBan: values.product_sellprice,
-      thue: values.product_tax,
-      // ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
-      // thoiHan: values.product_expiry_date[1].format(dateFormat),
-      soLuong: values.product_quantity,
-      moTa: values.product_description,
+    let newProvider = {
+      name: values.tenNhaCungCap,
+      email: values.email,
+      address: values.diaChi,
     };
-    console.log(newProduct);
-    dispatch(productActions.editProduct(newProduct));
-    //auto close modal
+    console.log(newProvider);
+    // dispatch(providerActions.addNewProduct(newProvider));
+    dispatch({
+      type: SagaActionTypes.PUT_PROVIDER,
+      id: provider.id,
+      provider: newProvider,
+    });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);
@@ -55,21 +54,12 @@ const DetailProviderForm = (props) => {
     <FormCustomed
       name="edit_provider_form"
       form={form}
-      initialValues={
-        {
-          // product_id: product.maSanPham,
-          // product_name: product.tenSanPham,
-          // product_buyprice: product.giaNhap,
-          // product_sellprice: product.giaBan,
-          // product_tax: product.thue,
-          // product_expiry_date: [
-          //   moment(product.ngaySanXuat, dateFormat),
-          //   moment(product.thoiHan, dateFormat),
-          // ],
-          // product_quantity: product.soLuong,
-          // product_description: product.moTa,
-        }
-      }
+      onFinish={onFinish}
+      initialValues={{
+        tenNhaCungCap: provider.name,
+        email: provider.email,
+        diaChi: provider.address,
+      }}
     >
       <Form.Item
         name="tenNhaCungCap"
@@ -86,7 +76,7 @@ const DetailProviderForm = (props) => {
           disabled={componentDisabled}
         />
       </Form.Item>
-      <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
+      {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
         <Select
           className="rounded"
           placeholder="Nhóm nhà cung cấp"
@@ -105,7 +95,7 @@ const DetailProviderForm = (props) => {
         ]}
       >
         <Input placeholder="Số điện thoại" disabled={componentDisabled} />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         name="email"
         label="Email"
@@ -137,7 +127,7 @@ const DetailProviderForm = (props) => {
           disabled={componentDisabled}
         />
       </Form.Item>
-      <Form.Item name="nhanVien" label="Nhân viên phụ trách">
+      {/* <Form.Item name="nhanVien" label="Nhân viên phụ trách">
         <Select className="rounded" placeholder="Chọn nhân viên" />
       </Form.Item>
       <Form.Item name="moTa" label="Mô tả">
@@ -147,7 +137,7 @@ const DetailProviderForm = (props) => {
           placeholder="Mô tả"
           disabled={componentDisabled}
         />
-      </Form.Item>
+      </Form.Item> */}
 
       {enableModify === false ? (
         <Form.Item
