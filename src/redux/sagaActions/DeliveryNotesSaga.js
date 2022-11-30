@@ -21,14 +21,14 @@ function* actGetDeliveryNotes() {
   }
 }
 
-function* actPostDeliveryNotes(newDeliveryNotes) {
+function* actPostDeliveryNotes(action) {
   try {
-    let { values } = newDeliveryNotes;
+    let { newDeliveryNote } = action;
     yield put(deliveryNotesActions.getDeliveryNotesLoading());
 
-    let res = yield call(() => DeliveryNotesService.postDeliveryNotes(values));
+    let res = yield call(() => DeliveryNotesService.postDeliveryNotes(newDeliveryNote));
     if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES });
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -37,14 +37,14 @@ function* actPostDeliveryNotes(newDeliveryNotes) {
   }
 }
 
-function* actPutDeliveryNotes(newDeliveryNotes) {
+function* actDeleteDeliveryNotes(action) {
   try {
-    let { values } = newDeliveryNotes;
+    let { id } = action;
     yield put(deliveryNotesActions.getDeliveryNotesLoading());
 
-    let res = yield call(() => DeliveryNotesService.postDeliveryNotes(values));
-    if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    let res = yield call(() => DeliveryNotesService.deleteDeliveryNotesById(id));
+    if (res.status === 200) {
+      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES });
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -53,26 +53,14 @@ function* actPutDeliveryNotes(newDeliveryNotes) {
   }
 }
 
-function* actDeleteDeliveryNotes(newDeliveryNotes) {
-  try {
-    let { values } = newDeliveryNotes;
-    yield put(deliveryNotesActions.getDeliveryNotesLoading());
-
-    let res = yield call(() => DeliveryNotesService.postDeliveryNotes(values));
-    if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
-    } else {
-      //yield put(authActions.requestLogFailed());
-    }
-  } catch (err) {
-    //yield put(authActions.requestLogFailed());
-  }
+export function* followActGetDeliveryNotes() {
+  yield takeLatest(SagaActionTypes.GET_LIST_DELIVERY_NOTES, actGetDeliveryNotes);
 }
 
-export function* followActGetListStaffs() {
-  yield takeLatest(SagaActionTypes.GET_LIST_USER_SAGA, actGetListStaffs);
+export function* followActPostDeliveryNotes() {
+  yield takeLatest(SagaActionTypes.POST_DELIVERY_NOTES, actPostDeliveryNotes);
 }
 
-export function* followActPostStaff() {
-  yield takeLatest(SagaActionTypes.POST_USER_SAGA, actPostStaffs);
+export function* followActDeleteDeliveryNotes() {
+  yield takeLatest(SagaActionTypes.DELETE_DELIVERY_NOTES, actDeleteDeliveryNotes);
 }

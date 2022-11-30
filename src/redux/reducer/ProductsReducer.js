@@ -118,10 +118,8 @@ const productsSlice = createSlice({
       state.loading = true;
     },
     getListProductsSuccess: (state, action) => {
-      console.log("action: ",action);
       state.products = action.payload.products;
       state.loading = false;
-      //state.products = action.payload.products;
     },
   },
 });

@@ -8,6 +8,7 @@ import staffsSlice from "./reducer/StaffReducer";
 import regulationSlice from "./reducer/RegulationSlice";
 import productsSlice from "./reducer/ProductsReducer";
 import deliveryNotesSlice from "./reducer/DeliveryNotesReducer";
+import providerSlice from "./reducer/ProviderReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -18,7 +19,8 @@ const rootReducer = {
     staffsSlice,
     regulationSlice,
     productsSlice,
-    deliveryNotesSlice
+    deliveryNotesSlice,
+    providerSlice,
 }
 
 export const store =  configureStore({
