@@ -1,12 +1,16 @@
 
-import { EditFilled } from "@ant-design/icons";
-import { Tag, Space } from "antd";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { Tag, Space, Popconfirm } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useHistory } from "react-router-dom";
+import { providerActions } from "../../../../redux/reducer/ProviderReducer";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import DetailProviderForm from "./DetailProviderForm";
 
 const TableProvider = (props) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { products } = useSelector((state) => state.productSlice);
   const history = useHistory();
   const [page, setPage] = React.useState(1);
@@ -108,13 +112,45 @@ const TableProvider = (props) => {
           >
             <EditFilled />
           </button>
+          <Popconfirm
+            placement="top"
+            title="Bạn có chắc muốn xóa sản phẩm này?"
+            okText="Xác nhận"
+            cancelText="Hủy"
+            okType="default"
+            okButtonProps={{
+              className:
+                "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
+            }}
+            cancelButtonProps={{
+              className:
+                "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
+            }}
+            onConfirm={() => handleRemoveProviders(record)}
+          >
+            <button
+              type="button"
+              className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
+            >
+              <DeleteFilled />
+            </button>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
-  const handleEditProvider = (record) => {
-    history.push("/detail_provider/" + record.maNhaCungCap);
+  const handleEditProvider = (provider) => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: (
+          <DetailProviderForm provider={provider}></DetailProviderForm>
+        ),
+      })
+    );
+  };
+  const handleRemoveProviders = (provider) => {
+    dispatch(providerActions.removeProduct(provider));
   };
 
   return (

@@ -22,6 +22,7 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
+
 const AddProductForm = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
