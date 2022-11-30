@@ -6,5 +6,6 @@ export default function * rootSaga() {
     yield all ([
         AuthenticationSaga.followActLoginWithEmailAndPassword(),
         ProductsSaga.followActGetListProducts(),
+        ProductsSaga.followActPostProducts()
     ]);
 }

@@ -12,7 +12,7 @@ export const URL_USERS_ID = (id) => `${DOMAIN_NAME}/users/${id}`;
 export const URL_PROVIDERS = `${DOMAIN_NAME}/providers`;
 export const URL_PROVIDERS_ID = (id) => `${DOMAIN_NAME}/providers/${id}`;
 
-// PRODUCT - Danh mục sản phẩm
+// PRODUCTS - Dòng sản phẩm
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 export const URL_PRODUCT_ID = (id) => `${DOMAIN_NAME}/products/${id}`;
 

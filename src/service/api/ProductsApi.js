@@ -1,8 +1,8 @@
 import Axios from "axios";
 import * as UrlApi from "../url";
 
-export const ProductService = {
-  postProduct: (title, tax) => {
+export const ProductsService = {
+  postProducts: (products) => {
     // return axios({
     //   url: UrlApi.URL_PRODUCTS,
     //   method: "POST",
@@ -12,20 +12,20 @@ export const ProductService = {
     //   },
     // });
     return Axios.post(UrlApi.URL_PRODUCTS, {
-      title: title,
-      tax: tax,
+      title: products.title,
+      tax: 10,
     });
   },
-  getProduct: () => {
+  getProducts: () => {
     return Axios.get(UrlApi.URL_PRODUCTS);
   },
-  getProductById: (id) => {
+  getProductsById: (id) => {
     return Axios.get(UrlApi.URL_PRODUCT_ID(id));
   },
-  deleteProductById: (id) => {
+  deleteProductsById: (id) => {
     return Axios.delete(UrlApi.URL_PRODUCT_ID(id));
   },
-  putProductById: (id, title, tax) => {
+  putProductsById: (id, title, tax) => {
     return Axios.put(UrlApi.URL_PRODUCT_ID(id), {
       title: title,
       tax: tax,
