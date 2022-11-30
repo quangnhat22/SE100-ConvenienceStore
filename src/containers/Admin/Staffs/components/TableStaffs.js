@@ -8,7 +8,7 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import StaffInforDetail from "./StaffInforDetail";
 
-const TableStaffs = () => {
+const TableStaffs = ({ keyWord }) => {
   const dispatch = useDispatch();
   const { staffs } = useSelector((state) => state.staffsSlice);
   const [page, setPage] = React.useState(1);
@@ -28,9 +28,16 @@ const TableStaffs = () => {
       key: "id",
       width: "10%",
       //defaultSortOrder: ["descend"],
-      sorter: (item1, item2) =>
-        item1.maNhanVien.localeCompare(item2.maNhanVien),
+      // sorter: (item1, item2) => item1.id.localeCompare(item2.id),
+      sorter: (a, b) => a.id - b.id,
       //sortOrder: sortedInfo.columnKey === "id" && sortedInfo.order,
+      filteredValue: [keyWord],
+      onFilter: (value, record) => {
+        return (
+          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.fullname).toLowerCase().includes(value.toLowerCase())
+        );
+      },
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -41,7 +48,7 @@ const TableStaffs = () => {
       width: "15%",
       showOnResponse: true,
       showOnDesktop: true,
-      sorter: (item1, item2) => item1.hoTen.localeCompare(item2.hoTen),
+      sorter: (item1, item2) => item1.fullname.localeCompare(item2.fullname),
     },
     {
       title: "Số điện thoại",

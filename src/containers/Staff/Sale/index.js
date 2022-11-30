@@ -29,8 +29,8 @@ const SalePage = () => {
         </Header>
 
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
-        <Content className="flex justify-center items-center h-full">
-          <div className="text-5xl w-full h-screen flex justify-center items-center bg-gray-100">
+        <Content className="flex justify-center items-center h-full w-full bg-slate-800">
+          <div className="text-5xl w-full h-screen flex justify-center items-center">
             Đây là content bán hàng
           </div>
         </Content>

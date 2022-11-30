@@ -1,5 +1,6 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
+import { useState } from "react";
 import TableStaffs from "./components/TableStaffs";
 import ModalForm from "../../../HOC/ModalForm";
 import { useDispatch } from "react-redux";
@@ -10,10 +11,10 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const StaffsPage = () => {
   const dispatch = useDispatch();
-
+  const [keyWord, setKeyWord] = useState("");
   useEffect(() => {
-    dispatch({type: SagaActionTypes.GET_LIST_USER_SAGA})
-  } , []);
+    dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+  }, []);
 
   const handleAddStaff = () => {
     dispatch(
@@ -35,7 +36,9 @@ const StaffsPage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            // onSearch={onSearch}
+            onSearch={(value) => {
+              setKeyWord(value);
+            }}
           />
           {/* button search */}
           <button
@@ -62,7 +65,7 @@ const StaffsPage = () => {
           </button>
         </div>
       </div>
-      <TableStaffs />
+      <TableStaffs keyWord={keyWord} />
       <ModalForm />
     </>
   );
