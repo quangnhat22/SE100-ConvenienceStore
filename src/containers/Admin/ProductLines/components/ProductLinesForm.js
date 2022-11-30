@@ -16,7 +16,14 @@ const ProductLinesForm = () => {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    dispatch({ type: SagaActionTypes.POST_PRODUCTS_SAGA, values });
+    let newProductLine = {
+      title: values.title,
+      tax: values.tax,
+    };
+    dispatch({
+      type: SagaActionTypes.POST_PRODUCTS_SAGA,
+      values: newProductLine,
+    });
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
@@ -30,6 +37,26 @@ const ProductLinesForm = () => {
         ]}
       >
         <Input placeholder="Tên dòng sản phẩm" />
+      </Form.Item>
+      <Form.Item
+        name="tax"
+        label="Thuế"
+        rules={[
+          {
+            required: true,
+            type: "number",
+            min: 0,
+            max: 100,
+          },
+        ]}
+      >
+        <InputNumber
+          addonAfter={"%"}
+          style={{
+            width: "30%",
+          }}
+          placeholder="Thuế"
+        />
       </Form.Item>
       <Form.Item
         wrapperCol={{

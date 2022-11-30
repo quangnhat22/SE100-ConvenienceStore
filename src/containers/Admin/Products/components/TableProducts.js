@@ -11,7 +11,7 @@ import ProductInforDetail from "./ProductInforDetail";
 
 const TableProducts = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.productsSlice);
+  // const { products } = useSelector((state) => state.productsSlice);
   const [page, setPage] = React.useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const columns = [
@@ -193,7 +193,7 @@ const TableProducts = () => {
     <>
       <TableTemplate
         columns={columns}
-        dataSource={products}
+        // dataSource={products}
         pagination={{
           onChange(current) {
             setPage(current);
