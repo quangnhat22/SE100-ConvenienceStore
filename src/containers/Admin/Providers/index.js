@@ -102,35 +102,6 @@ const ProvidersPage = () => {
             Thêm nhà cung cấp
           </button>
         </div>
-        <Space className="mt-3">
-          <Button
-            className="border-none shadow-none bg-transparent text-gray-500 hover:bg-transparent hover:text-gray-700"
-            type="text"
-            icon={<DownloadOutlined className="text-gray-900" />}
-            size="small"
-            //onClick={handleImportFile}
-          >
-            Nhập file
-          </Button>
-          <Button
-            className="border-none shadow-none bg-transparent text-gray-500 hover:bg-transparent hover:text-gray-700"
-            type="text"
-            icon={<UploadOutlined className="text-gray-900" />}
-            size="small"
-            //onClick={handleExportFile}
-          >
-            Xuất file
-          </Button>
-          <Button
-            className="border-none shadow-none bg-transparent text-gray-500 hover:bg-transparent hover:text-gray-700"
-            type="text"
-            icon={<TeamOutlined className="text-gray-900" />}
-            size="small"
-            //onClick={handleGroupProvider}
-          >
-            Nhóm nhà cung cấp
-          </Button>
-        </Space>
       </div>
 
       <TableProvider listProviders={providers}/>
