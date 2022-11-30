@@ -24,8 +24,8 @@ const TableStaffs = () => {
     },
     {
       title: "Mã nhân viên",
-      dataIndex: "maNhanVien",
-      key: "maNhanVien",
+      dataIndex: "id",
+      key: "id",
       width: "10%",
       //defaultSortOrder: ["descend"],
       sorter: (item1, item2) =>
@@ -36,8 +36,8 @@ const TableStaffs = () => {
     },
     {
       title: "Họ và tên",
-      dataIndex: "hoTen",
-      key: "hoTen",
+      dataIndex: "fullname",
+      key: "fullname",
       width: "15%",
       showOnResponse: true,
       showOnDesktop: true,
@@ -45,8 +45,8 @@ const TableStaffs = () => {
     },
     {
       title: "Số điện thoại",
-      dataIndex: "soDienThoai",
-      key: "soDienThoai",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,

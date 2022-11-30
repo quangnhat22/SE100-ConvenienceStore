@@ -5,19 +5,20 @@ export const UserService = {
   getUsers: () => {
     return Axios.get(UrlApi.URL_USERS);
   },
-  postUsers: (
-    email,
-    password,
-    fullname,
-    birthday,
-    identityNumber,
-    gender,
-    phoneNumber,
-    address,
-    other,
-    avatar,
-    role
-  ) => {
+  postUsers: (newUser) => {
+    let {
+      email,
+      password,
+      fullname,
+      birthday,
+      identityNumber,
+      gender,
+      phoneNumber,
+      address,
+      other,
+      avatar,
+      role,
+    } = newUser;
     return Axios.post(UrlApi.URL_USERS, {
       email: email,
       password: password,
@@ -33,18 +34,22 @@ export const UserService = {
     });
   },
   putUsersById: (
-    email,
-    password,
-    fullname,
-    birthday,
-    identityNumber,
-    gender,
-    phoneNumber,
-    address,
-    other,
-    avatar,
-    role
+    id,
+    user,
   ) => {
+    let {
+      email,
+      password,
+      fullname,
+      birthday,
+      identityNumber,
+      gender,
+      phoneNumber,
+      address,
+      other,
+      avatar,
+      role,
+    } = user;
     return Axios.delete(UrlApi.URL_USERS_ID(id), {
       email: email,
       password: password,

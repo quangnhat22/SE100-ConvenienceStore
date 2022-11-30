@@ -8,8 +8,6 @@ import {
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import AddProductForm from "../Products/components/AddProductForm";
-import { modalActions } from "../../../redux/reducer/ModalReducer";
 import TableProvider from "./components/TableProvider";
 
 

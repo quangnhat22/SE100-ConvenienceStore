@@ -1,59 +1,64 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  loading: false,
   staffs: [
-    {
-      maNhanVien: "1",
-      hoTen: "Bui Minh Tuan",
-      ngaySinh: "01/01/2002",
-      CCCD: "123456789",
-      gioiTinh: "male",
-      soDienThoai: "0123456789",
-      email: "123@gmail.com",
-      diaChi: "Thu Duc",
-      khac: "",
-    },
-    {
-      maNhanVien: "2",
-      hoTen: "Bui Minh Tuan 1",
-      ngaySinh: "01/01/2002",
-      CCCD: "123456789",
-      gioiTinh: "male",
-      soDienThoai: "0123456789",
-      email: "123@gmail.com",
-      diaChi: "Thu Duc",
-      khac: "",
-    },
-    {
-      maNhanVien: "3",
-      hoTen: "Bui Minh Tuan 2",
-      ngaySinh: "01/01/2002",
-      CCCD: "123456789",
-      gioiTinh: "male",
-      soDienThoai: "0123456789",
-      email: "123@gmail.com",
-      diaChi: "Thu Duc",
-      khac: "",
-    },
-    {
-      maNhanVien: "4",
-      hoTen: "Tran Dinh Loc",
-      ngaySinh: "01/01/2002",
-      CCCD: "123456789",
-      gioiTinh: "male",
-      soDienThoai: "0123456789",
-      email: "123@gmail.com",
-      diaChi: "Thu Duc",
-      khac: "",
-    },
+    // {
+    //   maNhanVien: "1",
+    //   hoTen: "Bui Minh Tuan",
+    //   ngaySinh: "01/01/2002",
+    //   CCCD: "123456789",
+    //   gioiTinh: "male",
+    //   soDienThoai: "0123456789",
+    //   email: "123@gmail.com",
+    //   diaChi: "Thu Duc",
+    //   khac: "",
+    // },
+    // {
+    //   maNhanVien: "2",
+    //   hoTen: "Bui Minh Tuan 1",
+    //   ngaySinh: "01/01/2002",
+    //   CCCD: "123456789",
+    //   gioiTinh: "male",
+    //   soDienThoai: "0123456789",
+    //   email: "123@gmail.com",
+    //   diaChi: "Thu Duc",
+    //   khac: "",
+    // },
+    // {
+    //   maNhanVien: "3",
+    //   hoTen: "Bui Minh Tuan 2",
+    //   ngaySinh: "01/01/2002",
+    //   CCCD: "123456789",
+    //   gioiTinh: "male",
+    //   soDienThoai: "0123456789",
+    //   email: "123@gmail.com",
+    //   diaChi: "Thu Duc",
+    //   khac: "",
+    // },
+    // {
+    //   maNhanVien: "4",
+    //   hoTen: "Tran Dinh Loc",
+    //   ngaySinh: "01/01/2002",
+    //   CCCD: "123456789",
+    //   gioiTinh: "male",
+    //   soDienThoai: "0123456789",
+    //   email: "123@gmail.com",
+    //   diaChi: "Thu Duc",
+    //   khac: "",
+    // },
   ],
 };
 
-const staffsSlice = createSlice({
+const staffSlice = createSlice({
   name: "staffs",
   initialState,
   reducers: {
+    getListStaffsInLoading: (state, action) => {
+      state.loading = true;
+    },
     getListStaffsSuccess: (state, action) => {
+      state.loading = false;
       state.staffs = action.payload.staffs;
     },
     addNewStaffs: (state, action) => {
@@ -78,6 +83,6 @@ const staffsSlice = createSlice({
   },
 });
 
-export const staffActions = staffsSlice.actions;
+export const staffActions = staffSlice.actions;
 
-export default staffsSlice.reducer;
+export default staffSlice.reducer;

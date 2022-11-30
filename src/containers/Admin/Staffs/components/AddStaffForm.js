@@ -19,7 +19,9 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
-const { Option } = Select;
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+
+;const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 const AddStaffForm = () => {
@@ -27,7 +29,6 @@ const AddStaffForm = () => {
   const dispatch = useDispatch();
   const onFinish = (values) => {
     let newStaff = {
-      maNhanVien: moment().valueOf(),
       hoTen: values.staff_name,
       ngaySinh: values.staff_birth.format(dateFormat),
       CCCD: values.staff_cccd,
@@ -38,7 +39,10 @@ const AddStaffForm = () => {
       khac: values.staff_other_information,
     };
     console.log(newStaff);
-    dispatch(staffActions.addNewStaffs(newStaff));
+    dispatch({
+      type: SagaActionTypes.POST_USER_SAGA,
+      value: newStaff,
+    });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);
