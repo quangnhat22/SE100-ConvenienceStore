@@ -2,7 +2,7 @@ import Search from "antd/lib/input/Search";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import TableProvider from "./components/TableProvider";
+import TableProviders from "./components/TableProviders";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddProviderForm from "./components/AddProviderForm";
 import ModalForm from "../../../HOC/ModalForm";

@@ -5,6 +5,7 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const DetailProviderForm = ({ provider }) => {
   const [form] = Form.useForm();

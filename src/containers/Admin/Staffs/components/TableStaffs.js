@@ -11,7 +11,6 @@ import StaffInforDetail from "./StaffInforDetail";
 const TableStaffs = ({ keyWord, data }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
 
   const columns = [
     {

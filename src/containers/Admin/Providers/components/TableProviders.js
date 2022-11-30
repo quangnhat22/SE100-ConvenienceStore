@@ -6,6 +6,7 @@ import TableTemplate from "../../../../common/Table/TableTemplate";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProviderForm from "./DetailProviderForm";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableProviders = (props) => {
   const dispatch = useDispatch();
@@ -135,8 +136,8 @@ const TableProviders = (props) => {
       })
     );
   };
-  const handleRemoveProvider = (provider) => {
-    dispatch(providerActions.removeProvider(provider));
+  const handleRemoveProvider = (record) => {
+    dispatch({ type: SagaActionTypes.DELETE_PROVIDER, record });
   };
 
   return (
