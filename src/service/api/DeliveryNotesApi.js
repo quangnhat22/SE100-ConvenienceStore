@@ -12,6 +12,16 @@ export const DeliveryNotesService = {
       date: date,
     });
   },
+  putDeliveryNotes: (newDeliveryNote) => {
+    let {
+      providerId,
+      date,
+    } = newDeliveryNote;
+    return Axios.put(UrlApi.URL_DELIVERY_NOTES, {
+      providerId: providerId,
+      date: date,
+    });
+  },
   getDeliveryNotes: () => {
     return Axios.get(UrlApi.URL_DELIVERY_NOTES);
   },
