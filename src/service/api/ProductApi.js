@@ -2,33 +2,43 @@ import Axios from "axios";
 import * as UrlApi from "../url";
 
 export const ProductService = {
-  postProduct: (title, tax) => {
-    // return axios({
-    //   url: UrlApi.URL_PRODUCTS,
-    //   method: "POST",
-    //   data: {
-    //     title: title,
-    //     tax: tax,
-    //   },
-    // });
-    return Axios.post(UrlApi.URL_PRODUCTS, {
-      title: title,
-      tax: tax,
+  postProduct: (newProduct) => {
+    let {
+      productId,
+      deliveryNoteId,
+      MFG,
+      EXP,
+      cost,
+      price,
+      quantity,
+      description,
+      image,
+    } = newProduct;
+    return Axios.post(UrlApi.URL_PRODUCT_ITEM, {
+      productId: productId,
+      deliveryNoteId: deliveryNoteId,
+      MFG: MFG,
+      EXP: EXP,
+      cost: cost,
+      price: price,
+      quantity: quantity,
+      description: description,
+      image: image,
     });
   },
-  getProduct: () => {
-    return Axios.get(UrlApi.URL_PRODUCTS);
-  },
-  getProductById: (id) => {
-    return Axios.get(UrlApi.URL_PRODUCT_ID(id));
-  },
+//   getProduct: () => {
+//     return Axios.get(UrlApi.URL_PRODUCTS);
+//   },
+//   getProductById: (id) => {
+//     return Axios.get(UrlApi.URL_PRODUCT_ID(id));
+//   },
   deleteProductById: (id) => {
-    return Axios.delete(UrlApi.URL_PRODUCT_ID(id));
+    return Axios.delete(UrlApi.URL_PRODUCT_ITEM_ID(id));
   },
-  putProductById: (id, title, tax) => {
-    return Axios.put(UrlApi.URL_PRODUCT_ID(id), {
-      title: title,
-      tax: tax,
-    });
-  },
+//   putProductById: (id, title, tax) => {
+//     return Axios.put(UrlApi.URL_PRODUCT_ID(id), {
+//       title: title,
+//       tax: tax,
+//     });
+//   },
 };

@@ -1,13 +1,24 @@
-import { UploadOutlined, DownloadOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, Space } from "antd";
+import { Form } from "antd";
 import Search from "antd/lib/input/Search";
-import TextArea from "antd/lib/input/TextArea";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 import TableProductLines from "./components/TableProductLines";
+import ProductLinesForm from "./components/ProductLinesForm";
+import ModalForm from "../../../HOC/ModalForm";
+import { modalActions } from "../../../redux/reducer/ModalReducer";
 
 const ProductLinesPage = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { products } = useSelector((state) => state.productsSlice);
+  console.log(products);
+
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+  }, []);
+
   const layout = {
     labelCol: {
       span: 8,
@@ -24,8 +35,12 @@ const ProductLinesPage = () => {
     form.resetFields();
   };
 
-  const handleAddProvider = () => {
-    setIsModalOpen(true);
+  const handleAddProductsLine = () => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: <ProductLinesForm />,
+      })
+    );
   };
   const handleSubmit = () => {
     form.submit();
@@ -36,8 +51,8 @@ const ProductLinesPage = () => {
   return (
     <>
       <div className="ml-7 mt-5 mr-3 mb-8">
-        <div className="search-container flex flex-col items-center md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
-          <div className="inline-block font-semibold md:mr-auto text-base whitespace-nowrap text-2xl">
+        <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
+          <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
             Danh sách dòng sản phẩm
           </div>
           <Search
@@ -52,7 +67,7 @@ const ProductLinesPage = () => {
             className="flex items-center justify-center
                     bg-blue-500 h-8 w-fit p-2 text-white
                     md:mt-0 hover:bg-blue-600 shadow-lg rounded whitespace-nowrap"
-            onClick={handleAddProvider}
+            onClick={handleAddProductsLine}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,79 +86,9 @@ const ProductLinesPage = () => {
             Thêm dòng sản phẩm
           </button>
         </div>
-        <Space className="mt-3">
-          <Button
-            className="border-none shadow-none bg-transparent text-gray-500 hover:bg-transparent hover:text-gray-700"
-            type="text"
-            icon={<DownloadOutlined className="text-gray-900" />}
-            size="small"
-            //onClick={handleImportFile}
-          >
-            Nhập file
-          </Button>
-          <Button
-            className="border-none shadow-none bg-transparent text-gray-500 hover:bg-transparent hover:text-gray-700"
-            type="text"
-            icon={<UploadOutlined className="text-gray-900" />}
-            size="small"
-            //onClick={handleExportFile}
-          >
-            Xuất file
-          </Button>
-        </Space>
       </div>
-      <TableProductLines />
-      <Modal
-        title={
-          <header className="font-medium text-xl">Thêm dòng sản phẩm</header>
-        }
-        open={isModalOpen}
-        destroyOnClose="true"
-        onCancel={handleCancel}
-        footer={
-          <button
-            className="rounded py-2 px-3 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-            onClick={handleSubmit}
-          >
-            Lưu
-          </button>
-        }
-      >
-        <div className="w-full h-full">
-          <Form
-            {...layout}
-            layout="horizontal"
-            form={form}
-            validateMessages={validateMessages}
-          >
-            <Form.Item
-              label="Mã dòng sản phẩm"
-              name="maDongSanPham"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Mã dòng sản phẩm" />
-            </Form.Item>
-            <Form.Item
-              label="Tên dòng sản phẩm"
-              name="tenDongSanPham"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Tên dòng sản phẩm" />
-            </Form.Item>
-            <Form.Item label="Mô tả" name="moTa">
-              <TextArea rows={4} placeholder="Mô tả dòng sản phẩm" />
-            </Form.Item>
-          </Form>
-        </div>
-      </Modal>
+      <TableProductLines data={products} />
+      <ModalForm />
     </>
   );
 };

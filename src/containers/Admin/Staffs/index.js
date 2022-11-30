@@ -2,13 +2,18 @@ import Search from "antd/lib/input/Search";
 import React from "react";
 import TableStaffs from "./components/TableStaffs";
 import ModalForm from "../../../HOC/ModalForm";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddStaffForm from "./components/AddStaffForm";
+import { useEffect } from "react";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const StaffsPage = () => {
   const dispatch = useDispatch();
-  const { visible } = useSelector((state) => state.modalSlice);
+
+  useEffect(() => {
+    dispatch({type: SagaActionTypes.GET_LIST_USER_SAGA})
+  } , []);
 
   const handleAddStaff = () => {
     dispatch(

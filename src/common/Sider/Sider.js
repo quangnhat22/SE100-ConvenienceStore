@@ -10,6 +10,7 @@ import {
   DashboardOutlined,
   ShopOutlined,
   LineChartOutlined,
+  CodeSandboxOutlined,
 } from "@ant-design/icons";
 import { useHistory, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -70,8 +71,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         selectedKeys={[
           location.pathname === "/dash-board"
             ? "1"
-            : location.pathname === "/products" ||
-              location.pathname.indexOf("team-detail") !== -1
+            : location.pathname === "/products"
             ? "2"
             : location.pathname === "/staffs"
             ? "3"
@@ -83,10 +83,15 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "6"
             : location.pathname === "/providers" ||
               location.pathname === "/add_provider" ||
-              location.pathname.indexOf("detail_provider") !== -1
+              location.pathname.includes("/detail_provider")
             ? "8"
+            : location.pathname === "/productlines"
+            ? "9"
+            : location.pathname === "/delivery_notes"
+            ? "10"
             : "-1",
         ]}
+        defaultOpenKeys={["sub1"]}
       >
         {/* <div className="logo"></div> */}
         <Menu.Item
@@ -98,15 +103,45 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Trang chủ
         </Menu.Item>
-        <Menu.Item
-          key="2"
-          icon={<ShopOutlined />}
-          onClick={() => {
-            history.push("/products");
-          }}
+        <Menu.SubMenu
+          title="Sản phẩm"
+          icon={<CodeSandboxOutlined />}
+          key="sub1"
         >
-          Quản lý sản phẩm
-        </Menu.Item>
+          <Menu.Item
+            key="2"
+            onClick={() => {
+              history.push("/products");
+            }}
+          >
+            Danh sách sản phẩm
+          </Menu.Item>
+          <Menu.Item
+            key="9"
+            onClick={() => {
+              history.push("/productlines");
+            }}
+          >
+            Dòng sản phẩm
+          </Menu.Item>
+          <Menu.Item
+            key="8"
+            onClick={() => {
+              history.push("/providers");
+            }}
+          >
+            Nhà cung cấp
+          </Menu.Item>
+          <Menu.Item
+            key="10"
+            onClick={() => {
+              history.push("/delivery_notes");
+            }}
+          >
+            Phiếu nhập kho
+          </Menu.Item>
+        </Menu.SubMenu>
+
         <Menu.Item
           key="3"
           icon={<TeamOutlined />}
@@ -125,15 +160,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Quản lý tài chính
         </Menu.Item>
-        <Menu.Item
-          key="8"
-          icon={<ProfileOutlined />}
-          onClick={() => {
-            history.push("/providers");
-          }}
-        >
-          Đơn vị cung cấp
-        </Menu.Item>
+
         <Menu.Item
           key="5"
           icon={<UserOutlined />}

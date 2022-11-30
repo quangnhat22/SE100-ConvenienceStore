@@ -6,6 +6,9 @@ import modalSlice from "./reducer/ModalReducer";
 import productSlice from "./reducer/ProductReducer";
 import staffsSlice from "./reducer/StaffReducer";
 import regulationSlice from "./reducer/RegulationSlice";
+import productsSlice from "./reducer/ProductsReducer";
+import deliveryNotesSlice from "./reducer/DeliveryNotesReducer";
+import providerSlice from "./reducer/ProviderReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -14,7 +17,10 @@ const rootReducer = {
     modalSlice,
     productSlice, // danh mục sản phẩm
     staffsSlice,
-    regulationSlice
+    regulationSlice,
+    productsSlice,
+    deliveryNotesSlice,
+    providerSlice,
 }
 
 export const store =  configureStore({

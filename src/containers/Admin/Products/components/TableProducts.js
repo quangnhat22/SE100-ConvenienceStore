@@ -11,7 +11,7 @@ import ProductInforDetail from "./ProductInforDetail";
 
 const TableProducts = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.productSlice);
+  const { products } = useSelector((state) => state.productsSlice);
   const [page, setPage] = React.useState(1);
   const [isOpen, setIsOpen] = useState(false);
   const columns = [
@@ -57,15 +57,15 @@ const TableProducts = () => {
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
-      render: (value, record) => {
-        return (
-          <div>
-            {record.giaBan.toLocaleString(undefined, {
-              maximumFractionDigits: 2,
-            })}
-          </div>
-        );
-      },
+      // render: (value, record) => {
+      //   return (
+      //     <div>
+      //       {record.giaBan.toLocaleString(undefined, {
+      //         maximumFractionDigits: 2,
+      //       })}
+      //     </div>
+      //   );
+      // },
     },
     {
       title: "Giá bán",
@@ -75,15 +75,15 @@ const TableProducts = () => {
       showOnDesktop: true,
       width: "15%",
       ellipsis: true,
-      render: (value, record) => {
-        return (
-          <div>
-            {record.giaBan.toLocaleString(undefined, {
-              maximumFractionDigits: 2,
-            })}
-          </div>
-        );
-      },
+      // render: (value, record) => {
+      //   return (
+      //     <div>
+      //       {record.giaBan.toLocaleString(undefined, {
+      //         maximumFractionDigits: 2,
+      //       })}
+      //     </div>
+      //   );
+      // },
     },
     {
       title: "Số lượng",
