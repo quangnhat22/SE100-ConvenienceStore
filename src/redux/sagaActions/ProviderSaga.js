@@ -23,10 +23,10 @@ function* actGetListProvider() {
 
 function* actPostProvider(action) {
   try {
-    let { id, provider } = action;
+    let { newProvider } = action;
     yield put(providerActions.getListProviderLoading());
 
-    let res = yield call(() => ProviderService.postProviders(id, provider));
+    let res = yield call(() => ProviderService.postProviders(newProvider));
     if (res.status === 201) {
       yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });
     } else {
@@ -39,10 +39,10 @@ function* actPostProvider(action) {
 
 function* actPutProvider(action) {
   try {
-    let { newProvider } = action;
+    let { id, provider } = action;
     yield put(providerActions.getListProviderLoading());
 
-    let res = yield call(() => ProviderService.putProviders(newProvider));
+    let res = yield call(() => ProviderService.putProviders(id, provider));
     if (res.status === 200) {
       yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });
     } else {
