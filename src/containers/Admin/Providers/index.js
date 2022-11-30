@@ -1,60 +1,65 @@
 import Search from "antd/lib/input/Search";
-import React from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import TableProvider from "./components/TableProvider";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddProviderForm from "./components/AddProviderForm";
 import ModalForm from "../../../HOC/ModalForm";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 
 //Data Demo
-const providers = [
-  {
-    maNhaCungCap: "NCC1",
-    tenNhaCungCap: "TẠP HÓA CHỊ HUYỀN",
-    nhomNhaCungCap: "MACDINH",
-    email: "huynhhgt@gnmail.com",
-    soDienThoai: "0967654554",
-    trangThai: true,
-  },
-  {
-    maNhaCungCap: "NCC2",
-    tenNhaCungCap: "NHÀ PHÂN PHỐI ĐÔNG BA",
-    nhomNhaCungCap: "MACDINH",
-    email: "dongbacoop@gmail.com",
-    soDienThoai: "0978654654",
-    trangThai: true,
-  },
-  {
-    maNhaCungCap: "NCC3",
-    tenNhaCungCap: "SIÊU THỊ CẨM THƠ",
-    nhomNhaCungCap: "MACDINH",
-    email: "camtho.super@gmail.com",
-    soDienThoai: "0387656734",
-    trangThai: false,
-  },
-  {
-    maNhaCungCap: "NCC4",
-    tenNhaCungCap: "NƯỚC NGỌT SÀI THÀNH",
-    nhomNhaCungCap: "MACDINH",
-    email: "saithanhdrinking@gmail.com",
-    soDienThoai: "0987678654",
-    trangThai: true,
-  },
-  {
-    maNhaCungCap: "NCC5",
-    tenNhaCungCap: "NƯỚC NGỌT VĨNH HẢO",
-    nhomNhaCungCap: "MACDINH",
-    email: "vinhhao.tphcm@gmail.com",
-    soDienThoai: "0988989345",
-    trangThai: true,
-  },
-];
+// const providers = [
+//   {
+//     maNhaCungCap: "NCC1",
+//     tenNhaCungCap: "TẠP HÓA CHỊ HUYỀN",
+//     nhomNhaCungCap: "MACDINH",
+//     email: "huynhhgt@gnmail.com",
+//     soDienThoai: "0967654554",
+//     trangThai: true,
+//   },
+//   {
+//     maNhaCungCap: "NCC2",
+//     tenNhaCungCap: "NHÀ PHÂN PHỐI ĐÔNG BA",
+//     nhomNhaCungCap: "MACDINH",
+//     email: "dongbacoop@gmail.com",
+//     soDienThoai: "0978654654",
+//     trangThai: true,
+//   },
+//   {
+//     maNhaCungCap: "NCC3",
+//     tenNhaCungCap: "SIÊU THỊ CẨM THƠ",
+//     nhomNhaCungCap: "MACDINH",
+//     email: "camtho.super@gmail.com",
+//     soDienThoai: "0387656734",
+//     trangThai: false,
+//   },
+//   {
+//     maNhaCungCap: "NCC4",
+//     tenNhaCungCap: "NƯỚC NGỌT SÀI THÀNH",
+//     nhomNhaCungCap: "MACDINH",
+//     email: "saithanhdrinking@gmail.com",
+//     soDienThoai: "0987678654",
+//     trangThai: true,
+//   },
+//   {
+//     maNhaCungCap: "NCC5",
+//     tenNhaCungCap: "NƯỚC NGỌT VĨNH HẢO",
+//     nhomNhaCungCap: "MACDINH",
+//     email: "vinhhao.tphcm@gmail.com",
+//     soDienThoai: "0988989345",
+//     trangThai: true,
+//   },
+// ];
 
 const ProvidersPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const { providers } = useSelector((state) => state.providerSlice);
+  console.log("providers", providers);
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER });
+  }, []);
   const handleAddProvider = () => {
     dispatch(
       modalActions.showModal({

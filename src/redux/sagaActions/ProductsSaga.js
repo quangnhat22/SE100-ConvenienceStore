@@ -12,9 +12,11 @@ function* actGetListProducts() {
     console.log(listProducts);
     console.log(res);
     if (res.status === 200) {
-      yield put(productsActions.getListProductsSuccess({products: listProducts}));
+      yield put(
+        productsActions.getListProductsSuccess({ products: listProducts })
+      );
     } else {
-    //yield put(authActions.requestLogFailed());
+      //yield put(authActions.requestLogFailed());
     }
   } catch (err) {
     //yield put(authActions.requestLogFailed());
@@ -24,16 +26,16 @@ function* actGetListProducts() {
 function* actPostProducts(newProducts) {
   try {
     console.log(newProducts);
-    let {values} = newProducts;
+    let { values } = newProducts;
     yield put(productsActions.getListProductsLoading());
 
     let res = yield call(() => ProductsService.postProducts(values));
     let listProducts = res.data;
     console.log(res);
     if (res.status === 201) {
-      yield put({type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA});
+      yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
     } else {
-    //yield put(authActions.requestLogFailed());
+      //yield put(authActions.requestLogFailed());
     }
   } catch (err) {
     //yield put(authActions.requestLogFailed());
@@ -41,15 +43,9 @@ function* actPostProducts(newProducts) {
 }
 
 export function* followActGetListProducts() {
-  yield takeLatest(
-    SagaActionTypes.GET_LIST_PRODUCTS_SAGA,
-    actGetListProducts
-  );
+  yield takeLatest(SagaActionTypes.GET_LIST_PRODUCTS_SAGA, actGetListProducts);
 }
 
 export function* followActPostProducts() {
-  yield takeLatest(
-    SagaActionTypes.POST_PRODUCTS_SAGA,
-    actPostProducts
-  );
+  yield takeLatest(SagaActionTypes.POST_PRODUCTS_SAGA, actPostProducts);
 }
