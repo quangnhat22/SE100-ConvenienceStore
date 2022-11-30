@@ -123,7 +123,7 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
               className:
                 "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
             }}
-            onConfirm={() => handleRemoveStaff(record)}
+            onConfirm={() => handleRemoveDeliveryNote(record)}
           >
             <button
               type="button"
@@ -137,8 +137,11 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
     },
   ];
 
-  const handleRemoveStaff = (staff) => {
-    dispatch(staffActions.removeStaffs(staff));
+  const handleRemoveDeliveryNote = (deliveryNote) => {
+    dispatch({
+      type: SagaActionTypes.DELETE_DELIVERY_NOTES,
+      id: deliveryNote.id,
+    });
   };
 
   const handleEditStaff = (staff) => {
