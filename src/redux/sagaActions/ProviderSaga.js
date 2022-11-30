@@ -8,11 +8,11 @@ function* actGetListProvider() {
     yield put(providerActions.getListProviderLoading());
 
     let res = yield call(() => ProviderService.getProviders());
+
+    console.log(res);
     let { status, data } = res;
     if (status === 200) {
-      yield put(
-        providerActions.getListProviderSuccess({ providers: data })
-      );
+      yield put(providerActions.getListProviderSuccess({ providers: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -23,10 +23,10 @@ function* actGetListProvider() {
 
 function* actPostProvider(action) {
   try {
-    let { newProvider } = action;
+    let { id, provider } = action;
     yield put(providerActions.getListProviderLoading());
 
-    let res = yield call(() => ProviderService.postProviders(newProvider));
+    let res = yield call(() => ProviderService.postProviders(id, provider));
     if (res.status === 201) {
       yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });
     } else {
@@ -38,20 +38,20 @@ function* actPostProvider(action) {
 }
 
 function* actPutProvider(action) {
-    try {
-      let { newProvider } = action;
-      yield put(providerActions.getListProviderLoading());
-  
-      let res = yield call(() => ProviderService.putProviders(newProvider));
-      if (res.status === 200) {
-        yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });
-      } else {
-        //yield put(authActions.requestLogFailed());
-      }
-    } catch (err) {
+  try {
+    let { newProvider } = action;
+    yield put(providerActions.getListProviderLoading());
+
+    let res = yield call(() => ProviderService.putProviders(newProvider));
+    if (res.status === 200) {
+      yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });
+    } else {
       //yield put(authActions.requestLogFailed());
     }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
   }
+}
 
 function* actDeleteProvider(action) {
   try {
@@ -60,7 +60,7 @@ function* actDeleteProvider(action) {
 
     let res = yield call(() => ProviderService.deleteProvidersById(id));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES });
+      yield put({ type: SagaActionTypes.GET_LIST_PROVIDER });
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -78,8 +78,8 @@ export function* followActPostProvider() {
 }
 
 export function* followActPutProvider() {
-    yield takeLatest(SagaActionTypes.PUT_PROVIDER, actPutProvider);
-  }
+  yield takeLatest(SagaActionTypes.PUT_PROVIDER, actPutProvider);
+}
 
 export function* followActDeleteProvider() {
   yield takeLatest(SagaActionTypes.DELETE_PROVIDER, actDeleteProvider);

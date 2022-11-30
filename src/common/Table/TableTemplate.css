@@ -1,16 +1,16 @@
 .ant-table-thead .ant-table-cell {
   font-weight: bold;
 }
-.table-striped-rows tr:nth-child(2n) td {
+.table-striped-rows tr:nth-child(2n + 1) td {
   background-color: #fbfbfbfb;
 }
 
-.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
+/* .ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
 .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
 .ant-table-thead > tr:hover:not(.ant-table-expanded-row) > td,
 .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
   background: unset;
-}
+} */
 
 .customTable .ant-table-tbody > tr > td {
   border: none;

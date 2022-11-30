@@ -13,17 +13,13 @@ const AddProviderForm = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
     let newProvider = {
-      name: values.product_name,
-      giaNhap: values.product_buyprice,
-      giaBan: values.product_sellprice,
-      thue: values.product_tax,
-      // ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
-      // thoiHan: values.product_expiry_date[1].format(dateFormat),
-      soLuong: values.product_quantity,
-      moTa: values.product_description,
+      name: values.tenNhaCungCap,
+      email: values.email,
+      address: values.diaChi,
     };
     console.log(newProvider);
-    dispatch(providerActions.addNewProduct(newProvider));
+    // dispatch(providerActions.addNewProduct(newProvider));
+    dispatch({ type: SagaActionTypes.POST_PROVIDER, newProvider: newProvider });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);
@@ -42,10 +38,10 @@ const AddProviderForm = () => {
       >
         <Input className="rounded" placeholder="Tên nhà cung cấp" />
       </Form.Item>
-      <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
+      {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
         <Select className="rounded" placeholder="Nhóm nhà cung cấp" />
-      </Form.Item>
-      <Form.Item
+      </Form.Item> */}
+      {/* <Form.Item
         name="soDienThoai"
         label="Số điện thoại"
         rules={[
@@ -57,7 +53,7 @@ const AddProviderForm = () => {
         ]}
       >
         <Input placeholder="Số điện thoại" />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         name="email"
         label="Email"
@@ -84,12 +80,12 @@ const AddProviderForm = () => {
           placeholder="Thôn (Xóm), Xã (Phường, Thị trấn), Tỉnh (Thành phố)..."
         />
       </Form.Item>
-      <Form.Item name="nhanVien" label="Nhân viên phụ trách">
+      {/* <Form.Item name="nhanVien" label="Nhân viên phụ trách">
         <Select className="rounded" placeholder="Chọn nhân viên" />
       </Form.Item>
       <Form.Item name="moTa" label="Mô tả">
         <TextArea className="rounded" rows={4} placeholder="Mô tả" />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         wrapperCol={{
           span: 25,

@@ -1,4 +1,5 @@
-import { Popconfirm, Space } from "antd";
+import { Table, Popconfirm, Space } from "antd";
+import moment from "moment";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
@@ -6,9 +7,8 @@ import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
-import StaffInforDetail from "./StaffInforDetail";
 
-const TableStaffs = ({ keyWord, data }) => {
+const TableDeliveryNotes = ({ keyWord, data }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const TableStaffs = ({ keyWord, data }) => {
       render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
     {
-      title: "Mã nhân viên",
+      title: "Mã nhập hàng",
       dataIndex: "id",
       key: "id",
       width: "10%",
@@ -34,41 +34,60 @@ const TableStaffs = ({ keyWord, data }) => {
       onFilter: (value, record) => {
         return (
           String(record.id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.fullname).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.phoneNumber)
+          String(record.provider.name)
             .toLowerCase()
             .includes(value.toLowerCase()) ||
-          String(record.email).toLowerCase().includes(value.toLowerCase())
+          String(record.date).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.total).toLowerCase().includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
-      title: "Họ và tên",
-      dataIndex: "fullname",
-      key: "fullname",
+      title: "Tên nhà cung cấp",
+      dataIndex: ["provider", "name"],
+      key: "provider",
       width: "15%",
       showOnResponse: true,
       showOnDesktop: true,
-      sorter: (item1, item2) => item1.fullname.localeCompare(item2.fullname),
+      sorter: (item1, item2) =>
+        item1.provider.name.localeCompare(item2.provider.name),
     },
     {
-      title: "Số điện thoại",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
+      title: "Ngày nhập",
+      dataIndex: "date",
+      key: "date",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
+      render: (date) => `${moment(date).format("DD/MM/YYYY")}`,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Tổng sản phẩm",
+      dataIndex: "productItems",
+      key: "productItems",
       showOnResponse: true,
       showOnDesktop: true,
       width: "15%",
       ellipsis: true,
+      render: (productItems) => {
+        let render = 0;
+        for (let i = 0; i < productItems.length; i++) {
+          render += productItems[i].quantity;
+        }
+        return render;
+      },
+    },
+    {
+      title: "Tổng tiền",
+      dataIndex: "total",
+      key: "total",
+      showOnResponse: true,
+      showOnDesktop: true,
+      width: "15%",
+      ellipsis: true,
+      sorter: (a, b) => a.total - b.total,
     },
     {
       title: "Thao tác",
@@ -122,11 +141,11 @@ const TableStaffs = ({ keyWord, data }) => {
   };
 
   const handleEditStaff = (staff) => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
-      })
-    );
+    // dispatch(
+    //   modalActions.showModal({
+    //     ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
+    //   })
+    // );
   };
 
   return (
@@ -149,4 +168,4 @@ const TableStaffs = ({ keyWord, data }) => {
   );
 };
 
-export default TableStaffs;
+export default TableDeliveryNotes;

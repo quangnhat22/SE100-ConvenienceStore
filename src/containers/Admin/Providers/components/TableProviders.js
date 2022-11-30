@@ -23,6 +23,7 @@ const TableProviders = (props) => {
       title: "Mã nhà cung cấp",
       dataIndex: "id",
       key: "id",
+      sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -48,6 +49,38 @@ const TableProviders = (props) => {
       showOnResponse: true,
       showOnDesktop: true,
     },
+    // {
+    //   title: "Trạng thái",
+    //   dataIndex: "trangThai",
+    //   key: "trangThai",
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   ellipsis: true,
+    //   render: (text, record, index) => {
+    //     let colorTag = text === false ? "red" : "green";
+    //     let contentTag = text === true ? "Đang giao dịch" : "Ngưng cung cấp";
+    //     return (
+    //       <Tag
+    //         key={index}
+    //         color={colorTag}
+    //         className="w-2/4 min-w-max text-center"
+    //       >
+    //         {contentTag}
+    //       </Tag>
+    //     );
+    //   },
+    //   filters: [
+    //     { text: "Đang giao dịch", value: true },
+    //     { text: "Ngưng cung cấp", value: false },
+    //   ],
+    //   onFilter: (value, record) => {
+    //     if (value === true) {
+    //       return record.trangThai === true;
+    //     } else {
+    //       return record.trangThai === false;
+    //     }
+    //   },
+    // },
     {
       title: "Thao tác",
       key: "action",

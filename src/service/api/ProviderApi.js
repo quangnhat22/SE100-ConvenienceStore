@@ -3,7 +3,7 @@ import * as UrlApi from "../url";
 
 export const ProviderService = {
   postProviders: (newProvider) => {
-    let {name, email, address} = newProvider;
+    let { name, email, address } = newProvider;
     return Axios.post(UrlApi.URL_PROVIDERS, {
       name: name,
       email: email,
@@ -19,9 +19,9 @@ export const ProviderService = {
   deleteProvidersById: (id) => {
     return Axios.delete(UrlApi.URL_PROVIDERS_ID(id));
   },
-  putProviders: (provider) => {
-    let {name, email, address} = provider;
-    return Axios.put(UrlApi.URL_PROVIDERS, {
+  putProviders: (id, provider) => {
+    let { name, email, address } = provider;
+    return Axios.put(UrlApi.URL_PROVIDERS(id), {
       name: name,
       email: email,
       address: address,

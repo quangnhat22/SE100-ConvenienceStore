@@ -57,7 +57,7 @@ const StaffInforDetail = ({ staff }) => {
     //   type: SagaActionTypes.POST_USER_SAGA,
     //   values: newStaff,
     // });
-    // dispatch(staffActions.editStaffs(newStaff));
+    dispatch(staffActions.editStaffs(newStaff));
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);

@@ -1,7 +1,8 @@
 import Search from "antd/lib/input/Search";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import TableProviders from "./components/TableProviders";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import TableProvider from "./components/TableProvider";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddProviderForm from "./components/AddProviderForm";
 import ModalForm from "../../../HOC/ModalForm";
@@ -9,11 +10,12 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const ProvidersPage = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
+  const { providers } = useSelector((state) => state.providerSlice);
+  console.log("providers", providers);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER });
   }, []);
-
   const handleAddProvider = () => {
     dispatch(
       modalActions.showModal({
