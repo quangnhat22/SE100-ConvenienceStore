@@ -10,6 +10,9 @@ export default function* rootSaga() {
     AuthenticationSaga.followActLoginWithEmailAndPassword(),
     ProductsSaga.followActGetListProducts(),
     ProductsSaga.followActPostProducts(),
+    ProductsSaga.followActPutProducts(),
+    ProductsSaga.followActDeleteProducts(),
+    ProductsSaga.followActGetProductsById(),
     StaffSaga.followActGetListStaffs(),
     StaffSaga.followActPostStaff(),
     StaffSaga.followActPutStaff(),
@@ -22,5 +25,6 @@ export default function* rootSaga() {
     ProviderSaga.followActPostProvider(),
     ProviderSaga.followActPutProvider(),
     ProviderSaga.followActDeleteProvider(),
+    ProviderSaga.followActGetProviderById(),
   ]);
 }
