@@ -37,7 +37,7 @@ const AddDeliveryNoteForm = () => {
       date: values.delivery_note_date.toISOString(),
     };
     dispatch({
-      type: SagaActionTypes.POST_DELIVERY_NOTES,
+      type: SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
       newDeliveryNote: newDeliveryNote,
     });
   };

@@ -71,8 +71,8 @@ const ProvidersPage = () => {
   return (
     <>
       <div className="ml-7 mt-5 mr-3 mb-8">
-        <div className="search-container flex flex-col items-center md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
-          <div className="inline-block font-semibold md:mr-auto text-base whitespace-nowrap text-2xl">
+        <div className="search-container flex flex-col items-center md:flex-row justify-end gap-x-4 gap-y-2 w-full">
+          <div className="inline-block font-semibold md:mr-auto text-base whitespace-nowrap">
             Danh sách nhà cung cấp
           </div>
           <Search

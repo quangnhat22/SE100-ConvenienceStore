@@ -28,7 +28,7 @@ function* actPostDeliveryNotes(action) {
 
     let res = yield call(() => DeliveryNotesService.postDeliveryNotes(newDeliveryNote));
     if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES });
+      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -44,7 +44,22 @@ function* actDeleteDeliveryNotes(action) {
 
     let res = yield call(() => DeliveryNotesService.deleteDeliveryNotesById(id));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES });
+      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
+function* actGetDeliveryNoteById(action) {
+  try {
+    let { id } = action;
+    let res = yield call(() => DeliveryNotesService.getDeliveryNotesById(id));
+    let {data, status} = res;
+    if (status === 200) {
+      yield put(deliveryNotesActions.getDeliveryNotesByIdSuccess({deliveryNote : data}));
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -54,13 +69,17 @@ function* actDeleteDeliveryNotes(action) {
 }
 
 export function* followActGetDeliveryNotes() {
-  yield takeLatest(SagaActionTypes.GET_LIST_DELIVERY_NOTES, actGetDeliveryNotes);
+  yield takeLatest(SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA, actGetDeliveryNotes);
 }
 
 export function* followActPostDeliveryNotes() {
-  yield takeLatest(SagaActionTypes.POST_DELIVERY_NOTES, actPostDeliveryNotes);
+  yield takeLatest(SagaActionTypes.POST_DELIVERY_NOTES_SAGA, actPostDeliveryNotes);
 }
 
 export function* followActDeleteDeliveryNotes() {
-  yield takeLatest(SagaActionTypes.DELETE_DELIVERY_NOTES, actDeleteDeliveryNotes);
+  yield takeLatest(SagaActionTypes.DELETE_DELIVERY_NOTES_SAGA, actDeleteDeliveryNotes);
+}
+
+export function* followActGetDeliveryNoteById() {
+  yield takeLatest(SagaActionTypes.GET_DELIVERY_NOTES_ID_SAGA, actGetDeliveryNoteById);
 }

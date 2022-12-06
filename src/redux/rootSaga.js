@@ -21,6 +21,7 @@ export default function* rootSaga() {
     DeliveryNotesSaga.followActGetDeliveryNotes(),
     DeliveryNotesSaga.followActPostDeliveryNotes(),
     DeliveryNotesSaga.followActDeleteDeliveryNotes(),
+    DeliveryNotesSaga.followActGetDeliveryNoteById(),
     ProviderSaga.followActGetListProvider(),
     ProviderSaga.followActPostProvider(),
     ProviderSaga.followActPutProvider(),
