@@ -6,13 +6,13 @@ import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { object, string } from "yup";
 import AlertCustom from "../../../common/Notification/Alert";
-import * as SagaActionTypes from '../../../redux/constants/constant';
+import * as SagaActionTypes from "../../../redux/constants/constant";
 import "../style/index.css";
 
 const LoginForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {isLoggedIn} = useSelector(state => state.authSlice)
+  const { isLoggedIn } = useSelector((state) => state.authSlice);
 
   const handleSubmit = (values) => {
     let { username, password } = values;
@@ -20,16 +20,22 @@ const LoginForm = () => {
       type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
       data: {
         username: username,
-        password: password
-      }
-    })
+        password: password,
+      },
+    });
   };
 
   useEffect(() => {
     if (isLoggedIn && localStorage.getItem("access_token") != null) {
-      history.replace("/dash-board");
+      console.log(localStorage.getItem("role"));
+      if (localStorage.getItem("role") === "MANAGER") {
+        history.replace("/dash-board");
+      }
+      if (localStorage.getItem("role") === "EMPLOYEE") {
+        history.replace("/sales");
+      }
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   const RegisterValidation = object().shape({
     username: string().max(255).required("Valid username required"),

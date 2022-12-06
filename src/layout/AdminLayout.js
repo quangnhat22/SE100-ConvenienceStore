@@ -1,11 +1,11 @@
-import { MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
-import { Layout } from 'antd';
-import { Content, Header } from 'antd/lib/layout/layout';
-import React, { useState } from 'react';
+import { MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons";
+import { Layout } from "antd";
+import { Content, Header } from "antd/lib/layout/layout";
+import React, { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
-import DrawerCustomed from '../common/Drawer/Drawer';
-import SiderCustomed from '../common/Sider/Sider';
-import SalePage from '../containers/Staff/Sale';
+import DrawerCustomed from "../common/Drawer/Drawer";
+import SiderCustomed from "../common/Sider/Sider";
+import SalePage from "../containers/Staff/Sale";
 
 const AdminLayout = (props) => {
   // const location = useLocation();
@@ -41,26 +41,25 @@ const AdminLayout = (props) => {
         <Content style={{ margin: "24px 16px 0" }}>{props.children}</Content>
       </Layout>
     </Layout>
-  )
-}
+  );
+};
 
 export default function AdminTemplate({ Component, ...props }) {
   return (
     <Route
       {...props}
       render={(propsComponent) => {
-        if(localStorage.getItem("access_token") != null ) {
+        if (localStorage.getItem("access_token") != null) {
           console.log(localStorage.getItem("role"));
-          if (localStorage.getItem("role") === 'MANAGER') {
+          if (localStorage.getItem("role") === "MANAGER") {
             return (
               <AdminLayout>
                 <Component {...propsComponent} />
               </AdminLayout>
             );
           }
-          if (localStorage.getItem("role") === 'EMPLOYEE') {
-            // return  <Route exact path="/sales" component={SalePage} />;
-
+          if (localStorage.getItem("role") === "EMPLOYEE") {
+            return <Route exact path="/sales" component={SalePage} />;
           }
         }
 

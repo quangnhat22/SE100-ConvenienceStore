@@ -54,6 +54,11 @@ const routesAdmin = [
     path: "/delivery_notes",
     component: DeliveryNotes,
   },
+  {
+    exact: false,
+    path: "/sales",
+    component: StaffsPage,
+  },
 ];
 
 export { routesAdmin };
