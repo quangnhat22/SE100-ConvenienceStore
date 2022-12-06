@@ -38,8 +38,8 @@ const DrawerCustomed = ({ setCollapsed, collapsed }) => {
             timer: 1000,
             timerProgressBar: true,
           });
-          localStorage.removeItem("token");
           localStorage.removeItem("role");
+          localStorage.removeItem("token");
           history.replace("/");
         }
       });

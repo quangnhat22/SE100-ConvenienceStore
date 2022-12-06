@@ -41,7 +41,7 @@ const DetailProviderForm = ({ provider }) => {
     console.log(newProvider);
     // dispatch(providerActions.addNewProduct(newProvider));
     dispatch({
-      type: SagaActionTypes.PUT_PROVIDER,
+      type: SagaActionTypes.PUT_PROVIDER_SAGA,
       id: provider.id,
       provider: newProvider,
     });

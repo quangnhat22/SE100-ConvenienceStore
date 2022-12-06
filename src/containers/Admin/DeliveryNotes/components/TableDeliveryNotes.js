@@ -139,7 +139,7 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
 
   const handleRemoveDeliveryNote = (deliveryNote) => {
     dispatch({
-      type: SagaActionTypes.DELETE_DELIVERY_NOTES,
+      type: SagaActionTypes.DELETE_DELIVERY_NOTES_SAGA,
       id: deliveryNote.id,
     });
   };

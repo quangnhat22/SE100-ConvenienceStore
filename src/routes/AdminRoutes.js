@@ -7,7 +7,6 @@ import StaffsPage from "../containers/Admin/Staffs";
 import ProvidersPage from "../containers/Admin/Providers";
 import ProductLinesPage from "../containers/Admin/ProductLines";
 import DeliveryNotes from "../containers/Admin/DeliveryNotes";
-import SalePage from "../containers/Staff/Sale";
 
 const routesAdmin = [
   {
@@ -54,11 +53,6 @@ const routesAdmin = [
     exact: false,
     path: "/delivery_notes",
     component: DeliveryNotes,
-  },
-  {
-    exact: false,
-    path: "/sales",
-    component: SalePage,
   },
 ];
 

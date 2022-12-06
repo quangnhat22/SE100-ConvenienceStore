@@ -139,7 +139,7 @@ const TableProvider = (props) => {
     );
   };
   const handleRemoveProviders = (provider) => {
-    dispatch({ type: SagaActionTypes.DELETE_PROVIDER, id: provider.id });
+    dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: provider.id });
   };
 
   return (

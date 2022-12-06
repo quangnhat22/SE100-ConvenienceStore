@@ -50,7 +50,7 @@ export const UserService = {
       avatar,
       role,
     } = user;
-    return Axios.delete(UrlApi.URL_USERS_ID(id), {
+    return Axios.put(UrlApi.URL_USERS_ID(id), {
       email: email,
       password: password,
       fullname: fullname,
@@ -67,7 +67,7 @@ export const UserService = {
   getUsersById: (id) => {
     return Axios.get(UrlApi.URL_USERS_ID(id));
   },
-  deleteProvidersById: (id) => {
+  deleteUserById: (id) => {
     return Axios.delete(UrlApi.URL_USERS_ID(id));
   },
 };
