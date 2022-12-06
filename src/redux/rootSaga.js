@@ -5,6 +5,7 @@ import * as StaffSaga from "./sagaActions/StaffSaga";
 import * as DeliveryNotesSaga from "./sagaActions/DeliveryNotesSaga";
 import * as ProviderSaga from "./sagaActions/ProviderSaga";
 import * as ProductSaga from "./sagaActions/ProductSaga";
+import * as ProductItemQuantityStateSaga from "./sagaActions/ProductItemQuantitySaga";
 
 export default function* rootSaga() {
   yield all([
@@ -30,5 +31,10 @@ export default function* rootSaga() {
     ProviderSaga.followActPutProvider(),
     ProviderSaga.followActDeleteProvider(),
     ProviderSaga.followActGetProviderById(),
+    ProductItemQuantityStateSaga.followActGetListProductItemsQuantity(),
+    ProductItemQuantityStateSaga.followActPostProductItemsQuantity(),
+    ProductItemQuantityStateSaga.followActPutProductItemsQuantity(),
+    ProductItemQuantityStateSaga.followActDeleteProductItemsQuantity(),
+    ProductItemQuantityStateSaga.followActProductItemQuantityById(),
   ]);
 }

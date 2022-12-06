@@ -3,16 +3,9 @@ import * as UrlApi from "../url";
 
 export const ProductsService = {
   postProducts: (products) => {
-    // return axios({
-    //   url: UrlApi.URL_PRODUCTS,
-    //   method: "POST",
-    //   data: {
-    //     title: title,
-    //     tax: tax,
-    //   },
-    // });
+    let {title} = products;
     return Axios.post(UrlApi.URL_PRODUCTS, {
-      title: products.title,
+      title: title,
       tax: 10,
     });
   },
@@ -25,7 +18,8 @@ export const ProductsService = {
   deleteProductsById: (id) => {
     return Axios.delete(UrlApi.URL_PRODUCT_ID(id));
   },
-  putProductsById: (id, title, tax) => {
+  putProductsById: (id, products) => {
+    let {title, tax} = products;
     return Axios.put(UrlApi.URL_PRODUCT_ID(id), {
       title: title,
       tax: tax,

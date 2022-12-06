@@ -25,7 +25,7 @@ const deliveryNotesSlice = createSlice({
       state.loading = true;
     },
     getDeliveryNotesSuccess: (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.deliveryNotes = action.payload.deliveryNotes;
     },
     getDeliveryNotesByIdSuccess: (state, action) => {
