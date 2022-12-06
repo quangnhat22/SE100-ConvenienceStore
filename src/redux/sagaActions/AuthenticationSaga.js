@@ -13,6 +13,8 @@ function* actLoginWithEmailAndPassword(payload) {
     
     if (res.status === 201) {
       localStorage.setItem("access_token", res.data["access_token"]);
+      localStorage.setItem("role", res.data["role"]);
+
       yield put(authActions.requestLogSuccess());
     } else {
     yield put(authActions.requestLogFailed());

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Redirect, Route } from "react-router-dom";
 import DrawerCustomed from '../common/Drawer/Drawer';
 import SiderCustomed from '../common/Sider/Sider';
+import SalePage from '../containers/Staff/Sale';
 
 const AdminLayout = (props) => {
   // const location = useLocation();
@@ -48,12 +49,20 @@ export default function AdminTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={(propsComponent) => {
-        if(localStorage.getItem("access_token") != null) {
-          return (
-            <AdminLayout>
-              <Component {...propsComponent} />
-            </AdminLayout>
-          );
+        if(localStorage.getItem("access_token") != null ) {
+          console.log(localStorage.getItem("role"));
+          if (localStorage.getItem("role") === 'MANAGER') {
+            return (
+              <AdminLayout>
+                <Component {...propsComponent} />
+              </AdminLayout>
+            );
+          }
+          if (localStorage.getItem("role") === 'EMPLOYEE') {
+            return (
+              <SalePage/>
+            );
+          }
         }
 
         // return to auth page
