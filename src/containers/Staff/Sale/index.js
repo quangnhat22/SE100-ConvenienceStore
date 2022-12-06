@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Layout } from "antd";
-import { Content, Header } from "antd/lib/layout/layout";
+import { Content, Header, Footer } from "antd/lib/layout/layout";
 import SearchHeader from "./components/SearchHeader";
 
 // Data Demo
@@ -10,7 +10,7 @@ import listProduct from "./components/DataDemo";
 const SalePage = () => {
   return (
     <>
-      <Layout>
+      <Layout className="min-h-screen w-full">
         {/* SearchHeader */}
         <Header
           style={{ padding: 0, background: "#011529" }}
@@ -29,10 +29,8 @@ const SalePage = () => {
         </Header>
 
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
-        <Content className="flex justify-center items-center h-full w-full bg-slate-800">
-          <div className="text-5xl w-full h-screen flex justify-center items-center">
-            Đây là content bán hàng
-          </div>
+        <Content className="bg-slate-800">
+          <div className="text-5xl">Đây là content bán hàng</div>
         </Content>
       </Layout>
     </>
