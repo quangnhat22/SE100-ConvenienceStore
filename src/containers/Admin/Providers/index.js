@@ -58,7 +58,7 @@ const ProvidersPage = () => {
   const { providers } = useSelector((state) => state.providerSlice);
   console.log("providers", providers);
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER });
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }, []);
   const handleAddProvider = () => {
     dispatch(

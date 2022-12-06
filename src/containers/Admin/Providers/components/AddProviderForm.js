@@ -21,7 +21,7 @@ const AddProviderForm = ({ data }) => {
     };
     console.log(newProvider);
     // dispatch(providerActions.addNewProduct(newProvider));
-    dispatch({ type: SagaActionTypes.POST_PROVIDER, newProvider: newProvider });
+    dispatch({ type: SagaActionTypes.POST_PROVIDER_SAGA, newProvider: newProvider });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);

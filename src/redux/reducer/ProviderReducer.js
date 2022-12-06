@@ -1,8 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loading : false,
+  loading: false,
   providers: [],
+  provider: {
+    id: 0,
+    name: "",
+    email: "",
+    address: "",
+  },
 };
 
 const providerSlice = createSlice({
@@ -15,6 +21,9 @@ const providerSlice = createSlice({
     getListProviderSuccess: (state, action) => {
       state.providers = action.payload.providers;
       state.loading = false;
+    },
+    getProviderByIdSuccess: (state, action) => {
+      state.provider = action.payload.provider;
     },
   },
 });

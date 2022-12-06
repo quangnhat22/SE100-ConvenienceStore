@@ -15,7 +15,7 @@ const DeliveryNotes = () => {
   const [keyWord, setKeyWord] = useState("");
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES });
-    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER });
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }, []);
 
   const handleAddDeliveryNote = () => {

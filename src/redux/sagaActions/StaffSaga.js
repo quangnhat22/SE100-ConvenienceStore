@@ -21,9 +21,9 @@ function* actGetListStaffs() {
 
 function* actPostStaff(action) {
   try {
-    let { values } = action;
+    let { newStaff } = action;
     yield put(staffActions.getListStaffsInLoading());
-    let res = yield call(() => UserService.postUsers(values));
+    let res = yield call(() => UserService.postUsers(newStaff));
     if (res.status === 201) {
       yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
     } else {
@@ -36,9 +36,9 @@ function* actPostStaff(action) {
 
 function* actPutStaff(action) {
   try {
-    let { values } = action;
+    let { id, staff } = action;
     yield put(staffActions.getListStaffsInLoading());
-    let res = yield call(() => UserService.putUsersById(values));
+    let res = yield call(() => UserService.putUsersById(id, staff));
     if (res.status === 200) {
       yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
     } else {
@@ -51,9 +51,9 @@ function* actPutStaff(action) {
 
 function* actDeleteStaff(action) {
   try {
-    let { values } = action;
+    let { id } = action;
     yield put(staffActions.getListStaffsInLoading());
-    let res = yield call(() => UserService.deleteUserById(values));
+    let res = yield call(() => UserService.deleteUserById(id));
     if (res.status === 200) {
       yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
     } else {
