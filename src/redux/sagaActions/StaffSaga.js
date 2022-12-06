@@ -19,15 +19,58 @@ function* actGetListStaffs() {
   }
 }
 
-function* actPostStaffs(newStaffs) {
+function* actPostStaff(action) {
   try {
-    let { values } = newStaffs;
-    // yield put(staffActions.getListStaffsInLoading());
-    console.log(values);
+    let { values } = action;
+    yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.postUsers(values));
-    console.log("pót", res);
     if (res.status === 201) {
       yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
+function* actPutStaff(action) {
+  try {
+    let { values } = action;
+    yield put(staffActions.getListStaffsInLoading());
+    let res = yield call(() => UserService.putUsersById(values));
+    if (res.status === 200) {
+      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
+function* actDeleteStaff(action) {
+  try {
+    let { values } = action;
+    yield put(staffActions.getListStaffsInLoading());
+    let res = yield call(() => UserService.deleteUserById(values));
+    if (res.status === 200) {
+      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
+function* actGetStaffById(action) {
+  try {
+    let { id } = action;
+    let res = yield call(() => UserService.getUsersById(id));
+    let {data, status} = res;
+    if (status === 200) {
+      yield put(staffActions.getListStaffByIdSuccess({staff : data}));
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -41,11 +84,17 @@ export function* followActGetListStaffs() {
 }
 
 export function* followActPostStaff() {
-  yield takeLatest(SagaActionTypes.POST_USER_SAGA, actPostStaffs);
+  yield takeLatest(SagaActionTypes.POST_USER_SAGA, actPostStaff);
 }
-// export function* followActPostStaffs() {
-//   yield takeLatest(
-//     SagaActionTypes.POST_Staffs_SAGA,
-//     actPostStaffs
-//   );
-// }
+
+export function* followActPutStaff() {
+  yield takeLatest(SagaActionTypes.PUT_USER_SAGA, actPutStaff);
+}
+
+export function* followActDeleteStaff() {
+  yield takeLatest(SagaActionTypes.DELETE_USER_SAGA, actDeleteStaff);
+}
+
+export function* followActGetStaffById() {
+  yield takeLatest(SagaActionTypes.GET_USER_BY_ID_SAGA, actGetStaffById);
+}
