@@ -59,9 +59,8 @@ export default function AdminTemplate({ Component, ...props }) {
             );
           }
           if (localStorage.getItem("role") === 'EMPLOYEE') {
-            return (
-              <SalePage/>
-            );
+            // return  <Route exact path="/sales" component={SalePage} />;
+
           }
         }
 
