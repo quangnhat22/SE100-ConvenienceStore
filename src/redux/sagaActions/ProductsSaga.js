@@ -23,9 +23,9 @@ function* actGetListProducts() {
 
 function* actPostProducts(action) {
   try {
-    let { newProduct } = action;
+    let { newProducts } = action;
     yield put(productsActions.getListProductsLoading());
-    let res = yield call(() => ProductsService.postProducts(newProduct));
+    let res = yield call(() => ProductsService.postProducts(newProducts));
     if (res.status === 201) {
       yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
     } else {
