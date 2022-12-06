@@ -33,7 +33,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
       if (result.isConfirmed) {
         AlertCustom({ type: "success", title: "Đăng xuất thành công" });
         localStorage.removeItem("access_token");
-        // localStorage.removeItem("role");
+        localStorage.removeItem("role");
         history.replace("/");
       }
     });

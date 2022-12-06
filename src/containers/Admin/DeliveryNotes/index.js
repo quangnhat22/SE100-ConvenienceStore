@@ -11,11 +11,12 @@ import AddDeliveryNoteForm from "./components/AddDeliveryNoteForm";
 
 const DeliveryNotes = () => {
   const dispatch = useDispatch();
-  //   const { staffs } = useSelector((state) => state.staffsSlice);
+  const { deliveryNotes } = useSelector((state) => state.deliveryNotesSlice);
   const [keyWord, setKeyWord] = useState("");
-  //   useEffect(() => {
-  //     dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
-  //   }, []);
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+  }, []);
 
   const handleAddDeliveryNote = () => {
     dispatch(
@@ -66,7 +67,7 @@ const DeliveryNotes = () => {
           </button>
         </div>
       </div>
-      <TableDeliveryNotes keyWord={keyWord} />
+      <TableDeliveryNotes keyWord={keyWord} data={deliveryNotes} />
       <ModalForm />
     </>
   );

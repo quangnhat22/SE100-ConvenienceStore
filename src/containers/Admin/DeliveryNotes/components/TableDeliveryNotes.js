@@ -7,6 +7,7 @@ import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableDeliveryNotes = ({ keyWord, data }) => {
   const dispatch = useDispatch();
@@ -110,7 +111,7 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
           </button>
           <Popconfirm
             placement="top"
-            title="Bạn có chắc muốn xóa nhân viên này?"
+            title="Bạn có chắc muốn xóa phiếu nhập hàng này?"
             okText="Xác nhận"
             cancelText="Hủy"
             okType="default"
@@ -122,7 +123,7 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
               className:
                 "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
             }}
-            onConfirm={() => handleRemoveStaff(record)}
+            onConfirm={() => handleRemoveDeliveryNote(record)}
           >
             <button
               type="button"
@@ -136,8 +137,11 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
     },
   ];
 
-  const handleRemoveStaff = (staff) => {
-    dispatch(staffActions.removeStaffs(staff));
+  const handleRemoveDeliveryNote = (deliveryNote) => {
+    dispatch({
+      type: SagaActionTypes.DELETE_DELIVERY_NOTES_SAGA,
+      id: deliveryNote.id,
+    });
   };
 
   const handleEditStaff = (staff) => {

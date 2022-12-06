@@ -34,24 +34,17 @@ const DetailProviderForm = ({ provider }) => {
   const dispatch = useDispatch();
   const onFinish = (values) => {
     let newProvider = {
-      maSanPham: values.product_id,
-      tenSanPham: values.product_name,
-      giaNhap: values.product_buyprice,
-      giaBan: values.product_sellprice,
-      thue: values.product_tax,
-      // ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
-      // thoiHan: values.product_expiry_date[1].format(dateFormat),
-      soLuong: values.product_quantity,
-      moTa: values.product_description,
+      name: values.tenNhaCungCap,
+      email: values.email,
+      address: values.diaChi,
     };
-    // dispatch({
-    //   type: SagaActionTypes.POST_USER_SAGA,
-    //   values: newStaff,
-    // });
-    // dispatch(staffActions.editStaffs(newStaff));
     console.log(newProvider);
-    dispatch(providerActions.editProvider(newProvider));
-    //auto close modal
+    // dispatch(providerActions.addNewProduct(newProvider));
+    dispatch({
+      type: SagaActionTypes.PUT_PROVIDER_SAGA,
+      id: provider.id,
+      provider: newProvider,
+    });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);
@@ -62,21 +55,11 @@ const DetailProviderForm = ({ provider }) => {
       name="edit_provider_form"
       form={form}
       onFinish={onFinish}
-      initialValues={
-        {
-          // product_id: product.maSanPham,
-          // product_name: product.tenSanPham,
-          // product_buyprice: product.giaNhap,
-          // product_sellprice: product.giaBan,
-          // product_tax: product.thue,
-          // product_expiry_date: [
-          //   moment(product.ngaySanXuat, dateFormat),
-          //   moment(product.thoiHan, dateFormat),
-          // ],
-          // product_quantity: product.soLuong,
-          // product_description: product.moTa,
-        }
-      }
+      initialValues={{
+        tenNhaCungCap: provider.name,
+        email: provider.email,
+        diaChi: provider.address,
+      }}
     >
       <Form.Item
         name="tenNhaCungCap"
@@ -93,7 +76,7 @@ const DetailProviderForm = ({ provider }) => {
           disabled={componentDisabled}
         />
       </Form.Item>
-      <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
+      {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
         <Select
           className="rounded"
           placeholder="Nhóm nhà cung cấp"
@@ -112,7 +95,7 @@ const DetailProviderForm = ({ provider }) => {
         ]}
       >
         <Input placeholder="Số điện thoại" disabled={componentDisabled} />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         name="email"
         label="Email"
@@ -144,7 +127,7 @@ const DetailProviderForm = ({ provider }) => {
           disabled={componentDisabled}
         />
       </Form.Item>
-      <Form.Item name="nhanVien" label="Nhân viên phụ trách">
+      {/* <Form.Item name="nhanVien" label="Nhân viên phụ trách">
         <Select className="rounded" placeholder="Chọn nhân viên" />
       </Form.Item>
       <Form.Item name="moTa" label="Mô tả">
@@ -154,7 +137,7 @@ const DetailProviderForm = ({ provider }) => {
           placeholder="Mô tả"
           disabled={componentDisabled}
         />
-      </Form.Item>
+      </Form.Item> */}
 
       {enableModify === false ? (
         <Form.Item

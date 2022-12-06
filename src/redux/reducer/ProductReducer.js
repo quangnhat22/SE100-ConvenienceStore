@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  requestListProduct : false,
-  product: [
+  requestListProduct: false,
+  listProduct: [
     {
       maSanPham: "1",
       tenSanPham: "Nước rửa chén",
@@ -114,6 +114,17 @@ const initialState = {
       moTa: "",
     },
   ],
+  product: {
+    productId: "",
+    deliveryNoteId: 0,
+    MFG: "",
+    EXP: "",
+    cost: 0,
+    price: 0,
+    quantity: 0,
+    description: "",
+    image: "",
+  },
 };
 
 const productSlice = createSlice({
@@ -125,26 +136,10 @@ const productSlice = createSlice({
     },
     getListProductSuccess: (state, action) => {
       state.requestListProduct = false;
-      state.products = action.payload.products;
+      state.listProduct = action.payload.listProduct;
     },
-    addNewProduct: (state, action) => {
-      state.products = [action.payload, ...state.products];
-    },
-    // input: id
-    removeProduct: (state, action) => {
-      state.products = state.products.filter(
-        (reader) => reader.maSanPham !== action.payload.maSanPham
-      );
-    },
-    //input : reader
-    editProduct: (state, action) => {
-      state.products = state.products.map((product) => {
-        if (product.maSanPham === action.payload.maSanPham) {
-          return { ...action.payload };
-        } else {
-          return product;
-        }
-      });
+    getProductByIdSuccess: (state, action) => {
+      state.product = action.payload.product;
     },
   },
 });

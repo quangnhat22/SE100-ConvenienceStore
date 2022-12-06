@@ -15,7 +15,7 @@ import {
   Upload,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
@@ -27,9 +27,19 @@ const { Option } = Select;
 const AddDeliveryNoteForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-
+  const { providers } = useSelector((state) => state.providerSlice);
+  const options = providers.map(function (provider) {
+    return { value: provider.id, label: `${provider.id} - ${provider.name}` };
+  });
   const onFinish = (values) => {
-    // dispatch ({type: SagaActionTypes.POST_PRODUCTS_SAGA, values});
+    let newDeliveryNote = {
+      providerId: values.delivery_note_provider,
+      date: values.delivery_note_date.toISOString(),
+    };
+    dispatch({
+      type: SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
+      newDeliveryNote: newDeliveryNote,
+    });
   };
 
   return (
@@ -41,17 +51,6 @@ const AddDeliveryNoteForm = () => {
         delivery_note_date: moment(),
       }}
     >
-      {/* <Form.Item
-        label="Mã dòng sản phẩm"
-        name="maDongSanPham"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input placeholder="Mã dòng sản phẩm" />
-      </Form.Item> */}
       <Form.Item
         name="delivery_note_provider"
         label="Nhà cung cấp"
@@ -64,7 +63,7 @@ const AddDeliveryNoteForm = () => {
         <Select
           placeholder="Nhà cung cấp"
           allowClear
-          // options={options}
+          options={options}
         ></Select>
       </Form.Item>
       <Form.Item
