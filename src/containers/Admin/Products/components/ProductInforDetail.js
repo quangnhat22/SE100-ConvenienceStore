@@ -19,6 +19,8 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
@@ -38,23 +40,27 @@ const ProductInforDetail = ({ product }) => {
   };
 
   const onFinish = (values) => {
-    let newProduct = {
-      maSanPham: values.product_id,
-      tenSanPham: values.product_name,
-      giaNhap: values.product_buyprice,
-      giaBan: values.product_sellprice,
-      thue: values.product_tax,
-      ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
-      thoiHan: values.product_expiry_date[1].format(dateFormat),
-      soLuong: values.product_quantity,
-      moTa: values.product_description,
-    };
-    console.log(newProduct);
-    dispatch(productActions.editProduct(newProduct));
-    //auto close modal
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
+    // let editProduct = {
+    //   productId: ,
+    //   deliveryNoteId: ,
+    //   MFG: ,
+    //   EXP: ,
+    //   cost: ,
+    //   price: ,
+    //   quantity: ,
+    //   description: ,
+    //   image: ,
+    // };
+    // console.log(newProduct);
+    // // dispatch(productActions.editProduct(newProduct));
+    // dispatch({
+    //   type: SagaActionTypes.PUT_PRODUCT_SAGA,
+    //   editProduct: editProduct,
+    // });
+    // //auto close modal
+    // setTimeout(() => {
+    //   dispatch(modalActions.hideModal());
+    // }, 300);
   };
   const handleModify = () => {};
 

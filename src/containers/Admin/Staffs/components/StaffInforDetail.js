@@ -40,7 +40,7 @@ const StaffInforDetail = ({ staff }) => {
   };
 
   const onFinish = (values) => {
-    let newStaff = {
+    let editedStaff = {
       fullname: values.staff_name,
       birthday: values.staff_birth.toISOString(),
       identityNumber: values.staff_cccd,
@@ -52,12 +52,13 @@ const StaffInforDetail = ({ staff }) => {
       avatar: staff.avatar,
       role: staff.role,
     };
-    console.log(newStaff);
-    // dispatch({
-    //   type: SagaActionTypes.POST_USER_SAGA,
-    //   values: newStaff,
-    // });
-    dispatch(staffActions.editStaffs(newStaff));
+    console.log(staff.id);
+    dispatch({
+      type: SagaActionTypes.PUT_USER_SAGA,
+      id: staff.id,
+      staff: editedStaff,
+    });
+    // dispatch(staffActions.editStaffs(editedStaff));
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);

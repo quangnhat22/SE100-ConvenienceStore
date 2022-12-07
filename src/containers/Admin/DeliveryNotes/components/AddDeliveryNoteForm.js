@@ -83,11 +83,11 @@ const AddDeliveryNoteForm = () => {
       </Form.Item>
       <Form.Item
         wrapperCol={{
-          span: 20,
-          offset: 20,
+          span: 30,
+          offset: 21,
         }}
       >
-        <Button htmlType="submit">Submit</Button>
+        <Button htmlType="submit">Lưu</Button>
       </Form.Item>
     </FormCustomed>
   );

@@ -1,19 +1,24 @@
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Space, Popconfirm } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProviderForm from "./DetailProviderForm";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
-import { type } from "@testing-library/user-event/dist/type"
+import { type } from "@testing-library/user-event/dist/type";
 
 const TableProviders = (props) => {
-  const dispatch = useDispatch();
-  const { providers } = useSelector((state) => state.providerSlice);
-  const [page, setPage] = React.useState(1);
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+  }, []);
+  const { providers } = useSelector((state) => state.providerSlice);
+  console.log(providers);
+
+  const [page, setPage] = React.useState(1);
   const columns = [
     {
       title: "STT",
@@ -114,7 +119,7 @@ const TableProviders = (props) => {
               className:
                 "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
             }}
-            onConfirm={() => handleRemoveProvider(record)}
+            onConfirm={() => handleRemoveProviders(record)}
           >
             <button
               type="button"
@@ -137,8 +142,8 @@ const TableProviders = (props) => {
       })
     );
   };
-  const handleRemoveProviders = (provider) => {
-    dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: provider.id });
+  const handleRemoveProviders = (record) => {
+    dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: record.id });
   };
 
   return (

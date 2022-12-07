@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import Search from "antd/lib/input/Search";
-import TableRegulation from './components/TableRegulation';
-import RegualtionForm from './components/RegulationForm';
-import ModalForm from '../../../HOC/ModalForm';
+import TableRegulation from "./components/TableRegulation";
+import RegulationForm from "./components/RegulationForm";
+import ModalForm from "../../../HOC/ModalForm";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
-import { useDispatch } from 'react-redux';
-import TableOtherRegulation from './components/TableOtherRegulation';
+import { useDispatch } from "react-redux";
+import TableOtherRegulation from "./components/TableOtherRegulation";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const SettingPage = () => {
   const dispatch = useDispatch();
@@ -14,10 +15,10 @@ const SettingPage = () => {
     dispatch(
       modalActions.showModal({
         title: "Thêm trạng thái",
-        ComponentContent: <RegualtionForm />,
+        ComponentContent: <RegulationForm />,
       })
     );
-  }
+  };
 
   return (
     <>
@@ -30,7 +31,6 @@ const SettingPage = () => {
             className="flex items-center justify-center
                     bg-blue-500 h-8 w-60 p-2 ml-2 text-white  
                     mt-3 md:mt-0 hover:bg-blue-600 shadow-lg"
-
             onClick={handleAddNewRegulation}
           >
             <svg
@@ -51,15 +51,15 @@ const SettingPage = () => {
           </button>
         </div>
       </div>
-      <TableRegulation/>
+      <TableRegulation />
 
       <p className="ml-4 mt-5 font-semibold text-base">Quy định khác</p>
 
-      <TableOtherRegulation/>
-      
-      <ModalForm/>
-    </>
-  )
-}
+      <TableOtherRegulation />
 
-export default SettingPage
+      <ModalForm />
+    </>
+  );
+};
+
+export default SettingPage;

@@ -8,11 +8,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
 import ProductInforDetail from "./ProductInforDetail";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableProducts = () => {
   const dispatch = useDispatch();
-  // const { products } = useSelector((state) => state.productsSlice);
+  // const { products } = useSelector((state) => state.productSlice);
   const [page, setPage] = React.useState(1);
+  // let editProduct = {
+  //   : ,
+  //   deliveryNoteId: ,
+  //   MFG: ,
+  //   EXP: ,
+  //   cost: ,
+  //   price: ,
+  //   : ,
+  //   description: ,
+  //   : ,
   const columns = [
     {
       title: "STT",
@@ -32,8 +43,8 @@ const TableProducts = () => {
     },
     {
       title: "Mã sản phẩm",
-      dataIndex: "maSanPham",
-      key: "maSanPham",
+      dataIndex: "productId",
+      key: "productId",
       width: "10%",
       sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
       showOnResponse: true,
@@ -41,24 +52,24 @@ const TableProducts = () => {
     },
     {
       title: "Tên sản phẩm",
-      dataIndex: "tenSanPham",
-      key: "tenSanPham",
+      dataIndex: "name",
+      key: "name",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
       title: "Giá nhập",
-      dataIndex: "giaNhap",
-      key: "giaNhap",
+      dataIndex: "cost",
+      key: "cost",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
       title: "Giá bán",
-      dataIndex: "giaBan",
-      key: "giaBan",
+      dataIndex: "price",
+      key: "price",
       showOnResponse: true,
       showOnDesktop: true,
       width: "15%",
@@ -66,8 +77,8 @@ const TableProducts = () => {
     },
     {
       title: "Số lượng",
-      dataIndex: "soLuong",
-      key: "soLuong",
+      dataIndex: "quantity",
+      key: "quantity",
       showOnResponse: true,
       showOnDesktop: true,
       width: "10%",
@@ -81,34 +92,34 @@ const TableProducts = () => {
       showOnDesktop: true,
       ellipsis: true,
       width: "10%",
-      render: (text, record, index) => {
-        let colorTag = text === 0 ? "red" : text < 10 ? "yellow" : "green";
-        let contentTag =
-          text === 0 ? "Hết hàng" : text < 10 ? "Sắp hết hàng" : "Còn hàng";
-        return (
-          <Tag
-            key={index}
-            color={colorTag}
-            className="w-2/4 min-w-max text-center"
-          >
-            {contentTag}
-          </Tag>
-        );
-      },
-      filters: [
-        { text: "Còn hàng", value: 2 },
-        { text: "Sắp hết hàng", value: 1 },
-        { text: "Hết hàng", value: 0 },
-      ],
-      onFilter: (value, record) => {
-        if (value === 2) {
-          return record.soLuong >= 10;
-        } else if (value === 1) {
-          return record.soLuong < 10 && record.soLuong > 0;
-        } else {
-          return record.soLuong === 0;
-        }
-      },
+      // render: (text, record, index) => {
+      //   let colorTag = text === 0 ? "red" : text < 10 ? "yellow" : "green";
+      //   let contentTag =
+      //     text === 0 ? "Hết hàng" : text < 10 ? "Sắp hết hàng" : "Còn hàng";
+      //   return (
+      //     <Tag
+      //       key={index}
+      //       color={colorTag}
+      //       className="w-2/4 min-w-max text-center"
+      //     >
+      //       {contentTag}
+      //     </Tag>
+      //   );
+      // },
+      // filters: [
+      //   { text: "Còn hàng", value: 2 },
+      //   { text: "Sắp hết hàng", value: 1 },
+      //   { text: "Hết hàng", value: 0 },
+      // ],
+      // onFilter: (value, record) => {
+      //   if (value === 2) {
+      //     return record.soLuong >= 10;
+      //   } else if (value === 1) {
+      //     return record.soLuong < 10 && record.soLuong > 0;
+      //   } else {
+      //     return record.soLuong === 0;
+      //   }
+      // },
     },
     {
       title: "Thao tác",
@@ -155,17 +166,20 @@ const TableProducts = () => {
       ),
     },
   ];
-  const handleEditProduct = (product) => {
+  const handleEditProduct = (record) => {
     dispatch(
       modalActions.showModal({
         ComponentContent: (
-          <ProductInforDetail product={product}></ProductInforDetail>
+          <ProductInforDetail product={record}></ProductInforDetail>
         ),
       })
     );
   };
-  const handleRemoveProduct = (product) => {
-    dispatch(productActions.removeProduct(product));
+  const handleRemoveProduct = (record) => {
+    dispatch({
+      type: SagaActionTypes.DELETE_PRODUCT_ITEM_SAGA,
+      id: record.productId,
+    });
   };
   return (
     <>

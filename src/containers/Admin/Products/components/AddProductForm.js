@@ -6,6 +6,8 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
@@ -14,22 +16,26 @@ const AddProductForm = () => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const onFinish = (values) => {
-    let newProduct = {
-      maSanPham: moment().valueOf(),
-      tenSanPham: values.product_name,
-      giaNhap: values.product_buyprice,
-      giaBan: values.product_sellprice,
-      thue: values.product_tax,
-      ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
-      thoiHan: values.product_expiry_date[1].format(dateFormat),
-      soLuong: values.product_quantity,
-      moTa: values.product_description,
-    };
-    console.log(newProduct);
-    dispatch(productActions.addNewProduct(newProduct));
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
+    // let newProduct = {
+    //   productId: ,
+    //   deliveryNoteId: ,
+    //   MFG: ,
+    //   EXP: ,
+    //   cost: ,
+    //   price: ,
+    //   quantity: ,
+    //   description: ,
+    //   image: ,
+    // };
+    // console.log(newProduct);
+    // // dispatch(productActions.addNewProduct(newProduct));
+    // dispatch({
+    //   type: SagaActionTypes.POST_PRODUCT_ITEM_SAGA,
+    //   newProduct: newProduct,
+    // });
+    // setTimeout(() => {
+    //   dispatch(modalActions.hideModal());
+    // }, 300);
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
@@ -169,11 +175,11 @@ const AddProductForm = () => {
       </Form.Item>
       <Form.Item
         wrapperCol={{
-          span: 20,
-          offset: 20,
+          span: 30,
+          offset: 21,
         }}
       >
-        <Button htmlType="submit">Submit</Button>
+        <Button htmlType="submit">Lưu</Button>
       </Form.Item>
     </FormCustomed>
   );

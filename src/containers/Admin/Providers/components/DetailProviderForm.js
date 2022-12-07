@@ -3,7 +3,6 @@ import { Form, Input, Select, Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
-import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
@@ -33,17 +32,17 @@ const DetailProviderForm = ({ provider }) => {
   };
   const dispatch = useDispatch();
   const onFinish = (values) => {
-    let newProvider = {
-      name: values.tenNhaCungCap,
+    let editedProvider = {
+      name: values.name,
       email: values.email,
-      address: values.diaChi,
+      address: values.address,
     };
-    console.log(newProvider);
-    // dispatch(providerActions.addNewProduct(newProvider));
+    console.log(editedProvider);
+    // dispatch(providerActions.addNewProduct(editedProvider));
     dispatch({
       type: SagaActionTypes.PUT_PROVIDER_SAGA,
       id: provider.id,
-      provider: newProvider,
+      provider: editedProvider,
     });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
@@ -62,7 +61,7 @@ const DetailProviderForm = ({ provider }) => {
       }}
     >
       <Form.Item
-        name="tenNhaCungCap"
+        name="name"
         label="Tên nhà cung cấp"
         rules={[
           {
@@ -112,7 +111,7 @@ const DetailProviderForm = ({ provider }) => {
         />
       </Form.Item>
       <Form.Item
-        name="diaChi"
+        name="address"
         label="Địa chỉ"
         rules={[
           {

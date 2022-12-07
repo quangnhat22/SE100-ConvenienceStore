@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import StaffInforDetail from "./StaffInforDetail";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableStaffs = ({ keyWord, data }) => {
   const dispatch = useDispatch();
@@ -116,8 +117,11 @@ const TableStaffs = ({ keyWord, data }) => {
     },
   ];
 
-  const handleRemoveStaff = (staff) => {
-    dispatch(staffActions.removeStaffs(staff));
+  const handleRemoveStaff = (record) => {
+    dispatch({
+      type: SagaActionTypes.DELETE_USER_SAGA,
+      id: record.id,
+    });
   };
 
   const handleEditStaff = (staff) => {

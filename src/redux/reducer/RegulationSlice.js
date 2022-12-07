@@ -32,6 +32,16 @@ const initialState = {
     },
   ],
 };
+// const initialState = {
+//   loading: false,
+//   regulations: [],
+//   regulation: {
+//     id: 0,
+//     name: "",
+//     email: "",
+//     address: "",
+//   },
+// };
 
 const regulationSlice = createSlice({
   name: "regulation",

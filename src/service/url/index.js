@@ -27,4 +27,5 @@ export const URL_PRODUCT_ITEM_ID = (id) => `${DOMAIN_NAME}/product-item/${id}`;
 
 //PRODUCT ITEM QUANTITY STATE RULE
 export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE = `${DOMAIN_NAME}/product-item`;
-export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) => `${DOMAIN_NAME}/product-item/${id}`;
+export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) =>
+  `${DOMAIN_NAME}/product-item/${id}`;

@@ -1,23 +1,33 @@
 import { hover } from "@testing-library/user-event/dist/hover";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { regulationActions } from "../../../../redux/reducer/RegulationSlice";
 import Swal from "sweetalert2";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableRegulation = () => {
   const dispatch = useDispatch();
-  const { regulations } = useSelector((state) => state.regulationSlice);
+  const { regulations } = useSelector(
+    (state) => state.productItemsQuantitySlice
+  );
+  console.log(regulations);
+  useEffect(() => {
+    dispatch({
+      type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
+    });
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const columns = [
     {
       title: "Mã trạng thái",
-      dataIndex: "maTrangThai",
-      key: "maTrangThai",
+      dataIndex: "id",
+      key: "id",
       width: "10%",
       //defaultSortOrder: ["descend"],
       sorter: (item1, item2) => item1.id.localeCompare(item2.id),
@@ -27,24 +37,24 @@ const TableRegulation = () => {
     },
     {
       title: "Tên trạng thái",
-      dataIndex: "tenTrangThai",
-      key: "tenTrangThai",
+      dataIndex: "stateName",
+      key: "stateName",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
       title: "Giá trị tối thiểu",
-      dataIndex: "min",
-      key: "min",
+      dataIndex: "minVal",
+      key: "minVal",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
       title: "Giá trị tối đa",
-      dataIndex: "max",
-      key: "max",
+      dataIndex: "maxVal",
+      key: "maxVal",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
@@ -97,7 +107,7 @@ const TableRegulation = () => {
               className:
                 "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
             }}
-            onConfirm={() => handleRemoveRegulation(record.maTrangThai)}
+            onConfirm={() => handleRemoveRegulation(record)}
           >
             <button
               type="button"
@@ -111,9 +121,8 @@ const TableRegulation = () => {
     },
   ];
 
-  const handleRemoveRegulation = (maTrangThai) => {
-    console.log(maTrangThai);
-    if (maTrangThai === 3) {
+  const handleRemoveRegulation = (record) => {
+    if (record.id === 3) {
       Swal.fire({
         width: "400",
         height: "100",
@@ -126,11 +135,10 @@ const TableRegulation = () => {
       });
       return;
     } else {
-      dispatch(
-        regulationActions.removeRegulation({
-          maTrangThai: maTrangThai,
-        })
-      );
+      dispatch({
+        type: SagaActionTypes.DELETE_PRODUCT_ITEM_QUANTITY_RULE_SAGA,
+        id: record.id,
+      });
     }
   };
 

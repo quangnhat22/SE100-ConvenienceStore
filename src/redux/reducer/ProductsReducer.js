@@ -4,15 +4,9 @@ const initialState = {
   loading: false,
   products: [],
   productsById: {
-    maSanPham: "",
-    tenSanPham: "",
-    giaNhap: 0,
-    giaBan: 0,
-    thue: 0,
-    ngaySanXuat: "",
-    thoiHan: "",
-    soLuong: 0,
-    moTa: "",
+    id: "",
+    title: "",
+    tax: 0,
   },
 };
 

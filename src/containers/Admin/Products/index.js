@@ -27,7 +27,7 @@ const ProductsPage = () => {
   };
 
   // useEffect(() => {
-  //   dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+  //   dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
   // }, []);
 
   return (

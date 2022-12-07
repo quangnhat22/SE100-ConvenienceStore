@@ -44,7 +44,7 @@ const AddStaffForm = () => {
     console.log(newStaff);
     dispatch({
       type: SagaActionTypes.POST_USER_SAGA,
-      values: newStaff,
+      newStaff: newStaff,
     });
     setTimeout(() => {
       dispatch(modalActions.hideModal());

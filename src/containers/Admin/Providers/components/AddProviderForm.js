@@ -13,12 +13,11 @@ const AddProviderForm = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
     let newProvider = {
-      name: values.tenNhaCungCap,
+      name: values.name,
       email: values.email,
-      address: values.diaChi,
+      address: values.address,
     };
     console.log(newProvider);
-    // dispatch(providerActions.addNewProduct(newProvider));
     dispatch({ type: SagaActionTypes.POST_PROVIDER_SAGA, newProvider: newProvider });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
@@ -28,7 +27,7 @@ const AddProviderForm = () => {
   return (
     <FormCustomed name="add_provider_form" form={form} onFinish={onFinish}>
       <Form.Item
-        name="tenNhaCungCap"
+        name="name"
         label="Tên nhà cung cấp"
         rules={[
           {
@@ -66,7 +65,7 @@ const AddProviderForm = () => {
         <Input className="rounded" placeholder="example@host.com" />
       </Form.Item>
       <Form.Item
-        name="diaChi"
+        name="address"
         label="Địa chỉ"
         rules={[
           {
@@ -88,8 +87,8 @@ const AddProviderForm = () => {
       </Form.Item> */}
       <Form.Item
         wrapperCol={{
-          span: 25,
-          offset: 25,
+          span: 30,
+          offset: 21,
         }}
       >
         <Button htmlType="submit">Lưu</Button>

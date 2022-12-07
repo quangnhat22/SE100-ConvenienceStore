@@ -22,8 +22,11 @@ const ProductLinesForm = () => {
     };
     dispatch({
       type: SagaActionTypes.POST_PRODUCTS_SAGA,
-      values: newProductLine,
+      newProducts: newProductLine,
     });
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
