@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Select, Button, InputNumber } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
@@ -9,18 +8,16 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const AddProviderForm = ({ data }) => {
+const AddProviderForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [form] = Form.useForm();
   const onFinish = (values) => {
     let newProvider = {
-      name: values.tenNhaCungCap,
+      name: values.name,
       email: values.email,
-      address: values.diaChi,
+      address: values.address,
     };
     console.log(newProvider);
-    // dispatch(providerActions.addNewProduct(newProvider));
     dispatch({ type: SagaActionTypes.POST_PROVIDER_SAGA, newProvider: newProvider });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
@@ -30,7 +27,7 @@ const AddProviderForm = ({ data }) => {
   return (
     <FormCustomed name="add_provider_form" form={form} onFinish={onFinish}>
       <Form.Item
-        name="tenNhaCungCap"
+        name="name"
         label="Tên nhà cung cấp"
         rules={[
           {
@@ -68,7 +65,7 @@ const AddProviderForm = ({ data }) => {
         <Input className="rounded" placeholder="example@host.com" />
       </Form.Item>
       <Form.Item
-        name="diaChi"
+        name="address"
         label="Địa chỉ"
         rules={[
           {
@@ -90,8 +87,8 @@ const AddProviderForm = ({ data }) => {
       </Form.Item> */}
       <Form.Item
         wrapperCol={{
-          span: 25,
-          offset: 25,
+          span: 30,
+          offset: 21,
         }}
       >
         <Button htmlType="submit">Lưu</Button>

@@ -92,7 +92,7 @@ export function* followActPostProducts() {
 }
 
 // export function* followActPutProducts() {
-//   yield takeLatest(SagaActionTypes.PUT_PRODUCTS_SAGA, actPutProducts);
+//   yield takeLatest(SagaActionTypes.PUT_PRODUCT_SAGA, actPutProducts);
 // }
 
 export function* followActDeleteProducts() {

@@ -2,10 +2,10 @@ import { Form } from "antd";
 import Search from "antd/lib/input/Search";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as SagaActionTypes from "../../../redux/constants/constant";
 import TableProductLines from "./components/TableProductLines";
 import ProductLinesForm from "./components/ProductLinesForm";
 import ModalForm from "../../../HOC/ModalForm";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 
 const ProductLinesPage = () => {

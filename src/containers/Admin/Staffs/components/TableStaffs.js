@@ -1,4 +1,4 @@
-import { Table, Popconfirm, Space } from "antd";
+import { Popconfirm, Space } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import StaffInforDetail from "./StaffInforDetail";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableStaffs = ({ keyWord, data }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
 
   const columns = [
     {
@@ -117,8 +117,11 @@ const TableStaffs = ({ keyWord, data }) => {
     },
   ];
 
-  const handleRemoveStaff = (staff) => {
-    dispatch(staffActions.removeStaffs(staff));
+  const handleRemoveStaff = (record) => {
+    dispatch({
+      type: SagaActionTypes.DELETE_USER_SAGA,
+      id: record.id,
+    });
   };
 
   const handleEditStaff = (staff) => {

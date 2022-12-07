@@ -3,10 +3,10 @@ import * as UrlApi from "../url";
 
 export const ProductsService = {
   postProducts: (products) => {
-    let {title} = products;
+    let { title, tax } = products;
     return Axios.post(UrlApi.URL_PRODUCTS, {
       title: title,
-      tax: 10,
+      tax: tax,
     });
   },
   getProducts: () => {
@@ -19,7 +19,7 @@ export const ProductsService = {
     return Axios.delete(UrlApi.URL_PRODUCT_ID(id));
   },
   putProductsById: (id, products) => {
-    let {title, tax} = products;
+    let { title, tax } = products;
     return Axios.put(UrlApi.URL_PRODUCT_ID(id), {
       title: title,
       tax: tax,

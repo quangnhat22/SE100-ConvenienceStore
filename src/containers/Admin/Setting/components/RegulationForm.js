@@ -8,9 +8,9 @@ import { regulationActions } from "../../../../redux/reducer/RegulationSlice";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import moment from "moment";
 import Swal from "sweetalert2";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-
-const RegualtionForm = () => {
+const RegulationForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -29,19 +29,22 @@ const RegualtionForm = () => {
       return;
     }
     console.log(values);
-    let newRegualtion = {
-      maTrangThai: moment().valueOf(),
-      tenTrangThai: values.tenTrangThai,
-      min: values.min,
-      max: values.max,
+    let newRegulation = {
+      stateName: values.stateName,
+      minVal: values.minVal,
+      maxVal: values.maxVal,
       color: values.color.hex,
     };
+    dispatch({
+      type: SagaActionTypes.POST_PRODUCT_ITEM_QUANTITY_RULE_SAGA,
+      newProductItemQuantityState: newRegulation,
+    });
 
-    dispatch(regulationActions.addNewRegulation(newRegualtion));
+    // dispatch(regulationActions.addNewRegulation(newRegulation));
 
     setTimeout(() => {
-      dispatch( modalActions.hideModal() );
-    }, 300)
+      dispatch(modalActions.hideModal());
+    }, 300);
 
     Swal.fire({
       width: "400",
@@ -53,15 +56,13 @@ const RegualtionForm = () => {
       timer: 1000,
       timerProgressBar: true,
     });
-
-    
   };
   //const initialValues = { color: { r: 26, g: 14, b: 85, a: 1 } };
 
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
       <Form.Item
-        name="tenTrangThai"
+        name="stateName"
         label="Tên trạng thái"
         rules={[
           {
@@ -72,7 +73,7 @@ const RegualtionForm = () => {
         <Input placeholder="Tên trạng thái" />
       </Form.Item>
       <Form.Item
-        name="min"
+        name="minVal"
         label="Số lượng tối thiểu"
         rules={[
           {
@@ -90,7 +91,7 @@ const RegualtionForm = () => {
         />
       </Form.Item>
       <Form.Item
-        name="max"
+        name="maxVal"
         label="Số lượng tối đa"
         rules={[
           {
@@ -109,7 +110,7 @@ const RegualtionForm = () => {
       </Form.Item>
 
       <Form.Item name="color" label={"Colorpicker"}>
-        <Colorpicker/>
+        <Colorpicker />
       </Form.Item>
 
       <Form.Item
@@ -123,4 +124,4 @@ const RegualtionForm = () => {
     </FormCustomed>
   );
 };
-export default RegualtionForm;
+export default RegulationForm;

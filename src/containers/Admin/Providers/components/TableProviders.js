@@ -1,19 +1,23 @@
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import { Tag, Space, Popconfirm } from "antd";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Space, Popconfirm } from "antd";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
-import { useHistory } from "react-router-dom";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProviderForm from "./DetailProviderForm";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { type } from "@testing-library/user-event/dist/type";
 
-const TableProvider = (props) => {
+const TableProviders = (props) => {
+
   const dispatch = useDispatch();
-  // const { products } = useSelector((state) => state.productSlice);
-  const history = useHistory();
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+  }, []);
+  const { providers } = useSelector((state) => state.providerSlice);
+  console.log(providers);
+
   const [page, setPage] = React.useState(1);
   const columns = [
     {
@@ -34,6 +38,7 @@ const TableProvider = (props) => {
       title: "Tên nhà cung cấp",
       dataIndex: "name",
       key: "name",
+      sorter: (item1, item2) => item1.name.localeCompare(item2.name),
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -43,7 +48,6 @@ const TableProvider = (props) => {
       key: "email",
       showOnResponse: true,
       showOnDesktop: true,
-      ellipsis: true,
     },
     {
       title: "Địa chỉ",
@@ -86,7 +90,7 @@ const TableProvider = (props) => {
     // },
     {
       title: "Thao tác",
-      key: "thaoTac",
+      key: "action",
       ellipsis: true,
       showOnResponse: true,
       showOnDesktop: true,
@@ -138,15 +142,15 @@ const TableProvider = (props) => {
       })
     );
   };
-  const handleRemoveProviders = (provider) => {
-    dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: provider.id });
+  const handleRemoveProviders = (record) => {
+    dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: record.id });
   };
 
   return (
     <>
       <TableTemplate
         columns={columns}
-        dataSource={props.listProviders}
+        dataSource={providers}
         pagination={{
           onChange(current) {
             setPage(current);
@@ -155,11 +159,10 @@ const TableProvider = (props) => {
           showSizeChanger: false,
           pageSizeOptions: ["6"],
         }}
-        rowKey={"maNhaCungCap"}
+        rowKey={"id"}
       />
-      {/* <ModalForm isModalOpen={isOpen} /> */}
     </>
   );
 };
 
-export default TableProvider;
+export default TableProviders;

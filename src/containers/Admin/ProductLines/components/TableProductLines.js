@@ -2,9 +2,15 @@ import { useState } from "react";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import moment from "moment";
 import ModalForm from "../../../../HOC/ModalForm";
+import { Popconfirm, Space } from "antd";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { useDispatch } from "react-redux";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
 
 const TableProductLines = ({ data }) => {
   console.log("data: ", data);
+  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const columns = [
     {
@@ -38,7 +44,66 @@ const TableProductLines = ({ data }) => {
         return <div>{record.tax + "%"}</div>;
       },
     },
+    {
+      title: "Thao tác",
+      key: "action",
+      ellipsis: true,
+      width: "10%",
+      showOnResponse: true,
+      showOnDesktop: true,
+      fixed: "right",
+      align: "center",
+      render: (text, record, index) => (
+        <Space size="middle" key={index}>
+          {/* <button
+            type="button"
+            className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
+            // onClick={() => handleEditProductLine(record)}
+          >
+            <EditFilled />
+          </button> */}
+          <Popconfirm
+            placement="top"
+            title="Bạn có chắc muốn xóa sản phẩm này?"
+            okText="Xác nhận"
+            cancelText="Hủy"
+            okType="default"
+            okButtonProps={{
+              className:
+                "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
+            }}
+            cancelButtonProps={{
+              className:
+                "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
+            }}
+            onConfirm={() => handleRemoveProductLine(record)}
+          >
+            <button
+              type="button"
+              className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
+            >
+              <DeleteFilled />
+            </button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
+  // const handleEditProduct = (record) => {
+  //   dispatch(
+  //     modalActions.showModal({
+  //       ComponentContent: (
+  //         <ProductInforDetail productLine={record}></ProductInforDetail>
+  //       ),
+  //     })
+  //   );
+  // };
+  const handleRemoveProductLine = (record) => {
+    dispatch({
+      type: SagaActionTypes.DELETE_PRODUCTS_SAGA,
+      id: record.id,
+    });
+  };
   return (
     <>
       <TableTemplate
@@ -52,7 +117,7 @@ const TableProductLines = ({ data }) => {
           showSizeChanger: false,
           pageSizeOptions: ["6"],
         }}
-        rowKey={"maDongSanPham"}
+        rowKey={"id"}
       />
     </>
   );
