@@ -71,7 +71,9 @@ const SiderCustomed = ({ setVisibleButton }) => {
         selectedKeys={[
           location.pathname === "/dash-board"
             ? "1"
-            : location.pathname === "/products"
+            : location.pathname === "/products" ||
+              location.pathname === "/add_product" ||
+              location.pathname.includes("/detail_product")
             ? "2"
             : location.pathname === "/staffs"
             ? "3"

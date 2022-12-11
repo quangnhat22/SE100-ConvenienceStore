@@ -7,6 +7,8 @@ import StaffsPage from "../containers/Admin/Staffs";
 import ProvidersPage from "../containers/Admin/Providers";
 import ProductLinesPage from "../containers/Admin/ProductLines";
 import DeliveryNotes from "../containers/Admin/DeliveryNotes";
+import AddProductPage from "../containers/Admin/Products/components/AddProductPage";
+import DetailProductPage from "../containers/Admin/Products/components/DetailProductPage";
 
 const routesAdmin = [
   {
@@ -18,6 +20,16 @@ const routesAdmin = [
     exact: false,
     path: "/products",
     component: ProductsPage,
+  },
+  {
+    exact: false,
+    path: "/add_product",
+    component: AddProductPage,
+  },
+  {
+    exact: false,
+    path: "/detail_product/:id",
+    component: DetailProductPage,
   },
   {
     exact: false,

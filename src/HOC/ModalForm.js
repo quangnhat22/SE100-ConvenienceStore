@@ -1,6 +1,5 @@
 import { Modal } from "antd";
 import React from "react";
-import AddProductForm from "../containers/Admin/Products/components/AddProductForm";
 import AddStaffForm from "../containers/Admin/Staffs/components/AddStaffForm";
 import { useSelector, useDispatch } from 'react-redux';
 import {modalActions} from "../redux/reducer/ModalReducer";

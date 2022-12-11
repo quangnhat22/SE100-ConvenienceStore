@@ -5,20 +5,16 @@ import React, { useState, useEffect } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
-import { regulationActions } from "../../../../redux/reducer/RegulationSlice";
 import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableRegulation = () => {
   const dispatch = useDispatch();
-  const { regulations } = useSelector(
-    (state) => state.productItemsQuantitySlice
-  );
+  //Lưu ý chỗ này làm trắng màn hình
+  const regulations = useSelector((state) => state.productItemsQuantitySlice);
   console.log(regulations);
   useEffect(() => {
-    dispatch({
-      type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
-    });
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA });
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -95,7 +91,7 @@ const TableRegulation = () => {
           </button>
           <Popconfirm
             placement="top"
-            title="Bạn có chắc muốn xóa sản phẩm này?"
+            title="Bạn có chắc muốn xóa trạng thái này?"
             okText="Xác nhận"
             cancelText="Hủy"
             okType="default"

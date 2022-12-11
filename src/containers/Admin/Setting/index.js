@@ -29,8 +29,8 @@ const SettingPage = () => {
           {/* button search */}
           <button
             className="flex items-center justify-center
-                    bg-blue-500 h-8 w-60 p-2 ml-2 text-white  
-                    mt-3 md:mt-0 hover:bg-blue-600 shadow-lg"
+                    bg-blue-500 h-8 w-fit p-2 text-white
+                    md:mt-0 hover:bg-blue-600 shadow-lg rounded whitespace-nowrap"
             onClick={handleAddNewRegulation}
           >
             <svg
