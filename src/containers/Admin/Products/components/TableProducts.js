@@ -7,8 +7,8 @@ import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
-import ProductInforDetail from "./ProductInforDetail";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { useHistory } from "react-router-dom";
 
 const TableProducts = () => {
   const dispatch = useDispatch();
@@ -167,13 +167,10 @@ const TableProducts = () => {
     },
   ];
   const handleEditProduct = (record) => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: (
-          <ProductInforDetail product={record}></ProductInforDetail>
-        ),
-      })
-    );
+    useHistory.push({
+      pathname: "/detail_product",
+      state: { product: record },
+    });
   };
   const handleRemoveProduct = (record) => {
     dispatch({

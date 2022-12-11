@@ -3,7 +3,6 @@ import React from "react";
 import TableProducts from "./components/TableProducts";
 import ModalForm from "../../../HOC/ModalForm";
 import { useSelector, useDispatch } from "react-redux";
-import AddProductForm from "./components/AddProductForm";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import {
   DownloadOutlined,
@@ -14,21 +13,23 @@ import { Button, Space } from "antd";
 import { useEffect } from "react";
 import { type } from "@testing-library/user-event/dist/type";
 import * as SagaActionTypes from "../../../redux/constants/constant";
+import { pureFinalPropsSelectorFactory } from "react-redux/es/connect/selectorFactory";
+import { useHistory } from "react-router-dom";
 
 const ProductsPage = () => {
-  const dispatch = useDispatch();
+  const history = useHistory();
+
+  // const handleAddProduct = () => {
+  //   dispatch(
+  //     modalActions.showModal({
+  //       ComponentContent: <AddProductForm />,
+  //     })
+  //   );
+  // };
 
   const handleAddProduct = () => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: <AddProductForm />,
-      })
-    );
+    history.push("/add_product");
   };
-
-  // useEffect(() => {
-  //   dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
-  // }, []);
 
   return (
     <>
