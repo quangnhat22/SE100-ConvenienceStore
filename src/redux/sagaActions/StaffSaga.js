@@ -37,8 +37,10 @@ function* actPostStaff(action) {
 function* actPutStaff(action) {
   try {
     let { id, staff } = action;
+    console.log(action);
     yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.putUsersById(id, staff));
+    console.log(res);
     if (res.status === 200) {
       yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
     } else {
@@ -68,9 +70,9 @@ function* actGetStaffById(action) {
   try {
     let { id } = action;
     let res = yield call(() => UserService.getUsersById(id));
-    let {data, status} = res;
+    let { data, status } = res;
     if (status === 200) {
-      yield put(staffActions.getListStaffByIdSuccess({staff : data}));
+      yield put(staffActions.getListStaffByIdSuccess({ staff: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }

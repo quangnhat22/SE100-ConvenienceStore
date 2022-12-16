@@ -33,13 +33,9 @@ export const UserService = {
       role: role,
     });
   },
-  putUsersById: (
-    id,
-    user,
-  ) => {
+  putUsersById: (id, user) => {
     let {
       email,
-      password,
       fullname,
       birthday,
       identityNumber,
@@ -50,9 +46,9 @@ export const UserService = {
       avatar,
       role,
     } = user;
-    return Axios.put(UrlApi.URL_USERS_ID(id), {
+    return Axios.put(UrlApi.URL_USERS, {
+      id: id,
       email: email,
-      password: password,
       fullname: fullname,
       birthday: birthday,
       identityNumber: identityNumber,

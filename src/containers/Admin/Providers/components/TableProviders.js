@@ -9,15 +9,8 @@ import DetailProviderForm from "./DetailProviderForm";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { type } from "@testing-library/user-event/dist/type";
 
-const TableProviders = (props) => {
-
+const TableProviders = ({ data, keyWord }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
-  }, []);
-  const { providers } = useSelector((state) => state.providerSlice);
-  console.log(providers);
-
   const [page, setPage] = React.useState(1);
   const columns = [
     {
@@ -33,6 +26,15 @@ const TableProviders = (props) => {
       sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
       showOnResponse: true,
       showOnDesktop: true,
+      filteredValue: [keyWord],
+      onFilter: (value, record) => {
+        return (
+          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.name).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.email).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.address).toLowerCase().includes(value.toLowerCase())
+        );
+      },
     },
     {
       title: "Tên nhà cung cấp",
@@ -150,7 +152,7 @@ const TableProviders = (props) => {
     <>
       <TableTemplate
         columns={columns}
-        dataSource={providers}
+        dataSource={data}
         pagination={{
           onChange(current) {
             setPage(current);

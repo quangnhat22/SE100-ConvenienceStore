@@ -1,12 +1,11 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TableStaffs from "./components/TableStaffs";
 import ModalForm from "../../../HOC/ModalForm";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddStaffForm from "./components/AddStaffForm";
-import { useEffect } from "react";
 import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const StaffsPage = () => {
