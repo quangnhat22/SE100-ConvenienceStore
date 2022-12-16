@@ -14,6 +14,7 @@ const FormCustomed = (props) => {
   };
   return (
     <Form
+      className="customForm"
       labelCol={{
         span: 8,
       }}

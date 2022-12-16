@@ -3,7 +3,8 @@ import { UserOutlined } from "@ant-design/icons";
 import { Layout } from "antd";
 import { Content, Header, Footer } from "antd/lib/layout/layout";
 import SearchHeader from "./components/SearchHeader";
-
+import PaymentForm from "./components/PaymentForm";
+import ListItem from "./components/ListItem";
 // Data Demo
 import listProduct from "./components/DataDemo";
 
@@ -29,8 +30,13 @@ const SalePage = () => {
         </Header>
 
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
-        <Content className="bg-slate-800">
-          <div className="text-5xl">Đây là content bán hàng</div>
+        <Content className="flex">
+          {/* <div class="w-2/3 bg-slate-300">
+            <ListItem />
+          </div> */}
+          {/* <div class="w-1/3 min-w-200">
+            <PaymentForm />
+          </div> */}
         </Content>
       </Layout>
     </>

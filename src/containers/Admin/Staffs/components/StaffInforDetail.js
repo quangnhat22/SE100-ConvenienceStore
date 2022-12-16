@@ -52,7 +52,7 @@ const StaffInforDetail = ({ staff }) => {
       avatar: staff.avatar,
       role: staff.role,
     };
-    console.log(staff.id);
+    console.log(staff);
     dispatch({
       type: SagaActionTypes.PUT_USER_SAGA,
       id: staff.id,
