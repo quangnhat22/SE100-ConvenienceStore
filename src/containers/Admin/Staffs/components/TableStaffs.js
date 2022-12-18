@@ -1,4 +1,4 @@
-import { Popconfirm, Space } from "antd";
+import { Popconfirm, Space, Spin } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
@@ -9,7 +9,7 @@ import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import StaffInforDetail from "./StaffInforDetail";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const TableStaffs = ({ keyWord, data }) => {
+const TableStaffs = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
 
@@ -131,7 +131,15 @@ const TableStaffs = ({ keyWord, data }) => {
       })
     );
   };
-
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
   return (
     <>
       <TableTemplate

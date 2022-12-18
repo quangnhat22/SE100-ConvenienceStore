@@ -10,7 +10,7 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const StaffsPage = () => {
   const dispatch = useDispatch();
-  const { staffs } = useSelector((state) => state.staffsSlice);
+  const { staffs, loading } = useSelector((state) => state.staffsSlice);
   const [keyWord, setKeyWord] = useState("");
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
@@ -65,7 +65,7 @@ const StaffsPage = () => {
           </button>
         </div>
       </div>
-      <TableStaffs keyWord={keyWord} data={staffs} />
+      <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
       <ModalForm />
     </>
   );

@@ -27,6 +27,7 @@ const dateFormat = "DD/MM/YYYY";
 const AddStaffForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const { submitSuccess } = useSelector((state) => state.staffsSlice);
   const onFinish = (values) => {
     let newStaff = {
       fullname: values.staff_name,
@@ -46,9 +47,9 @@ const AddStaffForm = () => {
       type: SagaActionTypes.POST_USER_SAGA,
       newStaff: newStaff,
     });
-    setTimeout(() => {
+    if (submitSuccess === true) {
       dispatch(modalActions.hideModal());
-    }, 300);
+    }
   };
   return (
     <FormCustomed name="add_staff_form" form={form} onFinish={onFinish}>

@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { staffActions } from "../reducer/StaffReducer";
 import { UserService } from "../../service/api/UserApi";
+import AlertCustom from "../../common/Notification/Alert";
 
 function* actGetListStaffs() {
   try {
@@ -25,12 +26,16 @@ function* actPostStaff(action) {
     yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.postUsers(newStaff));
     if (res.status === 201) {
+      yield put(staffActions.actionSuccess());
+      AlertCustom({ type: "success", title: "Thêm nhân viên thành công" });
       yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Thêm nhân viên thất bại" });
+      yield put(staffActions.actionFail());
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: "Thêm nhân viên thất bại" });
+    yield put(staffActions.actionFail());
   }
 }
 
