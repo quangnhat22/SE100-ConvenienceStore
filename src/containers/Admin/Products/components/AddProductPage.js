@@ -84,7 +84,7 @@ const AddProductPage = ({ data }) => {
       <div className="gap-8 mt-10 flex flex-col w-full lg:w-3/5 md:flex-row mx-10">
         {/* Thông tin sản phẩm */}
         <div className="rounded bg-white shadow-xl px-5 py-8">
-          <header className="font-bold text-xl">Thông tin sản phẩm</header>
+          <header className="font-bold text-xl mb-5">Thông tin sản phẩm</header>
           <Form
             form={productInformationForm}
             layout="vertical"
@@ -169,7 +169,7 @@ const AddProductPage = ({ data }) => {
 
         {/* Thông tin nhập hàng */}
         <div className="rounded bg-white shadow-xl  px-5 py-8">
-          <header className="font-bold text-xl whitespace-nowrap">
+          <header className="font-bold text-xl whitespace-nowrap mb-5">
             Thông tin nhập hàng
             <InfoCircleTwoTone className="ml-1" />
           </header>

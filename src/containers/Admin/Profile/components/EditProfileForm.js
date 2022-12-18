@@ -143,13 +143,13 @@ const EditProfileForm = ({ account }) => {
           <Form.Item
             name="images"
             label="Ảnh nhân viên"
-            initialValue={account.images}
             valuePropName="fileList"
           >
             <Upload
               accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
               action="/upload.do"
               listType="picture-card"
+              fileList={account.image}
               // onPreview={() => {}}
               // onRemove={() => {}}
               // onChange={handleChange}

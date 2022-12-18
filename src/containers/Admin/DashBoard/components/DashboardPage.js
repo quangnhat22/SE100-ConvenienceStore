@@ -117,34 +117,40 @@ const DashboardPage = () => {
         <div className="flex flex-wrap justify-between gap-y-10">
           {/* Card sản phẩm */}
           <Card
-            className="w-80 shadow-md"
+            className="w-80 shadow-md rounded"
             size="small"
             title="Sản phẩm"
-            headStyle={{ fontWeight: "bold", fontSize: "18px" }}
+            headStyle={{ fontWeight: "bold", fontSize: "25px" }}
             extra={
               <Link
                 /* onClick={() => handleCardProductDetail(source)} */
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
-                to = "products"
+                to="products"
               >
                 Chi tiết
               </Link>
             }
           >
-            <div className="font-bold text-2xl py-2">
+            {/* <div className="font-bold text-2xl py-2">
               {productTypes + " loại"}
+            </div> */}
+            <div className="text-yellow-400 opacity-80 font-bold text-lg py-2">
+              {"Sắp hết hạn: "}
+              <span class="text-lg text-black">
+                {productNearExpirationDate}
+              </span>
             </div>
-            <div className="text-yellow-400 opacity-80">
-              {"Sắp hết hạn: " + productNearExpirationDate}
+            <div className="text-red-500 font-bold text-lg py-2">
+              {"Hết hàng: "}
+              <span class="text-lg text-black">{outOfStock}</span>
             </div>
-            <div className="text-red-600 opacity-60">{"Hết hàng: " + outOfStock}</div>
           </Card>
           {/* Card nhân viên */}
           <Card
-            className="w-80 shadow-md"
+            className="w-80 shadow-md rounded"
             size="small"
             title="Nhân viên"
-            headStyle={{ fontWeight: "bold", fontSize: "18px" }}
+            headStyle={{ fontWeight: "bold", fontSize: "25px" }}
             extra={
               <Link
                 /* onClick={() => handleCardStaffDetail(source)} */
@@ -155,38 +161,37 @@ const DashboardPage = () => {
               </Link>
             }
           >
-            <div className="font-bold text-2xl py-2">
+            <div className="font-bold text-lg py-2">
               {numberOfStaff + " người"}
             </div>
           </Card>
           {/* Card tổng doanh thu */}
           <Card
-            className="w-80 shadow-md"
+            className="w-80 shadow-md rounded"
             size="small"
             title="Tổng doanh thu"
-            headStyle={{ fontWeight: "bold", fontSize: "18px" }}
+            headStyle={{ fontWeight: "bold", fontSize: "25px" }}
             extra={
               <Link
                 /* onClick={() => handleCardRevenueDetail(source)} */
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
-                to = "financial"
+                to="financial"
               >
                 Chi tiết
               </Link>
             }
           >
-            <div className="font-bold text-2xl py-2">
+            <div className="font-bold text-lg py-2">
               {totalRevenue + " VNĐ"}
             </div>
           </Card>
         </div>
-
         {/* Bảng biểu */}
         <div className="bg-white mt-10 md:mt-12 flex flex-col border-box shadow-md">
           {/* Lọc và tiêu đề */}
-          <div className="flex flex-col items-center justify-end lg:flex-row border-0 border-b border-gray-200 border-solid px-5">
-            <div className="inline-block text-blue-500 p-2 lg:p-0 lg:mr-auto text-xl">
-              SẢN PHẨM BÁN CHẠY
+          {/* <div className="flex flex-col items-center justify-end lg:flex-row border-0 border-b border-gray-200 border-solid px-5">
+            <div className="inline-block text-blue-500 p-2 lg:p-0 lg:mr-auto font-bold text-[28px]">
+              Tổng quan
             </div>
             <Space
               className="p-2 flex items-center justify-center"
@@ -198,7 +203,6 @@ const DashboardPage = () => {
                 defaultValue="Hôm nay"
                 disabled={isDisabled}
               />
-              {/* Lọc ngày tháng */}
               <RangePicker
                 ranges={{
                   Today: [moment(), moment()],
@@ -210,16 +214,42 @@ const DashboardPage = () => {
                 placeholder={["Thời điểm bắt đầu", "Thời điểm kết thúc"]}
               />
             </Space>
-          </div>
+          </div> */}
 
           {/* Biểu đồ */}
           <div className="m-5 box-border flex flex-wrap gap-y-10 gap-x-20">
-            <div className="mr-auto inline-block flex flex-col grow gap-y-10">
-              <div className="text-lg font-bold">Xu hướng bán chạy</div>
+            <div className="mr-x6-scroll-box-auto-hide flex flex-col grow gap-y-10">
+              <div className="flex justify-end items-center">
+                <span className="text-lg font-bold inline-block mr-auto">
+                  Doanh thu trong tháng
+                </span>
+                <span className="inline-block ml-5">
+                  <Link
+                    /* onClick={() => handleCardProductDetail(source)} */
+                    className="text-blue-500 cursor-pointer hover:text-blue-600 hover:underline"
+                    to="products"
+                  >
+                    Chi tiết
+                  </Link>
+                </span>
+              </div>
               <Chart />
             </div>
-            <div className="inline-block flex flex-col grow w-fit">
-              <div className="text-lg font-bold">Bảng xếp hạng</div>
+            <div className="flex flex-col grow">
+              <div className="flex justify-start items-center">
+                <span className="text-lg font-bold inline-block">
+                  Bán chạy trong tuần
+                </span>
+                <span className="inline-block ml-5">
+                  <Link
+                    /* onClick={() => handleCardProductDetail(source)} */
+                    className="text-blue-500 cursor-pointer hover:text-blue-600 hover:underline"
+                    to="products"
+                  >
+                    Thêm
+                  </Link>
+                </span>
+              </div>
               <Table
                 className="customTable w-fit mt-2"
                 rowKey={"id"}
