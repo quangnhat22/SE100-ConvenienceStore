@@ -1,12 +1,19 @@
 import Search from "antd/lib/input/Search";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableProviders from "./components/TableProviders";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddProviderForm from "./components/AddProviderForm";
 import ModalForm from "../../../HOC/ModalForm";
+import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const ProvidersPage = () => {
   const dispatch = useDispatch();
+  const { providers } = useSelector((state) => state.providerSlice);
+  const [keyWord, setKeyWord] = useState("");
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+  }, []);
   const handleAddProvider = () => {
     dispatch(
       modalActions.showModal({
@@ -27,7 +34,9 @@ const ProvidersPage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            // onSearch={onSearch}
+            onSearch={(value) => {
+              setKeyWord(value);
+            }}
           />
           {/* button search */}
           <button
@@ -55,7 +64,7 @@ const ProvidersPage = () => {
         </div>
       </div>
 
-      <TableProviders />
+      <TableProviders data={providers} keyWord={keyWord} />
       <ModalForm />
     </>
   );

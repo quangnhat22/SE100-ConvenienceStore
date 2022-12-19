@@ -17,7 +17,7 @@ function* actLoginWithEmailAndPassword(payload) {
 
       yield put(authActions.requestLogSuccess());
     } else {
-    yield put(authActions.requestLogFailed());
+      yield put(authActions.requestLogFailed());
     }
   } catch (err) {
     yield put(authActions.requestLogFailed());

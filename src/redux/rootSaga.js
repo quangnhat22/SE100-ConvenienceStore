@@ -6,6 +6,7 @@ import * as DeliveryNotesSaga from "./sagaActions/DeliveryNotesSaga";
 import * as ProviderSaga from "./sagaActions/ProviderSaga";
 import * as ProductSaga from "./sagaActions/ProductSaga";
 import * as ProductItemQuantityStateSaga from "./sagaActions/ProductItemQuantitySaga";
+import * as ReportSaga from "./sagaActions/ReportSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -36,5 +37,8 @@ export default function* rootSaga() {
     ProductItemQuantityStateSaga.followActPutProductItemsQuantity(),
     ProductItemQuantityStateSaga.followActDeleteProductItemsQuantity(),
     ProductItemQuantityStateSaga.followActProductItemQuantityById(),
+    ReportSaga.followActGetListReportWeek(),
+    ReportSaga.followActGetListReportMonth(),
+    ReportSaga.followActGetListReportYear(),
   ]);
 }

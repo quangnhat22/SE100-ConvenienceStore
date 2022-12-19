@@ -37,7 +37,7 @@ const DetailProviderForm = ({ provider }) => {
       email: values.email,
       address: values.address,
     };
-    console.log(editedProvider);
+    console.log(values);
     // dispatch(providerActions.addNewProduct(editedProvider));
     dispatch({
       type: SagaActionTypes.PUT_PROVIDER_SAGA,
@@ -55,9 +55,9 @@ const DetailProviderForm = ({ provider }) => {
       form={form}
       onFinish={onFinish}
       initialValues={{
-        tenNhaCungCap: provider.name,
+        name: provider.name,
         email: provider.email,
-        diaChi: provider.address,
+        address: provider.address,
       }}
     >
       <Form.Item
@@ -69,11 +69,7 @@ const DetailProviderForm = ({ provider }) => {
           },
         ]}
       >
-        <Input
-          className="rounded"
-          placeholder="Tên nhà cung cấp"
-          disabled={componentDisabled}
-        />
+        <Input placeholder="Tên nhà cung cấp" disabled={componentDisabled} />
       </Form.Item>
       {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
         <Select
@@ -104,11 +100,7 @@ const DetailProviderForm = ({ provider }) => {
           },
         ]}
       >
-        <Input
-          className="rounded"
-          placeholder="example@host.com"
-          disabled={componentDisabled}
-        />
+        <Input placeholder="example@host.com" disabled={componentDisabled} />
       </Form.Item>
       <Form.Item
         name="address"
@@ -121,7 +113,6 @@ const DetailProviderForm = ({ provider }) => {
       >
         <TextArea
           rows={4}
-          className="rounded"
           placeholder="Thôn (Xóm), Xã (Phường, Thị trấn), Tỉnh (Thành phố)..."
           disabled={componentDisabled}
         />

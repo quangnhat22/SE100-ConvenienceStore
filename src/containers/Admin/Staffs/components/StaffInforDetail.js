@@ -190,7 +190,7 @@ const StaffInforDetail = ({ staff }) => {
         label="Email"
         rules={[{ type: "email", required: true }]}
       >
-        <Input placeholder="Email" disabled={componentDisabled} />
+        <Input placeholder="Email" disabled={true} />
       </Form.Item>
       <Form.Item
         name="staff_address"

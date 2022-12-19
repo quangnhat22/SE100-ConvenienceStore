@@ -1,17 +1,16 @@
 import Search from "antd/lib/input/Search";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TableStaffs from "./components/TableStaffs";
 import ModalForm from "../../../HOC/ModalForm";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 import AddStaffForm from "./components/AddStaffForm";
-import { useEffect } from "react";
 import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const StaffsPage = () => {
   const dispatch = useDispatch();
-  const { staffs } = useSelector((state) => state.staffsSlice);
+  const { staffs, loading } = useSelector((state) => state.staffsSlice);
   const [keyWord, setKeyWord] = useState("");
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
@@ -66,7 +65,7 @@ const StaffsPage = () => {
           </button>
         </div>
       </div>
-      <TableStaffs keyWord={keyWord} data={staffs} />
+      <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
       <ModalForm />
     </>
   );
