@@ -28,3 +28,8 @@ export const URL_PRODUCT_ITEM_ID = (id) => `${DOMAIN_NAME}/product-item/${id}`;
 //PRODUCT ITEM QUANTITY STATE RULE
 export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE = `${DOMAIN_NAME}/product-item`;
 export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) => `${DOMAIN_NAME}/product-item/${id}`;
+
+//REPORT
+export const URL_GET_REPORT_WEEK = `${DOMAIN_NAME}/report/week`;
+export const URL_GET_REPORT_MONTH = `${DOMAIN_NAME}/report/month`;
+export const URL_GET_REPORT_YEAR = `${DOMAIN_NAME}/report/year`;
