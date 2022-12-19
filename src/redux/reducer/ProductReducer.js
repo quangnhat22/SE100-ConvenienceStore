@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  requestListProduct: false,
+  loading: false,
   listProduct: [
     // {
     //   maSanPham: "1",

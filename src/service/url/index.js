@@ -33,3 +33,12 @@ export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) => `${DOMAIN_NAME}/p
 export const URL_GET_REPORT_WEEK = `${DOMAIN_NAME}/report/week`;
 export const URL_GET_REPORT_MONTH = `${DOMAIN_NAME}/report/month`;
 export const URL_GET_REPORT_YEAR = `${DOMAIN_NAME}/report/year`;
+
+//INVOICES
+export const URL_POST_INVOICES = `${DOMAIN_NAME}/invoices`;
+export const URL_GET_INVOICES = `${DOMAIN_NAME}/invoices`;
+export const URL_GET_INVOICES_BY_ID = (id) => `${DOMAIN_NAME}/invoices/${id}`;
+
+//PRODUCT_ITEM_EXPIRE
+export const URL_PRODUCT_ITEM_EXPIRE_STATE = `${DOMAIN_NAME}/product-item-expire-state-rule`;
+export const URL_PRODUCT_ITEM_EXPIRE_STATE_BY_ID = (id) => `${DOMAIN_NAME}/product-item-expire-state-rule/${id}`;
