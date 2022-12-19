@@ -16,8 +16,6 @@ export default function* rootSaga() {
     ProductsSaga.followActPutProducts(),
     ProductsSaga.followActDeleteProducts(),
     ProductsSaga.followActGetProductsById(),
-    ProductSaga.followActPostProducts(),
-    ProductSaga.followActDeleteProducts(),
     StaffSaga.followActGetListStaffs(),
     StaffSaga.followActPostStaff(),
     StaffSaga.followActPutStaff(),
@@ -40,5 +38,9 @@ export default function* rootSaga() {
     ReportSaga.followActGetListReportWeek(),
     ReportSaga.followActGetListReportMonth(),
     ReportSaga.followActGetListReportYear(),
+    ProductSaga.followActGetListProductItem(),
+    ProductSaga.followActGetProductItemById(),
+    ProductSaga.followActDeleteProductItem(),
+    ProductSaga.followActPostProductItem(),
   ]);
 }

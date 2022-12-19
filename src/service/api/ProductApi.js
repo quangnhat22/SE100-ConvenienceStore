@@ -26,19 +26,13 @@ export const ProductService = {
       image: image,
     });
   },
-//   getProduct: () => {
-//     return Axios.get(UrlApi.URL_PRODUCTS);
-//   },
-//   getProductById: (id) => {
-//     return Axios.get(UrlApi.URL_PRODUCT_ID(id));
-//   },
+  getProduct: () => {
+    return Axios.get(UrlApi.URL_PRODUCT_ITEM);
+  },
+  getProductById: (id) => {
+    return Axios.get(UrlApi.URL_PRODUCT_ITEM_ID(id));
+  },
   deleteProductById: (id) => {
     return Axios.delete(UrlApi.URL_PRODUCT_ITEM_ID(id));
   },
-//   putProductById: (id, title, tax) => {
-//     return Axios.put(UrlApi.URL_PRODUCT_ID(id), {
-//       title: title,
-//       tax: tax,
-//     });
-//   },
 };
