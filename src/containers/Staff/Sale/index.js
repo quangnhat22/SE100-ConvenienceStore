@@ -17,7 +17,7 @@ const SalePage = () => {
           style={{ padding: 0, background: "#011529" }}
           className="flex justify-end items-center"
         >
-          <div className="mr-auto grow flex justify-center items-center bg-transparent">
+          <div className="mr-auto grow flex justify-center items-center bg-transparent z-10">
             <SearchHeader data={listProduct} />
           </div>
           <div className="flex items-center justify-end mr-7 bg-transparent">
@@ -30,13 +30,13 @@ const SalePage = () => {
         </Header>
 
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
-        <Content className="flex">
-          {/* <div class="w-2/3 bg-slate-300">
+        <Content className="flex z-0">
+          <div class="w-2/3 bg-slate-300">
             <ListItem />
-          </div> */}
-          {/* <div class="w-1/3 min-w-200">
+          </div>
+          <div class="w-1/3 min-w-200">
             <PaymentForm />
-          </div> */}
+          </div>
         </Content>
       </Layout>
     </>

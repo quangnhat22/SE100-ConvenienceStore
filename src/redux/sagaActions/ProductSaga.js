@@ -8,11 +8,9 @@ function* actGetListProductItem() {
     yield put(productActions.getListProductLoading());
 
     let res = yield call(() => ProductService.getProduct());
-    let {status, data} = res;
+    let { status, data } = res;
     if (status === 200) {
-      yield put(
-        productActions.getListProductSuccess({ products: data })
-      );
+      yield put(productActions.getListProductSuccess({ listProduct: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -25,9 +23,10 @@ function* actGetProductItemById(action) {
   try {
     let { id } = action;
     let res = yield call(() => ProductService.getProductById(id));
-    let {data, status} = res;
+    console.log("POST");
+    let { data, status } = res;
     if (status === 200) {
-      yield put(productActions.getProductByIdSuccess({provider : data}));
+      yield put(productActions.getProductByIdSuccess({ provider: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -39,10 +38,13 @@ function* actGetProductItemById(action) {
 function* actPostProductItem(action) {
   try {
     let { newProduct } = action;
+
     yield put(productActions.getListProductLoading());
     let res = yield call(() => ProductService.postProduct(newProduct));
+    console.log(res);
+
     if (res.status === 201) {
-     yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
+      yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -68,11 +70,17 @@ function* actDeleteProductItem(action) {
 }
 
 export function* followActGetListProductItem() {
-  yield takeLatest(SagaActionTypes.GET_LIST_PRODUCT_SAGA, actGetListProductItem);
+  yield takeLatest(
+    SagaActionTypes.GET_LIST_PRODUCT_SAGA,
+    actGetListProductItem
+  );
 }
 
 export function* followActGetProductItemById() {
-  yield takeLatest(SagaActionTypes.GET_LIST_PRODUCT_SAGA, actGetProductItemById);
+  yield takeLatest(
+    SagaActionTypes.GET_PRODUCT_BY_ID_SAGA,
+    actGetProductItemById
+  );
 }
 
 export function* followActPostProductItem() {
@@ -80,7 +88,10 @@ export function* followActPostProductItem() {
 }
 
 export function* followActDeleteProductItem() {
-  yield takeLatest(SagaActionTypes.DELETE_PRODUCT_ITEM_SAGA, actDeleteProductItem);
+  yield takeLatest(
+    SagaActionTypes.DELETE_PRODUCT_ITEM_SAGA,
+    actDeleteProductItem
+  );
 }
 
 // export function* followActGetProductsById() {

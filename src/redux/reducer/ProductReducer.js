@@ -139,7 +139,7 @@ const productSlice = createSlice({
       state.listProduct = action.payload.listProduct;
     },
     getProductByIdSuccess: (state, action) => {
-      state.product = action.payload.product;
+      state.productById = action.payload.productById;
     },
   },
 });
