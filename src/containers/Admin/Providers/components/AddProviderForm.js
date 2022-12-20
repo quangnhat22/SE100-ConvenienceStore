@@ -18,7 +18,10 @@ const AddProviderForm = () => {
       address: values.address,
     };
     console.log(newProvider);
-    dispatch({ type: SagaActionTypes.POST_PROVIDER_SAGA, newProvider: newProvider });
+    dispatch({
+      type: SagaActionTypes.POST_PROVIDER_SAGA,
+      newProvider: newProvider,
+    });
     setTimeout(() => {
       dispatch(modalActions.hideModal());
     }, 300);
@@ -59,6 +62,7 @@ const AddProviderForm = () => {
         rules={[
           {
             required: true,
+            type: "email",
           },
         ]}
       >

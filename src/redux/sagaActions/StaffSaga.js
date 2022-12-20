@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { staffActions } from "../reducer/StaffReducer";
+import { modalActions } from "../reducer/ModalReducer";
 import { UserService } from "../../service/api/UserApi";
 import AlertCustom from "../../common/Notification/Alert";
 
@@ -10,6 +11,7 @@ function* actGetListStaffs() {
 
     let res = yield call(() => UserService.getUsers());
     let { status, data } = res;
+    console.log(res);
     if (status === 200) {
       yield put(staffActions.getListStaffsSuccess({ staffs: data }));
     } else {
@@ -26,16 +28,15 @@ function* actPostStaff(action) {
     yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.postUsers(newStaff));
     if (res.status === 201) {
-      yield put(staffActions.actionSuccess());
       AlertCustom({ type: "success", title: "Thêm nhân viên thành công" });
-      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+      yield put(modalActions.hideModal());
     } else {
       AlertCustom({ type: "error", title: "Thêm nhân viên thất bại" });
-      yield put(staffActions.actionFail());
     }
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: "Thêm nhân viên thất bại" });
-    yield put(staffActions.actionFail());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
 
@@ -47,12 +48,15 @@ function* actPutStaff(action) {
     let res = yield call(() => UserService.putUsersById(id, staff));
     console.log(res);
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+      AlertCustom({ type: "success", title: "Chỉnh sửa nhân viên thành công" });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Chỉnh sửa nhân viên thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
 
@@ -62,12 +66,14 @@ function* actDeleteStaff(action) {
     yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.deleteUserById(id));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+      AlertCustom({ type: "success", title: "Xóa nhân viên thành công" });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Xóa nhân viên thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
 

@@ -47,9 +47,6 @@ const AddStaffForm = () => {
       type: SagaActionTypes.POST_USER_SAGA,
       newStaff: newStaff,
     });
-    if (submitSuccess === true) {
-      dispatch(modalActions.hideModal());
-    }
   };
   return (
     <FormCustomed name="add_staff_form" form={form} onFinish={onFinish}>

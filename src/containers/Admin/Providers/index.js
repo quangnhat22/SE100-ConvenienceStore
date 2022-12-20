@@ -9,7 +9,7 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const ProvidersPage = () => {
   const dispatch = useDispatch();
-  const { providers } = useSelector((state) => state.providerSlice);
+  const { providers, loading } = useSelector((state) => state.providerSlice);
   const [keyWord, setKeyWord] = useState("");
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
@@ -64,7 +64,7 @@ const ProvidersPage = () => {
         </div>
       </div>
 
-      <TableProviders data={providers} keyWord={keyWord} />
+      <TableProviders data={providers} keyWord={keyWord} loading={loading} />
       <ModalForm />
     </>
   );

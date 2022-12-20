@@ -97,6 +97,7 @@ const DetailProviderForm = ({ provider }) => {
         rules={[
           {
             required: true,
+            type: "email",
           },
         ]}
       >

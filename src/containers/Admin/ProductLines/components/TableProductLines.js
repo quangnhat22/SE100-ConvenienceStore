@@ -55,13 +55,13 @@ const TableProductLines = ({ data }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          {/* <button
+          <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             // onClick={() => handleEditProductLine(record)}
           >
             <EditFilled />
-          </button> */}
+          </button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa sản phẩm này?"
@@ -89,7 +89,7 @@ const TableProductLines = ({ data }) => {
       ),
     },
   ];
-  // const handleEditProduct = (record) => {
+  // const handleEditProductLine = (record) => {
   //   dispatch(
   //     modalActions.showModal({
   //       ComponentContent: (
