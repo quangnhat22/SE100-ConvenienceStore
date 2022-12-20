@@ -2,6 +2,8 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { deliveryNotesActions } from "../reducer/DeliveryNotesReducer";
 import { DeliveryNotesService } from "../../service/api/DeliveryNotesApi";
+import { modalActions } from "../reducer/ModalReducer";
+import AlertCustom from "../../common/Notification/Alert";
 
 function* actGetDeliveryNotes() {
   try {
@@ -26,14 +28,22 @@ function* actPostDeliveryNotes(action) {
     let { newDeliveryNote } = action;
     yield put(deliveryNotesActions.getDeliveryNotesLoading());
 
-    let res = yield call(() => DeliveryNotesService.postDeliveryNotes(newDeliveryNote));
+    let res = yield call(() =>
+      DeliveryNotesService.postDeliveryNotes(newDeliveryNote)
+    );
     if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
+      AlertCustom({
+        type: "success",
+        title: "Thêm phiếu nhập hàng thành công",
+      });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Thêm phiếu nhập hàng thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   }
 }
 
@@ -42,14 +52,21 @@ function* actDeleteDeliveryNotes(action) {
     let { id } = action;
     yield put(deliveryNotesActions.getDeliveryNotesLoading());
 
-    let res = yield call(() => DeliveryNotesService.deleteDeliveryNotesById(id));
+    let res = yield call(() =>
+      DeliveryNotesService.deleteDeliveryNotesById(id)
+    );
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
+      AlertCustom({
+        type: "success",
+        title: "Xóa phiếu nhập hàng thành công",
+      });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Xóa phiếu nhập hàng thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   }
 }
 
@@ -57,9 +74,11 @@ function* actGetDeliveryNoteById(action) {
   try {
     let { id } = action;
     let res = yield call(() => DeliveryNotesService.getDeliveryNotesById(id));
-    let {data, status} = res;
+    let { data, status } = res;
     if (status === 200) {
-      yield put(deliveryNotesActions.getDeliveryNotesByIdSuccess({deliveryNote : data}));
+      yield put(
+        deliveryNotesActions.getDeliveryNotesByIdSuccess({ deliveryNote: data })
+      );
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -69,17 +88,29 @@ function* actGetDeliveryNoteById(action) {
 }
 
 export function* followActGetDeliveryNotes() {
-  yield takeLatest(SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA, actGetDeliveryNotes);
+  yield takeLatest(
+    SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA,
+    actGetDeliveryNotes
+  );
 }
 
 export function* followActPostDeliveryNotes() {
-  yield takeLatest(SagaActionTypes.POST_DELIVERY_NOTES_SAGA, actPostDeliveryNotes);
+  yield takeLatest(
+    SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
+    actPostDeliveryNotes
+  );
 }
 
 export function* followActDeleteDeliveryNotes() {
-  yield takeLatest(SagaActionTypes.DELETE_DELIVERY_NOTES_SAGA, actDeleteDeliveryNotes);
+  yield takeLatest(
+    SagaActionTypes.DELETE_DELIVERY_NOTES_SAGA,
+    actDeleteDeliveryNotes
+  );
 }
 
 export function* followActGetDeliveryNoteById() {
-  yield takeLatest(SagaActionTypes.GET_DELIVERY_NOTES_ID_SAGA, actGetDeliveryNoteById);
+  yield takeLatest(
+    SagaActionTypes.GET_DELIVERY_NOTES_ID_SAGA,
+    actGetDeliveryNoteById
+  );
 }

@@ -64,22 +64,22 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
       showOnDesktop: true,
       render: (date) => `${moment(date).format("DD/MM/YYYY")}`,
     },
-    {
-      title: "Tổng sản phẩm",
-      dataIndex: "productItems",
-      key: "productItems",
-      showOnResponse: true,
-      showOnDesktop: true,
-      width: "15%",
-      ellipsis: true,
-      render: (productItems) => {
-        let render = 0;
-        for (let i = 0; i < productItems.length; i++) {
-          render += productItems[i].quantity;
-        }
-        return render;
-      },
-    },
+    // {
+    //   title: "Tổng sản phẩm",
+    //   dataIndex: "productItems",
+    //   key: "productItems",
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   width: "15%",
+    //   ellipsis: true,
+    //   render: (productItems) => {
+    //     let render = 0;
+    //     for (let i = 0; i < productItems.length; i++) {
+    //       render += productItems[i].quantity;
+    //     }
+    //     return render;
+    //   },
+    // },
     {
       title: "Tổng tiền",
       dataIndex: "total",
@@ -102,13 +102,13 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <button
+          {/* <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditStaff(record)}
           >
             <EditFilled />
-          </button>
+          </button> */}
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa phiếu nhập hàng này?"
@@ -144,13 +144,13 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
     });
   };
 
-  const handleEditStaff = (staff) => {
-    // dispatch(
-    //   modalActions.showModal({
-    //     ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
-    //   })
-    // );
-  };
+  // const handleEditStaff = (staff) => {
+  //   dispatch(
+  //     modalActions.showModal({
+  //       ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
+  //     })
+  //   );
+  // };
 
   return (
     <>

@@ -38,7 +38,7 @@ function* actPostProvider(action) {
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
 
@@ -61,7 +61,7 @@ function* actPutProvider(action) {
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
 
@@ -79,7 +79,7 @@ function* actDeleteProvider(action) {
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
 

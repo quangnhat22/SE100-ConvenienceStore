@@ -164,7 +164,7 @@ const AddStaffForm = () => {
           offset: 20,
         }}
       >
-        <Button htmlType="submit">Submit</Button>
+        <Button htmlType="submit">Lưu</Button>
       </Form.Item>
     </FormCustomed>
   );
