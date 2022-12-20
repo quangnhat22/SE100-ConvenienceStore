@@ -59,9 +59,6 @@ const StaffInforDetail = ({ staff }) => {
       staff: editedStaff,
     });
     // dispatch(staffActions.editStaffs(editedStaff));
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
   };
 
   const handleModify = () => {};

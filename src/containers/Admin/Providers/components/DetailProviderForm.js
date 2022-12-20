@@ -44,9 +44,6 @@ const DetailProviderForm = ({ provider }) => {
       id: provider.id,
       provider: editedProvider,
     });
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
   };
 
   return (

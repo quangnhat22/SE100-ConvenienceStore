@@ -22,9 +22,6 @@ const AddProviderForm = () => {
       type: SagaActionTypes.POST_PROVIDER_SAGA,
       newProvider: newProvider,
     });
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
   };
 
   return (
