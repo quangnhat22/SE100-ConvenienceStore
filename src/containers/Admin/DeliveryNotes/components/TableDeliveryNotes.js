@@ -1,4 +1,4 @@
-import { Table, Popconfirm, Space } from "antd";
+import { Table, Popconfirm, Space, Spin } from "antd";
 import moment from "moment";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const TableDeliveryNotes = ({ keyWord, data }) => {
+const TableDeliveryNotes = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,9 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
           String(record.provider.name)
             .toLowerCase()
             .includes(value.toLowerCase()) ||
-          String(record.date).toLowerCase().includes(value.toLowerCase()) ||
+          String(moment(record.date).format("DD/MM/YYYY"))
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
           String(record.total).toLowerCase().includes(value.toLowerCase())
         );
       },
@@ -151,6 +153,15 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
   //     })
   //   );
   // };
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
 
   return (
     <>

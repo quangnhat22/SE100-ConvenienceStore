@@ -2,17 +2,17 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { productsActions } from "../reducer/ProductsReducer";
 import { ProductsService } from "../../service/api/ProductsApi";
+import { modalActions } from "../reducer/ModalReducer";
+import AlertCustom from "../../common/Notification/Alert";
 
 function* actGetListProducts() {
   try {
     yield put(productsActions.getListProductsLoading());
 
     let res = yield call(() => ProductsService.getProducts());
-    let {status, data} = res;
+    let { status, data } = res;
     if (status === 200) {
-      yield put(
-        productsActions.getListProductsSuccess({ products: data })
-      );
+      yield put(productsActions.getListProductsSuccess({ products: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -27,12 +27,15 @@ function* actPostProducts(action) {
     yield put(productsActions.getListProductsLoading());
     let res = yield call(() => ProductsService.postProducts(newProducts));
     if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+      AlertCustom({ type: "success", title: "Thêm dòng sản phẩm thành công" });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Thêm dòng sản phẩm thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }
 }
 
@@ -43,12 +46,18 @@ function* actPutProducts(action) {
     yield put(productsActions.getListProductsLoading());
     let res = yield call(() => ProductsService.putProductsById(id, products));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+      AlertCustom({
+        type: "success",
+        title: "Chỉnh sửa dòng sản phẩm thành công",
+      });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Chỉnh sửa dòng sản phẩm thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }
 }
 
@@ -59,12 +68,16 @@ function* actDeleteProducts(action) {
 
     let res = yield call(() => ProductsService.deleteProductsById(id));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+      AlertCustom({
+        type: "success",
+        title: "Xóa dòng sản phẩm thành công",
+      });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Xóa dòng sản phẩm thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
   }
 }
 
@@ -72,9 +85,9 @@ function* actGetProductsById(action) {
   try {
     let { id } = action;
     let res = yield call(() => ProductsService.getProductsById(id));
-    let {data, status} = res;
+    let { data, status } = res;
     if (status === 200) {
-      yield put(productsActions.getProductsByIdSuccess({productsById : data}));
+      yield put(productsActions.getProductsByIdSuccess({ productsById: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }

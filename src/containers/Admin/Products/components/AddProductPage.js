@@ -69,7 +69,7 @@ const AddProductPage = ({ data }) => {
       price: importInformationForm.getFieldValue().price,
       quantity: productInformationForm.getFieldValue().quantity,
       description: importInformationForm.getFieldValue().description,
-      image: importInformationForm.image.filename,
+      // image: importInformationForm.image.filename,
     };
     console.log(newProduct);
     // dispatch({

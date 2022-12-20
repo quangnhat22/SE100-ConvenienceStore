@@ -80,8 +80,16 @@ const AddStaffForm = () => {
         name="staff_cccd"
         label="CCCD"
         rules={[
+          // {
+          //   pattern: "^([-]?[0-9]*|0)$",
+          //   message: "CCCD không hợp lệ",
+          // },
+          // {
+          //   pattern: /^(?:\d*)$/,
+          //   message: "CCCD không hợp lệ",
+          // },
           {
-            pattern: "^([-]?[0-9]*|0)$",
+            pattern: /^[\d]{12,12}$/,
             message: "CCCD không hợp lệ",
           },
           { required: true },
@@ -115,7 +123,7 @@ const AddStaffForm = () => {
         label="Số Điện Thoại"
         rules={[
           {
-            pattern: "^([-]?[0-9]*|0)$",
+            pattern: /^[\d]{10,10}$/,
             message: "Số Điện Thoại không hợp lệ",
           },
           { required: true },

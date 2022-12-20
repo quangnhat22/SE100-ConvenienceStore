@@ -9,11 +9,9 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
 
 const ProductLinesPage = () => {
-  const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { products } = useSelector((state) => state.productsSlice);
-  console.log(products);
+  const { products, loading } = useSelector((state) => state.productsSlice);
+  const [keyWord, setKeyWord] = useState("");
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
@@ -30,10 +28,6 @@ const ProductLinesPage = () => {
   const validateMessages = {
     required: "Vui lòng nhập ${label}!",
   };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    form.resetFields();
-  };
 
   const handleAddProductsLine = () => {
     dispatch(
@@ -41,11 +35,6 @@ const ProductLinesPage = () => {
         ComponentContent: <ProductLinesForm />,
       })
     );
-  };
-  const handleSubmit = () => {
-    form.submit();
-    setIsModalOpen(false);
-    form.resetFields();
   };
 
   return (
@@ -60,7 +49,9 @@ const ProductLinesPage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            // onSearch={onSearch}
+            onSearch={(value) => {
+              setKeyWord(value);
+            }}
           />
           {/* button search */}
           <button
@@ -87,7 +78,7 @@ const ProductLinesPage = () => {
           </button>
         </div>
       </div>
-      <TableProductLines data={products} />
+      <TableProductLines data={products} keyWord={keyWord} loading={loading} />
       <ModalForm />
     </>
   );
