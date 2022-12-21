@@ -132,10 +132,10 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     getListProductLoading: (state, action) => {
-      state.requestListProduct = true;
+      state.loading = true;
     },
     getListProductSuccess: (state, action) => {
-      state.requestListProduct = false;
+      state.loading = false;
       state.listProduct = action.payload.listProduct;
     },
     getProductByIdSuccess: (state, action) => {

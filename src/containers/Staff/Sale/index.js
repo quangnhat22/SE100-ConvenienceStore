@@ -5,14 +5,14 @@ import { Content, Header, Footer } from "antd/lib/layout/layout";
 import SearchHeader from "./components/SearchHeader";
 import PaymentForm from "./components/PaymentForm";
 import ListItem from "./components/ListItem";
-// Data Demo
-import listProduct from "./components/DataDemo";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../redux/constants/constant";
 
 const SalePage = () => {
   const dispatch = useDispatch();
   const { listProduct, loading } = useSelector((state) => state.productSlice);
+  const { cartItems } = useSelector((state) => state.cartSlice);
+  console.log(cartItems);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
   }, []);
@@ -39,7 +39,7 @@ const SalePage = () => {
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
         <Content className="flex z-0">
           <div className="w-2/3 bg-slate-300">
-            <ListItem />
+            <ListItem data={cartItems} />
           </div>
           <div className="w-1/3 min-w-200">
             <PaymentForm />
