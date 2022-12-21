@@ -114,7 +114,7 @@ const initialState = {
     //   moTa: "",
     // },
   ],
-  roductById: {
+  productById: {
     id: "",
     product: {
       id: "",
