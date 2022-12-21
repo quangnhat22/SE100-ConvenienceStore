@@ -203,7 +203,7 @@ const DashboardPage = () => {
                   <Link
                     /* onClick={() => handleCardProductDetail(source)} */
                     className="text-blue-500 cursor-pointer hover:text-blue-600 hover:underline"
-                    to="products"
+                    to="financial"
                   >
                     Xem thêm
                   </Link>
@@ -215,15 +215,6 @@ const DashboardPage = () => {
               <div className="flex justify-start items-center">
                 <span className="text-lg font-bold inline-block">
                   Bán chạy trong tuần
-                </span>
-                <span className="inline-block ml-5">
-                  <Link
-                    /* onClick={() => handleCardProductDetail(source)} */
-                    className="text-blue-500 cursor-pointer hover:text-blue-600 hover:underline"
-                    to="products"
-                  >
-                    Thêm
-                  </Link>
                 </span>
               </div>
               <Table

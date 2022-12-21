@@ -89,9 +89,11 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "9"
             : location.pathname === "/delivery_notes"
             ? "10"
+            : location.pathname === "/invoice"
+            ? "11"
             : "-1",
         ]}
-        defaultOpenKeys={["sub1"]}
+        defaultOpenKeys={["sub1","sub2"]}
       >
         {/* <div className="logo"></div> */}
         <Menu.Item
@@ -151,15 +153,24 @@ const SiderCustomed = ({ setVisibleButton }) => {
         >
           Quản lý nhân viên
         </Menu.Item>
-        <Menu.Item
-          key="4"
-          icon={<LineChartOutlined />}
-          onClick={() => {
-            history.push("/financial");
-          }}
-        >
-          Quản lý tài chính
-        </Menu.Item>
+        <Menu.SubMenu title="Tài chính" icon={<LineChartOutlined />} key="sub2">
+          <Menu.Item
+            key="4"
+            onClick={() => {
+              history.push("/financial");
+            }}
+          >
+            Doanh thu
+          </Menu.Item>
+          <Menu.Item
+            key="11"
+            onClick={() => {
+              history.push("/invoice");
+            }}
+          >
+            Hóa đơn
+          </Menu.Item>
+        </Menu.SubMenu>
 
         <Menu.Item
           key="5"

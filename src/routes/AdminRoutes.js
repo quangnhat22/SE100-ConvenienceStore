@@ -9,6 +9,7 @@ import ProductLinesPage from "../containers/Admin/ProductLines";
 import DeliveryNotes from "../containers/Admin/DeliveryNotes";
 import AddProductPage from "../containers/Admin/Products/components/AddProductPage";
 import DetailProductPage from "../containers/Admin/Products/components/DetailProductPage";
+import InvoicePage from "../containers/Admin/Financial/components/InvoicePage";
 
 const routesAdmin = [
   {
@@ -40,6 +41,11 @@ const routesAdmin = [
     exact: false,
     path: "/financial",
     component: FinancialPage,
+  },
+  {
+    exact: false,
+    path: "/invoice",
+    component: InvoicePage,
   },
   {
     exact: false,

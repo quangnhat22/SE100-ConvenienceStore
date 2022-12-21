@@ -56,7 +56,7 @@ const EditProfilePage = ({ data }) => {
     setFileList(newFileList);
   };
 
-  const onFinish = () => {
+  const onFinish = (values) => {
     Modal.confirm({
       title: "Xác nhận",
       icon: <ExclamationCircleOutlined />,
@@ -67,31 +67,47 @@ const EditProfilePage = ({ data }) => {
       centered: true,
       maskClosable: true,
       onOk: () => {
-        handleSave();
+        handleSave(values);
       },
     });
   };
 
-  const handleSave = () => {
-    let editedProfile = {
-      id: personalInformationForm.getFieldValue().id,
-      email: contactInformationForm.getFieldValue().email,
-      fullname: personalInformationForm.getFieldValue().fullname,
-      birthday: personalInformationForm.getFieldValue().birthday,
-      identityNumber: personalInformationForm.getFieldValue().identityNumber,
-      gender: personalInformationForm.getFieldValue().gender,
-      phoneNumber: contactInformationForm.getFieldValue().phoneNumber,
-      address: contactInformationForm.getFieldValue().address,
-      avatar: contactInformationForm.image.filename,
-      role: data.role,
+  const handleSave = (values) => {
+    // let editedProfile = {
+    //   id: personalInformationForm.getFieldValue().id,
+    //   email: contactInformationForm.getFieldValue().email,
+    //   fullname: personalInformationForm.getFieldValue().fullname,
+    //   birthday: personalInformationForm.getFieldValue().birthday,
+    //   identityNumber: personalInformationForm.getFieldValue().identityNumber,
+    //   gender: personalInformationForm.getFieldValue().gender,
+    //   phoneNumber: contactInformationForm.getFieldValue().phoneNumber,
+    //   address: contactInformationForm.getFieldValue().address,
+    //   avatar: contactInformationForm.image.filename,
+    //   role: data.role,
+    // };
+    // console.log(editedProfile);
+    // dispatch({
+    //   type: SagaActionTypes.PUT_USER_SAGA,
+    //   id: data.id,
+    //   staff: editedProfile,
+    // });
+    // history.go(0);
+    let editedProfile= {
+      fullname: values.staff_name,
+      birthday: values.staff_birth.toISOString(),
+      identityNumber: values.staff_cccd,
+      gender: values.staff_gender,
+      phoneNumber: values.staff_phone_number,
+      email: values.staff_email,
+      address: values.staff_address,
+      other: values.staff_other_information,
     };
-    console.log(editedProfile);
+    console.log(data);
     dispatch({
       type: SagaActionTypes.PUT_USER_SAGA,
       id: data.id,
       staff: editedProfile,
     });
-    history.go(0);
   };
 
   const initialvalue = {

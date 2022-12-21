@@ -4,6 +4,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import PieChart from "./PieChart";
 import RevenueChart from "./RevenueChart";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const { Option } = Select;
 const data = [
@@ -88,18 +89,17 @@ const RevenuePage = () => {
   const [capitalLoss, setCapitalLoss] = useState(0);
   const [yearList, setYearList] = useState([]);
   const [monthList, setMonthList] = useState([]);
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div>
       {/* Option */}
       <Space className="flex justify-between border-b p-5">
         <div className="inline-block content-around font-bold text-xl ml-5">
-          Biểu đồ doanh thu và chi phí
+          Bảng doanh thu
         </div>
         <Space className="whitespace-nowrap">
+          <span className="bg-slate-200">Tuần:</span>
           <span className="bg-slate-200">Tháng:</span>
           <span className="bg-slate-200">Năm:</span>
         </Space>

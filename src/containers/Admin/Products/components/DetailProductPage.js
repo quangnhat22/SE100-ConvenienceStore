@@ -135,7 +135,7 @@ const DetailProductPage = (props) => {
     <Form
       layout="vertical"
       validateMessages={validateMessages}
-      initialValues={initialValues}
+      // initialValues={initialValues}
     >
       <div className="flex justify-center items-center">
         <div className="gap-8 mt-10 flex w-full lg:w-3/5 flex-col md:flex-row mx-10">
