@@ -140,6 +140,7 @@ const productSlice = createSlice({
     },
     getProductByIdSuccess: (state, action) => {
       state.productById = action.payload.productById;
+      console.log(state.productById);
     },
   },
 });
