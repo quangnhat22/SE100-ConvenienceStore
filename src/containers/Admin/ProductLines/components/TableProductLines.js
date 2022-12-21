@@ -1,14 +1,14 @@
 import { useState } from "react";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import moment from "moment";
-import ModalForm from "../../../../HOC/ModalForm";
-import { Popconfirm, Space } from "antd";
+import { Popconfirm, Space, Spin } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import DetailProductLinesForm from "./DetailProductLinesForm";
 
-const TableProductLines = ({ data }) => {
+const TableProductLines = ({ data, keyWord, loading }) => {
   console.log("data: ", data);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -24,6 +24,14 @@ const TableProductLines = ({ data }) => {
       dataIndex: "id",
       key: "id",
       sorter: (item1, item2) => item1.id.localeCompare(item2.maDongSanPham),
+      filteredValue: [keyWord],
+      onFilter: (value, record) => {
+        return (
+          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.title).toLowerCase().includes(value.toLowerCase()) ||
+          String(`${record.tax}%`).toLowerCase().includes(value.toLowerCase())
+        );
+      },
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -55,13 +63,13 @@ const TableProductLines = ({ data }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          {/* <button
+          <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            // onClick={() => handleEditProductLine(record)}
+            onClick={() => handleEditProductLine(record)}
           >
             <EditFilled />
-          </button> */}
+          </button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa sản phẩm này?"
@@ -89,21 +97,31 @@ const TableProductLines = ({ data }) => {
       ),
     },
   ];
-  // const handleEditProduct = (record) => {
-  //   dispatch(
-  //     modalActions.showModal({
-  //       ComponentContent: (
-  //         <ProductInforDetail productLine={record}></ProductInforDetail>
-  //       ),
-  //     })
-  //   );
-  // };
+  const handleEditProductLine = (record) => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: (
+          <DetailProductLinesForm productLine={record}></DetailProductLinesForm>
+        ),
+      })
+    );
+  };
   const handleRemoveProductLine = (record) => {
     dispatch({
       type: SagaActionTypes.DELETE_PRODUCTS_SAGA,
       id: record.id,
     });
   };
+
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
   return (
     <>
       <TableTemplate

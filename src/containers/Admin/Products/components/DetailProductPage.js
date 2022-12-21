@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import {
   DatePicker,
   Form,
@@ -12,7 +13,9 @@ import {
 import { InfoCircleTwoTone, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -23,9 +26,34 @@ const getBase64 = (file) =>
 
 const DetailProductPage = (props) => {
   const history = useHistory();
-  const [productInformationForm] = Form.useForm();
-  const [importInformationForm] = Form.useForm();
+  const { id } = props.match.params;
+
+  // Get data by id
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+    dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
+    dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: id });
+  }, []);
+  const { products } = useSelector((state) => state.productsSlice);
+  const { deliveryNotes } = useSelector((state) => state.deliveryNotesSlice);
+  const optionsProductLines = products.map(function (productLine) {
+    return {
+      value: productLine.id,
+      label: productLine.title,
+    };
+  });
+  const optionsDeliveryNotes = deliveryNotes.map(function (deliveryNote) {
+    return {
+      value: deliveryNote.id,
+      label: `${deliveryNote.id} - ${deliveryNote.provider.name} - ${moment(
+        deliveryNote.date
+      ).format("DD/MM/YYYY")}`,
+    };
+  });
+  const { productById } = useSelector((state) => state.productSlice);
+
+  // ValidateMessagees
   const validateMessages = {
     required: "Cần nhập ${label}!",
     types: {
@@ -38,25 +66,25 @@ const DetailProductPage = (props) => {
     },
   };
 
-  //Set view
-  const [isView, setIsView] = useState(true);
+  // //Set view
+  // const [isView, setIsView] = useState(true);
 
   const handleExit = () => {
     history.goBack();
   };
 
-  const handleSetView = () => {
-    setIsView(true);
-  };
+  // const handleSetView = () => {
+  //   setIsView(true);
+  // };
 
-  const handleSetEdit = () => {
-    setIsView(false);
-  };
+  // const handleSetEdit = () => {
+  //   setIsView(false);
+  // };
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState([{ url: productById.image }]);
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -70,74 +98,81 @@ const DetailProductPage = (props) => {
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
-  const onFinish = () => {
-    let editedProduct = {
-      productId: productInformationForm.getFieldValue().productId,
-      deliveryNoteId: productInformationForm.getFieldValue().deliveryNoteId,
-      MFG: productInformationForm.getFieldValue().MFG,
-      EXP: productInformationForm.getFieldValue().EXP,
-      cost: importInformationForm.getFieldValue().cost,
-      price: importInformationForm.getFieldValue().price,
-      quantity: productInformationForm.getFieldValue().quantity,
-      description: importInformationForm.getFieldValue().description,
-      image: importInformationForm.image.filename,
-    };
-    console.log(editedProduct);
-    // dispatch({
-    //   type: SagaActionTypes.PUT_PRODUCT_ITEM_SAGA,
-    //   id: editedProduct.productId,
-    //   product: editedProduct,
-    // });
-    history.goBack();
-  };
+  // const onFinish = (values) => {
+  //   let editedProduct = {
+  //     productId: values.productId,
+  //     deliveryNoteId: values.deliveryNoteId,
+  //     MFG: values.MFG,
+  //     EXP: values.EXP,
+  //     cost: values.cost,
+  //     price: values.price,
+  //     quantity: values.quantity,
+  //     description: values.description,
+  //     image: values.filename,
+  //   };
+  //   console.log(editedProduct);
+  //   dispatch({
+  //     type: SagaActionTypes.PUT_productById_SAGA,
+  //     // newProduct: newProduct,
+  //   });
+  //   history.goBack();
+  // };
 
   //initialValues
+
   const initialValues = {
-    productId: props.product.productId,
-    deliveryNoteId: props.product.deliveryNoteId,
-    MFG: props.product.MFG,
-    EXP: props.product.EXP,
-    cost: props.product.cost,
-    price: props.product.price,
-    quantity: props.product.quantity,
-    description: props.product.description,
-    image: props.product.image,
+    productId: productById.product.id,
+    deliveryNoteId: productById.deliveryNote.id,
+    MFG: moment(productById.MFG),
+    EXP: moment(productById.EXP),
+    cost: productById.cost,
+    price: productById.price,
+    quantity: productById.quantity,
+    description: productById.description,
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="gap-8 mt-10 flex w-full lg:w-3/5 flex-col md:flex-row mx-10">
-        {/* Thông tin sản phẩm */}
-        <div className="rounded bg-white shadow-xl px-5 py-8" hidden={isView}>
-          <header className="font-bold text-xl mb-5">Thông tin sản phẩm</header>
-          <Form
-            form={productInformationForm}
-            layout="vertical"
-            validateMessages={validateMessages}
-            initialValues={initialValues}
-            onFinish={onFinish}
-          >
+    <Form
+      layout="vertical"
+      validateMessages={validateMessages}
+      initialValues={initialValues}
+    >
+      <div className="flex justify-center items-center">
+        <div className="gap-8 mt-10 flex w-full lg:w-3/5 flex-col md:flex-row mx-10">
+          {/* Thông tin sản phẩm */}
+          <div className="rounded bg-white shadow-xl px-5 py-8">
+            <header className="font-bold text-xl">Thông tin sản phẩm</header>
             <Form.Item
               name="productId"
-              label="Mã sản phẩm"
+              label="Dòng sản phẩm"
               rules={[
                 {
                   required: true,
                 },
               ]}
             >
-              <Input className="rounded" placeholder="Mã sản phẩm" />
+              <Select
+                className="rounded"
+                placeholder="Dòng sản phẩm"
+                allowClear
+                options={optionsProductLines}
+              ></Select>
             </Form.Item>
             <Form.Item
               name="deliveryNoteId"
-              label="Mã đơn vận chuyển"
+              label="Đơn vị cung cấp"
               rules={[
                 {
                   required: true,
                 },
               ]}
             >
-              <Input className="rounded" placeholder="Mã đơn vận chuyển" />
+              <Select
+                className="rounded"
+                placeholder="Đơn vị cung cấp"
+                allowClear
+                options={optionsDeliveryNotes}
+              ></Select>
             </Form.Item>
             <Form.Item>
               <Space>
@@ -190,23 +225,15 @@ const DetailProductPage = (props) => {
                 placeholder="Số lượng"
               />
             </Form.Item>
-          </Form>
-        </div>
+          </div>
 
-        <div className="gap-8 flex flex-col grow">
-          <div hidden={isView}>
+          <div className="rounded bg-white shadow-xl  px-5 py-8">
             {/* Thông tin nhập hàng */}
-            <header className="font-bold text-xl whitespace-nowrap mb-5">
-              Thông tin nhập hàng
-              <InfoCircleTwoTone className="ml-1" />
-            </header>
-            <Form
-              form={importInformationForm}
-              layout="vertical"
-              validateMessages={validateMessages}
-              initialValues={initialValues}
-              onFinish={onFinish}
-            >
+            <div>
+              <header className="font-bold text-xl whitespace-nowrap">
+                Thông tin nhập hàng
+                <InfoCircleTwoTone className="ml-1" />
+              </header>
               <Form.Item>
                 <Space>
                   <Form.Item
@@ -258,11 +285,10 @@ const DetailProductPage = (props) => {
                     beforeUpload={() => {
                       return false;
                     }}
-                    fileList={(value) => {
-                      return value.image;
-                    }}
+                    fileList={fileList}
                     onPreview={handlePreview}
                     onChange={handleChange}
+                    maxCount="1"
                   >
                     <Space className="flex flex-col text-base">
                       <PlusOutlined />
@@ -285,54 +311,50 @@ const DetailProductPage = (props) => {
                   </Modal>
                 </>
               </Form.Item>
-            </Form>
-          </div>
+            </div>
 
-          {/* Button Action */}
-          <div className="flex justify-end">
-            <Space
-              size={[15]}
-              hidden={isView}
-              className="w-full py-2 lg:w-3/5 flex justify-end"
-            >
-              <button
-                className="border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300"
-                onClick={handleSetView}
+            {/* Button Action */}
+            <div className="flex justify-end">
+              {/* <Space
+                size={[15]}
+                hidden={isView}
+                className="w-full py-2 lg:w-3/5 flex justify-end"
               >
-                Trở lại
-              </button>
-              <button
-                className="rounded py-2 px-3 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-                onClick={() => {
-                  productInformationForm.submit();
-                  importInformationForm.submit();
-                }}
+                <button
+                  className="border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300"
+                  onClick={handleSetView}
+                >
+                  Trở lại
+                </button>
+                <button
+                  className="rounded py-2 px-3 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                  htmlType="submit"
+                >
+                  Lưu
+                </button>
+              </Space> */}
+              <Space
+                size={[15]}
+                className="w-full py-2 lg:w-3/5 flex justify-end"
               >
-                Lưu
-              </button>
-            </Space>
-            <Space
-              size={[15]}
-              hidden={!isView}
-              className="w-full py-2 lg:w-3/5 flex justify-end"
-            >
-              <button
-                className="border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300 whitespace-nowrap"
-                onClick={handleSetEdit}
-              >
-                Chỉnh sửa
-              </button>
-              <button
-                className="rounded border border-red-400 text-red-400 py-2 px-3 bg-gray-100 opacity-90 hover:opacity-100 hover:text-red-500 hover-border-red-500 shadow-md"
-                onClick={handleExit}
-              >
-                Thoát
-              </button>
-            </Space>
+                {/* <button
+                  className="border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300 whitespace-nowrap"
+                  onClick={handleSetEdit}
+                >
+                  Chỉnh sửa
+                </button> */}
+                <button
+                  className="rounded border border-gray-400 text-gray-600 py-2 px-3 bg-gray-100 opacity-90 hover:opacity-100 hover:text-gray-800 hover:border-gray-500 shadow-md"
+                  onClick={handleExit}
+                >
+                  Thoát
+                </button>
+              </Space>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Form>
   );
 };
 

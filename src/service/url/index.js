@@ -22,14 +22,25 @@ export const URL_DELIVERY_NOTES_BY_ID = (id) =>
   `${DOMAIN_NAME}/delivery-notes/${id}`;
 
 //PRODUCT-ITEMS - Sản phẩm
-export const URL_PRODUCT_ITEM = `${DOMAIN_NAME}/product-item`;
-export const URL_PRODUCT_ITEM_ID = (id) => `${DOMAIN_NAME}/product-item/${id}`;
+export const URL_PRODUCT_ITEM = `${DOMAIN_NAME}/product-items`;
+export const URL_PRODUCT_ITEM_ID = (id) => `${DOMAIN_NAME}/product-items/${id}`;
 
 //PRODUCT ITEM QUANTITY STATE RULE
 export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE = `${DOMAIN_NAME}/product-item`;
-export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) => `${DOMAIN_NAME}/product-item/${id}`;
+export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) =>
+  `${DOMAIN_NAME}/product-item/${id}`;
 
 //REPORT
 export const URL_GET_REPORT_WEEK = `${DOMAIN_NAME}/report/week`;
 export const URL_GET_REPORT_MONTH = `${DOMAIN_NAME}/report/month`;
 export const URL_GET_REPORT_YEAR = `${DOMAIN_NAME}/report/year`;
+
+//INVOICES
+export const URL_POST_INVOICES = `${DOMAIN_NAME}/invoices`;
+export const URL_GET_INVOICES = `${DOMAIN_NAME}/invoices`;
+export const URL_GET_INVOICES_BY_ID = (id) => `${DOMAIN_NAME}/invoices/${id}`;
+
+//PRODUCT_ITEM_EXPIRE
+export const URL_PRODUCT_ITEM_EXPIRE_STATE = `${DOMAIN_NAME}/product-item-expire-state-rule`;
+export const URL_PRODUCT_ITEM_EXPIRE_STATE_BY_ID = (id) =>
+  `${DOMAIN_NAME}/product-item-expire-state-rule/${id}`;

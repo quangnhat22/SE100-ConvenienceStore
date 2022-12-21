@@ -1,5 +1,5 @@
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import { Space, Popconfirm } from "antd";
+import { Space, Popconfirm, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
@@ -9,7 +9,7 @@ import DetailProviderForm from "./DetailProviderForm";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { type } from "@testing-library/user-event/dist/type";
 
-const TableProviders = ({ data, keyWord }) => {
+const TableProviders = ({ data, keyWord, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
   const columns = [
@@ -147,7 +147,15 @@ const TableProviders = ({ data, keyWord }) => {
   const handleRemoveProviders = (record) => {
     dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: record.id });
   };
-
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
   return (
     <>
       <TableTemplate

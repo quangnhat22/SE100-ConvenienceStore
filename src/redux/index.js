@@ -1,6 +1,6 @@
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import rootSaga from "./rootSaga";
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware from "redux-saga";
 import authSlice from "./reducer/authSlice";
 import modalSlice from "./reducer/ModalReducer";
 import productSlice from "./reducer/ProductReducer";
@@ -10,25 +10,32 @@ import productsSlice from "./reducer/ProductsReducer";
 import deliveryNotesSlice from "./reducer/DeliveryNotesReducer";
 import providerSlice from "./reducer/ProviderReducer";
 import reportsSlice from "./reducer/ReportReducer";
+import invoiceSlice from "./reducer/InvoiceReducer";
+import productItemsExpireSlice from "./reducer/ProductExpireReducer";
+import cartSlice from "./reducer/CartReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducer = {
-    authSlice,
-    modalSlice,
-    productSlice, // danh mục sản phẩm
-    staffsSlice,
-    regulationSlice,
-    productsSlice,
-    deliveryNotesSlice,
-    providerSlice,
-    reportsSlice,
-}
+  authSlice,
+  modalSlice,
+  productSlice, // danh mục sản phẩm
+  staffsSlice,
+  regulationSlice,
+  productsSlice,
+  deliveryNotesSlice,
+  providerSlice,
+  reportsSlice,
+  invoiceSlice,
+  productItemsExpireSlice,
+  cartSlice,
+};
 
-export const store =  configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   devTools: true,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

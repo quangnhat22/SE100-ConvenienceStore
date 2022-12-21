@@ -22,7 +22,6 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 const dateFormat = "DD/MM/YYYY";
-const { Option } = Select;
 
 const AddDeliveryNoteForm = () => {
   const [form] = Form.useForm();

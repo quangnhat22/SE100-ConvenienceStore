@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
-import { Colorpicker } from "antd-colorpicker";
 import { useDispatch } from "react-redux";
-import { regulationActions } from "../../../../redux/reducer/RegulationSlice";
-import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import TextArea from "antd/lib/input/TextArea";
-import moment from "moment";
-import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const ProductLinesForm = () => {
@@ -24,9 +17,6 @@ const ProductLinesForm = () => {
       type: SagaActionTypes.POST_PRODUCTS_SAGA,
       newProducts: newProductLine,
     });
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
@@ -49,12 +39,12 @@ const ProductLinesForm = () => {
             required: true,
             type: "number",
             min: 0,
-            max: 100,
           },
         ]}
       >
         <InputNumber
           addonAfter={"%"}
+          min={0}
           style={{
             width: "30%",
           }}

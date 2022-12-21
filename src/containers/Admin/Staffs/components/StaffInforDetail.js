@@ -59,9 +59,6 @@ const StaffInforDetail = ({ staff }) => {
       staff: editedStaff,
     });
     // dispatch(staffActions.editStaffs(editedStaff));
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
   };
 
   const handleModify = () => {};
@@ -142,7 +139,7 @@ const StaffInforDetail = ({ staff }) => {
         label="CCCD"
         rules={[
           {
-            pattern: "^([-]?[0-9]*|0)$",
+            pattern: /^[\d]{10,10}$/,
             message: "CCCD không hợp lệ",
           },
           { required: true },
@@ -177,7 +174,7 @@ const StaffInforDetail = ({ staff }) => {
         label="Số Điện Thoại"
         rules={[
           {
-            pattern: "^([-]?[0-9]*|0)$",
+            pattern: /^[\d]{10,10}$/,
             message: "Số Điện Thoại không hợp lệ",
           },
           { required: true },

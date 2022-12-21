@@ -6,61 +6,63 @@ import {
   FileSearchOutlined,
 } from "@ant-design/icons";
 import "../../../../common/Table/TableTemplate";
+import { cartActions } from "../../../../redux/reducer/CartReducer";
+import { useSelector, useDispatch } from "react-redux";
 
-const SearchHeader = (props) => {
+const SearchHeader = ({ data }) => {
+  const dispatch = useDispatch();
   const [searchedText, setSearchedText] = useState("");
   const [showResult, setShowResult] = useState(true);
   const changeShowResult = (value) => {
     setShowResult(value === "" ? true : value === null ? true : false);
   };
 
+  const handleSelect = (cartItem) => {
+    dispatch(cartActions.addNewCartItem(cartItem));
+  };
+
   const columns = [
+    // {
+    //   dataIndex: "hinhAnh",
+    //   key: "hinhAnh",
+    //   width: "100px",
+    //   render: (value, record) => {
+    //     return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
+    //   },
+    // },
     {
-      dataIndex: "hinhAnh",
-      key: "hinhAnh",
-      width: "100px",
-      render: (value, record) => {
-        return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
-      },
-    },
-    {
-      dataIndex: "maSanPham",
-      key: "maSanPham",
-      width: "80px",
+      dataIndex: "id",
+      key: "id",
+      width: "20%",
       ellipsis: true,
       filteredValue: [searchedText],
       onFilter: (value, record) => {
         return (
-          String(record.maSanPham)
+          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.product.title)
             .toLowerCase()
-            .includes(value.toLowerCase()) ||
-          String(record.tenSanPham).toLowerCase().includes(value.toLowerCase())
+            .includes(value.toLowerCase())
         );
       },
     },
     {
-      dataIndex: "tenSanPham",
-      key: "tenSanPham",
+      dataIndex: ["product", "title"],
+      key: "title",
       ellipsis: true,
-      render: (value, record) => {
-        return <div className="line-clamp-2 truncate">{record.tenSanPham}</div>;
-      },
     },
     {
-      dataIndex: "giaBan",
-      key: "giaBan",
+      dataIndex: "price",
+      key: "price",
       width: "100px",
       fixed: "right",
       ellipsis: false,
       render: (value, record) => {
         return (
           <Space className="flex flex-nowrap" size={3}>
-            {record.giaBan.toLocaleString(undefined, {
+            {record.price.toLocaleString(undefined, {
               maximumFractionDigits: 2,
             })}
-            <sup className="inline-block underline flex flex-col justify-center">
-              đ
-            </sup>
+            <sup className="flex flex-col justify-center">vnđ</sup>
           </Space>
         );
       },
@@ -70,11 +72,11 @@ const SearchHeader = (props) => {
       fixed: "right",
       width: "100px",
       align: "center",
-      render: () => (
+      render: (value, record) => (
         <button
           type="button"
-          className="text-blue-500 bg-white border border-blue-500 p-1 rounded whitespace-nowrap ml-1"
-          // onClick={() => handleSelect(record)}
+          className="text-blue-500 bg-white border border-blue-500 p-1 rounded whitespace-nowrap ml-1 hover:bg-sky-500"
+          onClick={() => handleSelect(record)}
         >
           Chọn mua
         </button>
@@ -100,10 +102,11 @@ const SearchHeader = (props) => {
         <Table
           className="absolute p-1 bg-white shadow-lg overflow-y-auto customTable rounded-2xl"
           size="small"
+          rowKey={"id"}
           showHeader={false}
           pagination={false}
           columns={columns}
-          dataSource={props.data}
+          dataSource={data}
           scroll={{ y: 400 }}
           locale={{
             emptyText: (

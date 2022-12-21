@@ -10,8 +10,9 @@ import { productActions } from "../../../../redux/reducer/ProductReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
 
-const TableProducts = () => {
+const TableProducts = ({ data }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // const { products } = useSelector((state) => state.productSlice);
   const [page, setPage] = React.useState(1);
   // let editProduct = {
@@ -32,28 +33,28 @@ const TableProducts = () => {
       key: "",
       render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
-    {
-      title: "Ảnh",
-      dataIndex: "image",
-      key: "image",
-      width: "5%",
-      render: (value, record) => {
-        return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
-      },
-    },
+    // {
+    //   title: "Ảnh",
+    //   dataIndex: "image",
+    //   key: "image",
+    //   width: "5%",
+    //   render: (value, record) => {
+    //     return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
+    //   },
+    // },
     {
       title: "Mã sản phẩm",
-      dataIndex: "productId",
-      key: "productId",
+      dataIndex: "id",
+      key: "id",
       width: "10%",
-      sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
+      sorter: (item1, item2) => item1.id.localeCompare(item2.id),
       showOnResponse: true,
       showOnDesktop: true,
     },
     {
-      title: "Tên sản phẩm",
-      dataIndex: "name",
-      key: "name",
+      title: "Tên dòng sản phẩm",
+      dataIndex: ["product", "title"],
+      key: "title",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
@@ -65,6 +66,7 @@ const TableProducts = () => {
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
+      sorter: (a, b) => a.cost - b.cost,
     },
     {
       title: "Giá bán",
@@ -74,6 +76,7 @@ const TableProducts = () => {
       showOnDesktop: true,
       width: "15%",
       ellipsis: true,
+      sorter: (a, b) => a.price - b.price,
     },
     {
       title: "Số lượng",
@@ -83,29 +86,27 @@ const TableProducts = () => {
       showOnDesktop: true,
       width: "10%",
       ellipsis: true,
+      sorter: (a, b) => a.quantity - b.quantity,
     },
     {
       title: "Trạng thái",
-      dataIndex: "soLuong",
-      key: "soLuong",
+      dataIndex: "state",
+      key: "state",
       showOnResponse: true,
       showOnDesktop: true,
       ellipsis: true,
       width: "10%",
-      // render: (text, record, index) => {
-      //   let colorTag = text === 0 ? "red" : text < 10 ? "yellow" : "green";
-      //   let contentTag =
-      //     text === 0 ? "Hết hàng" : text < 10 ? "Sắp hết hàng" : "Còn hàng";
-      //   return (
-      //     <Tag
-      //       key={index}
-      //       color={colorTag}
-      //       className="w-2/4 min-w-max text-center"
-      //     >
-      //       {contentTag}
-      //     </Tag>
-      //   );
-      // },
+      render: (text, record, index) => {
+        return (
+          <Tag
+            key={index}
+            color={record.state.color}
+            className="w-2/4 min-w-max text-center"
+          >
+            {record.state.stateName}
+          </Tag>
+        );
+      },
       // filters: [
       //   { text: "Còn hàng", value: 2 },
       //   { text: "Sắp hết hàng", value: 1 },
@@ -167,10 +168,11 @@ const TableProducts = () => {
     },
   ];
   const handleEditProduct = (record) => {
-    useHistory.push({
-      pathname: "/detail_product",
-      state: { product: record },
-    });
+    // useHistory.push({
+    //   pathname: "/detail_product",
+    //   state: { product: record },
+    // });
+    history.push("/detail_product/" + record.id);
   };
   const handleRemoveProduct = (record) => {
     dispatch({
@@ -182,7 +184,7 @@ const TableProducts = () => {
     <>
       <TableTemplate
         columns={columns}
-        // dataSource={products}
+        dataSource={data}
         pagination={{
           onChange(current) {
             setPage(current);
@@ -191,7 +193,7 @@ const TableProducts = () => {
           showSizeChanger: false,
           pageSizeOptions: ["6"],
         }}
-        rowKey={"maSanPham"}
+        rowKey={"id"}
       />
     </>
   );

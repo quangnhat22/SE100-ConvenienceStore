@@ -1,4 +1,4 @@
-import { Table, Popconfirm, Space } from "antd";
+import { Table, Popconfirm, Space, Spin } from "antd";
 import moment from "moment";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const TableDeliveryNotes = ({ keyWord, data }) => {
+const TableDeliveryNotes = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,9 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
           String(record.provider.name)
             .toLowerCase()
             .includes(value.toLowerCase()) ||
-          String(record.date).toLowerCase().includes(value.toLowerCase()) ||
+          String(moment(record.date).format("DD/MM/YYYY"))
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
           String(record.total).toLowerCase().includes(value.toLowerCase())
         );
       },
@@ -64,22 +66,22 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
       showOnDesktop: true,
       render: (date) => `${moment(date).format("DD/MM/YYYY")}`,
     },
-    {
-      title: "Tổng sản phẩm",
-      dataIndex: "productItems",
-      key: "productItems",
-      showOnResponse: true,
-      showOnDesktop: true,
-      width: "15%",
-      ellipsis: true,
-      render: (productItems) => {
-        let render = 0;
-        for (let i = 0; i < productItems.length; i++) {
-          render += productItems[i].quantity;
-        }
-        return render;
-      },
-    },
+    // {
+    //   title: "Tổng sản phẩm",
+    //   dataIndex: "productItems",
+    //   key: "productItems",
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   width: "15%",
+    //   ellipsis: true,
+    //   render: (productItems) => {
+    //     let render = 0;
+    //     for (let i = 0; i < productItems.length; i++) {
+    //       render += productItems[i].quantity;
+    //     }
+    //     return render;
+    //   },
+    // },
     {
       title: "Tổng tiền",
       dataIndex: "total",
@@ -102,13 +104,13 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <button
+          {/* <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditStaff(record)}
           >
             <EditFilled />
-          </button>
+          </button> */}
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa phiếu nhập hàng này?"
@@ -144,13 +146,22 @@ const TableDeliveryNotes = ({ keyWord, data }) => {
     });
   };
 
-  const handleEditStaff = (staff) => {
-    // dispatch(
-    //   modalActions.showModal({
-    //     ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
-    //   })
-    // );
-  };
+  // const handleEditStaff = (staff) => {
+  //   dispatch(
+  //     modalActions.showModal({
+  //       ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
+  //     })
+  //   );
+  // };
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
 
   return (
     <>

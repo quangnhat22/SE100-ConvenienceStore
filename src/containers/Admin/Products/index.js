@@ -1,5 +1,5 @@
 import Search from "antd/lib/input/Search";
-import React from "react";
+import React, { useState } from "react";
 import TableProducts from "./components/TableProducts";
 import ModalForm from "../../../HOC/ModalForm";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +18,9 @@ import { useHistory } from "react-router-dom";
 
 const ProductsPage = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { listProduct, loading } = useSelector((state) => state.productSlice);
+  const [keyWord, setKeyWord] = useState("");
 
   // const handleAddProduct = () => {
   //   dispatch(
@@ -26,6 +29,9 @@ const ProductsPage = () => {
   //     })
   //   );
   // };
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
+  }, []);
 
   const handleAddProduct = () => {
     history.push("/add_product");
@@ -71,7 +77,7 @@ const ProductsPage = () => {
         </div>
       </div>
 
-      <TableProducts />
+      <TableProducts data={listProduct} />
       <ModalForm />
     </>
   );

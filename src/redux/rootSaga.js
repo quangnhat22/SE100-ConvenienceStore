@@ -7,6 +7,8 @@ import * as ProviderSaga from "./sagaActions/ProviderSaga";
 import * as ProductSaga from "./sagaActions/ProductSaga";
 import * as ProductItemQuantityStateSaga from "./sagaActions/ProductItemQuantitySaga";
 import * as ReportSaga from "./sagaActions/ReportSaga";
+import * as InvoiceSaga from "./sagaActions/InvoiceSaga";
+import * as ProductExpireSaga from "./sagaActions/ProductExpireSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -16,8 +18,6 @@ export default function* rootSaga() {
     ProductsSaga.followActPutProducts(),
     ProductsSaga.followActDeleteProducts(),
     ProductsSaga.followActGetProductsById(),
-    ProductSaga.followActPostProducts(),
-    ProductSaga.followActDeleteProducts(),
     StaffSaga.followActGetListStaffs(),
     StaffSaga.followActPostStaff(),
     StaffSaga.followActPutStaff(),
@@ -40,5 +40,17 @@ export default function* rootSaga() {
     ReportSaga.followActGetListReportWeek(),
     ReportSaga.followActGetListReportMonth(),
     ReportSaga.followActGetListReportYear(),
+    ProductSaga.followActGetListProductItem(),
+    ProductSaga.followActGetProductItemById(),
+    ProductSaga.followActDeleteProductItem(),
+    ProductSaga.followActPostProductItem(),
+    InvoiceSaga.followActGetListInvoice(),
+    InvoiceSaga.followActGetInvoiceById(),
+    InvoiceSaga.followActPostInvoice(),
+    ProductExpireSaga.followActGetListProductItemsExpire(),
+    ProductExpireSaga.followActProductItemExpireById(),
+    ProductExpireSaga.followActPutProductItemsExpire(),
+    ProductExpireSaga.followActPostProductItemsExpire(),
+    ProductExpireSaga.followActDeleteProductItemsExpire(),
   ]);
 }

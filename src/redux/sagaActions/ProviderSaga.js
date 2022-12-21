@@ -2,6 +2,8 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { providerActions } from "../reducer/ProviderReducer";
 import { ProviderService } from "../../service/api/ProviderApi";
+import { modalActions } from "../reducer/ModalReducer";
+import AlertCustom from "../../common/Notification/Alert";
 
 function* actGetListProvider() {
   try {
@@ -28,29 +30,38 @@ function* actPostProvider(action) {
 
     let res = yield call(() => ProviderService.postProviders(newProvider));
     if (res.status === 201) {
-      yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+      AlertCustom({ type: "success", title: "Thêm nhà cung cấp thành công" });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Thêm nhà cung cấp thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
 
 function* actPutProvider(action) {
   try {
     let { id, provider } = action;
-    
+
     console.log(action);
     yield put(providerActions.getListProviderLoading());
     let res = yield call(() => ProviderService.putProviders(id, provider));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+      AlertCustom({
+        type: "success",
+        title: "Chỉnh sửa nhà cung cấp thành công",
+      });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Chỉnh sửa nhà cung cấp thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
 
@@ -61,12 +72,14 @@ function* actDeleteProvider(action) {
 
     let res = yield call(() => ProviderService.deleteProvidersById(id));
     if (res.status === 200) {
-      yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+      AlertCustom({ type: "success", title: "Xóa nhà cung cấp thành công" });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Xóa nhà cung cấp thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
 
@@ -74,9 +87,9 @@ function* actGetProviderById(action) {
   try {
     let { id } = action;
     let res = yield call(() => ProviderService.getProvidersById(id));
-    let {data, status} = res;
+    let { data, status } = res;
     if (status === 200) {
-      yield put(providerActions.getProviderByIdSuccess({provider : data}));
+      yield put(providerActions.getProviderByIdSuccess({ provider: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }
