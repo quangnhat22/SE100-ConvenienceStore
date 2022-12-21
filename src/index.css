@@ -79,3 +79,15 @@ input:checked ~ .block {
   padding: 0 !important;
   background: #001529;
 }
+
+.ant-modal-header {
+  border-radius: 10px;
+}
+
+.ant-modal-content {
+  border-radius: 10px;
+}
+
+.ant-modal-footer {
+  border-radius: 10px;
+}

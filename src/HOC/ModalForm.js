@@ -1,8 +1,8 @@
 import { Modal } from "antd";
 import React from "react";
 import AddStaffForm from "../containers/Admin/Staffs/components/AddStaffForm";
-import { useSelector, useDispatch } from 'react-redux';
-import {modalActions} from "../redux/reducer/ModalReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { modalActions } from "../redux/reducer/ModalReducer";
 
 const ModalForm = () => {
   const { visible, ComponentContent, title } = useSelector(
@@ -16,7 +16,8 @@ const ModalForm = () => {
 
   return (
     <Modal
-      title = {title}
+      className="rounded"
+      title={title}
       open={visible}
       onCancel={handleCancel}
       closable={true}

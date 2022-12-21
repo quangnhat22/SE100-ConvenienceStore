@@ -11,7 +11,7 @@ const TableTemplate = (props) => {
         cancelSort: "Trở về mặc định",
       }}
       rowKey={props.rowKey}
-      className="table-striped-rows m-3 drop-shadow-lg"
+      className="table-striped-rows m-3 drop-shadow-lg rounded"
       // size="middle"
       columns={props.columns}
       dataSource={props.dataSource}

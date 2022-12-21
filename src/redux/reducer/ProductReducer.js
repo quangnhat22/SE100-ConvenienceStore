@@ -135,8 +135,8 @@ const productSlice = createSlice({
       state.loading = true;
     },
     getListProductSuccess: (state, action) => {
-      state.loading = false;
       state.listProduct = action.payload.listProduct;
+      state.loading = false;
     },
     getProductByIdSuccess: (state, action) => {
       state.productById = action.payload.productById;

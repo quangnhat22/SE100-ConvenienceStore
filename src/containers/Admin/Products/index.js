@@ -49,7 +49,9 @@ const ProductsPage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            // onSearch={onSearch}
+            onSearch={(value) => {
+              setKeyWord(value);
+            }}
           />
           {/* button search */}
           <button
@@ -77,7 +79,7 @@ const ProductsPage = () => {
         </div>
       </div>
 
-      <TableProducts data={listProduct} />
+      <TableProducts data={listProduct} keyWord={keyWord} loading={loading} />
       <ModalForm />
     </>
   );
