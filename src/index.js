@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./redux";
 import { Provider } from "react-redux";
+import RevenueChart from "./containers/Admin/Financial/components/RevenueChart";
+import RevenuePage from "./containers/Admin/Financial/components/RevenuePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -13,7 +15,8 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        {/* <App /> */}
+        <RevenuePage />
       </BrowserRouter>
     </React.StrictMode>
   </Provider>
