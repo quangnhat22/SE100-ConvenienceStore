@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 
 const TableProducts = ({ data }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // const { products } = useSelector((state) => state.productSlice);
   const [page, setPage] = React.useState(1);
   // let editProduct = {
@@ -167,10 +168,11 @@ const TableProducts = ({ data }) => {
     },
   ];
   const handleEditProduct = (record) => {
-    useHistory.push({
-      pathname: "/detail_product",
-      state: { product: record },
-    });
+    // useHistory.push({
+    //   pathname: "/detail_product",
+    //   state: { product: record },
+    // });
+    history.push("/detail_product/" + record.id);
   };
   const handleRemoveProduct = (record) => {
     dispatch({

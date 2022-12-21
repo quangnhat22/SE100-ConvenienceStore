@@ -23,10 +23,10 @@ function* actGetProductItemById(action) {
   try {
     let { id } = action;
     let res = yield call(() => ProductService.getProductById(id));
-    console.log("POST");
+    console.log(res);
     let { data, status } = res;
     if (status === 200) {
-      yield put(productActions.getProductByIdSuccess({ provider: data }));
+      yield put(productActions.getProductByIdSuccess({ productById: data }));
     } else {
       //yield put(authActions.requestLogFailed());
     }
