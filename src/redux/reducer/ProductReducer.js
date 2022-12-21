@@ -114,9 +114,22 @@ const initialState = {
     //   moTa: "",
     // },
   ],
-  productById: {
-    productId: "",
-    deliveryNoteId: 0,
+  roductById: {
+    id: "",
+    product: {
+      id: "",
+      title: "",
+      tax: 0,
+    },
+    deliveryNote: {
+      id: 0,
+      provider: {
+        id: 0,
+        name: "",
+        email: "",
+        address: "",
+      },
+    },
     MFG: "",
     EXP: "",
     cost: 0,

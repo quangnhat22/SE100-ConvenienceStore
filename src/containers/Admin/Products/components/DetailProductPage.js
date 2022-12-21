@@ -52,6 +52,7 @@ const DetailProductPage = (props) => {
     };
   });
   const { productById } = useSelector((state) => state.productSlice);
+  console.log(productById);
 
   // ValidateMessagees
   const validateMessages = {
@@ -84,7 +85,9 @@ const DetailProductPage = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([{ url: productById.image }]);
+  const [fileList, setFileList] = useState([
+    { url: productById ? productById.image : "" },
+  ]);
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -120,22 +123,24 @@ const DetailProductPage = (props) => {
 
   //initialValues
 
-  const initialValues = {
-    productId: productById.product.id,
-    deliveryNoteId: productById.deliveryNote.id,
-    MFG: moment(productById.MFG),
-    EXP: moment(productById.EXP),
-    cost: productById.cost,
-    price: productById.price,
-    quantity: productById.quantity,
-    description: productById.description,
-  };
+  const initialValues = productById
+    ? {
+        productId: productById.product.id,
+        deliveryNoteId: productById.deliveryNote.id,
+        MFG: moment(productById.MFG),
+        EXP: moment(productById.EXP),
+        cost: productById.cost,
+        price: productById.price,
+        quantity: productById.quantity,
+        description: productById.description,
+      }
+    : {};
 
   return (
     <Form
       layout="vertical"
       validateMessages={validateMessages}
-      // initialValues={initialValues}
+      initialValues={initialValues}
     >
       <div className="flex justify-center items-center">
         <div className="gap-8 mt-10 flex w-full lg:w-3/5 flex-col md:flex-row mx-10">
@@ -273,11 +278,7 @@ const DetailProductPage = (props) => {
               <Form.Item name="description" label="Mô tả">
                 <TextArea className="rounded" placeholder="Mô tả..." rows={4} />
               </Form.Item>
-              <Form.Item
-                className="w-fit rounded"
-                name="image"
-                label="Hình ảnh sản phẩm"
-              >
+              <Form.Item className="w-fit rounded" label="Hình ảnh sản phẩm">
                 <>
                   <Upload
                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"

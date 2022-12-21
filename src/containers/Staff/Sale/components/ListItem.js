@@ -43,7 +43,7 @@ const ListItem = ({ data }) => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item
-          className="sm:bg-slate-50 mb-2"
+          className="sm:bg-slate-50 mb-2 p-5 rounded-lg"
           actions={[<a onClick={() => handleDelete(item)}>Xóa</a>]}
         >
           <Skeleton avatar title={false} loading={false} active>
