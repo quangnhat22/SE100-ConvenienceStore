@@ -42,7 +42,7 @@ const SalePage = () => {
             <ListItem data={cartItems} />
           </div>
           <div className="w-1/3 min-w-200">
-            <PaymentForm />
+            <PaymentForm data={cartItems} />
           </div>
         </Content>
       </Layout>
