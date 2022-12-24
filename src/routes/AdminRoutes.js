@@ -10,6 +10,7 @@ import DeliveryNotes from "../containers/Admin/DeliveryNotes";
 import AddProductPage from "../containers/Admin/Products/components/AddProductPage";
 import DetailProductPage from "../containers/Admin/Products/components/DetailProductPage";
 import InvoicePage from "../containers/Admin/Financial/components/InvoicePage";
+import SalePage from "../containers/Staff/Sale";
 
 const routesAdmin = [
   {
@@ -75,7 +76,7 @@ const routesAdmin = [
   {
     exact: false,
     path: "/sales",
-    component: StaffsPage,
+    component: SalePage,
   },
 ];
 
