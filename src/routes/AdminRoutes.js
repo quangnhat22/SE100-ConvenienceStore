@@ -11,6 +11,7 @@ import AddProductPage from "../containers/Admin/Products/components/AddProductPa
 import DetailProductPage from "../containers/Admin/Products/components/DetailProductPage";
 import InvoicePage from "../containers/Admin/Financial/components/InvoicePage";
 import SalePage from "../containers/Staff/Sale";
+import DetailProviderPage from "../containers/Admin/Providers/components/DetailProvider/DetailProviderPage";
 
 const routesAdmin = [
   {
@@ -77,6 +78,11 @@ const routesAdmin = [
     exact: false,
     path: "/sales",
     component: SalePage,
+  },
+  {
+    exact: false,
+    path: "/provider-detail-page",
+    component: DetailProviderPage,
   },
 ];
 

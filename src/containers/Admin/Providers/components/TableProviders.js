@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { providerActions } from "../../../../redux/reducer/ProviderReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import DetailProviderForm from "./DetailProviderForm";
+import DetailProviderPage from "./DetailProvider/DetailProviderPage";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { type } from "@testing-library/user-event/dist/type";
 
@@ -136,13 +136,13 @@ const TableProviders = ({ data, keyWord, loading }) => {
   ];
 
   const handleEditProvider = (record) => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: (
-          <DetailProviderForm provider={record}></DetailProviderForm>
-        ),
-      })
-    );
+    // dispatch(
+    //   modalActions.showModal({
+    //     ComponentContent: (
+    //       <DetailProviderPage provider={record}></DetailProviderPage>
+    //     ),
+    //   })
+    // );
   };
   const handleRemoveProviders = (record) => {
     dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: record.id });
