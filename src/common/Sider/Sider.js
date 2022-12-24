@@ -35,6 +35,7 @@ const SiderCustomed = ({ setVisibleButton }) => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("role");
         history.replace("/");
+        history.go(0);
       }
     });
   };
