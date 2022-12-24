@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -23,35 +23,46 @@ const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 
-const PaymentForm = () => {
+const totalPrice = (cartItems) => {
+  if (cartItems) {
+    let total = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      total += cartItems[i].quantity * cartItems[i].price;
+    }
+    return total;
+  }
+};
+
+const PaymentForm = ({ data }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    let newProduct = {
-      maSanPham: moment().valueOf(),
-      tenSanPham: values.product_name,
-      giaNhap: values.product_buyprice,
-      giaBan: values.product_sellprice,
-      thue: values.product_tax,
-      ngaySanXuat: values.product_expiry_date[0].format(dateFormat),
-      thoiHan: values.product_expiry_date[1].format(dateFormat),
-      soLuong: values.product_quantity,
-      moTa: values.product_description,
-    };
-    console.log(newProduct);
-    dispatch(productActions.addNewProduct(newProduct));
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
+  const defaultValues = {
+    store_name: "Convenience Store",
+    bill_date: moment(),
+    bill_creater: "Quang Kotex",
+    bill_price: totalPrice(data),
+    bill_tax: 8,
+    bill_finalprice: (totalPrice(data) * 108) / 100,
   };
+  useEffect(() => {
+    form.setFieldsValue(defaultValues);
+  }, [form, defaultValues]);
+  const onFinish = (values) => {
+    console.log(values);
+  };
+
+  const onChange = (value) => {
+    form.setFieldsValue({
+      bill_customer_repay: value - form.getFieldValue().bill_finalprice,
+    });
+  };
+
   return (
     <FormCustomed
       name="bill_form"
       form={form}
       onFinish={onFinish}
-      initialValues={{
-        bill_date: moment(),
-      }}
+      initialValues={defaultValues}
     >
       {/* <Form.Item name="product_id" label="Mã sản phẩm">
         <Input
@@ -71,7 +82,7 @@ const PaymentForm = () => {
           },
         ]}
       >
-        <Input placeholder="Tên cửa hàng" />
+        <Input placeholder="Tên cửa hàng" disabled={true} />
       </Form.Item>
       <Form.Item
         name="bill_date"
@@ -82,10 +93,14 @@ const PaymentForm = () => {
           },
         ]}
       >
-        <DatePicker placeholder="Ngày lập hóa đơn" format={dateFormat} />
+        <DatePicker
+          placeholder="Ngày lập hóa đơn"
+          format={dateFormat}
+          disabled={true}
+        />
       </Form.Item>
       <Form.Item
-        name="store_staff"
+        name="bill_creater"
         label="Người lập hóa đơn"
         rules={[
           {
@@ -93,7 +108,7 @@ const PaymentForm = () => {
           },
         ]}
       >
-        <Input placeholder="Tên người lập hóa đơn" />
+        <Input placeholder="Tên người lập hóa đơn" disabled={true} />
       </Form.Item>
       <Form.Item
         name="bill_price"
@@ -106,7 +121,13 @@ const PaymentForm = () => {
           },
         ]}
       >
-        <InputNumber addonAfter={"VNĐ"} placeholder="Tổng giá" />
+        <InputNumber
+          addonAfter={"VNĐ"}
+          placeholder="Tổng giá"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          disabled={true}
+        />
       </Form.Item>
       <Form.Item
         name="bill_tax"
@@ -119,7 +140,26 @@ const PaymentForm = () => {
           },
         ]}
       >
-        <InputNumber addonAfter={"%"} placeholder="Thuế VAT" />
+        <InputNumber addonAfter={"%"} placeholder="Thuế VAT" disabled={true} />
+      </Form.Item>
+      <Form.Item
+        name="bill_finalprice"
+        label="Tiền sau thuế"
+        rules={[
+          {
+            required: true,
+            type: "number",
+            min: 1,
+          },
+        ]}
+      >
+        <InputNumber
+          addonAfter={"VNĐ"}
+          placeholder="Tổng giá"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          disabled={true}
+        />
       </Form.Item>
       <Form.Item
         name="bill_customer_pay"
@@ -128,11 +168,17 @@ const PaymentForm = () => {
           {
             required: true,
             type: "number",
-            min: 1,
           },
         ]}
       >
-        <InputNumber addonAfter={"VNĐ"} placeholder="Tiền khách trả" />
+        <InputNumber
+          addonAfter={"VNĐ"}
+          min={(totalPrice(data) * 108) / 100}
+          placeholder="Tiền khách trả"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          onChange={(value) => onChange(value)}
+        />
       </Form.Item>
       <Form.Item
         name="bill_customer_repay"
@@ -141,21 +187,18 @@ const PaymentForm = () => {
           {
             required: true,
             type: "number",
-            min: 1,
           },
         ]}
       >
-        <InputNumber addonAfter={"VNĐ"} placeholder="Tiền trả lại cho khách" />
+        <InputNumber
+          addonAfter={"VNĐ"}
+          placeholder="Tiền trả lại cho khách"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          disabled={true}
+        />
       </Form.Item>
-      <Form.Item
-        name="bill_note"
-        label="Ghi chú"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
+      <Form.Item name="bill_note" label="Ghi chú">
         <Input placeholder="Ghi chú" />
       </Form.Item>
       <Form.Item
@@ -167,7 +210,6 @@ const PaymentForm = () => {
         <Button className="mr-4" htmlType="submit">
           Thanh toán
         </Button>
-        <Button>In hóa đơn</Button>
       </Form.Item>
     </FormCustomed>
   );

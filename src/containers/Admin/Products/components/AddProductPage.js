@@ -25,13 +25,13 @@ const getBase64 = (file) =>
 
 const AddProductPage = () => {
   const history = useHistory();
-  const [productInformationForm] = Form.useForm();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
     dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   }, []);
   const { products } = useSelector((state) => state.productsSlice);
+  console.log(products);
   const { deliveryNotes } = useSelector((state) => state.deliveryNotesSlice);
   const optionsProductLines = products.map(function (productLine) {
     return {
@@ -91,7 +91,7 @@ const AddProductPage = () => {
       quantity: values.quantity,
       description: values.description,
       // image: importInformationForm.image.filename,
-      image: "http://example.com/a.jpg",
+      image: "http://example.com/a.jpg", /////////////Cần sửa ở đây
     };
     console.log("abc");
     dispatch({
@@ -103,7 +103,6 @@ const AddProductPage = () => {
 
   return (
     <Form
-      form={productInformationForm}
       layout="vertical"
       validateMessages={validateMessages}
       onFinish={onFinish}
@@ -116,7 +115,7 @@ const AddProductPage = () => {
 
             <Form.Item
               name="productId"
-              label="Dòng sản sản phẩm"
+              label="Dòng sản phẩm"
               rules={[
                 {
                   required: true,
@@ -125,14 +124,14 @@ const AddProductPage = () => {
             >
               <Select
                 className="rounded"
-                placeholder="Dòng sản sản phẩm"
+                placeholder="Dòng sản phẩm"
                 allowClear
                 options={optionsProductLines}
               ></Select>
             </Form.Item>
             <Form.Item
               name="deliveryNoteId"
-              label="Đơn vận chuyển"
+              label="Đơn vị cung cấp"
               rules={[
                 {
                   required: true,
@@ -141,7 +140,7 @@ const AddProductPage = () => {
             >
               <Select
                 className="rounded"
-                placeholder="Đơn vận chuyển"
+                placeholder="Đơn vị cung cấp"
                 allowClear
                 options={optionsDeliveryNotes}
               ></Select>
@@ -240,8 +239,8 @@ const AddProductPage = () => {
                 </Form.Item>
               </Space>
             </Form.Item>
-            <Form.Item name="description" label="Mô tả">
-              <TextArea className="rounded" placeholder="Mô tả..." rows={4} />
+            <Form.Item className="rounded" name="description" label="Mô tả">
+              <TextArea placeholder="Mô tả..." rows={4} />
             </Form.Item>
             <Form.Item
               className="w-fit rounded"

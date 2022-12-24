@@ -14,7 +14,7 @@ const SettingPage = () => {
   const handleAddNewRegulation = () => {
     dispatch(
       modalActions.showModal({
-        title: "Thêm trạng thái",
+        // title: "Thêm trạng thái",
         ComponentContent: <RegulationForm />,
       })
     );

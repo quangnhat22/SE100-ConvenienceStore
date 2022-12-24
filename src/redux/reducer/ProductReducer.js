@@ -115,8 +115,21 @@ const initialState = {
     // },
   ],
   productById: {
-    productId: "",
-    deliveryNoteId: 0,
+    id: "",
+    product: {
+      id: "",
+      title: "",
+      tax: 0,
+    },
+    deliveryNote: {
+      id: 0,
+      provider: {
+        id: 0,
+        name: "",
+        email: "",
+        address: "",
+      },
+    },
     MFG: "",
     EXP: "",
     cost: 0,
@@ -132,14 +145,15 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     getListProductLoading: (state, action) => {
-      state.requestListProduct = true;
+      state.loading = true;
     },
     getListProductSuccess: (state, action) => {
-      state.requestListProduct = false;
       state.listProduct = action.payload.listProduct;
+      state.loading = false;
     },
     getProductByIdSuccess: (state, action) => {
       state.productById = action.payload.productById;
+      console.log(state.productById);
     },
   },
 });

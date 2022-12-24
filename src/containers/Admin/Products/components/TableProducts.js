@@ -1,6 +1,6 @@
 import { hover } from "@testing-library/user-event/dist/hover";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
+import { Table, Tag, Popconfirm, Space, Tooltip, Spin } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
@@ -10,8 +10,9 @@ import { productActions } from "../../../../redux/reducer/ProductReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
 
-const TableProducts = ({ data }) => {
+const TableProducts = ({ data, keyWord, loading }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   // const { products } = useSelector((state) => state.productSlice);
   const [page, setPage] = React.useState(1);
   // let editProduct = {
@@ -47,6 +48,17 @@ const TableProducts = ({ data }) => {
       key: "id",
       width: "10%",
       sorter: (item1, item2) => item1.id.localeCompare(item2.id),
+      filteredValue: [keyWord],
+      onFilter: (value, record) => {
+        return (
+          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.product.title)
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.price).toLowerCase().includes(value.toLowerCase())
+        );
+      },
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -167,17 +179,29 @@ const TableProducts = ({ data }) => {
     },
   ];
   const handleEditProduct = (record) => {
-    useHistory.push({
-      pathname: "/detail_product",
-      state: { product: record },
-    });
+    // useHistory.push({
+    //   pathname: "/detail_product",
+    //   state: { product: record },
+    // });
+    history.push("/detail_product/" + record.id);
   };
   const handleRemoveProduct = (record) => {
     dispatch({
       type: SagaActionTypes.DELETE_PRODUCT_ITEM_SAGA,
-      id: record.productId,
+      id: record.id,
     });
   };
+
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
+
   return (
     <>
       <TableTemplate

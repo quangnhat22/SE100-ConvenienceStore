@@ -12,13 +12,23 @@ import { useSelector, useDispatch } from "react-redux";
 const SearchHeader = ({ data }) => {
   const dispatch = useDispatch();
   const [searchedText, setSearchedText] = useState("");
+
   const [showResult, setShowResult] = useState(true);
   const changeShowResult = (value) => {
     setShowResult(value === "" ? true : value === null ? true : false);
   };
 
   const handleSelect = (cartItem) => {
-    dispatch(cartActions.addNewCartItem(cartItem));
+    let newCartItem = {
+      id: cartItem.id,
+      productName: cartItem.product.title,
+      price: cartItem.price,
+      quantity: 1,
+      tax: cartItem.product.tax,
+      image: cartItem.image,
+      maxQuantity: cartItem.quantity,
+    };
+    dispatch(cartActions.addNewCartItem(newCartItem));
   };
 
   const columns = [
@@ -51,9 +61,15 @@ const SearchHeader = ({ data }) => {
       ellipsis: true,
     },
     {
+      dataIndex: "quantity",
+      width: "10%",
+      key: "quantity",
+      ellipsis: true,
+    },
+    {
       dataIndex: "price",
       key: "price",
-      width: "100px",
+      width: "20%",
       fixed: "right",
       ellipsis: false,
       render: (value, record) => {

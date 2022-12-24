@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { current } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
@@ -19,14 +20,19 @@ const cartSlice = createSlice({
     // dùng tạm
     //input : reader
     addNewCartItem: (state, action) => {
-      //state.cartItems = [action.payload, ...state.cartItems];
       let newCartItem = action.payload;
       //check cart is available
-      if (state.cartItems.Contains(action.payload)) {
+      console.log(newCartItem);
+      let listCartItem = current(state.cartItems);
+      let item = listCartItem.find((item) => item.id === newCartItem.id);
+      if (typeof item != "undefined") {
         state.cartItems = state.cartItems.map((cart) => {
-          if (cart.id === newCartItem.id) {
-            newCartItem.number = cart.number + 1;
-            return { ... newCartItem};
+          if (
+            cart.id === newCartItem.id &&
+            cart.quantity < newCartItem.maxQuantity
+          ) {
+            newCartItem.quantity = cart.quantity + 1;
+            return { ...newCartItem };
           } else {
             return cart;
           }
@@ -34,36 +40,36 @@ const cartSlice = createSlice({
       } else {
         state.cartItems = [action.payload, ...state.cartItems];
       }
+    },
 
-      
-    },
-    addNewCartItem: (state, action) => {
-      let newCartItem = action.payload;
-      //check cart is available
-      if (state.cartItems.Contains(action.payload)) {
-        state.cartItems = state.cartItems.map((cart) => {
-          if (cart.id === newCartItem.id) {
-            newCartItem.number = cart.number + 1;
-            return { ... newCartItem};
-          } else {
-            return cart;
-          }
-        });
-      } else {
-        state.cartItems = [action.payload, ...state.cartItems];
-      }
-    },
     reduceCartItem: (state, action) => {
-      let {id} = action.payload;
+      let { id } = action.payload;
       state.cartItems = state.cartItems.map((cart) => {
         if (cart.id === id) {
-          cart.number = cart.number - 1;
-          return { ... cart.number};
+          cart.quantity = cart.quantity - 1;
+          return cart;
         } else {
           return cart;
         }
       });
     },
+
+    cartItemQuantityChange: (state, action) => {
+      let newCartItem = action.payload;
+      //check cart is available
+      let listCartItem = current(state.cartItems);
+      let item = listCartItem.find((item) => item.id === newCartItem.id);
+      if (typeof item != "undefined") {
+        state.cartItems = state.cartItems.map((cart) => {
+          if (cart.id === newCartItem.id) {
+            return { ...newCartItem };
+          } else {
+            return cart;
+          }
+        });
+      }
+    },
+
     // input: id
     removeCartItem: (state, action) => {
       state.cartItems = state.cartItems.filter(
