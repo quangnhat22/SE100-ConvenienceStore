@@ -20,6 +20,12 @@ const SettingPage = () => {
     );
   };
 
+  useEffect(() => {
+    dispatch({
+      type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
+    });
+  }, []);
+
   return (
     <>
       <div className="ml-4 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row">

@@ -28,7 +28,7 @@ const RegulationForm = () => {
       });
       return;
     }
-    console.log(values);
+    
     let newRegulation = {
       stateName: values.stateName,
       minVal: values.minVal,

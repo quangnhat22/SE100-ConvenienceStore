@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { productItemsQuantityActions } from "../reducer/ProductItemQuantityReducer";
 import { ProductItemQuantityService } from "../../service/api/ProductItemQuantityApi";
+import Swal from "sweetalert2";
 
 function* actGetListProductItemsQuantity() {
   try {
@@ -11,12 +12,24 @@ function* actGetListProductItemsQuantity() {
       ProductItemQuantityService.getProductItemQuantity()
     );
     let { status, data } = res;
+    console.log(res);
     if (status === 200) {
       yield put(
         productItemsQuantityActions.getProductItemsQuantitySuccess({
           productItemsQuantity: data,
         })
       );
+
+       Swal.fire({
+      width: "400",
+      height: "100",
+      backdrop: "none",
+      icon: "success",
+      title: "Giá trị tối thiểu không được phép lớn hơn giá trị max",
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
     } else {
       //yield put(authActions.requestLogFailed());
     }

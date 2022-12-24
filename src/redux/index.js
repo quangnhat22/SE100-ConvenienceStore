@@ -13,6 +13,7 @@ import reportsSlice from "./reducer/ReportReducer";
 import invoiceSlice from "./reducer/InvoiceReducer";
 import productItemsExpireSlice from "./reducer/ProductExpireReducer";
 import cartSlice from "./reducer/CartReducer";
+import productItemsQuantitySlice from "./reducer/ProductItemQuantityReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -28,6 +29,7 @@ const rootReducer = {
   reportsSlice,
   invoiceSlice,
   productItemsExpireSlice,
+  productItemsQuantitySlice,
   cartSlice,
 };
 
@@ -35,7 +37,7 @@ export const store = configureStore({
   reducer: rootReducer,
   devTools: true,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware({serializableCheck: false}).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

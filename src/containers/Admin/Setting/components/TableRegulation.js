@@ -9,10 +9,11 @@ import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const TableRegulation = () => {
+  
   const dispatch = useDispatch();
   //Lưu ý chỗ này làm trắng màn hình
-  const regulations = useSelector((state) => state.productItemsQuantitySlice);
-  console.log(regulations);
+  let {productItemsQuantity} = useSelector((state) => state.productItemsQuantitySlice);
+  console.log(productItemsQuantity);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA });
   }, []);
@@ -154,7 +155,7 @@ const TableRegulation = () => {
         rowClassName={(record, index) =>
           index % 2 === 0 ? "table-row-light" : "table-row-dark"
         }
-        dataSource={regulations}
+        dataSource={productItemsQuantity}
         //  onChange={handleChange}
         scroll={{ x: 1100 }}
       />
