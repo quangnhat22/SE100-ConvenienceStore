@@ -1,15 +1,21 @@
 import React, { useEffect } from "react";
-import Search from "antd/lib/input/Search";
 import TableRegulation from "./components/TableRegulation";
 import RegulationForm from "./components/RegulationForm";
 import ModalForm from "../../../HOC/ModalForm";
 import { modalActions } from "../../../redux/reducer/ModalReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TableOtherRegulation from "./components/TableOtherRegulation";
 import * as SagaActionTypes from "../../../redux/constants/constant";
+import { Space, Spin } from "antd";
 
 const SettingPage = () => {
   const dispatch = useDispatch();
+  let {loading, productItemsQuantity} = useSelector((state) => state.productItemsQuantitySlice);
+  useEffect(() => {
+    dispatch({
+      type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
+    });
+  }, []);
 
   const handleAddNewRegulation = () => {
     dispatch(
@@ -19,13 +25,15 @@ const SettingPage = () => {
       })
     );
   };
-
-  useEffect(() => {
-    dispatch({
-      type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
-    });
-  }, []);
-
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
   return (
     <>
       <div className="ml-4 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row">
@@ -57,7 +65,7 @@ const SettingPage = () => {
           </button>
         </div>
       </div>
-      <TableRegulation />
+      <TableRegulation productItemsQuantity={productItemsQuantity}/>
 
       <p className="ml-4 mt-5 font-semibold text-base">Quy định khác</p>
 

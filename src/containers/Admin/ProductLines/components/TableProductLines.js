@@ -9,7 +9,6 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProductLinesForm from "./DetailProductLinesForm";
 
 const TableProductLines = ({ data, keyWord, loading }) => {
-  console.log("data: ", data);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const columns = [

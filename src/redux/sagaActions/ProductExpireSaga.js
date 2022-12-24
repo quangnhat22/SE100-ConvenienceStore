@@ -59,7 +59,7 @@ function* actPutProductItemsExpire(action) {
     );
     if (res.status === 200) {
       yield put({
-        type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
+        type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA,
       });
     } else {
       //yield put(authActions.requestLogFailed());
