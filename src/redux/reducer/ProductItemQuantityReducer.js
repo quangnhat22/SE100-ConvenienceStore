@@ -23,6 +23,9 @@ const productItemsQuantitySlice = createSlice({
       state.loading = false;
       state.productItemsQuantity = action.payload.productItemsQuantity;
     },
+    getProductItemsQuantityFail: (state, action) => {
+      state.loading = false;
+    },
     getProductItemQuantityByIdSuccess: (state, action) => {
       state.productItemQuantity = action.payload.productItemQuantity;
     },

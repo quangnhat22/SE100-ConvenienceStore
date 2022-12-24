@@ -116,7 +116,7 @@ const DetailProductLinesForm = ({ productLine }) => {
           >
             Hủy
           </Button>
-          <Button onClick={handleModify} htmlType="submit">
+          <Button onClick={handleModify} htmltype="submit">
             Lưu
           </Button>
         </Form.Item>
