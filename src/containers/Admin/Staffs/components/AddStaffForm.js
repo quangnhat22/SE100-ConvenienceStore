@@ -49,7 +49,14 @@ const AddStaffForm = () => {
     });
   };
   return (
-    <FormCustomed name="add_staff_form" form={form} onFinish={onFinish}>
+    <FormCustomed
+      name="add_staff_form"
+      form={form}
+      onFinish={onFinish}
+      initialValues={{
+        staff_other_information: "",
+      }}
+    >
       <Form.Item
         name="staff_name"
         label="Họ và tên"

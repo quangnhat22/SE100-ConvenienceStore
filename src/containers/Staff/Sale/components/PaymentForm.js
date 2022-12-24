@@ -19,6 +19,8 @@ import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { productActions } from "../../../../redux/reducer/ProductReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import "./style/CustomInputNumber.css";
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
@@ -34,6 +36,17 @@ const totalPrice = (cartItems) => {
 };
 
 const PaymentForm = ({ data }) => {
+  const validateMessages = {
+    required: "Cần nhập ${label}!",
+    types: {
+      email: "${label} không hợp lệ!",
+      number: "",
+    },
+    number: {
+      min: "${label} phải ít nhất từ ${min} trở lên",
+      range: "${label} phải trong khoảng từ ${min} đến ${max}",
+    },
+  };
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const defaultValues = {
@@ -43,6 +56,7 @@ const PaymentForm = ({ data }) => {
     bill_price: totalPrice(data),
     bill_tax: 8,
     bill_finalprice: (totalPrice(data) * 108) / 100,
+    bill_note: "",
   };
   useEffect(() => {
     form.setFieldsValue(defaultValues);
@@ -58,11 +72,18 @@ const PaymentForm = ({ data }) => {
   };
 
   return (
-    <FormCustomed
-      name="bill_form"
+    <Form
+      labelCol={{
+        span: 8,
+      }}
+      wrapperCol={{
+        span: 20,
+      }}
+      className="PaymentForm my-4 sm:mx-8 mx-2"
       form={form}
       onFinish={onFinish}
       initialValues={defaultValues}
+      validateMessages={validateMessages}
     >
       {/* <Form.Item name="product_id" label="Mã sản phẩm">
         <Input
@@ -122,6 +143,7 @@ const PaymentForm = ({ data }) => {
         ]}
       >
         <InputNumber
+          className="input-number-right"
           addonAfter={"VNĐ"}
           placeholder="Tổng giá"
           formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -140,7 +162,12 @@ const PaymentForm = ({ data }) => {
           },
         ]}
       >
-        <InputNumber addonAfter={"%"} placeholder="Thuế VAT" disabled={true} />
+        <InputNumber
+          className="input-number-right"
+          addonAfter={"%"}
+          placeholder="Thuế VAT"
+          disabled={true}
+        />
       </Form.Item>
       <Form.Item
         name="bill_finalprice"
@@ -154,6 +181,7 @@ const PaymentForm = ({ data }) => {
         ]}
       >
         <InputNumber
+          className="input-number-right"
           addonAfter={"VNĐ"}
           placeholder="Tổng giá"
           formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -172,6 +200,7 @@ const PaymentForm = ({ data }) => {
         ]}
       >
         <InputNumber
+          className="input-number-right"
           addonAfter={"VNĐ"}
           min={(totalPrice(data) * 108) / 100}
           placeholder="Tiền khách trả"
@@ -191,6 +220,7 @@ const PaymentForm = ({ data }) => {
         ]}
       >
         <InputNumber
+          className="input-number-right"
           addonAfter={"VNĐ"}
           placeholder="Tiền trả lại cho khách"
           formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -199,7 +229,7 @@ const PaymentForm = ({ data }) => {
         />
       </Form.Item>
       <Form.Item name="bill_note" label="Ghi chú">
-        <Input placeholder="Ghi chú" />
+        <TextArea rows={2} placeholder="Ghi chú" />
       </Form.Item>
       <Form.Item
         wrapperCol={{
@@ -211,7 +241,7 @@ const PaymentForm = ({ data }) => {
           Thanh toán
         </Button>
       </Form.Item>
-    </FormCustomed>
+    </Form>
   );
 };
 export default PaymentForm;

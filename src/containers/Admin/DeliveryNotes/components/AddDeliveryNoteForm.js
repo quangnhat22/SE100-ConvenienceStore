@@ -77,7 +77,7 @@ const AddDeliveryNoteForm = () => {
         <DatePicker
           placeholder="Ngày nhập kho"
           format={dateFormat}
-          disabled={true}
+          disabledDate={(current) => current.isAfter(moment())}
         />
       </Form.Item>
       <Form.Item

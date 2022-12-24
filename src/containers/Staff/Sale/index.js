@@ -12,7 +12,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import ReactToPrint from "react-to-print";
-import {useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Layout } from "antd";
 import { Content, Header, Footer } from "antd/lib/layout/layout";
@@ -31,6 +31,7 @@ const SalePage = () => {
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
   }, []);
+
   return (
     <>
       <Layout className="min-h-screen w-full">
@@ -51,20 +52,20 @@ const SalePage = () => {
           </div>
         </Header>
         <ReactToPrint
-                  trigger={() => (
-                    // <IconButton variant="text" size="large" color="info">
-                    //   <PrintIcon />
-                    // </IconButton>
-                     <a href="#">Print this out!</a>
-                  )}
-                  content={() => componentRef.current}
-                />
+          trigger={() => (
+            // <IconButton variant="text" size="large" color="info">
+            //   <PrintIcon />
+            // </IconButton>
+            <a href="#">Print this out!</a>
+          )}
+          content={() => componentRef.current}
+        />
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
         <Content className="flex z-0">
-          <div className="w-2/3 bg-slate-300">
+          <div className="w-3/5 bg-slate-300">
             <ListItem data={cartItems} />
           </div>
-          <div className="w-1/3 min-w-200">
+          <div className="w-2/5 min-w-200">
             <PaymentForm data={cartItems} />
           </div>
         </Content>
@@ -83,15 +84,13 @@ const SalePage = () => {
             {/* {`Khách hàng / Cơ quan: ${CoQuan} - Địa chỉ: ${DiaChi}`} */}
           </Typography>
           <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-            {
-              `Ngày lập: ${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`
-            }
+            {`Ngày lập: ${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`}
           </Typography>
           {/* <TableRoomPaymentPrint
             data={}
             handleDelete={handleDeleteRoom}
           /> */}
-           <PaymentForm />
+          <PaymentForm />
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Typography
               variant="h3"

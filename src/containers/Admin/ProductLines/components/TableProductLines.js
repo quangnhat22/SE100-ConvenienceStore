@@ -43,7 +43,7 @@ const TableProductLines = ({ data, keyWord, loading }) => {
       showOnDesktop: true,
     },
     {
-      title: "Thuế (VAT)",
+      title: "Thuế",
       dataIndex: "tax",
       key: "tax",
       showOnResponse: true,
