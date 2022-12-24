@@ -24,11 +24,13 @@ const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 
 const totalPrice = (cartItems) => {
-  let total = 0;
-  for (let i = 0; i < cartItems.length; i++) {
-    total += cartItems[i].quantity * cartItems[i].price;
+  if (cartItems) {
+    let total = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      total += cartItems[i].quantity * cartItems[i].price;
+    }
+    return total;
   }
-  return total;
 };
 
 const PaymentForm = ({ data }) => {
