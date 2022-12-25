@@ -2,6 +2,16 @@ import Axios from "axios";
 import * as UrlApi from "../url";
 
 export const ProviderService = {
+  getProductsOfProvidersById: (providerId) => {
+    return Axios.get(UrlApi.URL_PRODUCT_OF_PROVIDER_ID(providerId));
+  },
+  addProductsOfProvidersById: (providerId, listIdProduct) => {
+    return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_ADD(providerId), listIdProduct);
+    //return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_ADD(providerId), {listIdProduct});
+  },
+  removeProductsOfProvidersById: (providerId, listIdProduct) => {
+    return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_REMOVE(providerId), listIdProduct);
+  },
   postProviders: (newProvider) => {
     let { name, email, address } = newProvider;
     return Axios.post(UrlApi.URL_PROVIDERS, {
