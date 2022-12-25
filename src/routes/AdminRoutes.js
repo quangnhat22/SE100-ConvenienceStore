@@ -12,6 +12,7 @@ import DetailProductPage from "../containers/Admin/Products/components/DetailPro
 import Invoice from "../containers/Admin/Invoice";
 import SalePage from "../containers/Staff/Sale";
 import DetailProviderPage from "../containers/Admin/Providers/components/DetailProvider/DetailProviderPage";
+import NewDeliveryNotePage from "../containers/Admin/DeliveryNotes/components/NewDeliveryNote/NewDeliveryNotePage";
 
 const routesAdmin = [
   {
@@ -83,6 +84,11 @@ const routesAdmin = [
     exact: false,
     path: "/provider-detail-page",
     component: DetailProviderPage,
+  },
+  {
+    exact: false,
+    path: "/new-delivery-note",
+    component: NewDeliveryNotePage,
   },
 ];
 

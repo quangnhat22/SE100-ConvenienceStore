@@ -18,18 +18,6 @@ const DetailProviderPage = () => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }, []);
 
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-  const validateMessages = {
-    required: "Vui lòng nhập ${label}!",
-  };
-
   const handleAddProductsLine = () => {
     // dispatch(
     //   modalActions.showModal({

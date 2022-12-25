@@ -2,15 +2,15 @@ import { hover } from "@testing-library/user-event/dist/hover";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import { Table, Tag, Popconfirm, Space, Tooltip, Spin } from "antd";
 import React, { useState } from "react";
-import ModalForm from "../../../../HOC/ModalForm";
-import TableTemplate from "../../../../common/Table/TableTemplate";
+import ModalForm from "../../../../../../HOC/ModalForm";
+import TableTemplate from "../../../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
-import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import { productActions } from "../../../../redux/reducer/ProductReducer";
-import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
+import { productActions } from "../../../../../../redux/reducer/ProductReducer";
+import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
 
-const NewDeliveryNotePage = ({ data, keyWord, loading }) => {
+const NewDeliveryTable = ({ data, keyWord, loading }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   // const { products } = useSelector((state) => state.productSlice);
@@ -42,26 +42,7 @@ const NewDeliveryNotePage = ({ data, keyWord, loading }) => {
     //     return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
     //   },
     // },
-    {
-      title: "Mã sản phẩm",
-      dataIndex: "id",
-      key: "id",
-      width: "10%",
-      sorter: (item1, item2) => item1.id.localeCompare(item2.id),
-      filteredValue: [keyWord],
-      onFilter: (value, record) => {
-        return (
-          String(record.id).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.product.title)
-            .toLowerCase()
-            .includes(value.toLowerCase()) ||
-          String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.price).toLowerCase().includes(value.toLowerCase())
-        );
-      },
-      showOnResponse: true,
-      showOnDesktop: true,
-    },
+
     {
       title: "Tên dòng sản phẩm",
       dataIndex: ["product", "title"],
@@ -221,4 +202,4 @@ const NewDeliveryNotePage = ({ data, keyWord, loading }) => {
   );
 };
 
-export default NewDeliveryNotePage;
+export default NewDeliveryTable;
