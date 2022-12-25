@@ -32,8 +32,11 @@ const AddDeliveryNoteForm = () => {
   });
   const onFinish = (values) => {
     let newDeliveryNote = {
-      providerId: values.delivery_note_provider,
+      providerId: "",
       date: values.delivery_note_date.toISOString(),
+      creatorId: 0,
+      shipper: "",
+      productItems: [],
     };
     dispatch({
       type: SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
