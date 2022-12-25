@@ -1,23 +1,21 @@
 import { hover } from "@testing-library/user-event/dist/hover";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import { Table, Tag, Popconfirm, Space, Tooltip } from "antd";
 import React, { useState, useEffect } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { Popconfirm, Space, Spin, Tag, Loading } from "antd";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import RegulationForm from "./RegulationForm";
+import DetailRegulationForm from "./DetailRegulationForm";
 
-const TableRegulation = () => {
+const TableRegulation = ({productItemsQuantity}) => {
   const dispatch = useDispatch();
-  //Lưu ý chỗ này làm trắng màn hình
-  const regulations = useSelector((state) => state.productItemsQuantitySlice);
-  console.log(regulations);
-  useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA });
-  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [page, setPage] = useState(1);
 
   const columns = [
     {
@@ -85,7 +83,7 @@ const TableRegulation = () => {
           <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            //   onClick={() => handleViewProduct(record)}
+            onClick={() => handleEditRegulation(record)}
           >
             <EditFilled />
           </button>
@@ -138,25 +136,30 @@ const TableRegulation = () => {
     }
   };
 
+  const handleEditRegulation = (record) => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: (
+          <DetailRegulationForm productItemQuantity={record}></DetailRegulationForm>
+        ),
+      })
+    );
+  };
+
   return (
     <>
-      <Table
-        pagination={{ pageSize: 3, showSizeChanger: false }}
-        locale={{
-          triggerDesc: "Nhấp để sắp xếp giảm dần",
-          triggerAsc: "Nhấp để sắp xếp tăng dần",
-          cancelSort: "Trở về mặc định",
+      <TableTemplate
+        columns={columns}
+        dataSource={productItemsQuantity}
+        pagination={{
+          onChange(current) {
+            setPage(current);
+          },
+          defaultPageSize: 6,
+          showSizeChanger: false,
+          pageSizeOptions: ["6"],
         }}
         rowKey={"id"}
-        className="header-style m-3 drop-shadow-lg"
-        size="middle"
-        columns={columns}
-        rowClassName={(record, index) =>
-          index % 2 === 0 ? "table-row-light" : "table-row-dark"
-        }
-        dataSource={regulations}
-        //  onChange={handleChange}
-        scroll={{ x: 1100 }}
       />
       <ModalForm isModalOpen={isOpen} />
     </>

@@ -53,6 +53,23 @@ const cartSlice = createSlice({
         }
       });
     },
+
+    cartItemQuantityChange: (state, action) => {
+      let newCartItem = action.payload;
+      //check cart is available
+      let listCartItem = current(state.cartItems);
+      let item = listCartItem.find((item) => item.id === newCartItem.id);
+      if (typeof item != "undefined") {
+        state.cartItems = state.cartItems.map((cart) => {
+          if (cart.id === newCartItem.id) {
+            return { ...newCartItem };
+          } else {
+            return cart;
+          }
+        });
+      }
+    },
+
     // input: id
     removeCartItem: (state, action) => {
       state.cartItems = state.cartItems.filter(

@@ -28,7 +28,7 @@ const RegulationForm = () => {
       });
       return;
     }
-    console.log(values);
+    
     let newRegulation = {
       stateName: values.stateName,
       minVal: values.minVal,
@@ -38,23 +38,6 @@ const RegulationForm = () => {
     dispatch({
       type: SagaActionTypes.POST_PRODUCT_ITEM_QUANTITY_RULE_SAGA,
       newProductItemQuantityState: newRegulation,
-    });
-
-    // dispatch(regulationActions.addNewRegulation(newRegulation));
-
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
-
-    Swal.fire({
-      width: "400",
-      height: "100",
-      backdrop: "none",
-      icon: "success",
-      title: "Giá trị tối thiểu không được phép lớn hơn giá trị max",
-      showConfirmButton: false,
-      timer: 1000,
-      timerProgressBar: true,
     });
   };
   //const initialValues = { color: { r: 26, g: 14, b: 85, a: 1 } };

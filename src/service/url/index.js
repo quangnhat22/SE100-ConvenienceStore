@@ -26,9 +26,9 @@ export const URL_PRODUCT_ITEM = `${DOMAIN_NAME}/product-items`;
 export const URL_PRODUCT_ITEM_ID = (id) => `${DOMAIN_NAME}/product-items/${id}`;
 
 //PRODUCT ITEM QUANTITY STATE RULE
-export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE = `${DOMAIN_NAME}/product-item`;
+export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE = `${DOMAIN_NAME}/product-item-quantity-state-rule`;
 export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) =>
-  `${DOMAIN_NAME}/product-item/${id}`;
+  `${DOMAIN_NAME}/product-item-quantity-state-rule/${id}`;
 
 //REPORT
 export const URL_GET_REPORT_WEEK = `${DOMAIN_NAME}/report/week`;

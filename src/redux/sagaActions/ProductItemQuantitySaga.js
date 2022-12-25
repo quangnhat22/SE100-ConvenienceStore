@@ -2,14 +2,13 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { productItemsQuantityActions } from "../reducer/ProductItemQuantityReducer";
 import { ProductItemQuantityService } from "../../service/api/ProductItemQuantityApi";
+import { modalActions } from "../reducer/ModalReducer";
+import Swal from "sweetalert2";
 
 function* actGetListProductItemsQuantity() {
   try {
-    yield put(productItemsQuantityActions.getListProductsLoading());
-
-    let res = yield call(() =>
-      ProductItemQuantityService.getProductItemQuantity()
-    );
+    yield put(productItemsQuantityActions.getProductItemsQuantityLoading());
+    let res = yield call(() => ProductItemQuantityService.getProductItemQuantity());
     let { status, data } = res;
     if (status === 200) {
       yield put(
@@ -35,21 +34,51 @@ function* actPostProductItemsQuantity(action) {
       )
     );
     if (res.status === 201) {
+      Swal.fire({
+        width: "400",
+        height: "100",
+        backdrop: "none",
+        icon: "success",
+        title: "Thêm giá trị mới thành công",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
       yield put({
         type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
       });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      Swal.fire({
+        width: "400",
+        height: "100",
+        backdrop: "none",
+        icon: "error",
+        title: "Thêm giá trị mới thất bại",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+      yield put(productItemsQuantityActions.getProductItemsQuantityFail());
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    Swal.fire({
+      width: "400",
+      height: "100",
+      backdrop: "none",
+      icon: "error",
+      title: err,
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
+    yield put(productItemsQuantityActions.getProductItemsQuantityFail());
   }
 }
 
 function* actPutProductItemsQuantity(action) {
   try {
     let { id, productItemQuantityState } = action;
-
     yield put(productItemsQuantityActions.getProductItemsQuantityLoading());
     let res = yield call(() =>
       ProductItemQuantityService.putProductItemQuantityById(
@@ -61,11 +90,40 @@ function* actPutProductItemsQuantity(action) {
       yield put({
         type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
       });
+      Swal.fire({
+        width: "400",
+        height: "100",
+        backdrop: "none",
+        icon: "success",
+        title: "Cập nhập giá trị thành công",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      Swal.fire({
+        width: "400",
+        height: "100",
+        backdrop: "none",
+        icon: "error",
+        title: "Cập nhập giá trị thất bại",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    Swal.fire({
+      width: "400",
+      height: "100",
+      backdrop: "none",
+      icon: "error",
+      title: err,
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
   }
 }
 
@@ -81,11 +139,39 @@ function* actDeleteProductItemsQuantity(action) {
       yield put({
         type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
       });
+      Swal.fire({
+        width: "400",
+        height: "100",
+        backdrop: "none",
+        icon: "success",
+        title: "Xoá giá trị thành công",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
     } else {
-      //yield put(authActions.requestLogFailed());
+      Swal.fire({
+        width: "400",
+        height: "100",
+        backdrop: "none",
+        icon: "error",
+        title: "Xoá giá trị thất bại",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+      });
     }
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    Swal.fire({
+      width: "400",
+      height: "100",
+      backdrop: "none",
+      icon: "error",
+      title: err,
+      showConfirmButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
   }
 }
 

@@ -139,7 +139,7 @@ const StaffInforDetail = ({ staff }) => {
         label="CCCD"
         rules={[
           {
-            pattern: /^[\d]{10,10}$/,
+            pattern: /^[\d]{12,12}$/,
             message: "CCCD không hợp lệ",
           },
           { required: true },

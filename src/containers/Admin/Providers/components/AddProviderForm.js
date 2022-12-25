@@ -18,14 +18,19 @@ const AddProviderForm = () => {
       address: values.address,
     };
     console.log(newProvider);
-    dispatch({
-      type: SagaActionTypes.POST_PROVIDER_SAGA,
-      newProvider: newProvider,
-    });
+    // dispatch({
+    //   type: SagaActionTypes.POST_PROVIDER_SAGA,
+    //   newProvider: newProvider,
+    // });
   };
 
   return (
-    <FormCustomed name="add_provider_form" form={form} onFinish={onFinish}>
+    <FormCustomed
+      name="add_provider_form"
+      form={form}
+      onFinish={onFinish}
+      initialValues={{ representative: "" }}
+    >
       <Form.Item
         name="name"
         label="Tên nhà cung cấp"
@@ -54,6 +59,19 @@ const AddProviderForm = () => {
         <Input placeholder="Số điện thoại" />
       </Form.Item> */}
       <Form.Item
+        name="phoneNumber"
+        label="Số Điện Thoại"
+        rules={[
+          {
+            pattern: /^[\d]{10,10}$/,
+            message: "Số Điện Thoại không hợp lệ",
+          },
+          { required: true },
+        ]}
+      >
+        <Input placeholder="Số điện thoại" />
+      </Form.Item>
+      <Form.Item
         name="email"
         label="Email"
         rules={[
@@ -64,6 +82,9 @@ const AddProviderForm = () => {
         ]}
       >
         <Input className="rounded" placeholder="example@host.com" />
+      </Form.Item>
+      <Form.Item name="representative" label="Người đại diện">
+        <Input className="rounded" placeholder="Tên nhà cung cấp" />
       </Form.Item>
       <Form.Item
         name="address"

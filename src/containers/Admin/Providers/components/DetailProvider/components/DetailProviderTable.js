@@ -1,14 +1,12 @@
 import { useState } from "react";
-import TableTemplate from "../../../../common/Table/TableTemplate";
+import TableTemplate from "../../../../../../common/Table/TableTemplate";
 import moment from "moment";
 import { Popconfirm, Space, Spin } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
-import * as SagaActionTypes from "../../../../redux/constants/constant";
+import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
-import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import DetailProductLinesForm from "./DetailProductLinesForm";
 
-const TableProductLines = ({ data, keyWord, loading }) => {
+const DetailProviderTable = ({ data, keyWord, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const columns = [
@@ -62,13 +60,6 @@ const TableProductLines = ({ data, keyWord, loading }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <button
-            type="button"
-            className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            onClick={() => handleEditProductLine(record)}
-          >
-            <EditFilled />
-          </button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa sản phẩm này?"
@@ -96,15 +87,7 @@ const TableProductLines = ({ data, keyWord, loading }) => {
       ),
     },
   ];
-  const handleEditProductLine = (record) => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: (
-          <DetailProductLinesForm productLine={record}></DetailProductLinesForm>
-        ),
-      })
-    );
-  };
+
   const handleRemoveProductLine = (record) => {
     dispatch({
       type: SagaActionTypes.DELETE_PRODUCTS_SAGA,
@@ -140,4 +123,4 @@ const TableProductLines = ({ data, keyWord, loading }) => {
   );
 };
 
-export default TableProductLines;
+export default DetailProviderTable;

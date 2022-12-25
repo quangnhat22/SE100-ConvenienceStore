@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import FormCustomed from "../../../../common/Form/FormCustomed";
+import FormCustomed from "../../../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
-import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 
-const DetailProviderForm = ({ provider }) => {
+const DetailProviderForm = (props) => {
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -39,11 +39,11 @@ const DetailProviderForm = ({ provider }) => {
     };
     console.log(values);
     // dispatch(providerActions.addNewProduct(editedProvider));
-    dispatch({
-      type: SagaActionTypes.PUT_PROVIDER_SAGA,
-      id: provider.id,
-      provider: editedProvider,
-    });
+    // dispatch({
+    //   type: SagaActionTypes.PUT_PROVIDER_SAGA,
+    //   id: provider.id,
+    //   provider: editedProvider,
+    // });
   };
 
   return (
@@ -51,11 +51,11 @@ const DetailProviderForm = ({ provider }) => {
       name="edit_provider_form"
       form={form}
       onFinish={onFinish}
-      initialValues={{
-        name: provider.name,
-        email: provider.email,
-        address: provider.address,
-      }}
+      // initialValues={{
+      //   name: provider.name,
+      //   email: provider.email,
+      //   address: provider.address,
+      // }}
     >
       <Form.Item
         name="name"
