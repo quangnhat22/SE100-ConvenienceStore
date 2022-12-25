@@ -79,9 +79,11 @@ function* actDeleteStaff(action) {
 
 function* actGetStaffById(action) {
   try {
+    yield put(staffActions.getListStaffsInLoading());
     let { id } = action;
     let res = yield call(() => UserService.getUsersById(id));
     let { data, status } = res;
+    
     if (status === 200) {
       yield put(staffActions.getListStaffByIdSuccess({ staff: data }));
     } else {
