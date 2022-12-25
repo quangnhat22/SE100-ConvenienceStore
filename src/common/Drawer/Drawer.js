@@ -40,6 +40,7 @@ const DrawerCustomed = ({ setCollapsed, collapsed }) => {
           });
           localStorage.removeItem("role");
           localStorage.removeItem("token");
+          localStorage.removeItem("id");
           history.replace("/");
         }
       });

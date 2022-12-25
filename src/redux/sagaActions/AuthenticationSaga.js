@@ -10,10 +10,11 @@ function* actLoginWithEmailAndPassword(payload) {
     const { username, password } = payload.data;
 
     let res = yield call(() => UserService.postAuthLogin(username, password));
-
+    console.log(res);
     if (res.status === 200) {
       localStorage.setItem("access_token", res.data["access_token"]);
       localStorage.setItem("role", res.data["user"]["role"]);
+      localStorage.setItem("id", res.data["user"]["id"]);
 
       yield put(authActions.requestLogSuccess());
     } else {
