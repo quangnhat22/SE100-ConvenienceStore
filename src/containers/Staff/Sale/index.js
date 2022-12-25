@@ -1,16 +1,3 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControl,
-  FormHelperText,
-  Grid,
-  IconButton,
-  Paper,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
 import ReactToPrint from "react-to-print";
 import { useRef, useState, useEffect } from "react";
 import { UserOutlined } from "@ant-design/icons";
@@ -21,6 +8,8 @@ import PaymentForm from "./components/PaymentForm";
 import ListItem from "./components/ListItem";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../redux/constants/constant";
+import PrintPaymentForm from "./components/PrintPaymentForm";
+import { Paper } from "@mui/material";
 
 const SalePage = () => {
   const dispatch = useDispatch();
@@ -73,34 +62,8 @@ const SalePage = () => {
 
       {/* printer template */}
       <div style={{ display: "none" }}>
-        <Paper
-          ref={componentRef}
-          sx={{ width: "100%", overflow: "hidden", p: 5 }}
-        >
-          <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
-            Hoá đơn
-          </Typography>
-          <Typography variant="h3" gutterBottom sx={{ mb: 4 }}>
-            {/* {`Khách hàng / Cơ quan: ${CoQuan} - Địa chỉ: ${DiaChi}`} */}
-          </Typography>
-          <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-            {`Ngày lập: ${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`}
-          </Typography>
-          {/* <TableRoomPaymentPrint
-            data={}
-            handleDelete={handleDeleteRoom}
-          /> */}
-          <PaymentForm />
-          <Box sx={{ display: "flex", justifyContent: "right" }}>
-            <Typography
-              variant="h3"
-              gutterBottom
-              sx={{ mt: 2 }}
-              color="secondary"
-            >
-              {/* {`${numberWithCommas(Math.round(totalPrice * 100) / 100)} VNĐ`} */}
-            </Typography>
-          </Box>
+        <Paper ref={componentRef}>
+          <PrintPaymentForm data={cartItems} />
         </Paper>
       </div>
     </>

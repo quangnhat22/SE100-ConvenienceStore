@@ -4,19 +4,22 @@ const initialState = {
   loading: false,
   staffs: [],
   staff: {
-    maNhanVien: "",
-    hoTen: "",
-    ngaySinh: "",
-    CCCD: "",
-    gioiTinh: "",
-    soDienThoai: "",
+    id: -1,
     email: "",
-    diaChi: "",
-    khac: "",
+    fullname: "",
+    birthday: "",
+    identityNumber: "",
+    gender: "",
+    phoneNumber: "",
+    address: "",
+    other: "",
+    avatar: "",
+    role: "",
+    updatedAt: "",
   },
 };
 
-const staffSlice = createSlice({
+const staffsSlice = createSlice({
   name: "staffs",
   initialState,
   reducers: {
@@ -30,13 +33,14 @@ const staffSlice = createSlice({
       state.staffs = action.payload.staffs;
     },
     getListStaffByIdSuccess: (state, action) => {
+      console.log(action);
       state.loading = false;
       // state.submitSuccess = true;
-      state.staffs = action.payload.staff;
+      state.staff = action.payload.staff;
     },
   },
 });
 
-export const staffActions = staffSlice.actions;
+export const staffActions = staffsSlice.actions;
 
-export default staffSlice.reducer;
+export default staffsSlice.reducer;
