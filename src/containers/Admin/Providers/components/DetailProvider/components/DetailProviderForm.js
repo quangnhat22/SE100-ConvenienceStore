@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Select, Button } from "antd";
+import { Form, Input, Select, Button, Col, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import FormCustomed from "../../../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,17 @@ import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 
 const DetailProviderForm = (props) => {
+  const validateMessages = {
+    required: "Cần nhập ${label}!",
+    types: {
+      email: "${label} không hợp lệ!",
+      number: "",
+    },
+    number: {
+      min: "${label} phải ít nhất từ ${min} trở lên",
+      range: "${label} phải trong khoảng từ ${min} đến ${max}",
+    },
+  };
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -47,27 +58,94 @@ const DetailProviderForm = (props) => {
   };
 
   return (
-    <FormCustomed
+    <Form
       name="edit_provider_form"
       form={form}
       onFinish={onFinish}
+      validateMessages={validateMessages}
       // initialValues={{
       //   name: provider.name,
       //   email: provider.email,
       //   address: provider.address,
       // }}
     >
-      <Form.Item
-        name="name"
-        label="Tên nhà cung cấp"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input placeholder="Tên nhà cung cấp" disabled={componentDisabled} />
-      </Form.Item>
+      <Row gutter={24}>
+        <Col span={12} key={1}>
+          <Form.Item
+            name="name"
+            label="Tên nhà cung cấp"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <Input
+              placeholder="Tên nhà cung cấp"
+              disabled={componentDisabled}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12} key={2}>
+          <Form.Item
+            name="phoneNumber"
+            label="Số Điện Thoại"
+            rules={[
+              {
+                pattern: /^[\d]{10,10}$/,
+                message: "Số Điện Thoại không hợp lệ",
+              },
+              { required: true },
+            ]}
+          >
+            <Input placeholder="Số điện thoại" disabled={componentDisabled} />
+          </Form.Item>
+        </Col>
+        <Col span={12} key={3}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              {
+                required: true,
+                type: "email",
+              },
+            ]}
+          >
+            <Input
+              placeholder="example@host.com"
+              disabled={componentDisabled}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12} key={4}>
+          <Form.Item name="representative" label="Người đại diện">
+            <Input
+              className="rounded"
+              placeholder="Tên người đại diện"
+              disabled={componentDisabled}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={24} key={5}>
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <TextArea
+              rows={4}
+              placeholder="Thôn (Xóm), Xã (Phường, Thị trấn), Tỉnh (Thành phố)..."
+              disabled={componentDisabled}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+
       {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
         <Select
           className="rounded"
@@ -88,33 +166,7 @@ const DetailProviderForm = (props) => {
       >
         <Input placeholder="Số điện thoại" disabled={componentDisabled} />
       </Form.Item> */}
-      <Form.Item
-        name="email"
-        label="Email"
-        rules={[
-          {
-            required: true,
-            type: "email",
-          },
-        ]}
-      >
-        <Input placeholder="example@host.com" disabled={componentDisabled} />
-      </Form.Item>
-      <Form.Item
-        name="address"
-        label="Địa chỉ"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <TextArea
-          rows={4}
-          placeholder="Thôn (Xóm), Xã (Phường, Thị trấn), Tỉnh (Thành phố)..."
-          disabled={componentDisabled}
-        />
-      </Form.Item>
+
       {/* <Form.Item name="nhanVien" label="Nhân viên phụ trách">
         <Select className="rounded" placeholder="Chọn nhân viên" />
       </Form.Item>
@@ -128,27 +180,17 @@ const DetailProviderForm = (props) => {
       </Form.Item> */}
 
       {enableModify === false ? (
-        <Form.Item
-          wrapperCol={{
-            span: 26,
-          }}
+        <div
           style={{
             textAlign: "end",
           }}
         >
-          <Button
-            className="edit-reader-button mr-4"
-            onClick={handleEnableModify}
-          >
+          <Button className="edit-reader-button" onClick={handleEnableModify}>
             Chỉnh sửa
           </Button>
-          <Button onClick={handleClose}>Đóng</Button>
-        </Form.Item>
+        </div>
       ) : (
-        <Form.Item
-          wrapperCol={{
-            span: 26,
-          }}
+        <div
           style={{
             textAlign: "end",
           }}
@@ -162,9 +204,9 @@ const DetailProviderForm = (props) => {
           <Button onClick={handleModify} htmlType="submit">
             Lưu
           </Button>
-        </Form.Item>
+        </div>
       )}
-    </FormCustomed>
+    </Form>
   );
 };
 

@@ -84,7 +84,7 @@ const AddProviderForm = () => {
         <Input className="rounded" placeholder="example@host.com" />
       </Form.Item>
       <Form.Item name="representative" label="Người đại diện">
-        <Input className="rounded" placeholder="Tên nhà cung cấp" />
+        <Input className="rounded" placeholder="Tên người đại diện" />
       </Form.Item>
       <Form.Item
         name="address"

@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Form, Button } from "antd";
 import Search from "antd/lib/input/Search";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,12 +40,15 @@ const DetailProviderPage = () => {
 
   return (
     <>
-      <div className="ml-7 mt-5 mr-3 mb-8">
-        <div>
+      <div className="ml-3 mt-5 mr-3 mb-8">
+        <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
+          Thông tin của nhà cung cấp
+        </div>
+        <div className="rounded bg-white py-5 px-3 my-5">
           <DetailProviderForm />
         </div>
         <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
-          <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
+          <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-lg">
             Danh sách dòng sản phẩm
           </div>
           <Search
@@ -87,6 +90,9 @@ const DetailProviderPage = () => {
         keyWord={keyWord}
         loading={loading}
       />
+      <div className="flex justify-end w-full">
+        <Button className="mx-3 mb-3">Đóng</Button>
+      </div>
       <ModalForm />
     </>
   );
