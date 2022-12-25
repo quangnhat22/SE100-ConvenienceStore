@@ -8,7 +8,11 @@ const initialState = {
     name: "",
     email: "",
     address: "",
+    phone: "",
+    representative: "",
+    updatedAt: "",
   },
+  productOfProvider: []
 };
 
 const providerSlice = createSlice({
@@ -24,6 +28,13 @@ const providerSlice = createSlice({
     },
     getProviderByIdSuccess: (state, action) => {
       state.provider = action.payload.provider;
+    },
+    getProductOfProviderLoading: (state, action) => {
+      state.loading = true;
+    },
+    getProductOfProviderSuccess: (state, action) => {
+      state.loading = false;
+      state.productOfProvider = action.payload.productOfProvider;
     },
   },
 });

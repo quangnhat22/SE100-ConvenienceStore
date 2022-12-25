@@ -12,6 +12,11 @@ export const URL_USERS_ID = (id) => `${DOMAIN_NAME}/users/${id}`;
 export const URL_PROVIDERS = `${DOMAIN_NAME}/providers`;
 export const URL_PROVIDERS_ID = (id) => `${DOMAIN_NAME}/providers/${id}`;
 
+//PRODUCT OF PROVIDER 
+export const URL_PRODUCT_OF_PROVIDER_ID = (id) => `${DOMAIN_NAME}/providers/products/${id}`; 
+export const URL_PRODUCT_OF_PROVIDER_ID_ADD = (id) => `${DOMAIN_NAME}/providers/products/${id}/add`; 
+export const URL_PRODUCT_OF_PROVIDER_ID_REMOVE = (id) => `${DOMAIN_NAME}/providers/products/${id}/remove`; 
+
 // PRODUCTS - Dòng sản phẩm
 export const URL_PRODUCTS = `${DOMAIN_NAME}/products`;
 export const URL_PRODUCT_ID = (id) => `${DOMAIN_NAME}/products/${id}`;

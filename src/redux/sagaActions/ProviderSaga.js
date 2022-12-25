@@ -98,6 +98,73 @@ function* actGetProviderById(action) {
   }
 }
 
+function* actGetListProductOfProvider(action) {
+  try {
+    let {providerId} = action;
+
+    let res = yield call(() => ProviderService.getProductsOfProvidersById(providerId));
+
+    let { status, data } = res;
+
+    if (status === 200) {
+      yield put(providerActions.getProductOfProviderSuccess({ productOfProvider: data }));
+
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
+function* actAddProductOfProvider(action) {
+  try {
+    let { providerId, listIdProduct } = action;
+
+    yield put(providerActions.getProductOfProviderLoading());
+
+    let res = yield call(() => ProviderService.addProductsOfProvidersById(providerId, listIdProduct));
+
+    if (res.status === 201) {
+      AlertCustom({ type: "success", title: "Thêm sản phẩm nhà cung cấp thành công" });
+      yield put(modalActions.hideModal());
+
+    } else {
+      AlertCustom({ type: "error", title: "Thêm sản phẩm nhà cung cấp thất bại" });
+
+    }
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+
+  } catch (err) {
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA  });
+  }
+}
+
+function* actRemoveProductOfProvider(action) {
+  try {
+    let { providerId, listIdProduct } = action;
+
+    yield put(providerActions.getProductOfProviderLoading());
+
+    let res = yield call(() => ProviderService.removeProductsOfProvidersById(providerId, listIdProduct));
+
+    if (res.status === 201) {
+      AlertCustom({ type: "success", title: "Xoá sản phẩm nhà cung cấp thành công" });
+      yield put(modalActions.hideModal());
+      
+    } else {
+      AlertCustom({ type: "error", title: "Xoá sản phẩm nhà cung cấp thất bại" });
+
+    }
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+    
+  } catch (err) {
+    AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+  }
+}
+
 export function* followActGetListProvider() {
   yield takeLatest(SagaActionTypes.GET_LIST_PROVIDER_SAGA, actGetListProvider);
 }
@@ -116,4 +183,16 @@ export function* followActDeleteProvider() {
 
 export function* followActGetProviderById() {
   yield takeLatest(SagaActionTypes.GET_PROVIDER_BY_ID_SAGA, actGetProviderById);
+}
+
+export function* followActGetListProductOfProvider() {
+  yield takeLatest(SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA, actGetListProductOfProvider);
+}
+
+export function* followActAddProductOfProvider() {
+  yield takeLatest(SagaActionTypes.ADD_PRODUCT_PROVIDER_ID_SAGA, actAddProductOfProvider);
+}
+
+export function* followActRemoveProductOfProvider() {
+  yield takeLatest(SagaActionTypes.REMOVE_PRODUCT_PROVIDER_ID_SAGA, actRemoveProductOfProvider);
 }
