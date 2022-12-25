@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./redux";
 import { Provider } from "react-redux";
+import { ConfigProvider } from "antd";
+import viVN from "antd/lib/locale/vi_VN";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -13,7 +15,9 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        <ConfigProvider locale={viVN}>
+          <App />
+        </ConfigProvider>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>

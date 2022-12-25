@@ -12,7 +12,6 @@ import * as SagaActionTypes from "../../../../redux/constants/constant";
 const TableDeliveryNotes = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
 
   const columns = [
     {
