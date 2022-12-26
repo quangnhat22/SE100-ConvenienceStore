@@ -130,9 +130,8 @@ function* actGetListProductOfProvider(action) {
 }
 
 function* actAddProductOfProvider(action) {
+  let { providerId, listIdProduct } = action;
   try {
-    let { providerId, listIdProduct } = action;
-
     yield put(providerActions.getProductOfProviderLoading());
 
     let res = yield call(() =>
@@ -142,26 +141,32 @@ function* actAddProductOfProvider(action) {
     if (res.status === 201) {
       AlertCustom({
         type: "success",
-        title: "Thêm sản phẩm nhà cung cấp thành công",
+        title: "Thêm dòng sản phẩm của nhà cung cấp thành công",
       });
       yield put(modalActions.hideModal());
     } else {
       AlertCustom({
         type: "error",
-        title: "Thêm sản phẩm nhà cung cấp thất bại",
+        title: "Thêm dòng sản phẩm của nhà cung cấp thất bại",
       });
     }
-    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+    yield put({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: providerId,
+    });
+    yield put(providerActions.hideLoading());
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+    yield put({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: providerId,
+    });
   }
 }
 
 function* actRemoveProductOfProvider(action) {
+  let { providerId, listIdProduct } = action;
   try {
-    let { providerId, listIdProduct } = action;
-
     yield put(providerActions.getProductOfProviderLoading());
 
     let res = yield call(() =>
@@ -171,19 +176,26 @@ function* actRemoveProductOfProvider(action) {
     if (res.status === 201) {
       AlertCustom({
         type: "success",
-        title: "Xoá sản phẩm nhà cung cấp thành công",
+        title: "Xoá dòng sản phẩm của nhà cung cấp thành công",
       });
       yield put(modalActions.hideModal());
     } else {
       AlertCustom({
         type: "error",
-        title: "Xoá sản phẩm nhà cung cấp thất bại",
+        title: "Xoá dòng sản phẩm của nhà cung cấp thất bại",
       });
     }
-    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+    yield put({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: providerId,
+    });
+    yield put(providerActions.hideLoading());
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
+    yield put({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: providerId,
+    });
   }
 }
 

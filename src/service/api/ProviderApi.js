@@ -13,6 +13,7 @@ export const ProviderService = {
     //return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_ADD(providerId), {listIdProduct});
   },
   removeProductsOfProvidersById: (providerId, listIdProduct) => {
+    console.log(providerId);
     return Axios.post(
       UrlApi.URL_PRODUCT_OF_PROVIDER_ID_REMOVE(providerId),
       listIdProduct

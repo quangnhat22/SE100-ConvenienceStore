@@ -5,8 +5,10 @@ import { Popconfirm, Space, Spin } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const DetailProviderTable = ({ data, keyWord, loading }) => {
+const DetailProviderTable = ({ data, keyWord }) => {
+  let { id } = useParams();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const columns = [
@@ -90,20 +92,21 @@ const DetailProviderTable = ({ data, keyWord, loading }) => {
 
   const handleRemoveProductLine = (record) => {
     dispatch({
-      type: SagaActionTypes.DELETE_PRODUCTS_SAGA,
-      id: record.id,
+      type: SagaActionTypes.REMOVE_PRODUCT_PROVIDER_ID_SAGA,
+      providerId: id,
+      listIdProduct: [record.id],
     });
   };
 
-  if (loading === true) {
-    return (
-      <div className="w-full flex items-center justify-center mb-12 h-4/5">
-        <Space size="middle ">
-          <Spin size="large" tip="Loading..." />
-        </Space>
-      </div>
-    );
-  }
+  // if (loading === true) {
+  //   return (
+  //     <div className="w-full flex items-center justify-center mb-12 h-4/5">
+  //       <Space size="middle ">
+  //         <Spin size="large" tip="Loading..." />
+  //       </Space>
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <TableTemplate

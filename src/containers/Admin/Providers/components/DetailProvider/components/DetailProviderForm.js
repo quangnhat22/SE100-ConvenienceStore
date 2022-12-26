@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 
-const DetailProviderForm = ({ provider, loading }) => {
+const DetailProviderForm = ({ provider }) => {
   const validateMessages = {
     required: "Cần nhập ${label}!",
     types: {
@@ -58,15 +58,15 @@ const DetailProviderForm = ({ provider, loading }) => {
     // });
   };
 
-  if (loading === true) {
-    return (
-      <div className="w-full flex items-center justify-center mb-12 h-4/5">
-        <Space size="middle ">
-          <Spin size="large" tip="Loading..." />
-        </Space>
-      </div>
-    );
-  }
+  // if (loading === true) {
+  //   return (
+  //     <div className="w-full flex items-center justify-center mb-12 h-4/5">
+  //       <Space size="middle ">
+  //         <Spin size="large" tip="Loading..." />
+  //       </Space>
+  //     </div>
+  //   );
+  // }
 
   return (
     <Form
