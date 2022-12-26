@@ -1,4 +1,4 @@
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EditFilled, EyeFilled } from "@ant-design/icons";
 import { Space, Popconfirm, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,10 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import DetailProviderPage from "./DetailProvider/DetailProviderPage";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { type } from "@testing-library/user-event/dist/type";
+import { useHistory } from "react-router-dom";
 
 const TableProviders = ({ data, keyWord, loading }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
   const columns = [
@@ -23,7 +25,7 @@ const TableProviders = ({ data, keyWord, loading }) => {
       title: "Mã nhà cung cấp",
       dataIndex: "id",
       key: "id",
-      sorter: (item1, item2) => item1.maSanPham.localeCompare(item2.maSanPham),
+      sorter: (a, b) => a.id - b.id,
       showOnResponse: true,
       showOnDesktop: true,
       filteredValue: [keyWord],
@@ -45,6 +47,13 @@ const TableProviders = ({ data, keyWord, loading }) => {
       showOnDesktop: true,
     },
     {
+      title: "Số điện thoại",
+      dataIndex: "phone",
+      key: "phone",
+      showOnResponse: true,
+      showOnDesktop: true,
+    },
+    {
       title: "Email",
       dataIndex: "email",
       key: "email",
@@ -58,38 +67,6 @@ const TableProviders = ({ data, keyWord, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
     },
-    // {
-    //   title: "Trạng thái",
-    //   dataIndex: "trangThai",
-    //   key: "trangThai",
-    //   showOnResponse: true,
-    //   showOnDesktop: true,
-    //   ellipsis: true,
-    //   render: (text, record, index) => {
-    //     let colorTag = text === false ? "red" : "green";
-    //     let contentTag = text === true ? "Đang giao dịch" : "Ngưng cung cấp";
-    //     return (
-    //       <Tag
-    //         key={index}
-    //         color={colorTag}
-    //         className="w-2/4 min-w-max text-center"
-    //       >
-    //         {contentTag}
-    //       </Tag>
-    //     );
-    //   },
-    //   filters: [
-    //     { text: "Đang giao dịch", value: true },
-    //     { text: "Ngưng cung cấp", value: false },
-    //   ],
-    //   onFilter: (value, record) => {
-    //     if (value === true) {
-    //       return record.trangThai === true;
-    //     } else {
-    //       return record.trangThai === false;
-    //     }
-    //   },
-    // },
     {
       title: "Thao tác",
       key: "action",
@@ -103,9 +80,9 @@ const TableProviders = ({ data, keyWord, loading }) => {
           <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            onClick={() => handleEditProvider(record)}
+            onClick={() => handleViewProvider(record)}
           >
-            <EditFilled />
+            <EyeFilled />
           </button>
           <Popconfirm
             placement="top"
@@ -135,14 +112,8 @@ const TableProviders = ({ data, keyWord, loading }) => {
     },
   ];
 
-  const handleEditProvider = (record) => {
-    // dispatch(
-    //   modalActions.showModal({
-    //     ComponentContent: (
-    //       <DetailProviderPage provider={record}></DetailProviderPage>
-    //     ),
-    //   })
-    // );
+  const handleViewProvider = (record) => {
+    history.push("/provider-detail-page/" + record.id);
   };
   const handleRemoveProviders = (record) => {
     dispatch({ type: SagaActionTypes.DELETE_PROVIDER_SAGA, id: record.id });

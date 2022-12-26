@@ -82,7 +82,7 @@ const routesAdmin = [
   },
   {
     exact: false,
-    path: "/provider-detail-page",
+    path: "/provider-detail-page/:id",
     component: DetailProviderPage,
   },
   {

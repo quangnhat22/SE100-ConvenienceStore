@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, all } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { providerActions } from "../reducer/ProviderReducer";
 import { ProviderService } from "../../service/api/ProviderApi";
@@ -11,7 +11,6 @@ function* actGetListProvider() {
 
     let res = yield call(() => ProviderService.getProviders());
 
-    console.log(res);
     let { status, data } = res;
     if (status === 200) {
       yield put(providerActions.getListProviderSuccess({ providers: data }));
@@ -86,13 +85,23 @@ function* actDeleteProvider(action) {
 function* actGetProviderById(action) {
   try {
     let { id } = action;
+    yield put(providerActions.getListProviderLoading());
     let res = yield call(() => ProviderService.getProvidersById(id));
-    let { data, status } = res;
-    if (status === 200) {
-      yield put(providerActions.getProviderByIdSuccess({ provider: data }));
+    let res1 = yield call(() => ProviderService.getProductsOfProvidersById(id));
+
+    if (res.status === 200 && res1.status === 200) {
+      yield all([
+        put(providerActions.getProviderByIdSuccess({ provider: res.data })),
+        put(
+          providerActions.getProductOfProviderSuccess({
+            productOfProvider: res1.data,
+          })
+        ),
+      ]);
     } else {
       //yield put(authActions.requestLogFailed());
     }
+    yield put(providerActions.hideLoading());
   } catch (err) {
     //yield put(authActions.requestLogFailed());
   }
@@ -100,15 +109,18 @@ function* actGetProviderById(action) {
 
 function* actGetListProductOfProvider(action) {
   try {
-    let {providerId} = action;
-
-    let res = yield call(() => ProviderService.getProductsOfProvidersById(providerId));
+    let { providerId } = action;
+    yield put(providerActions.getListProviderLoading());
+    let res = yield call(() =>
+      ProviderService.getProductsOfProvidersById(providerId)
+    );
 
     let { status, data } = res;
 
     if (status === 200) {
-      yield put(providerActions.getProductOfProviderSuccess({ productOfProvider: data }));
-
+      yield put(
+        providerActions.getProductOfProviderSuccess({ productOfProvider: data })
+      );
     } else {
       //yield put(authActions.requestLogFailed());
     }
@@ -123,21 +135,26 @@ function* actAddProductOfProvider(action) {
 
     yield put(providerActions.getProductOfProviderLoading());
 
-    let res = yield call(() => ProviderService.addProductsOfProvidersById(providerId, listIdProduct));
+    let res = yield call(() =>
+      ProviderService.addProductsOfProvidersById(providerId, listIdProduct)
+    );
 
     if (res.status === 201) {
-      AlertCustom({ type: "success", title: "Thêm sản phẩm nhà cung cấp thành công" });
+      AlertCustom({
+        type: "success",
+        title: "Thêm sản phẩm nhà cung cấp thành công",
+      });
       yield put(modalActions.hideModal());
-
     } else {
-      AlertCustom({ type: "error", title: "Thêm sản phẩm nhà cung cấp thất bại" });
-
+      AlertCustom({
+        type: "error",
+        title: "Thêm sản phẩm nhà cung cấp thất bại",
+      });
     }
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
-
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA  });
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
   }
 }
 
@@ -147,18 +164,23 @@ function* actRemoveProductOfProvider(action) {
 
     yield put(providerActions.getProductOfProviderLoading());
 
-    let res = yield call(() => ProviderService.removeProductsOfProvidersById(providerId, listIdProduct));
+    let res = yield call(() =>
+      ProviderService.removeProductsOfProvidersById(providerId, listIdProduct)
+    );
 
     if (res.status === 201) {
-      AlertCustom({ type: "success", title: "Xoá sản phẩm nhà cung cấp thành công" });
+      AlertCustom({
+        type: "success",
+        title: "Xoá sản phẩm nhà cung cấp thành công",
+      });
       yield put(modalActions.hideModal());
-      
     } else {
-      AlertCustom({ type: "error", title: "Xoá sản phẩm nhà cung cấp thất bại" });
-
+      AlertCustom({
+        type: "error",
+        title: "Xoá sản phẩm nhà cung cấp thất bại",
+      });
     }
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
-    
   } catch (err) {
     AlertCustom({ type: "error", title: err });
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA });
@@ -186,13 +208,22 @@ export function* followActGetProviderById() {
 }
 
 export function* followActGetListProductOfProvider() {
-  yield takeLatest(SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA, actGetListProductOfProvider);
+  yield takeLatest(
+    SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA,
+    actGetListProductOfProvider
+  );
 }
 
 export function* followActAddProductOfProvider() {
-  yield takeLatest(SagaActionTypes.ADD_PRODUCT_PROVIDER_ID_SAGA, actAddProductOfProvider);
+  yield takeLatest(
+    SagaActionTypes.ADD_PRODUCT_PROVIDER_ID_SAGA,
+    actAddProductOfProvider
+  );
 }
 
 export function* followActRemoveProductOfProvider() {
-  yield takeLatest(SagaActionTypes.REMOVE_PRODUCT_PROVIDER_ID_SAGA, actRemoveProductOfProvider);
+  yield takeLatest(
+    SagaActionTypes.REMOVE_PRODUCT_PROVIDER_ID_SAGA,
+    actRemoveProductOfProvider
+  );
 }

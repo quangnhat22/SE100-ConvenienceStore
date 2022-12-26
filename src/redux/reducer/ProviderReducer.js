@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
+  loadingTableProduct: false,
+  loadingProviderId: false,
   providers: [],
   provider: {
     id: 0,
@@ -12,7 +14,7 @@ const initialState = {
     representative: "",
     updatedAt: "",
   },
-  productOfProvider: []
+  productOfProvider: [],
 };
 
 const providerSlice = createSlice({
@@ -33,8 +35,10 @@ const providerSlice = createSlice({
       state.loading = true;
     },
     getProductOfProviderSuccess: (state, action) => {
-      state.loading = false;
       state.productOfProvider = action.payload.productOfProvider;
+    },
+    hideLoading: (state, action) => {
+      state.loading = false;
     },
   },
 });
