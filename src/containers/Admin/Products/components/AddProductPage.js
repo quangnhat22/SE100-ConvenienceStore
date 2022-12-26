@@ -92,10 +92,10 @@ const AddProductPage = () => {
       price: values.price,
       quantity: values.quantity,
       description: values.description,
-      // image: importInformationForm.image.filename,
+      // image: values.image.filename,
       image: "http://example.com/a.jpg", /////////////Cần sửa ở đây
     };
-    console.log("abc");
+    console.log(values);
     dispatch({
       type: SagaActionTypes.POST_PRODUCT_ITEM_SAGA,
       newProduct: newProduct,
@@ -140,11 +140,11 @@ const AddProductPage = () => {
             <Form.Item
               name="productId"
               label="Dòng sản phẩm"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //   },
+              // ]}
             >
               <Select
                 className="rounded"
@@ -156,11 +156,11 @@ const AddProductPage = () => {
             <Form.Item
               name="deliveryNoteId"
               label="Đơn vị cung cấp"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //   },
+              // ]}
             >
               <Select
                 className="rounded"

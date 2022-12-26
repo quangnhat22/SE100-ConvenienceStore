@@ -9,13 +9,20 @@ import * as SagaActionTypes from "../../../../../redux/constants/constant";
 import DetailProviderForm from "./components/DetailProviderForm";
 import { modalActions } from "../../../../../redux/reducer/ModalReducer";
 
-const DetailProviderPage = () => {
+const DetailProviderPage = (props) => {
   const dispatch = useDispatch();
-  const { products, loading } = useSelector((state) => state.productsSlice);
+  const { id } = props.match.params;
+  let { provider, productOfProvider, loading } = useSelector(
+    (state) => state.providerSlice
+  );
   const [keyWord, setKeyWord] = useState("");
 
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+    dispatch({ type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA, id: id });
+    // dispatch({
+    //   type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA,
+    //   providerId: id,
+    // });
   }, []);
 
   const handleAddProductsLine = () => {
@@ -33,7 +40,7 @@ const DetailProviderPage = () => {
           Thông tin của nhà cung cấp
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">
-          <DetailProviderForm />
+          <DetailProviderForm provider={provider} loading={loading} />
         </div>
         <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
           <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-lg">
@@ -74,7 +81,7 @@ const DetailProviderPage = () => {
         </div>
       </div>
       <DetailProviderTable
-        data={products}
+        data={productOfProvider}
         keyWord={keyWord}
         loading={loading}
       />

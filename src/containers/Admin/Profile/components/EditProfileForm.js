@@ -10,6 +10,7 @@ const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
 const EditProfileForm = ({ account }) => {
   const [form] = Form.useForm();
+  const [progress, setProgress] = useState(0);
 
   const uploadImage = async options => {
     const { onSuccess, onError, file, onProgress } = options;

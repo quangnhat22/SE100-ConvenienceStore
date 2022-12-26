@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Form, Input, Select, Button, Col, Row } from "antd";
+import React, { useState, useEffect } from "react";
+import { Form, Input, Select, Button, Col, Row, Spin, Space } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import FormCustomed from "../../../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 
-const DetailProviderForm = (props) => {
+const DetailProviderForm = ({ provider, loading }) => {
   const validateMessages = {
     required: "Cần nhập ${label}!",
     types: {
@@ -17,6 +17,12 @@ const DetailProviderForm = (props) => {
       min: "${label} phải ít nhất từ ${min} trở lên",
       range: "${label} phải trong khoảng từ ${min} đến ${max}",
     },
+  };
+  console.log("provider:", provider);
+  const defaultValues = {
+    name: provider.name,
+    email: provider.email,
+    address: provider.address,
   };
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
@@ -36,11 +42,6 @@ const DetailProviderForm = (props) => {
   };
   const handleModify = () => {};
 
-  const handleClose = () => {
-    setTimeout(() => {
-      dispatch(modalActions.hideModal());
-    }, 300);
-  };
   const dispatch = useDispatch();
   const onFinish = (values) => {
     let editedProvider = {
@@ -57,17 +58,23 @@ const DetailProviderForm = (props) => {
     // });
   };
 
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
+
   return (
     <Form
-      name="edit_provider_form"
+      name="detail_provider_form"
       form={form}
       onFinish={onFinish}
       validateMessages={validateMessages}
-      // initialValues={{
-      //   name: provider.name,
-      //   email: provider.email,
-      //   address: provider.address,
-      // }}
+      initialValues={defaultValues}
     >
       <Row gutter={24}>
         <Col span={12} key={1}>

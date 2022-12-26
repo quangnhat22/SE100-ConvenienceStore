@@ -44,22 +44,6 @@ const AddProviderForm = () => {
       >
         <Input className="rounded" placeholder="Tên nhà cung cấp" />
       </Form.Item>
-      {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
-        <Select className="rounded" placeholder="Nhóm nhà cung cấp" />
-      </Form.Item> */}
-      {/* <Form.Item
-        name="soDienThoai"
-        label="Số điện thoại"
-        rules={[
-          {
-            pattern: "^([-]?[0-9]*|0)$",
-            message: "Số Điện Thoại không hợp lệ",
-          },
-          { required: true },
-        ]}
-      >
-        <Input placeholder="Số điện thoại" />
-      </Form.Item> */}
       <Form.Item
         name="phone"
         label="Số Điện Thoại"
@@ -103,12 +87,6 @@ const AddProviderForm = () => {
           placeholder="Thôn (Xóm), Xã (Phường, Thị trấn), Tỉnh (Thành phố)..."
         />
       </Form.Item>
-      {/* <Form.Item name="nhanVien" label="Nhân viên phụ trách">
-        <Select className="rounded" placeholder="Chọn nhân viên" />
-      </Form.Item>
-      <Form.Item name="moTa" label="Mô tả">
-        <TextArea className="rounded" rows={4} placeholder="Mô tả" />
-      </Form.Item> */}
       <Form.Item
         wrapperCol={{
           span: 30,
