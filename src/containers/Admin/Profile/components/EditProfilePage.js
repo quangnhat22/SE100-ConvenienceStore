@@ -76,7 +76,6 @@ const EditProfilePage = ({ data }) => {
   };
 
   const handleSave = (values) => {
-    console.log(values);
     let editedProfile = {
       email: values.email,
       fullname: values.fullname,
@@ -87,7 +86,7 @@ const EditProfilePage = ({ data }) => {
       address: values.address,
       other: values.other,
       avatar: imageChange,
-      role: "MANAGER",
+      role: localStorage.getItem("role"),
     };
     console.log(editedProfile);
     dispatch({

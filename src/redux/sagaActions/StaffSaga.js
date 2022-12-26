@@ -48,11 +48,11 @@ function* actPutStaff(action) {
     console.log(res);
     if (res.status === 200) {
       AlertCustom({ type: "success", title: "Chỉnh sửa nhân viên thành công" });
+      yield put(staffActions.getListStaffByIdSuccess({ staff: res.data }));
       yield put(modalActions.hideModal());
     } else {
       AlertCustom({ type: "error", title: "Chỉnh sửa nhân viên thất bại" });
     }
-    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
     AlertCustom({ type: "error", title: err });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
