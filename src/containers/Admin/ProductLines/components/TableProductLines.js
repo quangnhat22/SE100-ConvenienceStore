@@ -2,7 +2,7 @@ import { useState } from "react";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import moment from "moment";
 import { Popconfirm, Space, Spin } from "antd";
-import { DeleteFilled, EyeOutlined } from "@ant-design/icons";
+import { DeleteFilled, EyeFilled } from "@ant-design/icons";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
@@ -67,7 +67,7 @@ const TableProductLines = ({ data, keyWord, loading }) => {
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditProductLine(record)}
           >
-            <EyeOutlined />
+            <EyeFilled />
           </button>
           <Popconfirm
             placement="top"

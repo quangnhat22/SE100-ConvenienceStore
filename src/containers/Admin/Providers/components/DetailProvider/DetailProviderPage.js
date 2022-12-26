@@ -1,4 +1,4 @@
-import { Form, Button } from "antd";
+import { Form, Button, Spin, Space } from "antd";
 import Search from "antd/lib/input/Search";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import DetailProviderTable from "./components/DetailProviderTable";
 import ModalForm from "../../../../../HOC/ModalForm";
 import * as SagaActionTypes from "../../../../../redux/constants/constant";
 import DetailProviderForm from "./components/DetailProviderForm";
+import AddProductLineInProvider from "./components/AddProductLineInProvider";
 import { modalActions } from "../../../../../redux/reducer/ModalReducer";
 
 const DetailProviderPage = (props) => {
@@ -23,15 +24,26 @@ const DetailProviderPage = (props) => {
     //   type: SagaActionTypes.GET_LIST_PRODUCT_PROVIDER_ID_SAGA,
     //   providerId: id,
     // });
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }, []);
 
   const handleAddProductsLine = () => {
-    // dispatch(
-    //   modalActions.showModal({
-    //     ComponentContent: <ProductLinesForm />,
-    //   })
-    // );
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: <AddProductLineInProvider />,
+      })
+    );
   };
+
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -80,11 +92,7 @@ const DetailProviderPage = (props) => {
           </button>
         </div>
       </div>
-      <DetailProviderTable
-        data={productOfProvider}
-        keyWord={keyWord}
-        loading={loading}
-      />
+      <DetailProviderTable data={productOfProvider} keyWord={keyWord} />
       <div className="flex justify-end w-full">
         <Button className="mx-3 mb-3">Đóng</Button>
       </div>
