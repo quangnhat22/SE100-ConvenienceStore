@@ -42,9 +42,8 @@ function* actPostProvider(action) {
 }
 
 function* actPutProvider(action) {
+  let { id, provider } = action;
   try {
-    let { id, provider } = action;
-
     console.log(action);
     yield put(providerActions.getListProviderLoading());
     let res = yield call(() => ProviderService.putProviders(id, provider));
@@ -53,14 +52,19 @@ function* actPutProvider(action) {
         type: "success",
         title: "Chỉnh sửa nhà cung cấp thành công",
       });
-      yield put(modalActions.hideModal());
     } else {
       AlertCustom({ type: "error", title: "Chỉnh sửa nhà cung cấp thất bại" });
     }
-    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+    yield put({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: id,
+    });
   } catch (err) {
     AlertCustom({ type: "error", title: err });
-    yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+    yield put({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: id,
+    });
   }
 }
 

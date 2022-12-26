@@ -48,14 +48,15 @@ const DetailProviderForm = ({ provider }) => {
       name: values.name,
       email: values.email,
       address: values.address,
+      phone: values.phoneNumber,
+      representative: values.representative,
     };
     console.log(values);
-    // dispatch(providerActions.addNewProduct(editedProvider));
-    // dispatch({
-    //   type: SagaActionTypes.PUT_PROVIDER_SAGA,
-    //   id: provider.id,
-    //   provider: editedProvider,
-    // });
+    dispatch({
+      type: SagaActionTypes.PUT_PROVIDER_SAGA,
+      id: provider.id,
+      provider: editedProvider,
+    });
   };
 
   // if (loading === true) {

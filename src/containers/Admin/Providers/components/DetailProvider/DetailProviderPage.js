@@ -9,8 +9,10 @@ import * as SagaActionTypes from "../../../../../redux/constants/constant";
 import DetailProviderForm from "./components/DetailProviderForm";
 import AddProductLineInProvider from "./components/AddProductLineInProvider";
 import { modalActions } from "../../../../../redux/reducer/ModalReducer";
+import { useHistory } from "react-router-dom";
 
 const DetailProviderPage = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { id } = props.match.params;
   let { provider, productOfProvider, loading } = useSelector(
@@ -26,6 +28,10 @@ const DetailProviderPage = (props) => {
     // });
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }, []);
+
+  const handleClose = () => {
+    history.goBack();
+  };
 
   const handleAddProductsLine = () => {
     dispatch(
@@ -94,7 +100,9 @@ const DetailProviderPage = (props) => {
       </div>
       <DetailProviderTable data={productOfProvider} keyWord={keyWord} />
       <div className="flex justify-end w-full">
-        <Button className="mx-3 mb-3">Đóng</Button>
+        <Button className="mx-3 mb-3" onClick={() => handleClose()}>
+          Đóng
+        </Button>
       </div>
       <ModalForm />
     </>
