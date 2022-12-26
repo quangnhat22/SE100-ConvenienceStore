@@ -36,9 +36,9 @@ export const URL_PRODUCT_ITEM_QUANTITY_STATE_RULE_ID = (id) =>
   `${DOMAIN_NAME}/product-item-quantity-state-rule/${id}`;
 
 //REPORT
-export const URL_GET_REPORT_WEEK = `${DOMAIN_NAME}/report/week`;
-export const URL_GET_REPORT_MONTH = `${DOMAIN_NAME}/report/month`;
-export const URL_GET_REPORT_YEAR = `${DOMAIN_NAME}/report/year`;
+export const URL_GET_REPORT_WEEK = (year, month, day) => `${DOMAIN_NAME}/report/week?year=${year}&month=${month}&day=${day}`;
+export const URL_GET_REPORT_MONTH = (year, month) => `${DOMAIN_NAME}/report/month?year=${year}&month=${month}`;
+export const URL_GET_REPORT_YEAR = (year) => `${DOMAIN_NAME}/report/year?year=${year}`;
 
 //INVOICES
 export const URL_POST_INVOICES = `${DOMAIN_NAME}/invoices`;
