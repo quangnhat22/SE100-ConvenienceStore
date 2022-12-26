@@ -21,8 +21,6 @@ const cartSlice = createSlice({
     //input : reader
     addNewCartItem: (state, action) => {
       let newCartItem = action.payload;
-      //check cart is available
-      console.log(newCartItem);
       let listCartItem = current(state.cartItems);
       let item = listCartItem.find((item) => item.id === newCartItem.id);
       if (typeof item != "undefined") {
