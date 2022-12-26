@@ -5,92 +5,15 @@ import React, { useEffect, useState } from "react";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import TableInvoice from "./TableInvoice";
 import ModalForm from "../../../../HOC/ModalForm";
+import { useDispatch, useSelector } from "react-redux";
 
 const InvoicePage = () => {
+  const dispatch = useDispatch();
   const [keyWord, setKeyWord] = useState("");
-  const data = [
-    {
-      id: "string",
-      date: "2022-12-25T04:40:14.476Z",
-      creator: {
-        id: 1,
-        email: "test@email.com",
-        fullname: "John Doe",
-        birthday: "2022-12-25T04:40:14.476Z",
-        identityNumber: "11234567890",
-        gender: "MALE",
-        phoneNumber: "1234567890",
-        address: "100 Wall St",
-        other: "About your self",
-        avatar: "https://localhost/test.jpg",
-        role: "MANAGER",
-      },
-      total: 0,
-      invoiceDetails: [
-        {
-          productItem: {
-            id: "string",
-            product: {
-              id: "string",
-              title: "string",
-              tax: 10,
-            },
-            deliveryNote: {
-              id: 0,
-              provider: {
-                id: 1,
-                name: "string",
-                email: "test@example.com",
-                address: "string",
-              },
-              date: "2022-12-25T04:40:14.476Z",
-              total: 0,
-              productItems: [
-                {
-                  id: "string",
-                  product: {
-                    id: "string",
-                    title: "string",
-                    tax: 10,
-                  },
-                  MFG: "2022-12-25T04:40:14.476Z",
-                  EXP: "2022-12-25T04:40:14.476Z",
-                  cost: 0,
-                  price: 0,
-                  quantity: 0,
-                  initialQuantity: 0,
-                  description: "string",
-                  image: "string",
-                  state: [
-                    {
-                      stateName: "string",
-                      color: "string",
-                    },
-                  ],
-                },
-              ],
-            },
-            MFG: "2022-12-25T04:40:14.476Z",
-            EXP: "2022-12-25T04:40:14.476Z",
-            cost: 0,
-            price: 0,
-            quantity: 0,
-            initialQuantity: 0,
-            description: "string",
-            image: "string",
-            state: [
-              {
-                stateName: "string",
-                color: "string",
-              },
-            ],
-          },
-          price: 0,
-          quantity: 0,
-        },
-      ],
-    },
-  ];
+  const { listInvoice } = useSelector((state) => state.invoiceSlice);
+  useEffect(() => {
+    dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+  }, []);
 
   return (
     <div className="bg-white pb-5">
@@ -102,8 +25,8 @@ const InvoicePage = () => {
           name="search"
           placeholder="Tìm kiếm..."
           allowClear
-          onChange={(value) => {
-            setKeyWord(value);
+          onChange={(e) => {
+            setKeyWord(e.target.value);
           }}
         />
       </Space>
@@ -114,7 +37,7 @@ const InvoicePage = () => {
           moment(new Date()).format("DD/MM/YYYY  HH:MM")}
       </div>
 
-      <TableInvoice keyWord={keyWord} data={data} loading={false} />
+      <TableInvoice keyWord={keyWord} data={listInvoice} loading={false} />
       <ModalForm />
     </div>
   );

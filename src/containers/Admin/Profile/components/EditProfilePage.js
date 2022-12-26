@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { DatePicker, Form, Input, Modal, Select, Space, Upload } from "antd";
-import {
-  ExclamationCircleOutlined,
-  InfoCircleTwoTone,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
@@ -19,10 +15,6 @@ const getBase64 = (file) =>
   });
 
 const EditProfilePage = ({ data }) => {
-  console.log(data);
-  const history = useHistory();
-  const [personalInformationForm] = Form.useForm();
-  const [contactInformationForm] = Form.useForm();
   const { Option } = Select;
   const dispatch = useDispatch();
   const validateMessages = {
@@ -75,34 +67,17 @@ const EditProfilePage = ({ data }) => {
   };
 
   const handleSave = (values) => {
-    // let editedProfile = {
-    //   id: personalInformationForm.getFieldValue().id,
-    //   email: contactInformationForm.getFieldValue().email,
-    //   fullname: personalInformationForm.getFieldValue().fullname,
-    //   birthday: personalInformationForm.getFieldValue().birthday,
-    //   identityNumber: personalInformationForm.getFieldValue().identityNumber,
-    //   gender: personalInformationForm.getFieldValue().gender,
-    //   phoneNumber: contactInformationForm.getFieldValue().phoneNumber,
-    //   address: contactInformationForm.getFieldValue().address,
-    //   avatar: contactInformationForm.image.filename,
-    //   role: data.role,
-    // };
-    // console.log(editedProfile);
-    // dispatch({
-    //   type: SagaActionTypes.PUT_USER_SAGA,
-    //   id: data.id,
-    //   staff: editedProfile,
-    // });
-    // history.go(0);
     let editedProfile = {
       fullname: values.staff_name,
-      birthday: values.staff_birth.toISOString(),
-      identityNumber: values.staff_cccd,
-      gender: values.staff_gender,
-      phoneNumber: values.staff_phone_number,
+      birthday: values.birthday.toISOString(),
+      identityNumber: values.identityNumber,
+      gender: values.gender,
+      phoneNumber: values.phoneNumber,
       email: values.staff_email,
-      address: values.staff_address,
-      other: values.staff_other_information,
+      address: values.address,
+      other: values.other,
+      role: data.role,
+      avatar: "",
     };
     console.log(data);
     dispatch({

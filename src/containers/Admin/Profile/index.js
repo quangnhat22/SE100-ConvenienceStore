@@ -5,18 +5,18 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 import { Space, Spin } from "antd";
 
 const FrofilePage = () => {
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   let { loading, staff } = useSelector((state) => state.staffsSlice);
 
   useEffect(() => {
-    let id =  localStorage.getItem("id");
-    disptach({
+    let id = localStorage.getItem("id");
+    dispatch({
       type: SagaActionTypes.GET_USER_BY_ID_SAGA,
       id: id,
     });
   }, []);
 
-  if (loading === true ) {
+  if (loading === true) {
     return (
       <div className="w-full flex items-center justify-center mb-12 h-4/5">
         <Space size="middle ">

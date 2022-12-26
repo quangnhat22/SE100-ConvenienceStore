@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import TableRevenue from "./TableRevenue";
 import { Segmented } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 // import dayjs from "dayjs";
 // import "dayjs/locale/zh-cn";
 // import "dayjs/plugin/updateLocale";
@@ -93,22 +94,55 @@ const { Option } = Select;
 // ];
 
 const RevenuePage = () => {
-  const [profit, setProfit] = useState(3984000);
-  const [keyWord, setKeyWord] = useState("");
-  const [capitalLoss, setCapitalLoss] = useState(0);
   const TimeReal = new Date();
+  const dispatch = useDispatch();
+  const [selectedYear, setSelectedYear] = useState({
+    year: TimeReal.getFullYear(),
+  });
+  const [selectedMonth, setSelectedMonth] = useState({
+    year: TimeReal.getFullYear(),
+    month: TimeReal.getMonth(),
+  });
+  const [selectedWeek, setSelectedWeek] = useState({
+    year: TimeReal.getFullYear(),
+    month: TimeReal.getMonth(),
+    day: TimeReal.getDate(),
+  });
+  const { loading, reports } = useSelector((state) => state.reportsSlice);
+  const [time, setTime] = useState({
+    year: TimeReal.getFullYear(),
+    month: TimeReal.getMonth(),
+    day: TimeReal.getDate(),
+  });
+  const [valueFilter, setValueFilter] = useState("WEEK");
+  useEffect(() => {
+    dispatch({
+      type:
+        valueFilter === "WEEK"
+          ? SagaActionTypes.GET_REPORT_WEEK_SAGA
+          : valueFilter === "MONTH"
+          ? SagaActionTypes.GET_REPORT_MONTH_SAGA
+          : SagaActionTypes.GET_REPORT_YEAR_SAGA,
+      year: time.year,
+      month: time.month,
+      day: time.day,
+    });
+  }, [time]);
+  const [keyWord, setKeyWord] = useState("");
+  const [profit, setProfit] = useState(3984000);
+  const [capitalLoss, setCapitalLoss] = useState(0);
   const listOption = [
     {
       label: "Tuần",
-      value: "weekly",
+      value: "WEEK",
     },
     {
       label: "Tháng",
-      value: "monthly",
+      value: "MONTH",
     },
     {
       label: "Năm",
-      value: "yearly",
+      value: "YEAR",
     },
   ];
   const [weekHidden, setWeekHidden] = useState(false);
@@ -127,27 +161,33 @@ const RevenuePage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            onChange={(value) => {
-              setKeyWord(value);
+            onChange={(e) => {
+              setKeyWord(e.target.value);
             }}
           />
           <Segmented
             size="large"
             options={listOption}
             onChange={(value) => {
-              if (value === "weekly") {
+              setValueFilter(value);
+              if (value === "WEEK") {
                 setWeekHidden(false);
                 setMonthHidden(true);
                 setYearHidden(true);
+                setTime(selectedWeek);
               } else {
-                if (value === "monthly") {
+                if (value === "MONTH") {
                   setWeekHidden(true);
                   setMonthHidden(false);
                   setYearHidden(true);
+                  setTime(selectedMonth);
                 } else {
-                  setWeekHidden(true);
-                  setMonthHidden(true);
-                  setYearHidden(false);
+                  if (value === "YEAR") {
+                    setWeekHidden(true);
+                    setMonthHidden(true);
+                    setYearHidden(false);
+                    setTime(selectedYear);
+                  }
                 }
               }
             }}
@@ -161,7 +201,16 @@ const RevenuePage = () => {
               }}
               defaultValue={moment(TimeReal)}
               onChange={(date) => {
-                console.log(date._d.getDay());
+                setSelectedMonth({
+                  year: moment(date).getFullYear(),
+                  month: moment(date).getMonth(),
+                  day: moment(date).getDate(),
+                });
+                setTime({
+                  year: moment(date).getFullYear(),
+                  month: moment(date).getMonth(),
+                  day: moment(date).getDate(),
+                });
               }}
             />
           </div>
@@ -174,6 +223,16 @@ const RevenuePage = () => {
               }}
               format={"MM-YYYY"}
               defaultValue={moment(TimeReal)}
+              onChange={(date) => {
+                setSelectedMonth({
+                  year: moment(date).getFullYear(),
+                  month: moment(date).getMonth(),
+                });
+                setTime({
+                  year: moment(date).getFullYear(),
+                  month: moment(date).getMonth(),
+                });
+              }}
             />
           </div>
           <div hidden={yearHidden}>
@@ -185,6 +244,14 @@ const RevenuePage = () => {
               }}
               format={"YYYY"}
               defaultValue={moment(TimeReal)}
+              onChange={(date) => {
+                setSelectedYear({
+                  year: moment(date).getFullYear(),
+                });
+                setTime({
+                  year: moment(date).getFullYear(),
+                });
+              }}
             />
           </div>
         </Space>
@@ -196,7 +263,7 @@ const RevenuePage = () => {
           moment(new Date()).format("DD/MM/YYYY  HH:MM")}
       </div>
 
-      <TableRevenue keyWord={keyWord} data={""} loading={""} />
+      <TableRevenue keyWord={keyWord} data={reports} loading={loading} />
 
       {/* Tổng kết */}
       <div className="mt-10 flex flex-wrap justify-around gap-x-10 border text-2xl p-5">
