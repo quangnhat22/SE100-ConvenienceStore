@@ -14,6 +14,7 @@ import invoiceSlice from "./reducer/InvoiceReducer";
 import productItemsExpireSlice from "./reducer/ProductExpireReducer";
 import cartSlice from "./reducer/CartReducer";
 import productItemsQuantitySlice from "./reducer/ProductItemQuantityReducer";
+import editDeliveryNotesSlice from "./reducer/EditDeliveryNotesReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -31,6 +32,7 @@ const rootReducer = {
   productItemsExpireSlice,
   productItemsQuantitySlice,
   cartSlice,
+  editDeliveryNotesSlice,
 };
 
 export const store = configureStore({
