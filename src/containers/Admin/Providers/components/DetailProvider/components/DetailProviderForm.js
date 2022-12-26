@@ -23,6 +23,8 @@ const DetailProviderForm = ({ provider }) => {
     name: provider.name,
     email: provider.email,
     address: provider.address,
+    phoneNumber: provider.phone,
+    representative: provider.representative,
   };
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);

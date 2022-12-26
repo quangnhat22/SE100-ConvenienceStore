@@ -9,22 +9,14 @@ import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
 import { productActions } from "../../../../../../redux/reducer/ProductReducer";
 import * as SagaActionTypes from "../../../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
+import { editDeliveryNotesActions } from "../../../../../../redux/reducer/EditDeliveryNotesReducer";
 
-const NewDeliveryTable = ({ data, keyWord, loading }) => {
+const NewDeliveryTable = ({ data, keyWord }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  // const { products } = useSelector((state) => state.productSlice);
+  let { productOfProvider } = useSelector((state) => state.providerSlice);
   const [page, setPage] = React.useState(1);
-  // let editProduct = {
-  //   : ,
-  //   deliveryNoteId: ,
-  //   MFG: ,
-  //   EXP: ,
-  //   cost: ,
-  //   price: ,
-  //   : ,
-  //   description: ,
-  //   : ,
   const columns = [
     {
       title: "STT",
@@ -33,23 +25,40 @@ const NewDeliveryTable = ({ data, keyWord, loading }) => {
       key: "",
       render: (text, record, index) => (page - 1) * 6 + index + 1,
     },
-    // {
-    //   title: "Ảnh",
-    //   dataIndex: "image",
-    //   key: "image",
-    //   width: "5%",
-    //   render: (value, record) => {
-    //     return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
-    //   },
-    // },
-
     {
       title: "Tên dòng sản phẩm",
-      dataIndex: ["product", "title"],
-      key: "title",
+      dataIndex: "productId",
+      key: "productId",
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
+      filteredValue: [keyWord],
+      onFilter: (value, record) => {
+        return (
+          String(
+            productOfProvider.find((item) => item.id === record.productId).title
+          )
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.price).toLowerCase().includes(value.toLowerCase()) ||
+          String(moment(record.MFG).format("DD/MM/YYYY"))
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          String(moment(record.EXP).format("DD/MM/YYYY"))
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          String(record.quantity).toLowerCase().includes(value.toLowerCase())
+        );
+      },
+      render: (productId) => {
+        let productLine = productOfProvider.find(
+          (item) => item.id === productId
+        );
+        if (typeof productLine != "undefined") {
+          return productLine.title;
+        }
+      },
     },
     {
       title: "Giá nhập",
@@ -71,6 +80,24 @@ const NewDeliveryTable = ({ data, keyWord, loading }) => {
       sorter: (a, b) => a.price - b.price,
     },
     {
+      title: "Ngày sản xuất",
+      dataIndex: "MFG",
+      key: "MFG",
+      width: "10%",
+      showOnResponse: true,
+      showOnDesktop: true,
+      render: (MFG) => `${moment(MFG).format("DD/MM/YYYY")}`,
+    },
+    {
+      title: "Ngày hết hạn",
+      dataIndex: "EXP",
+      key: "EXP",
+      width: "10%",
+      showOnResponse: true,
+      showOnDesktop: true,
+      render: (EXP) => `${moment(EXP).format("DD/MM/YYYY")}`,
+    },
+    {
       title: "Số lượng",
       dataIndex: "quantity",
       key: "quantity",
@@ -79,40 +106,6 @@ const NewDeliveryTable = ({ data, keyWord, loading }) => {
       width: "10%",
       ellipsis: true,
       sorter: (a, b) => a.quantity - b.quantity,
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "state",
-      key: "state",
-      showOnResponse: true,
-      showOnDesktop: true,
-      ellipsis: true,
-      width: "10%",
-      render: (text, record, index) => {
-        return (
-          <Tag
-            key={index}
-            color={record.state.color}
-            className="w-2/4 min-w-max text-center"
-          >
-            {record.state.stateName}
-          </Tag>
-        );
-      },
-      // filters: [
-      //   { text: "Còn hàng", value: 2 },
-      //   { text: "Sắp hết hàng", value: 1 },
-      //   { text: "Hết hàng", value: 0 },
-      // ],
-      // onFilter: (value, record) => {
-      //   if (value === 2) {
-      //     return record.soLuong >= 10;
-      //   } else if (value === 1) {
-      //     return record.soLuong < 10 && record.soLuong > 0;
-      //   } else {
-      //     return record.soLuong === 0;
-      //   }
-      // },
     },
     {
       title: "Thao tác",
@@ -125,13 +118,6 @@ const NewDeliveryTable = ({ data, keyWord, loading }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          <button
-            type="button"
-            className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            onClick={() => handleEditProduct(record)}
-          >
-            <EditFilled />
-          </button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa sản phẩm này?"
@@ -159,29 +145,10 @@ const NewDeliveryTable = ({ data, keyWord, loading }) => {
       ),
     },
   ];
-  const handleEditProduct = (record) => {
-    // useHistory.push({
-    //   pathname: "/detail_product",
-    //   state: { product: record },
-    // });
-    history.push("/detail_product/" + record.id);
-  };
-  const handleRemoveProduct = (record) => {
-    dispatch({
-      type: SagaActionTypes.DELETE_PRODUCT_ITEM_SAGA,
-      id: record.id,
-    });
-  };
 
-  if (loading === true) {
-    return (
-      <div className="w-full flex items-center justify-center mb-12 h-4/5">
-        <Space size="middle ">
-          <Spin size="large" tip="Loading..." />
-        </Space>
-      </div>
-    );
-  }
+  const handleRemoveProduct = (record) => {
+    dispatch(editDeliveryNotesActions.removeNewProductItem(record));
+  };
 
   return (
     <>

@@ -14,10 +14,12 @@ const DeliveryNotes = () => {
   const { deliveryNotes, loading } = useSelector(
     (state) => state.deliveryNotesSlice
   );
+  const uid = localStorage.getItem("id");
   const [keyWord, setKeyWord] = useState("");
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
     dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
+    dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
   }, []);
 
   const handleAddDeliveryNote = () => {

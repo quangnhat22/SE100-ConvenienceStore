@@ -13,24 +13,43 @@ import {
   Upload,
   Row,
   Col,
+  Space,
+  Spin,
 } from "antd";
 import moment from "moment";
 import Search from "antd/lib/input/Search";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NewDeliveryTable from "./components/NewDeliveryTable";
-// import ProductLinesForm from "./components/ProductLinesForm";
+import AddNewProduct from "./components/AddNewProduct";
 import ModalForm from "../../../../../HOC/ModalForm";
 import * as SagaActionTypes from "../../../../../redux/constants/constant";
 import { modalActions } from "../../../../../redux/reducer/ModalReducer";
+import { useHistory } from "react-router-dom";
+import AlertCustom from "../../../../../common/Notification/Alert";
+
 const dateFormat = "DD/MM/YYYY";
 
 const NewDeliveryNotePage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [keyWord, setKeyWord] = useState("");
-
+  let { newDeliveryNote } = useSelector(
+    (state) => state.editDeliveryNotesSlice
+  );
+  console.log(newDeliveryNote);
+  const uid = localStorage.getItem("id");
+  let { provider, loading } = useSelector((state) => state.providerSlice);
+  let staffSlice = useSelector((state) => state.staffsSlice);
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
+    dispatch({
+      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
+      id: newDeliveryNote.providerId,
+    });
+    dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
+    if (newDeliveryNote.providerId == "-1") {
+      history.push("/delivery_notes/");
+    }
   }, []);
 
   const layout = {
@@ -40,6 +59,13 @@ const NewDeliveryNotePage = () => {
     wrapperCol: {
       span: 16,
     },
+  };
+
+  const initialValues = {
+    delivery_note_provider: provider.name,
+    delivery_note_date: moment(newDeliveryNote.date),
+    delivery_note_staff: staffSlice.staff.fullname,
+    delivery_note_shipper: newDeliveryNote.shipper,
   };
 
   const validateMessages = {
@@ -54,27 +80,43 @@ const NewDeliveryNotePage = () => {
     },
   };
 
-  const handleAddProductsLine = () => {
-    // dispatch(
-    //   modalActions.showModal({
-    //     ComponentContent: <ProductLinesForm />,
-    //   })
-    // );
+  const handleSubmit = () => {
+    if (newDeliveryNote.productItems.length !== 0) {
+      dispatch({
+        type: SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
+        newDeliveryNote: newDeliveryNote,
+      });
+    } else {
+      AlertCustom({ type: "error", title: "Vui lòng thêm sản phẩm" });
+    }
   };
+
+  const handleAddProductToDeliveryNote = () => {
+    dispatch(
+      modalActions.showModal({
+        ComponentContent: <AddNewProduct />,
+      })
+    );
+  };
+
+  if (staffSlice.loading === true || loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
 
   return (
     <>
-      <Form
-        name="add_delivery_note_form"
-        initialValues={{
-          delivery_note_date: moment(),
-        }}
-      >
-        <div className="ml-3 mt-5 mr-3 mb-8">
-          <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
-            Tạo phiếu nhập hàng
-          </div>
-          <div className="rounded bg-white py-5 px-3 my-5">
+      <div className="ml-3 mt-5 mr-3 mb-8">
+        <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
+          Tạo phiếu nhập hàng
+        </div>
+        <div className="rounded bg-white py-5 px-3 my-5">
+          <Form name="add_delivery_note_form" initialValues={initialValues}>
             <Row gutter={24}>
               <Col span={12} key={1}>
                 <Form.Item
@@ -86,7 +128,7 @@ const NewDeliveryNotePage = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Nhà cung cấp"></Input>
+                  <Input placeholder="Nhà cung cấp" disabled={true}></Input>
                 </Form.Item>
               </Col>
               <Col span={12} key={2}>
@@ -103,6 +145,7 @@ const NewDeliveryNotePage = () => {
                     placeholder="Ngày nhập kho"
                     format={dateFormat}
                     disabledDate={(current) => current.isAfter(moment())}
+                    disabled={true}
                   />
                 </Form.Item>
               </Col>
@@ -116,7 +159,10 @@ const NewDeliveryNotePage = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Tên nhân viên kiểm hàng" />
+                  <Input
+                    placeholder="Tên nhân viên kiểm hàng"
+                    disabled={true}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12} key={4}>
@@ -124,57 +170,57 @@ const NewDeliveryNotePage = () => {
                   <Input
                     className="rounded"
                     placeholder="Tên người giao hàng"
+                    disabled={true}
                   />
                 </Form.Item>
               </Col>
             </Row>
+          </Form>
+        </div>
+        <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
+          <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-lg">
+            Danh sách sản phẩm
           </div>
-          <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
-            <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-lg">
-              Danh sách sản phẩm
-            </div>
-            <Search
-              className="min-w-min max-w-xs"
-              name="search"
-              placeholder="Tìm kiếm..."
-              allowClear
-              onSearch={(value) => {
-                setKeyWord(value);
-              }}
-            />
-            {/* button search */}
-            <button
-              className="flex items-center justify-center
+          <Search
+            className="min-w-min max-w-xs"
+            name="search"
+            placeholder="Tìm kiếm..."
+            allowClear
+            onSearch={(value) => {
+              setKeyWord(value);
+            }}
+          />
+          {/* button search */}
+          <button
+            className="flex items-center justify-center
                     bg-blue-500 h-8 w-fit p-2 text-white
                     md:mt-0 hover:bg-blue-600 shadow-lg rounded whitespace-nowrap"
-              onClick={handleAddProductsLine}
+            onClick={handleAddProductToDeliveryNote}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4 mr-3"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4 mr-3"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
-                />
-              </svg>
-              Thêm sản phẩm
-            </button>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            Thêm sản phẩm
+          </button>
         </div>
-        <NewDeliveryTable keyWord={keyWord} />
-        <div className="flex justify-end w-full">
-          <Button className="mx-3 mb-3" htmlType="submit">
-            Lưu
-          </Button>
-        </div>
-      </Form>
-
+      </div>
+      <NewDeliveryTable keyWord={keyWord} data={newDeliveryNote.productItems} />
+      <div className="flex justify-end w-full">
+        <Button onClick={() => handleSubmit()} className="mx-3 mb-3">
+          Lưu
+        </Button>
+      </div>
       <ModalForm />
     </>
   );
