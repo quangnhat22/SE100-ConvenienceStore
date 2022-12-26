@@ -5,11 +5,13 @@ import {
   InfoCircleTwoTone,
   PlusOutlined,
 } from "@ant-design/icons";
+import { Col, Row, Divider } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import axios from "axios";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -22,9 +24,10 @@ const EditProfilePage = ({ data }) => {
   console.log(data);
   const history = useHistory();
   const [personalInformationForm] = Form.useForm();
-  const [contactInformationForm] = Form.useForm();
   const { Option } = Select;
   const dispatch = useDispatch();
+  const [progress, setProgress] = useState(0);
+
   const validateMessages = {
     required: "Cần nhập ${label}!",
     types: {
@@ -41,6 +44,8 @@ const EditProfilePage = ({ data }) => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([{ url: data.avatar }]);
+  const [imageChange, setImageChange] = useState(data.avatar);
+
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -52,10 +57,6 @@ const EditProfilePage = ({ data }) => {
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
-  };
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    console.log(fileList[0]);
   };
 
   const onFinish = (values) => {
@@ -75,41 +76,68 @@ const EditProfilePage = ({ data }) => {
   };
 
   const handleSave = (values) => {
-    // let editedProfile = {
-    //   id: personalInformationForm.getFieldValue().id,
-    //   email: contactInformationForm.getFieldValue().email,
-    //   fullname: personalInformationForm.getFieldValue().fullname,
-    //   birthday: personalInformationForm.getFieldValue().birthday,
-    //   identityNumber: personalInformationForm.getFieldValue().identityNumber,
-    //   gender: personalInformationForm.getFieldValue().gender,
-    //   phoneNumber: contactInformationForm.getFieldValue().phoneNumber,
-    //   address: contactInformationForm.getFieldValue().address,
-    //   avatar: contactInformationForm.image.filename,
-    //   role: data.role,
-    // };
-    // console.log(editedProfile);
-    // dispatch({
-    //   type: SagaActionTypes.PUT_USER_SAGA,
-    //   id: data.id,
-    //   staff: editedProfile,
-    // });
-    // history.go(0);
+    console.log(values);
     let editedProfile = {
-      fullname: values.staff_name,
-      birthday: values.staff_birth.toISOString(),
-      identityNumber: values.staff_cccd,
-      gender: values.staff_gender,
-      phoneNumber: values.staff_phone_number,
-      email: values.staff_email,
-      address: values.staff_address,
-      other: values.staff_other_information,
+      email: values.email,
+      fullname: values.fullname,
+      birthday: values.birthday.toISOString(),
+      identityNumber: values.identityNumber,
+      gender: values.gender,
+      phoneNumber: values.phoneNumber,
+      address: values.address,
+      other: values.other,
+      avatar: imageChange,
+      role: "MANAGER",
     };
-    console.log(data);
+    console.log(editedProfile);
     dispatch({
       type: SagaActionTypes.PUT_USER_SAGA,
       id: data.id,
       staff: editedProfile,
     });
+  };
+
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost/image/upload",
+        data: fmData,
+        ...config,
+      });
+
+      let { data, status } = res;
+      console.log("server res: ", res);
+      setImageChange(data["path"]);
+      onSuccess("Ok");
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    //console.log(fileList);
+    setFileList(fileList);
+    //filelist - [{uid: "-1",url:'Some url to image'}]
   };
 
   const initialvalue = {
@@ -127,173 +155,168 @@ const EditProfilePage = ({ data }) => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="gap-8 mt-10 flex flex-col w-full lg:w-3/5 md:flex-row mx-10">
+      <div className="gap-8 mt-10 w-full lg:w-3/5 mx-10">
         {/* Thông tin cá nhân */}
-        <div className="rounded bg-white shadow-xl px-5 py-8 w-2/5">
-          <header className="font-bold text-xl mb-5">Thông tin cá nhân</header>
-          <Form
-            form={personalInformationForm}
-            layout="vertical"
-            validateMessages={validateMessages}
-            onFinish={onFinish}
-            initialValues={initialvalue}
-          >
-            <Form.Item name="id" label="Mã nhân viên">
-              <Input placeholder="Mã nhân viên" disabled={true} />
-            </Form.Item>
-            <Form.Item
-              name="fullname"
-              label="Họ và tên"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Họ và tên" />
-            </Form.Item>
-            <Form.Item
-              name="birthday"
-              label="Ngày sinh"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <DatePicker format="DD/MM/YYYY" placeholder="Ngày sinh" />
-            </Form.Item>
-            <Form.Item
-              name="identityNumber"
-              label="CCCD"
-              rules={[
-                {
-                  pattern: "^([-]?[0-9]*|0)$",
-                  message: "CCCD không hợp lệ",
-                },
-                { required: true },
-              ]}
-            >
-              <Input placeholder="CCCD" />
-            </Form.Item>
-            <Form.Item
-              name="gender"
-              label="Giới tính"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Select
-                placeholder="Giới tính"
-                allowClear
+        <Form
+          form={personalInformationForm}
+          //layout="horizontal"
+          validateMessages={validateMessages}
+          onFinish={onFinish}
+          initialValues={initialvalue}
+        >
+          <Row>
+            <div className="rounded bg-white shadow-xl px-5 py-8 w-2/5">
+              <header className="font-bold text-xl mb-5">
+                Thông tin cá nhân
+              </header>
+
+              <Form.Item name="id" label="Mã nhân viên">
+                <Input placeholder="Mã nhân viên" disabled={true} />
+              </Form.Item>
+              <Form.Item
+                name="fullname"
+                label="Họ và tên"
                 rules={[
                   {
                     required: true,
                   },
                 ]}
               >
-                <Option value="MALE">Nam</Option>
-                <Option value="FEMALE">Nữ</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item name="other" label="Khác">
-              <TextArea rows={2} placeholder="Khác" />
-            </Form.Item>
-          </Form>
-        </div>
-
-        {/* Thông tin liên hệ */}
-        <div className="rounded bg-white shadow-xl px-5 py-8 grow relative">
-          <header className="font-bold text-xl whitespace-nowrap mb-5">
-            Thông tin liên hệ
-            <InfoCircleTwoTone className="ml-1" />
-          </header>
-          <Form
-            form={contactInformationForm}
-            layout="vertical"
-            validateMessages={validateMessages}
-            onFinish={onFinish}
-            initialValues={initialvalue}
-          >
-            <Form.Item
-              name="phoneNumber"
-              label="Số Điện Thoại"
-              rules={[
-                {
-                  pattern: "^([-]?[0-9]*|0)$",
-                  message: "Số Điện Thoại không hợp lệ",
-                },
-                { required: true },
-              ]}
-            >
-              <Input placeholder="Số điện thoại" />
-            </Form.Item>
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[{ type: "email", required: true }]}
-            >
-              <Input placeholder="Email" />
-            </Form.Item>
-            <Form.Item
-              name="address"
-              label="Địa chỉ"
-              rules={[{ required: true }]}
-            >
-              <TextArea rows={4} placeholder="Địa chỉ" />
-            </Form.Item>
-            <Form.Item
-              className="w-fit rounded"
-              name="avatar"
-              label="Ảnh nhân viên"
-            >
-              <>
-                <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture-card"
-                  beforeUpload={(file) => {
-                    return false;
-                  }}
-                  fileList={fileList}
-                  onPreview={handlePreview}
-                  onChange={handleChange}
-                  maxCount="1"
-                >
-                  <Space className="flex flex-col text-base">
-                    <PlusOutlined />
-                    Tải ảnh
-                  </Space>
-                </Upload>
-                <Modal
-                  open={previewOpen}
-                  title={previewTitle}
-                  footer={null}
-                  onCancel={handleCancel}
-                >
-                  <img
-                    alt="example"
-                    style={{
-                      width: "100%",
-                    }}
-                    src={previewImage}
-                  />
-                </Modal>
-              </>
-            </Form.Item>
-
-            {/* Action */}
-            <Form.Item className="flex justify-end absolute right-5 bottom-0">
-              <button
-                className="rounded py-2 px-4 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-                type="submit"
+                <Input placeholder="Họ và tên" />
+              </Form.Item>
+              <Form.Item
+                name="birthday"
+                label="Ngày sinh"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
               >
-                Lưu
-              </button>
-            </Form.Item>
-          </Form>
-        </div>
+                <DatePicker format="DD/MM/YYYY" placeholder="Ngày sinh" />
+              </Form.Item>
+              <Form.Item
+                name="identityNumber"
+                label="CCCD"
+                rules={[
+                  {
+                    pattern: "^([-]?[0-9]*|0)$",
+                    message: "CCCD không hợp lệ",
+                  },
+                  { required: true },
+                ]}
+              >
+                <Input placeholder="CCCD" />
+              </Form.Item>
+              <Form.Item
+                name="gender"
+                label="Giới tính"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Select
+                  placeholder="Giới tính"
+                  allowClear
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Option value="MALE">Nam</Option>
+                  <Option value="FEMALE">Nữ</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item name="other" label="Khác">
+                <TextArea rows={2} placeholder="Khác" />
+              </Form.Item>
+            </div>
+            {/* Thông tin liên hệ */}
+            <div className="rounded bg-white shadow-xl px-5 py-8 grow relative">
+              <header className="font-bold text-xl whitespace-nowrap mb-5">
+                Thông tin liên hệ
+                <InfoCircleTwoTone className="ml-1" />
+              </header>
+              <Form.Item
+                name="phoneNumber"
+                label="Số Điện Thoại"
+                rules={[
+                  {
+                    pattern: "^([-]?[0-9]*|0)$",
+                    message: "Số Điện Thoại không hợp lệ",
+                  },
+                  { required: true },
+                ]}
+              >
+                <Input placeholder="Số điện thoại" />
+              </Form.Item>
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[{ type: "email", required: true }]}
+              >
+                <Input placeholder="Email" />
+              </Form.Item>
+              <Form.Item
+                name="address"
+                label="Địa chỉ"
+                rules={[{ required: true }]}
+              >
+                <TextArea rows={4} placeholder="Địa chỉ" />
+              </Form.Item>
+              <Form.Item
+                className="w-fit rounded"
+                name="avatar"
+                label="Ảnh nhân viên"
+              >
+                <>
+                  <Upload
+                    accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={handlePreview}
+                    customRequest={uploadImage}
+                    onChange={handleOnChange}
+                    maxCount="1"
+                    //showUploadList = {false}
+                  >
+                    <Space className="flex flex-col text-base">
+                      <PlusOutlined />
+                      Tải ảnh
+                    </Space>
+                  </Upload>
+                  <Modal
+                    open={previewOpen}
+                    title={previewTitle}
+                    footer={null}
+                    onCancel={handleCancel}
+                  >
+                    <img
+                      alt="example"
+                      style={{
+                        width: "100%",
+                      }}
+                      src={previewImage}
+                    />
+                  </Modal>
+                </>
+              </Form.Item>
+
+              {/* Action */}
+              <Form.Item className="flex justify-end absolute right-5 bottom-0">
+                <button
+                  className="rounded py-2 px-4 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                  type="submit"
+                >
+                  Lưu
+                </button>
+              </Form.Item>
+            </div>
+          </Row>
+        </Form>
       </div>
     </div>
   );

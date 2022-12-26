@@ -11,7 +11,6 @@ function* actGetListStaffs() {
 
     let res = yield call(() => UserService.getUsers());
     let { status, data } = res;
-    console.log(res);
     if (status === 200) {
       yield put(staffActions.getListStaffsSuccess({ staffs: data }));
     } else {
