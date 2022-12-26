@@ -61,7 +61,7 @@ const PieChart = (props) => {
     ],
   };
 
-  return <Pie {...config} />;
+  return <Pie className={props.className} {...config} />;
 };
 
 export default PieChart;

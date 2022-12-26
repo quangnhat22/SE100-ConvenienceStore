@@ -1,5 +1,5 @@
 import { Popconfirm, Space, Spin } from "antd";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EyeOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
@@ -87,7 +87,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditStaff(record)}
           >
-            <EditFilled />
+            <EyeOutlined />
           </button>
           <Popconfirm
             placement="top"

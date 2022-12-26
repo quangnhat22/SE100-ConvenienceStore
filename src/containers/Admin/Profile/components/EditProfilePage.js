@@ -44,7 +44,7 @@ const EditProfilePage = ({ data }) => {
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
-      console.log(file.originFileObj);
+      console.log(file.preview);
     }
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
@@ -54,6 +54,7 @@ const EditProfilePage = ({ data }) => {
   };
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+    console.log(fileList[0]);
   };
 
   const onFinish = (values) => {
@@ -92,7 +93,7 @@ const EditProfilePage = ({ data }) => {
     //   staff: editedProfile,
     // });
     // history.go(0);
-    let editedProfile= {
+    let editedProfile = {
       fullname: values.staff_name,
       birthday: values.staff_birth.toISOString(),
       identityNumber: values.staff_cccd,
@@ -251,7 +252,7 @@ const EditProfilePage = ({ data }) => {
                 <Upload
                   action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                   listType="picture-card"
-                  beforeUpload={() => {
+                  beforeUpload={(file) => {
                     return false;
                   }}
                   fileList={fileList}

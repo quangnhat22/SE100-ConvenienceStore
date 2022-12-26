@@ -1,5 +1,5 @@
 import { hover } from "@testing-library/user-event/dist/hover";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EyeOutlined } from "@ant-design/icons";
 import { Table, Tag, Popconfirm, Space, Tooltip, Spin } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
@@ -78,6 +78,16 @@ const TableProducts = ({ data, keyWord, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
       sorter: (a, b) => a.cost - b.cost,
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.cost
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            <sup>đ</sup>
+          </div>
+        );
+      },
     },
     {
       title: "Giá bán",
@@ -88,6 +98,16 @@ const TableProducts = ({ data, keyWord, loading }) => {
       width: "15%",
       ellipsis: true,
       sorter: (a, b) => a.price - b.price,
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.price
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            <sup>đ</sup>
+          </div>
+        );
+      },
     },
     {
       title: "Số lượng",
@@ -98,6 +118,15 @@ const TableProducts = ({ data, keyWord, loading }) => {
       width: "10%",
       ellipsis: true,
       sorter: (a, b) => a.quantity - b.quantity,
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.price
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+          </div>
+        );
+      },
     },
     {
       title: "Trạng thái",
@@ -149,7 +178,7 @@ const TableProducts = ({ data, keyWord, loading }) => {
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditProduct(record)}
           >
-            <EditFilled />
+            <EyeOutlined />
           </button>
           <Popconfirm
             placement="top"

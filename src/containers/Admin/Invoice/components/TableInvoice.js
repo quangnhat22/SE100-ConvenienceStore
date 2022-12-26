@@ -1,4 +1,4 @@
-import { EditFilled } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import { Space, Spin, Tooltip } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
@@ -103,7 +103,7 @@ const TableInvoice = ({ keyWord, data, loading }) => {
               className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
               onClick={() => handleViewContent(record.invoiceDetails)}
             >
-              <EditFilled />
+              <EyeOutlined />
             </button>
           </Space>
         </Tooltip>

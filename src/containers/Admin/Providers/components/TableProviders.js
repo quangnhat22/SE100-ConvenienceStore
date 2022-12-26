@@ -1,4 +1,4 @@
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EyeOutlined } from "@ant-design/icons";
 import { Space, Popconfirm, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -105,7 +105,7 @@ const TableProviders = ({ data, keyWord, loading }) => {
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditProvider(record)}
           >
-            <EditFilled />
+            <EyeOutlined />
           </button>
           <Popconfirm
             placement="top"

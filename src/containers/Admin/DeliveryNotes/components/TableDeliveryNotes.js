@@ -90,6 +90,16 @@ const TableDeliveryNotes = ({ keyWord, data, loading }) => {
       width: "15%",
       ellipsis: true,
       sorter: (a, b) => a.total - b.total,
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.total
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            <sup>đ</sup>
+          </div>
+        );
+      },
     },
     {
       title: "Thao tác",

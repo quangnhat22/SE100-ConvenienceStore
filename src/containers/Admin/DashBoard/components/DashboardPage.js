@@ -87,10 +87,10 @@ const dataTopSale = [
 
 const DashboardPage = () => {
   const [productNearExpirationDate, setProductNearExpirationDate] =
-    useState(null);
-  const [outOfStock, setOutOfStock] = useState(null);
-  const [numberOfStaff, setNumberOfStaff] = useState(null);
-  const [totalRevenue, setTotalRevenue] = useState(null);
+    useState(0);
+  const [outOfStock, setOutOfStock] = useState(0);
+  const [numberOfStaff, setNumberOfStaff] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
 
   const columnsTopSale = [
     {
@@ -116,10 +116,10 @@ const DashboardPage = () => {
   return (
     <>
       <div className="mt-2 mx-2 md:mt-6 md:mx-12">
-        <div className="flex flex-wrap justify-between gap-y-10">
+        <div className="flex flex-wrap gap-10">
           {/* Card sản phẩm */}
           <Card
-            className="w-80 shadow-md rounded"
+            className="w-80 shadow-md rounded grow"
             size="small"
             title="Sản phẩm"
             headStyle={{ fontWeight: "bold", fontSize: "25px" }}
@@ -139,18 +139,24 @@ const DashboardPage = () => {
             <div className="text-yellow-400 opacity-80 font-bold text-lg py-2">
               {"Sắp hết hạn: "}
               <span class="text-lg text-black">
-                {productNearExpirationDate}
+                {productNearExpirationDate
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
               </span>
             </div>
             <div className="text-red-500 font-bold text-lg py-2">
               {"Hết hàng: "}
-              <span class="text-lg text-black">{outOfStock}</span>
+              <span class="text-lg text-black">
+                {outOfStock
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+              </span>
             </div>
           </Card>
 
           {/* Card nhân viên */}
           <Card
-            className="w-80 shadow-md rounded"
+            className="w-80 shadow-md rounded grow"
             size="small"
             title="Nhân viên"
             headStyle={{ fontWeight: "bold", fontSize: "25px" }}
@@ -165,13 +171,15 @@ const DashboardPage = () => {
             }
           >
             <div className="font-bold text-lg py-2">
-              {numberOfStaff + " người"}
+              {numberOfStaff
+                .toString()
+                .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " người"}
             </div>
           </Card>
 
           {/* Card tổng doanh thu */}
           <Card
-            className="w-80 shadow-md rounded"
+            className="w-80 shadow-md rounded grow"
             size="small"
             title="Tổng doanh thu"
             headStyle={{ fontWeight: "bold", fontSize: "25px" }}
@@ -186,7 +194,8 @@ const DashboardPage = () => {
             }
           >
             <div className="font-bold text-lg py-2">
-              {totalRevenue + " VNĐ"}
+              {(totalRevenue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                " VNĐ"}
             </div>
           </Card>
         </div>
@@ -209,7 +218,7 @@ const DashboardPage = () => {
                   </Link>
                 </span>
               </div>
-              <PieChart data={dataRevenue} />
+              <PieChart className="grow" data={dataRevenue} />
             </div>
             <div className="flex flex-col grow">
               <div className="flex justify-start items-center">

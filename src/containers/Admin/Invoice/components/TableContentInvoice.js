@@ -91,6 +91,7 @@ const TableInvoice = ({ listItem }) => {
 
   return (
     <TableTemplate
+      className="mt-10"
       dataSource={listItem}
       columns={columns}
       pagination={{

@@ -78,7 +78,9 @@ const AddProductPage = () => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
 
   const onFinish = (values) => {
     let newProduct = {
@@ -99,6 +101,28 @@ const AddProductPage = () => {
       newProduct: newProduct,
     });
     history.goBack();
+  };
+
+  // format số
+  const formatterNumber = (val) => {
+    if (!val) return "";
+    return `${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const parserNumber = (val) => {
+    if (!val) return "";
+    return Number.parseInt(val.replace(/\$\s?|(\,*)/g, ""));
+  };
+
+  // format tiền
+  const formatterPrice = (val) => {
+    if (!val) return "";
+    return `${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const parserPrice = (val) => {
+    if (!val) return "";
+    return Number.parseFloat(val.replace(/\$\s?|(\,*)/g, "")).toFixed(3);
   };
 
   return (
@@ -194,6 +218,11 @@ const AddProductPage = () => {
                 className="w-full rounded"
                 min={1}
                 placeholder="Số lượng"
+                formatter={(value) => formatterNumber(value)}
+                parser={(value) => parserNumber(value)}
+                onChange={(value) => {
+                  console.log("value", value);
+                }}
               />
             </Form.Item>
           </div>
@@ -219,6 +248,8 @@ const AddProductPage = () => {
                     min={0}
                     addonAfter={<div>VNĐ</div>}
                     placeholder="Giá nhập"
+                    formatter={(value) => formatterPrice(value)}
+                    parser={(value) => parserPrice(value)}
                   />
                 </Form.Item>
                 <Form.Item
@@ -235,6 +266,8 @@ const AddProductPage = () => {
                     min={0}
                     addonAfter={<div>VNĐ</div>}
                     placeholder="Giá bán"
+                    formatter={(value) => formatterPrice(value)}
+                    parser={(value) => parserPrice(value)}
                   />
                 </Form.Item>
               </Space>
