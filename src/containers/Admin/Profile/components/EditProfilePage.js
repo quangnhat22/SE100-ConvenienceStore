@@ -19,6 +19,7 @@ const getBase64 = (file) =>
   });
 
 const EditProfilePage = ({ data }) => {
+  console.log(data);
   const history = useHistory();
   const [personalInformationForm] = Form.useForm();
   const [contactInformationForm] = Form.useForm();

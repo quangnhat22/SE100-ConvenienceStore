@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EditProfilePage from "./components/EditProfilePage";
-
-//Data Account demo
-const myAccount = {
-  id: 1,
-  fullname: "Nguyễn Trung Thành",
-  birthday: "1997/11/06",
-  identityNumber: "052237482993",
-  gender: "MALE",
-  phoneNumber: "0988374654",
-  email: "admin.jd@gmail.com",
-  address: "Xóm A, Khu B, Xã C, Huyện D, Tỉnh F",
-  other: "Trầm tính, ít nói nhưng hòa đồng, lạc quan",
-  avatar:
-    "https://file.tinnhac.com/resize/600x-/2019/06/30/20190630131543-0b16.jpg",
-  role: "MANAGER",
-};
+import { useDispatch, useSelector } from "react-redux";
+import * as SagaActionTypes from "../../../redux/constants/constant";
+import { Space, Spin } from "antd";
 
 const FrofilePage = () => {
-  return <EditProfilePage data={myAccount}/>;
+  const disptach = useDispatch();
+  let { loading, staff } = useSelector((state) => state.staffsSlice);
+
+  useEffect(() => {
+    let id =  localStorage.getItem("id");
+    disptach({
+      type: SagaActionTypes.GET_USER_BY_ID_SAGA,
+      id: id,
+    });
+  }, []);
+
+  if (loading === true ) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
+  return <EditProfilePage data={staff} />;
 };
 export default FrofilePage;

@@ -85,15 +85,6 @@ const PaymentForm = ({ data }) => {
       initialValues={defaultValues}
       validateMessages={validateMessages}
     >
-      {/* <Form.Item name="product_id" label="Mã sản phẩm">
-        <Input
-          style={{
-            width: "80%",
-          }}
-          placeholder="Mã sản phẩm"
-          disabled={true}
-        />
-      </Form.Item> */}
       <Form.Item
         name="store_name"
         label="Tên cửa hàng"
