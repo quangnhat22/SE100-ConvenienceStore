@@ -2,13 +2,13 @@ import Axios from "axios";
 import * as UrlApi from "../url";
 
 export const ReportService = {
-  getReportWeek: () => {
-    return Axios.get(UrlApi.URL_GET_REPORT_WEEK);
+  getReportWeek: (year, month, day) => {
+    return Axios.get(UrlApi.URL_GET_REPORT_WEEK(year, month, day));
   },
-  getReportMonth: () => {
-    return Axios.get(UrlApi.URL_GET_REPORT_MONTH);
+  getReportMonth: (year, month) => {
+    return Axios.get(UrlApi.URL_GET_REPORT_MONTH(year, month));
   },
-  getReportYear: () => {
-    return Axios.get(UrlApi.URL_GET_REPORT_YEAR);
+  getReportYear: (year) => {
+    return Axios.get(UrlApi.URL_GET_REPORT_YEAR(year));
   },
 };

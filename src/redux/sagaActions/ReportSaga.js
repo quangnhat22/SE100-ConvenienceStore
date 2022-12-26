@@ -3,11 +3,11 @@ import * as SagaActionTypes from "../constants/constant";
 import { reportsActions } from "../reducer/ReportReducer";
 import { ReportService } from "../../service/api/ReportApi";
 
-function* actGetListReportWeek() {
+function* actGetListReportWeek(year, month, day) {
   try {
     yield put(reportsActions.getListReportLoading());
 
-    let res = yield call(() => ReportService.getReportWeek());
+    let res = yield call(() => ReportService.getReportWeek(year, month, day));
 
     let { status, data } = res;
     if (status === 200) {
@@ -21,11 +21,11 @@ function* actGetListReportWeek() {
 }
 
 
-function* actGetListReportMonth() {
+function* actGetListReportMonth(year, month) {
   try {
     yield put(reportsActions.getListReportLoading());
 
-    let res = yield call(() => ReportService.getReportMonth());
+    let res = yield call(() => ReportService.getReportMonth(year, month));
 
     let { status, data } = res;
     if (status === 200) {
@@ -38,11 +38,11 @@ function* actGetListReportMonth() {
   }
 }
 
-function* actGetListReportYear() {
+function* actGetListReportYear(year) {
   try {
     yield put(reportsActions.getListReportLoading());
 
-    let res = yield call(() => ReportService.getReportYear());
+    let res = yield call(() => ReportService.getReportYear(year));
 
     let { status, data } = res;
     if (status === 200) {

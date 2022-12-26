@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { PlusOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Form, Input, Button, Select, DatePicker, Upload, Modal } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
-import * as moment from "moment";
+// import * as moment from "moment";
+import axios from "axios";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -10,11 +11,46 @@ const dateFormat = "DD/MM/YYYY";
 const EditProfileForm = ({ account }) => {
   const [form] = Form.useForm();
 
-  // const [listImage, setListimage] = useState(account.images);
-  // const handleChange = (info) => {
-  //   let listImage = [...info.listImage];
-  //   listImage = listImage.slice(-1);
-  //   setListimage(listImage);
+  const uploadImage = async options => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: event => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      }
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios.post(
+        "http://localhost/image/upload",
+        fmData,
+        config
+      );
+
+      onSuccess("Ok");
+      console.log("server res: ", res);
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    setDefaultFileList(fileList);
+    //filelist - [{uid: "-1",url:'Some url to image'}]
+  };
+
+
   const handleSave = () => {
     Modal.confirm({
       title: "Xác nhận",
@@ -147,12 +183,12 @@ const EditProfileForm = ({ account }) => {
           >
             <Upload
               accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
-              action="/upload.do"
               listType="picture-card"
               fileList={account.image}
               // onPreview={() => {}}
               // onRemove={() => {}}
-              // onChange={handleChange}
+              customRequest={uploadImage}
+              onChange={handleOnChange}
             >
               <div>
                 <PlusOutlined />
