@@ -227,10 +227,9 @@ const AddProductPage = () => {
             </Form.Item>
           </div>
           {/* Thông tin nhập hàng */}
-          <div className="rounded bg-white shadow-xl  px-5 py-8">
+          <div className="rounded bg-white shadow-xl px-5 py-8">
             <header className="font-bold text-xl whitespace-nowrap">
               Thông tin nhập hàng
-              <InfoCircleTwoTone className="ml-1" />
             </header>
             <Form.Item>
               <Space>

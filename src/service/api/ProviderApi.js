@@ -6,18 +6,26 @@ export const ProviderService = {
     return Axios.get(UrlApi.URL_PRODUCT_OF_PROVIDER_ID(providerId));
   },
   addProductsOfProvidersById: (providerId, listIdProduct) => {
-    return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_ADD(providerId), listIdProduct);
+    return Axios.post(
+      UrlApi.URL_PRODUCT_OF_PROVIDER_ID_ADD(providerId),
+      listIdProduct
+    );
     //return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_ADD(providerId), {listIdProduct});
   },
   removeProductsOfProvidersById: (providerId, listIdProduct) => {
-    return Axios.post(UrlApi.URL_PRODUCT_OF_PROVIDER_ID_REMOVE(providerId), listIdProduct);
+    return Axios.post(
+      UrlApi.URL_PRODUCT_OF_PROVIDER_ID_REMOVE(providerId),
+      listIdProduct
+    );
   },
   postProviders: (newProvider) => {
-    let { name, email, address } = newProvider;
+    let { name, email, address, phone, representative } = newProvider;
     return Axios.post(UrlApi.URL_PROVIDERS, {
       name: name,
       email: email,
       address: address,
+      phone: phone,
+      representative: representative,
     });
   },
   getProviders: () => {
@@ -30,11 +38,13 @@ export const ProviderService = {
     return Axios.delete(UrlApi.URL_PROVIDERS_ID(id));
   },
   putProviders: (id, provider) => {
-    let { name, email, address } = provider;
+    let { name, email, address, phone, representative } = provider;
     return Axios.put(UrlApi.URL_PROVIDERS_ID(id), {
       name: name,
       email: email,
       address: address,
+      phone: phone,
+      representative: representative,
     });
   },
 };

@@ -3,8 +3,9 @@ import * as SagaActionTypes from "../constants/constant";
 import { reportsActions } from "../reducer/ReportReducer";
 import { ReportService } from "../../service/api/ReportApi";
 
-function* actGetListReportWeek(year, month, day) {
+function* actGetListReportWeek(action) {
   try {
+    let { year, month, day } = action;
     yield put(reportsActions.getListReportLoading());
 
     let res = yield call(() => ReportService.getReportWeek(year, month, day));
@@ -20,9 +21,9 @@ function* actGetListReportWeek(year, month, day) {
   }
 }
 
-
-function* actGetListReportMonth(year, month) {
+function* actGetListReportMonth(action) {
   try {
+    let { year, month } = action;
     yield put(reportsActions.getListReportLoading());
 
     let res = yield call(() => ReportService.getReportMonth(year, month));
@@ -38,8 +39,9 @@ function* actGetListReportMonth(year, month) {
   }
 }
 
-function* actGetListReportYear(year) {
+function* actGetListReportYear(action) {
   try {
+    let { year } = action;
     yield put(reportsActions.getListReportLoading());
 
     let res = yield call(() => ReportService.getReportYear(year));
@@ -55,17 +57,17 @@ function* actGetListReportYear(year) {
   }
 }
 
-
 export function* followActGetListReportWeek() {
   yield takeLatest(SagaActionTypes.GET_REPORT_WEEK_SAGA, actGetListReportWeek);
 }
 
 export function* followActGetListReportMonth() {
-  yield takeLatest(SagaActionTypes.GET_REPORT_MONTH_SAGA, actGetListReportMonth);
+  yield takeLatest(
+    SagaActionTypes.GET_REPORT_MONTH_SAGA,
+    actGetListReportMonth
+  );
 }
 
 export function* followActGetListReportYear() {
   yield takeLatest(SagaActionTypes.GET_REPORT_YEAR_SAGA, actGetListReportYear);
 }
-
-

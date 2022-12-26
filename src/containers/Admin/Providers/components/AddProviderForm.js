@@ -16,12 +16,14 @@ const AddProviderForm = () => {
       name: values.name,
       email: values.email,
       address: values.address,
+      phone: values.phone,
+      representative: values.representative,
     };
     console.log(newProvider);
-    // dispatch({
-    //   type: SagaActionTypes.POST_PROVIDER_SAGA,
-    //   newProvider: newProvider,
-    // });
+    dispatch({
+      type: SagaActionTypes.POST_PROVIDER_SAGA,
+      newProvider: newProvider,
+    });
   };
 
   return (
@@ -59,7 +61,7 @@ const AddProviderForm = () => {
         <Input placeholder="Số điện thoại" />
       </Form.Item> */}
       <Form.Item
-        name="phoneNumber"
+        name="phone"
         label="Số Điện Thoại"
         rules={[
           {

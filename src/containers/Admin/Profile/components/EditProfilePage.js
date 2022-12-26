@@ -126,18 +126,19 @@ const EditProfilePage = ({ data }) => {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="gap-8 mt-10 flex flex-col w-full lg:w-3/5 md:flex-row mx-10">
-        {/* Thông tin cá nhân */}
-        <div className="rounded bg-white shadow-xl px-5 py-8 w-2/5">
-          <header className="font-bold text-xl mb-5">Thông tin cá nhân</header>
-          <Form
-            form={personalInformationForm}
-            layout="vertical"
-            validateMessages={validateMessages}
-            onFinish={onFinish}
-            initialValues={initialvalue}
-          >
+    <Form
+      layout="vertical"
+      validateMessages={validateMessages}
+      onFinish={onFinish}
+      initialValues={initialvalue}
+    >
+      <div className="flex justify-center items-center">
+        <div className="gap-8 mt-10 flex flex-col w-full lg:w-3/5 md:flex-row mx-10">
+          {/* Thông tin cá nhân */}
+          <div className="rounded bg-white shadow-xl px-5 py-8 w-2/5">
+            <header className="font-bold text-xl mb-5">
+              Thông tin cá nhân
+            </header>
             <Form.Item name="id" label="Mã nhân viên">
               <Input placeholder="Mã nhân viên" disabled={true} />
             </Form.Item>
@@ -201,22 +202,12 @@ const EditProfilePage = ({ data }) => {
             <Form.Item name="other" label="Khác">
               <TextArea rows={2} placeholder="Khác" />
             </Form.Item>
-          </Form>
-        </div>
-
-        {/* Thông tin liên hệ */}
-        <div className="rounded bg-white shadow-xl px-5 py-8 grow relative">
-          <header className="font-bold text-xl whitespace-nowrap mb-5">
-            Thông tin liên hệ
-            <InfoCircleTwoTone className="ml-1" />
-          </header>
-          <Form
-            form={contactInformationForm}
-            layout="vertical"
-            validateMessages={validateMessages}
-            onFinish={onFinish}
-            initialValues={initialvalue}
-          >
+          </div>
+          {/* Thông tin liên hệ */}
+          <div className="rounded bg-white shadow-xl px-5 py-8 grow">
+            <header className="font-bold text-xl mb-5">
+              Thông tin liên hệ
+            </header>
             <Form.Item
               name="phoneNumber"
               label="Số Điện Thoại"
@@ -284,7 +275,7 @@ const EditProfilePage = ({ data }) => {
             </Form.Item>
 
             {/* Action */}
-            <Form.Item className="flex justify-end absolute right-5 bottom-0">
+            <Form.Item className="flex justify-end right-5 bottom-0">
               <button
                 className="rounded py-2 px-4 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
                 type="submit"
@@ -292,10 +283,10 @@ const EditProfilePage = ({ data }) => {
                 Lưu
               </button>
             </Form.Item>
-          </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </Form>
   );
 };
 
