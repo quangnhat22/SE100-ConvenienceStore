@@ -48,7 +48,7 @@ const AddDeliveryNoteForm = () => {
     console.log(newDeliveryNote);
     dispatch(editDeliveryNotesActions.getNewDeliveryNotes({ newDeliveryNote }));
     dispatch(modalActions.hideModal());
-    history.push("/new-delivery-note/");
+    history.push("/new-delivery-note");
   };
 
   return (

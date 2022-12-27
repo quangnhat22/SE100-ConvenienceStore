@@ -1,5 +1,6 @@
 import { hover } from "@testing-library/user-event/dist/hover";
-import { DeleteFilled, EyeOutlined } from "@ant-design/icons";
+import moment from "moment";
+import { DeleteFilled, EyeFilled } from "@ant-design/icons";
 import { Table, Tag, Popconfirm, Space, Tooltip, Spin } from "antd";
 import React, { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
@@ -56,7 +57,10 @@ const TableProducts = ({ data, keyWord, loading }) => {
             .toLowerCase()
             .includes(value.toLowerCase()) ||
           String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.price).toLowerCase().includes(value.toLowerCase())
+          String(record.price).toLowerCase().includes(value.toLowerCase()) ||
+          record.state.find((item) =>
+            item.stateName.toLowerCase().includes(value.toLowerCase())
+          )
         );
       },
       showOnResponse: true,
@@ -121,12 +125,30 @@ const TableProducts = ({ data, keyWord, loading }) => {
       render: (text, record, index) => {
         return (
           <div>
-            {record.price
+            {record.quantity
               .toString()
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
           </div>
         );
       },
+    },
+    {
+      title: "Ngày sản xuất",
+      dataIndex: "MFG",
+      key: "MFG",
+      width: "10%",
+      showOnResponse: true,
+      showOnDesktop: true,
+      render: (MFG) => `${moment(MFG).format("DD/MM/YYYY")}`,
+    },
+    {
+      title: "Ngày hết hạn",
+      dataIndex: "EXP",
+      key: "EXP",
+      width: "10%",
+      showOnResponse: true,
+      showOnDesktop: true,
+      render: (EXP) => `${moment(EXP).format("DD/MM/YYYY")}`,
     },
     {
       title: "Trạng thái",
@@ -136,31 +158,15 @@ const TableProducts = ({ data, keyWord, loading }) => {
       showOnDesktop: true,
       ellipsis: true,
       width: "10%",
-      render: (text, record, index) => {
-        return (
-          <Tag
-            key={index}
-            color={record.state.color}
-            className="w-2/4 min-w-max text-center"
-          >
-            {record.state.stateName}
-          </Tag>
-        );
-      },
-      // filters: [
-      //   { text: "Còn hàng", value: 2 },
-      //   { text: "Sắp hết hàng", value: 1 },
-      //   { text: "Hết hàng", value: 0 },
-      // ],
-      // onFilter: (value, record) => {
-      //   if (value === 2) {
-      //     return record.soLuong >= 10;
-      //   } else if (value === 1) {
-      //     return record.soLuong < 10 && record.soLuong > 0;
-      //   } else {
-      //     return record.soLuong === 0;
-      //   }
-      // },
+      render: (state) => (
+        <>
+          {state.map((item) => (
+            <Tag color={item.color} key={item.stateName}>
+              {item.stateName}
+            </Tag>
+          ))}
+        </>
+      ),
     },
     {
       title: "Thao tác",
@@ -178,7 +184,7 @@ const TableProducts = ({ data, keyWord, loading }) => {
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditProduct(record)}
           >
-            <EyeOutlined />
+            <EyeFilled />
           </button>
           <Popconfirm
             placement="top"
@@ -208,10 +214,6 @@ const TableProducts = ({ data, keyWord, loading }) => {
     },
   ];
   const handleEditProduct = (record) => {
-    // useHistory.push({
-    //   pathname: "/detail_product",
-    //   state: { product: record },
-    // });
     history.push("/detail_product/" + record.id);
   };
   const handleRemoveProduct = (record) => {

@@ -22,6 +22,7 @@ function* actGetListProductItem() {
 function* actGetProductItemById(action) {
   try {
     let { id } = action;
+    yield put(productActions.getListProductLoading());
     let res = yield call(() => ProductService.getProductById(id));
     console.log(res);
     let { data, status } = res;

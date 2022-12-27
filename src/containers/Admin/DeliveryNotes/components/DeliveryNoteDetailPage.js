@@ -20,86 +20,37 @@ import moment from "moment";
 import Search from "antd/lib/input/Search";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import NewDeliveryTable from "./components/NewDeliveryTable";
-import AddNewProduct from "./components/AddNewProduct";
-import ModalForm from "../../../../../HOC/ModalForm";
-import * as SagaActionTypes from "../../../../../redux/constants/constant";
-import { modalActions } from "../../../../../redux/reducer/ModalReducer";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
-import AlertCustom from "../../../../../common/Notification/Alert";
+import TableProducts from "../../Products/components/TableProducts";
 
 const dateFormat = "DD/MM/YYYY";
 
-const NewDeliveryNotePage = () => {
+const DeliveryNoteDetailPage = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { id } = props.match.params;
   const [keyWord, setKeyWord] = useState("");
-  let { newDeliveryNote } = useSelector(
-    (state) => state.editDeliveryNotesSlice
+  const { deliveryNote, loading } = useSelector(
+    (state) => state.deliveryNotesSlice
   );
-  console.log(newDeliveryNote);
-  const uid = localStorage.getItem("id");
-  let { provider, loading } = useSelector((state) => state.providerSlice);
-  let staffSlice = useSelector((state) => state.staffsSlice);
+
   useEffect(() => {
-    dispatch({
-      type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
-      id: newDeliveryNote.providerId,
-    });
-    dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
-    if (newDeliveryNote.providerId == "-1") {
-      history.push("/delivery_notes");
-    }
+    dispatch({ type: SagaActionTypes.GET_DELIVERY_NOTES_ID_SAGA, id: id });
   }, []);
 
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-
   const initialValues = {
-    delivery_note_provider: provider.name,
-    delivery_note_date: moment(newDeliveryNote.date),
-    delivery_note_staff: staffSlice.staff.fullname,
-    delivery_note_shipper: newDeliveryNote.shipper,
+    delivery_note_provider: deliveryNote.provider.name,
+    delivery_note_date: moment(deliveryNote.date),
+    delivery_note_staff: deliveryNote.creator.fullname,
+    delivery_note_shipper: deliveryNote.shipper,
   };
 
-  const validateMessages = {
-    required: "Cần nhập ${label}!",
-    types: {
-      email: "${label} không hợp lệ!",
-      number: "",
-    },
-    number: {
-      min: "${label} phải ít nhất từ ${min} trở lên",
-      range: "${label} phải trong khoảng từ ${min} đến ${max}",
-    },
+  const handleExit = () => {
+    history.goBack();
   };
 
-  const handleSubmit = () => {
-    if (newDeliveryNote.productItems.length !== 0) {
-      dispatch({
-        type: SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
-        newDeliveryNote: newDeliveryNote,
-      });
-    } else {
-      AlertCustom({ type: "error", title: "Vui lòng thêm sản phẩm" });
-    }
-  };
-
-  const handleAddProductToDeliveryNote = () => {
-    dispatch(
-      modalActions.showModal({
-        ComponentContent: <AddNewProduct />,
-      })
-    );
-  };
-
-  if (staffSlice.loading === true || loading === true) {
+  if (loading === true) {
     return (
       <div className="w-full flex items-center justify-center mb-12 h-4/5">
         <Space size="middle ">
@@ -191,39 +142,16 @@ const NewDeliveryNotePage = () => {
             }}
           />
           {/* button search */}
-          <button
-            className="flex items-center justify-center
-                    bg-blue-500 h-8 w-fit p-2 text-white
-                    md:mt-0 hover:bg-blue-600 shadow-lg rounded whitespace-nowrap"
-            onClick={handleAddProductToDeliveryNote}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4 mr-3"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            Thêm sản phẩm
-          </button>
         </div>
       </div>
-      <NewDeliveryTable keyWord={keyWord} data={newDeliveryNote.productItems} />
+      <TableProducts keyWord={keyWord} data={deliveryNote.productItems} />
       <div className="flex justify-end w-full">
-        <Button onClick={() => handleSubmit()} className="mx-3 mb-3">
-          Lưu
+        <Button onClick={() => handleExit()} className="mx-3 mb-3">
+          Đóng
         </Button>
       </div>
-      <ModalForm />
     </>
   );
 };
 
-export default NewDeliveryNotePage;
+export default DeliveryNoteDetailPage;

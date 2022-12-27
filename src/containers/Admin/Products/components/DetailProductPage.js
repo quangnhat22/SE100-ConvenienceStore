@@ -9,6 +9,7 @@ import {
   Select,
   Space,
   Upload,
+  Spin,
 } from "antd";
 import { InfoCircleTwoTone, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
@@ -31,27 +32,9 @@ const DetailProductPage = (props) => {
   // Get data by id
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
-    dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
     dispatch({ type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA, id: id });
   }, []);
-  const { products } = useSelector((state) => state.productsSlice);
-  const { deliveryNotes } = useSelector((state) => state.deliveryNotesSlice);
-  const optionsProductLines = products.map(function (productLine) {
-    return {
-      value: productLine.id,
-      label: productLine.title,
-    };
-  });
-  const optionsDeliveryNotes = deliveryNotes.map(function (deliveryNote) {
-    return {
-      value: deliveryNote.id,
-      label: `${deliveryNote.id} - ${deliveryNote.provider.name} - ${moment(
-        deliveryNote.date
-      ).format("DD/MM/YYYY")}`,
-    };
-  });
-  const { productById } = useSelector((state) => state.productSlice);
+  const { productById, loading } = useSelector((state) => state.productSlice);
   console.log(productById);
 
   // ValidateMessagees
@@ -101,41 +84,16 @@ const DetailProductPage = (props) => {
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
-  // const onFinish = (values) => {
-  //   let editedProduct = {
-  //     productId: values.productId,
-  //     deliveryNoteId: values.deliveryNoteId,
-  //     MFG: values.MFG,
-  //     EXP: values.EXP,
-  //     cost: values.cost,
-  //     price: values.price,
-  //     quantity: values.quantity,
-  //     description: values.description,
-  //     image: values.filename,
-  //   };
-  //   console.log(editedProduct);
-  //   dispatch({
-  //     type: SagaActionTypes.PUT_productById_SAGA,
-  //     // newProduct: newProduct,
-  //   });
-  //   history.goBack();
-  // };
-
-  //initialValues
-
-  const initialValues = productById
-    ? {
-        productId: productById.product.id,
-        deliveryNoteId: productById.deliveryNote.id,
-        MFG: moment(productById.MFG),
-        EXP: moment(productById.EXP),
-        cost: productById.cost,
-        price: productById.price,
-        quantity: productById.quantity,
-        description: productById.description,
-      }
-    : {};
-
+  const initialValues = {
+    productId: productById.product.title,
+    deliveryNoteId: `${productById.deliveryNote.id} - ${productById.deliveryNote.provider.name}`,
+    MFG: moment(productById.MFG),
+    EXP: moment(productById.EXP),
+    cost: productById.cost,
+    price: productById.price,
+    quantity: productById.quantity,
+    description: productById.description,
+  };
   // format số
   const formatterNumber = (val) => {
     if (!val) return "";
@@ -158,6 +116,16 @@ const DetailProductPage = (props) => {
     return Number.parseFloat(val.replace(/\$\s?|(\,*)/g, "")).toFixed(3);
   };
 
+  if (loading === true) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
+
   return (
     <Form
       layout="vertical"
@@ -178,28 +146,26 @@ const DetailProductPage = (props) => {
                 },
               ]}
             >
-              <Select
+              <Input
                 className="rounded"
                 placeholder="Dòng sản phẩm"
-                allowClear
-                options={optionsProductLines}
-              ></Select>
+                disabled={true}
+              ></Input>
             </Form.Item>
             <Form.Item
               name="deliveryNoteId"
-              label="Đơn vị cung cấp"
+              label="Mã phiếu nhập kho"
               rules={[
                 {
                   required: true,
                 },
               ]}
             >
-              <Select
+              <Input
                 className="rounded"
-                placeholder="Đơn vị cung cấp"
-                allowClear
-                options={optionsDeliveryNotes}
-              ></Select>
+                placeholder="Phiếu nhập kho"
+                disabled={true}
+              ></Input>
             </Form.Item>
             <Form.Item>
               <Space>
@@ -216,6 +182,7 @@ const DetailProductPage = (props) => {
                     format="DD/MM/YYYY"
                     className="rounded"
                     placeholder="Ngày sản xuất"
+                    disabled={true}
                   />
                 </Form.Item>
                 <Form.Item
@@ -231,6 +198,7 @@ const DetailProductPage = (props) => {
                     format="DD/MM/YYYY"
                     className="rounded"
                     placeholder="Ngày hết hạn"
+                    disabled={true}
                   />
                 </Form.Item>
               </Space>
@@ -252,6 +220,7 @@ const DetailProductPage = (props) => {
                 placeholder="Số lượng"
                 formatter={(value) => formatterNumber(value)}
                 parser={(value) => parserNumber(value)}
+                disabled={true}
               />
             </Form.Item>
           </div>
@@ -281,6 +250,7 @@ const DetailProductPage = (props) => {
                       placeholder="Giá nhập"
                       formatter={(value) => formatterPrice(value)}
                       parser={(value) => parserPrice(value)}
+                      disabled={true}
                     />
                   </Form.Item>
                   <Form.Item

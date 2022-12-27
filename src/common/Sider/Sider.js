@@ -73,7 +73,6 @@ const SiderCustomed = ({ setVisibleButton }) => {
           location.pathname === "/dash-board"
             ? "1"
             : location.pathname === "/products" ||
-              location.pathname === "/add_product" ||
               location.pathname.includes("/detail_product")
             ? "2"
             : location.pathname === "/staffs"
@@ -84,17 +83,20 @@ const SiderCustomed = ({ setVisibleButton }) => {
             ? "5"
             : location.pathname === "/setting"
             ? "6"
-            : location.pathname === "/providers"
+            : location.pathname === "/providers" ||
+              location.pathname.includes("/provider-detail-page")
             ? "8"
             : location.pathname === "/productlines"
             ? "9"
-            : location.pathname === "/delivery_notes"
+            : location.pathname === "/delivery_notes" ||
+              location.pathname.includes("/delivery-note-detail-page") ||
+              location.pathname === "/new-delivery-note"
             ? "10"
             : location.pathname === "/invoice"
             ? "11"
             : "-1",
         ]}
-        defaultOpenKeys={["sub1","sub2"]}
+        defaultOpenKeys={["sub1", "sub2"]}
       >
         {/* <div className="logo"></div> */}
         <Menu.Item

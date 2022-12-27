@@ -1,6 +1,6 @@
 import { Table, Popconfirm, Space, Spin } from "antd";
 import moment from "moment";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EditFilled, EyeFilled } from "@ant-design/icons";
 import { useState } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { useHistory } from "react-router-dom";
 
 const TableDeliveryNotes = ({ keyWord, data, loading }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
 
@@ -113,13 +115,13 @@ const TableDeliveryNotes = ({ keyWord, data, loading }) => {
       align: "center",
       render: (text, record, index) => (
         <Space size="middle" key={index}>
-          {/* <button
+          <button
             type="button"
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
-            onClick={() => handleEditStaff(record)}
+            onClick={() => handleViewDeliveryNoteDetail(record)}
           >
-            <EditFilled />
-          </button> */}
+            <EyeFilled />
+          </button>
           <Popconfirm
             placement="top"
             title="Bạn có chắc muốn xóa phiếu nhập hàng này?"
@@ -155,13 +157,9 @@ const TableDeliveryNotes = ({ keyWord, data, loading }) => {
     });
   };
 
-  // const handleEditStaff = (staff) => {
-  //   dispatch(
-  //     modalActions.showModal({
-  //       ComponentContent: <StaffInforDetail staff={staff}></StaffInforDetail>,
-  //     })
-  //   );
-  // };
+  const handleViewDeliveryNoteDetail = (record) => {
+    history.push("/delivery-note-detail-page/" + record.id);
+  };
   if (loading === true) {
     return (
       <div className="w-full flex items-center justify-center mb-12 h-4/5">

@@ -47,6 +47,7 @@ const deliveryNotesSlice = createSlice({
     },
     getDeliveryNotesByIdSuccess: (state, action) => {
       state.deliveryNote = action.payload.deliveryNote;
+      state.loading = false;
     },
   },
 });

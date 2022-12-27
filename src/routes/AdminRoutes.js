@@ -13,6 +13,7 @@ import Invoice from "../containers/Admin/Invoice";
 import SalePage from "../containers/Staff/Sale";
 import DetailProviderPage from "../containers/Admin/Providers/components/DetailProvider/DetailProviderPage";
 import NewDeliveryNotePage from "../containers/Admin/DeliveryNotes/components/NewDeliveryNote/NewDeliveryNotePage";
+import DeliveryNoteDetailPage from "../containers/Admin/DeliveryNotes/components/DeliveryNoteDetailPage";
 
 const routesAdmin = [
   {
@@ -25,11 +26,11 @@ const routesAdmin = [
     path: "/products",
     component: ProductsPage,
   },
-  {
-    exact: false,
-    path: "/add_product",
-    component: AddProductPage,
-  },
+  // {
+  //   exact: false,
+  //   path: "/add_product",
+  //   component: AddProductPage,
+  // },
   {
     exact: false,
     path: "/detail_product/:id",
@@ -89,6 +90,11 @@ const routesAdmin = [
     exact: false,
     path: "/new-delivery-note",
     component: NewDeliveryNotePage,
+  },
+  {
+    exact: false,
+    path: "/delivery-note-detail-page/:id",
+    component: DeliveryNoteDetailPage,
   },
 ];
 

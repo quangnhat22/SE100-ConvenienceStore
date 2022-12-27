@@ -73,6 +73,7 @@ function* actDeleteDeliveryNotes(action) {
 function* actGetDeliveryNoteById(action) {
   try {
     let { id } = action;
+    yield put(deliveryNotesActions.getDeliveryNotesLoading());
     let res = yield call(() => DeliveryNotesService.getDeliveryNotesById(id));
     let { data, status } = res;
     if (status === 200) {
