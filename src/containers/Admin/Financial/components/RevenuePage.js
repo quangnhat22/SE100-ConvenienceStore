@@ -1,5 +1,5 @@
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import { DatePicker, Select, Space } from "antd";
+import { DatePicker, Space } from "antd";
 import moment from "moment";
 import Search from "antd/lib/input/Search";
 import React, { useEffect, useState } from "react";
@@ -7,91 +7,6 @@ import * as SagaActionTypes from "../../../../redux/constants/constant";
 import TableRevenue from "./TableRevenue";
 import { Segmented } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-// import dayjs from "dayjs";
-// import "dayjs/locale/zh-cn";
-// import "dayjs/plugin/updateLocale";
-
-// dayjs.updateLocale("zh-cn", {
-//   weekStart: 1,
-// });
-
-const { Option } = Select;
-// const data = [
-//   {
-//     name: "Doanh thu",
-//     time: "Quý 1",
-//     number: 18.9,
-//   },
-//   {
-//     name: "Doanh thu",
-//     time: "Quý 2",
-//     number: 28.8,
-//   },
-//   {
-//     name: "Doanh thu",
-//     time: "Quý 3",
-//     number: 39.3,
-//   },
-//   {
-//     name: "Doanh thu",
-//     time: "Quý 4",
-//     number: 81.4,
-//   },
-//   {
-//     name: "Chi phí",
-//     time: "Quý 1",
-//     number: 12.4,
-//   },
-//   {
-//     name: "Chi phí",
-//     time: "Quý 2",
-//     number: 23.2,
-//   },
-//   {
-//     name: "Chi phí",
-//     time: "Quý 3",
-//     number: 34.5,
-//   },
-//   {
-//     name: "Chi phí",
-//     time: "Quý 4",
-//     number: 99.7,
-//   },
-//   {
-//     name: "Phí tổn",
-//     time: "Quý 1",
-//     number: 75.4,
-//   },
-//   {
-//     name: "Phí tổn",
-//     time: "Quý 2",
-//     number: 65.2,
-//   },
-//   {
-//     name: "Phí tổn",
-//     time: "Quý 3",
-//     number: 43.5,
-//   },
-//   {
-//     name: "Phí tổn",
-//     time: "Quý 4",
-//     number: 67.7,
-//   },
-// ];
-// const dataRevenue = [
-//   {
-//     name: "Doanh thu",
-//     number: 8604000,
-//   },
-//   {
-//     name: "Chi phí",
-//     number: 4500000,
-//   },
-//   {
-//     name: "Phí tổn",
-//     number: 120000,
-//   },
-// ];
 
 const RevenuePage = () => {
   const TimeReal = new Date();
@@ -152,8 +67,8 @@ const RevenuePage = () => {
   return (
     <div className="bg-white">
       {/* Option */}
-      <Space className="flex justify-between border-b py-3">
-        <div className="inline-block content-around font-bold text-xl ml-5">
+      <Space className="flex flex-wrap justify-between border-b py-3 gap-x-4 gap-y-2">
+        <div className="inline-block content-around font-semibold text-2xl whitespace-nowrap ml-5">
           Bảng doanh thu
         </div>
         <Space className="flex gap-20 mr-2">
@@ -194,6 +109,7 @@ const RevenuePage = () => {
           />
           <div hidden={weekHidden}>
             <DatePicker
+              allowClear={false}
               placeholder="Chọn tuần"
               picker="week"
               disabledDate={(currentDate) => {
@@ -201,7 +117,7 @@ const RevenuePage = () => {
               }}
               defaultValue={moment(TimeReal)}
               onChange={(date) => {
-                setSelectedMonth({
+                setSelectedWeek({
                   year: moment(date).getFullYear(),
                   month: moment(date).getMonth(),
                   day: moment(date).getDate(),
@@ -216,6 +132,7 @@ const RevenuePage = () => {
           </div>
           <div hidden={monthHidden}>
             <DatePicker
+              allowClear={false}
               placeholder="Chọn tháng"
               picker="month"
               disabledDate={(currentDate) => {
@@ -237,6 +154,7 @@ const RevenuePage = () => {
           </div>
           <div hidden={yearHidden}>
             <DatePicker
+              allowClear={false}
               placeholder="Chọn năm"
               picker="year"
               disabledDate={(currentDate) => {

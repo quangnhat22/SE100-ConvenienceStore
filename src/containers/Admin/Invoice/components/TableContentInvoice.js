@@ -1,15 +1,7 @@
-import { EditFilled } from "@ant-design/icons";
-import { Space, Spin, Tooltip } from "antd";
-import moment from "moment";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import TableTemplate from "../../../../common/Table/TableTemplate";
-import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import InfoCreatorForm from "./InfoCreatorForm";
-import TableContentInvoice from "./TableContentInvoice";
 
 const TableInvoice = ({ listItem }) => {
-  const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const columns = [
     {

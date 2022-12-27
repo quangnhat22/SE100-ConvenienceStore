@@ -18,7 +18,7 @@ const InvoicePage = () => {
   return (
     <div className="bg-white pb-5">
       <Space className="flex justify-between border-b p-5">
-        <div className="inline-block content-around font-bold text-xl">
+        <div className="inline-block content-around font-semibold text-2xl whitespace-nowrap">
           Hóa đơn sản phẩm
         </div>
         <Search

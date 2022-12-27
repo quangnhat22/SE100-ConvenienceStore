@@ -56,6 +56,9 @@ const TableInvoice = ({ keyWord, data, loading }) => {
       width: "20%",
       showOnResponse: true,
       showOnDesktop: true,
+      sorter: (item1, item2) => {
+        item1.creator.fullname.localeCompare(item2.creator.fullname);
+      },
       render: (text, record, index) => {
         return (
           <Tooltip title="Nhấp để xem thông tin">

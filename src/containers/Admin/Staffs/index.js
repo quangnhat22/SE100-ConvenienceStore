@@ -26,8 +26,8 @@ const StaffsPage = () => {
 
   return (
     <>
-      <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row gap-y-2">
-        <p className="font-semibold  text-2xl whitespace-nowrap">
+      <div className="ml-7 mt-5 mr-3 mb-5 flex flex-col justify-between items-center md:flex-row gap-x-4 gap-y-2">
+        <p className="font-semibold text-2xl whitespace-nowrap">
           Danh sách nhân viên
         </p>
 

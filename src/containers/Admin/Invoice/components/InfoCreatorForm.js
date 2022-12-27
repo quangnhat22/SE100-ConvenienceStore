@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
-import { Form, Input, Button, Select, DatePicker, Upload } from "antd";
+import { Form, Input, Select, DatePicker, Upload } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 
 const { Option } = Select;
@@ -19,6 +19,7 @@ const InfoCreatorForm = ({ creator }) => {
     staff_email: creator.email,
     staff_address: creator.address,
     staff_other_information: creator.other,
+    staff_role: creator.role,
   };
 
   return (

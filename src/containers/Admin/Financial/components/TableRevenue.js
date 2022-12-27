@@ -94,6 +94,26 @@ const TableRevenue = ({ keyWord, data, loading }) => {
         );
       },
     },
+    {
+      title: "Lợi nhuận",
+      dataIndex: "profit",
+      key: "profit",
+      showOnResponse: true,
+      showOnDesktop: true,
+      width: "10%",
+      ellipsis: true,
+      sorter: (a, b) => a.profit - b.profit,
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.profit
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            <sup>đ</sup>
+          </div>
+        );
+      },
+    },
   ];
 
   if (loading === true) {
