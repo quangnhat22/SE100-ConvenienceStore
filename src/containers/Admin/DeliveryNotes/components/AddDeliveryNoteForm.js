@@ -21,27 +21,34 @@ import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { editDeliveryNotesActions } from "../../../../redux/reducer/EditDeliveryNotesReducer";
+import { useHistory } from "react-router-dom";
+
 const dateFormat = "DD/MM/YYYY";
 
 const AddDeliveryNoteForm = () => {
+  const history = useHistory();
+
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { providers } = useSelector((state) => state.providerSlice);
+  const { staff } = useSelector((state) => state.staffsSlice);
   const options = providers.map(function (provider) {
     return { value: provider.id, label: `${provider.id} - ${provider.name}` };
   });
+
   const onFinish = (values) => {
     let newDeliveryNote = {
-      providerId: "",
+      providerId: values.delivery_note_provider,
       date: values.delivery_note_date.toISOString(),
-      creatorId: 0,
-      shipper: "",
+      creatorId: staff.id,
+      shipper: values.delivery_note_shipper,
       productItems: [],
     };
-    dispatch({
-      type: SagaActionTypes.POST_DELIVERY_NOTES_SAGA,
-      newDeliveryNote: newDeliveryNote,
-    });
+    console.log(newDeliveryNote);
+    dispatch(editDeliveryNotesActions.getNewDeliveryNotes({ newDeliveryNote }));
+    dispatch(modalActions.hideModal());
+    history.push("/new-delivery-note/");
   };
 
   return (
@@ -51,6 +58,8 @@ const AddDeliveryNoteForm = () => {
       onFinish={onFinish}
       initialValues={{
         delivery_note_date: moment(),
+        delivery_note_shipper: "",
+        delivery_note_staff: staff.fullname,
       }}
     >
       <Form.Item
@@ -63,9 +72,13 @@ const AddDeliveryNoteForm = () => {
         ]}
       >
         <Select
+          showSearch
           placeholder="Nhà cung cấp"
           allowClear
           options={options}
+          filterOption={(input, option) =>
+            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+          }
         ></Select>
       </Form.Item>
       <Form.Item
@@ -82,6 +95,20 @@ const AddDeliveryNoteForm = () => {
           format={dateFormat}
           disabledDate={(current) => current.isAfter(moment())}
         />
+      </Form.Item>
+      <Form.Item
+        name="delivery_note_staff"
+        label="Nhân viên kiểm hàng"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input placeholder="Tên nhân viên kiểm hàng" disabled={true} />
+      </Form.Item>
+      <Form.Item name="delivery_note_shipper" label="Người giao hàng">
+        <Input className="rounded" placeholder="Tên người giao hàng" />
       </Form.Item>
       <Form.Item
         wrapperCol={{
