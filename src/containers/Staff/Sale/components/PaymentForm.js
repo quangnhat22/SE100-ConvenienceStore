@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -15,11 +15,11 @@ import {
   Checkbox,
   Upload,
 } from "antd";
-import FormCustomed from "../../../../common/Form/FormCustomed";
-import { useSelector, useDispatch } from "react-redux";
-import { productActions } from "../../../../redux/reducer/ProductReducer";
-import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import { useDispatch } from "react-redux";
 import "./style/CustomInputNumber.css";
+import PrintPaymentForm from "./PrintPaymentForm";
+import { Paper } from "@mui/material";
+import ReactToPrint from "react-to-print";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -36,6 +36,8 @@ const totalPrice = (cartItems) => {
 };
 
 const PaymentForm = ({ data }) => {
+  const componentRef = useRef(null);
+  const printComponentRef = useRef(null);
   const validateMessages = {
     required: "Cần nhập ${label}!",
     types: {
@@ -61,6 +63,11 @@ const PaymentForm = ({ data }) => {
   useEffect(() => {
     form.setFieldsValue(defaultValues);
   }, [form, defaultValues]);
+
+  useEffect(() => {
+    printComponentRef.current.click();
+  }, []);
+
   const onFinish = (values) => {
     console.log(values);
   };
@@ -72,167 +79,187 @@ const PaymentForm = ({ data }) => {
   };
 
   return (
-    <Form
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 20,
-      }}
-      className="PaymentForm my-4 sm:mx-8 mx-2"
-      form={form}
-      onFinish={onFinish}
-      initialValues={defaultValues}
-      validateMessages={validateMessages}
-    >
-      <Form.Item
-        name="store_name"
-        label="Tên cửa hàng"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input placeholder="Tên cửa hàng" disabled={true} />
-      </Form.Item>
-      <Form.Item
-        name="bill_date"
-        label="Ngày lập hóa đơn"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <DatePicker
-          placeholder="Ngày lập hóa đơn"
-          format={dateFormat}
-          disabled={true}
-        />
-      </Form.Item>
-      <Form.Item
-        name="bill_creater"
-        label="Người lập hóa đơn"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input placeholder="Tên người lập hóa đơn" disabled={true} />
-      </Form.Item>
-      <Form.Item
-        name="bill_price"
-        label="Tổng tiền hàng"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 1,
-          },
-        ]}
-      >
-        <InputNumber
-          className="input-number-right"
-          addonAfter={"VNĐ"}
-          placeholder="Tổng giá"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          disabled={true}
-        />
-      </Form.Item>
-      <Form.Item
-        name="bill_tax"
-        label="Thuế VAT"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 0,
-          },
-        ]}
-      >
-        <InputNumber
-          className="input-number-right"
-          addonAfter={"%"}
-          placeholder="Thuế VAT"
-          disabled={true}
-        />
-      </Form.Item>
-      <Form.Item
-        name="bill_finalprice"
-        label="Tiền sau thuế"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 1,
-          },
-        ]}
-      >
-        <InputNumber
-          className="input-number-right"
-          addonAfter={"VNĐ"}
-          placeholder="Tổng giá"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          disabled={true}
-        />
-      </Form.Item>
-      <Form.Item
-        name="bill_customer_pay"
-        label="Tiền khách trả"
-        rules={[
-          {
-            required: true,
-            type: "number",
-          },
-        ]}
-      >
-        <InputNumber
-          className="input-number-right"
-          addonAfter={"VNĐ"}
-          min={(totalPrice(data) * 108) / 100}
-          placeholder="Tiền khách trả"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          onChange={(value) => onChange(value)}
-        />
-      </Form.Item>
-      <Form.Item
-        name="bill_customer_repay"
-        label="Tiền trả lại cho khách"
-        rules={[
-          {
-            required: true,
-            type: "number",
-          },
-        ]}
-      >
-        <InputNumber
-          className="input-number-right"
-          addonAfter={"VNĐ"}
-          placeholder="Tiền trả lại cho khách"
-          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          disabled={true}
-        />
-      </Form.Item>
-      <Form.Item name="bill_note" label="Ghi chú">
-        <TextArea rows={2} placeholder="Ghi chú" />
-      </Form.Item>
-      <Form.Item
+    <>
+      <Form
+        labelCol={{
+          span: 8,
+        }}
         wrapperCol={{
           span: 20,
-          offset: 10,
         }}
+        className="PaymentForm my-4 sm:mx-8 mx-2"
+        form={form}
+        onFinish={onFinish}
+        initialValues={defaultValues}
+        validateMessages={validateMessages}
       >
-        <Button className="mr-4" htmlType="submit">
-          Thanh toán
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item
+          name="store_name"
+          label="Tên cửa hàng"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input placeholder="Tên cửa hàng" disabled={true} />
+        </Form.Item>
+        <Form.Item
+          name="bill_date"
+          label="Ngày lập hóa đơn"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <DatePicker
+            placeholder="Ngày lập hóa đơn"
+            format={dateFormat}
+            disabled={true}
+          />
+        </Form.Item>
+        <Form.Item
+          name="bill_creater"
+          label="Người lập hóa đơn"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Input placeholder="Tên người lập hóa đơn" disabled={true} />
+        </Form.Item>
+        <Form.Item
+          name="bill_price"
+          label="Tổng tiền hàng"
+          rules={[
+            {
+              required: true,
+              type: "number",
+              min: 1,
+            },
+          ]}
+        >
+          <InputNumber
+            className="input-number-right"
+            addonAfter={"VNĐ"}
+            placeholder="Tổng giá"
+            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            disabled={true}
+          />
+        </Form.Item>
+        <Form.Item
+          name="bill_tax"
+          label="Thuế VAT"
+          rules={[
+            {
+              required: true,
+              type: "number",
+              min: 0,
+            },
+          ]}
+        >
+          <InputNumber
+            className="input-number-right"
+            addonAfter={"%"}
+            placeholder="Thuế VAT"
+            disabled={true}
+          />
+        </Form.Item>
+        <Form.Item
+          name="bill_finalprice"
+          label="Tiền sau thuế"
+          rules={[
+            {
+              required: true,
+              type: "number",
+              min: 1,
+            },
+          ]}
+        >
+          <InputNumber
+            className="input-number-right"
+            addonAfter={"VNĐ"}
+            placeholder="Tổng giá"
+            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            disabled={true}
+          />
+        </Form.Item>
+        <Form.Item
+          name="bill_customer_pay"
+          label="Tiền khách trả"
+          rules={[
+            {
+              required: true,
+              type: "number",
+            },
+          ]}
+        >
+          <InputNumber
+            className="input-number-right"
+            addonAfter={"VNĐ"}
+            min={(totalPrice(data) * 108) / 100}
+            placeholder="Tiền khách trả"
+            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            onChange={(value) => onChange(value)}
+          />
+        </Form.Item>
+        <Form.Item
+          name="bill_customer_repay"
+          label="Tiền trả lại cho khách"
+          rules={[
+            {
+              required: true,
+              type: "number",
+            },
+          ]}
+        >
+          <InputNumber
+            className="input-number-right"
+            addonAfter={"VNĐ"}
+            placeholder="Tiền trả lại cho khách"
+            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            disabled={true}
+          />
+        </Form.Item>
+        <Form.Item name="bill_note" label="Ghi chú">
+          <TextArea rows={2} placeholder="Ghi chú" />
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            span: 20,
+            offset: 10,
+          }}
+        >
+          <ReactToPrint
+            
+            trigger={() => (
+              // <IconButton variant="text" size="large" color="info">
+              //   <PrintIcon />
+              // </IconButton>
+              <Button className="mr-4" htmlType="submit" ref={printComponentRef}>
+                Thanh toán
+              </Button>
+            )}
+            content={() => {
+              return componentRef.current;
+            }}
+          />
+        </Form.Item>
+      </Form>
+
+      {/* printer template */}
+      <div style={{ display: "none" }}>
+        <Paper ref={componentRef}>
+          <PrintPaymentForm data={data} />
+        </Paper>
+      </div>
+    </>
   );
 };
 export default PaymentForm;
