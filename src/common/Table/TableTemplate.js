@@ -19,6 +19,7 @@ const TableTemplate = (props) => {
       dataSource={props.dataSource}
       // onChange={handleChange}
       scroll={{ x: "max-content" }}
+      summary={props.summary}
     />
   );
 };

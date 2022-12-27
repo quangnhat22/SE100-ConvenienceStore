@@ -1,11 +1,49 @@
-import React from "react";
-import { Column } from "@ant-design/charts";
+import React, { useEffect, useState } from "react";
 import { Pie, G2 } from "@ant-design/plots";
+import { useDispatch, useSelector } from "react-redux";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const PieChart = (props) => {
+  const dispatch = useDispatch();
+  const [revenue, setRevenue] = useState(0);
+  const [cost, setCost] = useState(0);
+  const [profit, setProfit] = useState(0);
+  const { reports } = useSelector((state) => state.reportsSlice);
+  useEffect(() => {
+    dispatch({
+      type: SagaActionTypes.GET_REPORT_MONTH_SAGA,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth(),
+    });
+  }, []);
+  useEffect(() => {
+    var totalRevenue = 0;
+    var totalProfit = 0;
+    reports.forEach((element) => {
+      totalRevenue += element.revenue;
+      totalProfit += element.profit;
+    });
+    setRevenue(totalRevenue);
+    setProfit(totalProfit);
+    setCost(totalRevenue - totalProfit);
+  }, [reports]);
+  const dataRevenue = [
+    {
+      name: "Doanh thu",
+      number: revenue,
+    },
+    {
+      name: "Chi phí",
+      number: cost,
+    },
+    {
+      name: "Lợi nhuận",
+      number: profit,
+    },
+  ];
   const G = G2.getEngine("canvas");
   const config = {
-    data: props.data,
+    data: dataRevenue,
     appendPadding: 10,
     angleField: "number",
     colorField: "name",
@@ -61,7 +99,7 @@ const PieChart = (props) => {
     ],
   };
 
-  return <Pie className={props.className} {...config} />;
+  return <Pie className="grow" {...config} />;
 };
 
 export default PieChart;

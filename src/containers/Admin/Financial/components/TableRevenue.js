@@ -1,8 +1,9 @@
-import { Space, Spin } from "antd";
+import { Space, Spin, Table, Typography } from "antd";
 import React, { useState } from "react";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 
 const TableRevenue = ({ keyWord, data, loading }) => {
+  const { Text } = Typography;
   const [page, setPage] = useState(1);
   const columns = [
     {
@@ -139,6 +140,41 @@ const TableRevenue = ({ keyWord, data, loading }) => {
         pageSizeOptions: ["6"],
       }}
       rowKey={"id"}
+      summary={(data) => {
+        let totalRevenue = 0;
+        let totalProfit = 0;
+        data.forEach(({ revenue, profit }) => {
+          totalRevenue += revenue;
+          totalProfit += profit;
+        });
+        return (
+          <Table.Summary.Row>
+            <Table.Summary.Cell colSpan={5}>
+              <div className="w-full text-center text-2xl">Tổng:</div>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell>
+              <Text type="secondary">
+                <div>
+                  {totalRevenue
+                    .toString()
+                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+                  <sup>đ</sup>
+                </div>
+              </Text>
+            </Table.Summary.Cell>
+            <Table.Summary.Cell>
+              <Text type="success">
+                <div>
+                  {totalProfit
+                    .toString()
+                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+                  <sup>đ</sup>
+                </div>
+              </Text>
+            </Table.Summary.Cell>
+          </Table.Summary.Row>
+        );
+      }}
     />
   );
 };

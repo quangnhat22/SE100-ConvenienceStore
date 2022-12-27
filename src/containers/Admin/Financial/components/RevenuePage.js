@@ -1,4 +1,3 @@
-import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import { DatePicker, Space } from "antd";
 import moment from "moment";
 import Search from "antd/lib/input/Search";
@@ -44,8 +43,6 @@ const RevenuePage = () => {
     });
   }, [time]);
   const [keyWord, setKeyWord] = useState("");
-  const [profit, setProfit] = useState(3984000);
-  const [capitalLoss, setCapitalLoss] = useState(0);
   const listOption = [
     {
       label: "Tuần",
@@ -182,24 +179,6 @@ const RevenuePage = () => {
       </div>
 
       <TableRevenue keyWord={keyWord} data={reports} loading={loading} />
-
-      {/* Tổng kết */}
-      <div className="mt-10 flex flex-wrap justify-around gap-x-10 border text-2xl p-5">
-        <span className="text-green-500 flex justify-center items-center">
-          <ArrowUpOutlined className="px-2" />
-          {"Lợi nhuận: " +
-            profit.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") +
-            " VNĐ"}
-        </span>
-        <span className="text-red-500 flex justify-center items-center">
-          <ArrowDownOutlined className="px-2" />
-          {"Lỗ vốn: " +
-            capitalLoss
-              .toString()
-              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") +
-            " VNĐ"}
-        </span>
-      </div>
     </div>
   );
 };

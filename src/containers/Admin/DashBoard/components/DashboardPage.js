@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Card, Space, DatePicker, Segmented, Table } from "antd";
-import moment from "moment";
+import { Card } from "antd";
 import "../../../../common/Segmented/Segmented.css";
 import PieChart from "./PieChart";
 import "../../../../common/Table/TableTemplate.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import BestSellingTable from "./BestSellingTable";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
+import moment from "moment";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
   const { reports } = useSelector((state) => state.reportsSlice);
   const { staffs } = useSelector((state) => state.staffsSlice);
   const { listProduct } = useSelector((state) => state.productSlice);
-  const { deliveryNotes } = useSelector((state) => state.deliveryNotesSlice);
-  const [productNearExpirationDate, setProductNearExpirationDate] = useState(0);
   const [outOfStock, setOutOfStock] = useState(0);
   const [numberOfStaff, setNumberOfStaff] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
+  const [expiredSoon, setExpiredSoon] = useState(0);
 
   const [year, setYear] = useState(new Date().getFullYear());
-  const [revenue, setRevenue] = useState(0);
-  const [cost, setCost] = useState(0);
 
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
@@ -31,16 +29,6 @@ const DashboardPage = () => {
   }, [year]);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
-  }, []);
-  useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
-  }, []);
-  useEffect(() => {
-    dispatch({
-      type: SagaActionTypes.GET_REPORT_MONTH_SAGA,
-      year: new Date().getFullYear(),
-      month: new Date().getMonth(),
-    });
   }, []);
 
   useEffect(() => {
@@ -56,13 +44,13 @@ const DashboardPage = () => {
 
   useEffect(() => {
     console.log("reports", reports);
-    var number = totalRevenue;
+    var revenue = totalRevenue;
     if (reports.length === 0) return;
     else {
       reports.forEach((element) => {
-        number = number + element.revenue;
+        revenue = revenue + element.revenue;
       });
-      setTotalRevenue(number);
+      setTotalRevenue(revenue);
     }
     setYear(year - 1);
   }, [reports]);
@@ -70,118 +58,24 @@ const DashboardPage = () => {
   useEffect(() => {
     console.log("listProduct", listProduct);
     var number = 0;
+    var expiredSoon = 0;
     listProduct.forEach((element) => {
       if (element.quantity === 0) {
         ++number;
       }
+      var startDay = element.EXP;
+      var space = 0;
+      while (moment(startDay).valueOf() < moment(Date.now()).valueOf()) {
+        startDay = moment(startDay).add(1, "days");
+        ++space;
+      }
+      if (space <= 10) {
+        ++expiredSoon;
+      }
     });
     setOutOfStock(number);
+    setExpiredSoon(expiredSoon);
   }, [listProduct]);
-
-  useEffect(() => {
-    console.log("deliveryNotes", deliveryNotes);
-    var number = 0;
-    deliveryNotes.forEach((element) => {
-      number = number + element.total;
-    });
-    setCost(number);
-  }, [deliveryNotes]);
-
-  const columnsTopSale = [
-    {
-      align: "left",
-      render: (text, record, index) => {
-        return (
-          <div className="bg-red-400 w-7 h-7 rounded-full flex items-center justify-center">
-            {index + 1}
-          </div>
-        );
-      },
-    },
-    {
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      dataIndex: "number",
-      key: "number",
-    },
-  ];
-
-  //Data Demo
-
-  const dataRevenue = [
-    {
-      name: "Doanh thu",
-      number: revenue,
-    },
-    {
-      name: "Chi phí",
-      number: cost,
-    },
-  ];
-  const [dataTopSale, setDataTopSale] = useState([
-    {
-      id: 1,
-      name: "Bánh tráng",
-      number: 124,
-    },
-    {
-      id: 2,
-      name: "Cải",
-      number: 122,
-    },
-    {
-      id: 3,
-      name: "Snack bí đỏ",
-      number: 100,
-    },
-    {
-      id: 4,
-      name: "Kem chuối",
-      number: 96,
-    },
-    {
-      id: 5,
-      name: "Nước suối",
-      number: 84,
-    },
-    {
-      id: 6,
-      name: "Kem dừa",
-      number: 67,
-    },
-    {
-      id: 7,
-      name: "Nước tăng lực redbull",
-      number: 50,
-    },
-    {
-      id: 8,
-      name: "Pepsi",
-      number: 45,
-    },
-    {
-      id: 9,
-      name: "Coca Cola",
-      number: 40,
-    },
-    {
-      id: 10,
-      name: "Cool air",
-      number: 35,
-    },
-    {
-      id: 11,
-      name: "Cool air",
-      number: 35,
-    },
-    {
-      id: 12,
-      name: "Cool air",
-      number: 35,
-    },
-  ]);
 
   return (
     <>
@@ -209,7 +103,7 @@ const DashboardPage = () => {
             <div className="text-yellow-400 opacity-80 font-bold text-lg py-2">
               {"Sắp hết hạn: "}
               <span class="text-lg text-black">
-                {productNearExpirationDate
+                {expiredSoon
                   .toString()
                   .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
               </span>
@@ -288,7 +182,7 @@ const DashboardPage = () => {
                   </Link>
                 </span>
               </div>
-              <PieChart className="grow" data={dataRevenue} />
+              <PieChart />
             </div>
             <div className="flex flex-col grow">
               <div className="flex justify-between items-center gap-10">
@@ -305,15 +199,7 @@ const DashboardPage = () => {
                   </Link>
                 </span>
               </div>
-              <Table
-                className="customTable mt-2"
-                rowKey={"id"}
-                size="small"
-                showHeader={false}
-                pagination={false}
-                columns={columnsTopSale}
-                dataSource={dataTopSale.slice(0, 10)}
-              />
+              <BestSellingTable />
             </div>
           </div>
         </div>
