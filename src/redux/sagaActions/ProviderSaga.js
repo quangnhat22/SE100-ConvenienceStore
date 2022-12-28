@@ -36,7 +36,7 @@ function* actPostProvider(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
@@ -60,7 +60,7 @@ function* actPutProvider(action) {
       id: id,
     });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({
       type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
       id: id,
@@ -81,7 +81,7 @@ function* actDeleteProvider(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
   }
 }
@@ -160,7 +160,7 @@ function* actAddProductOfProvider(action) {
     });
     yield put(providerActions.hideLoading());
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({
       type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
       id: providerId,
@@ -195,7 +195,7 @@ function* actRemoveProductOfProvider(action) {
     });
     yield put(providerActions.hideLoading());
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({
       type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
       id: providerId,

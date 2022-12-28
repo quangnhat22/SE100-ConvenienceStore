@@ -34,7 +34,7 @@ function* actPostStaff(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -54,7 +54,7 @@ function* actPutStaff(action) {
       AlertCustom({ type: "error", title: "Chỉnh sửa nhân viên thất bại" });
     }
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -71,7 +71,7 @@ function* actDeleteStaff(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -82,7 +82,7 @@ function* actGetStaffById(action) {
     let { id } = action;
     let res = yield call(() => UserService.getUsersById(id));
     let { data, status } = res;
-    
+
     if (status === 200) {
       yield put(staffActions.getListStaffByIdSuccess({ staff: data }));
     } else {

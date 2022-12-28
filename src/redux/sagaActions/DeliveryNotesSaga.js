@@ -42,7 +42,7 @@ function* actPostDeliveryNotes(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   }
 }
@@ -65,7 +65,7 @@ function* actDeleteDeliveryNotes(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   }
 }
