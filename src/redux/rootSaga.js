@@ -47,6 +47,7 @@ export default function* rootSaga() {
     ProductSaga.followActGetProductItemById(),
     ProductSaga.followActDeleteProductItem(),
     ProductSaga.followActPostProductItem(),
+    ProductSaga.followActPutProductItem(),
     InvoiceSaga.followActGetListInvoice(),
     InvoiceSaga.followActGetInvoiceById(),
     InvoiceSaga.followActPostInvoice(),

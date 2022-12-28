@@ -35,4 +35,12 @@ export const ProductService = {
   deleteProductById: (id) => {
     return Axios.delete(UrlApi.URL_PRODUCT_ITEM_ID(id));
   },
+  putProductById: (id, productItemQuantity) => {
+    let { price, description, image } = productItemQuantity;
+    return Axios.put(UrlApi.URL_PRODUCT_ITEM_ID(id), {
+      price: price,
+      description: description,
+      image: image,
+    });
+  },
 };

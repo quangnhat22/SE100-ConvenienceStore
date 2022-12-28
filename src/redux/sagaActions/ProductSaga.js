@@ -54,6 +54,22 @@ function* actPostProductItem(action) {
   }
 }
 
+function* actPutProductItem(action) {
+  try {
+    let { editProduct } = action;
+
+    let res = yield call(() => ProductService.putProductById(editProduct));
+
+    if (res.status === 200) {
+     
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
 function* actDeleteProductItem(action) {
   try {
     let { id } = action;
@@ -86,6 +102,10 @@ export function* followActGetProductItemById() {
 
 export function* followActPostProductItem() {
   yield takeLatest(SagaActionTypes.POST_PRODUCT_ITEM_SAGA, actPostProductItem);
+}
+
+export function* followActPutProductItem() {
+  yield takeLatest(SagaActionTypes.PUT_PRODUCT_ITEM_SAGA, actPutProductItem);
 }
 
 export function* followActDeleteProductItem() {
