@@ -18,6 +18,7 @@ import {
 import FormCustomed from "../../../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { editDeliveryNotesActions } from "../../../../../../redux/reducer/EditDeliveryNotesReducer";
+import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -27,7 +28,7 @@ const AddNewProduct = () => {
   const optionsProductLines = productOfProvider.map(function (productLine) {
     return {
       value: productLine.id,
-      label: `${productLine.title} - ${productLine.id}`,
+      label: `${productLine.id} - ${productLine.title}`,
     };
   });
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const AddNewProduct = () => {
     };
     console.log(newProduct);
     dispatch(editDeliveryNotesActions.addNewProductItem(newProduct));
+    dispatch(modalActions.hideModal());
   };
   return (
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>

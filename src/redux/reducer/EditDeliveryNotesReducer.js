@@ -1,5 +1,6 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import moment from "moment";
+import AlertCustom from "../../common/Notification/Alert";
 
 const initialState = {
   newDeliveryNote: {
@@ -63,6 +64,7 @@ const editDeliveryNotesSlice = createSlice({
           ...state.newDeliveryNote.productItems,
         ];
       }
+      AlertCustom({ type: "success", title: "Thêm sản phẩm thành công" });
     },
     removeNewProductItem: (state, action) => {
       console.log("abc", action.payload);
@@ -76,6 +78,7 @@ const editDeliveryNotesSlice = createSlice({
           moment(product.MFG).format("DD/MM/YYYY") !==
             moment(deleteProductItem.MFG).format("DD/MM/YYYY")
       );
+      AlertCustom({ type: "success", title: "Xóa sản phẩm thành công" });
     },
   },
 });
