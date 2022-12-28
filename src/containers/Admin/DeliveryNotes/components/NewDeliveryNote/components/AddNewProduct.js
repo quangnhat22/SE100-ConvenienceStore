@@ -49,7 +49,12 @@ const AddNewProduct = () => {
     dispatch(modalActions.hideModal());
   };
   return (
-    <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
+    <FormCustomed
+      name="add_product_form"
+      form={form}
+      onFinish={onFinish}
+      initialValues={{ description: "", image: "" }}
+    >
       <Form.Item
         name="product_name"
         label="Tên dòng sản phẩm"
