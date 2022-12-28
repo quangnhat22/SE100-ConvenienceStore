@@ -58,7 +58,7 @@ const DetailProviderPage = (props) => {
           Nhà cung cấp: {id} - {provider.name}
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">
-          <DetailProviderForm provider={provider} loading={loading} />
+          <DetailProviderForm provider={provider} />
         </div>
         <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
           <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-lg">

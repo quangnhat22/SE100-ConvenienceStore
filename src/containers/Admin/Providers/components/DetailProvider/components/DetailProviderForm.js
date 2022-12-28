@@ -155,40 +155,6 @@ const DetailProviderForm = ({ provider }) => {
           </Form.Item>
         </Col>
       </Row>
-
-      {/* <Form.Item name="nhomNhaCungCap" label="Nhóm nhà cung cấp">
-        <Select
-          className="rounded"
-          placeholder="Nhóm nhà cung cấp"
-          disabled={componentDisabled}
-        />
-      </Form.Item>
-      <Form.Item
-        name="soDienThoai"
-        label="Số điện thoại"
-        rules={[
-          {
-            pattern: "^([-]?[0-9]*|0)$",
-            message: "Số Điện Thoại không hợp lệ",
-          },
-          { required: true },
-        ]}
-      >
-        <Input placeholder="Số điện thoại" disabled={componentDisabled} />
-      </Form.Item> */}
-
-      {/* <Form.Item name="nhanVien" label="Nhân viên phụ trách">
-        <Select className="rounded" placeholder="Chọn nhân viên" />
-      </Form.Item>
-      <Form.Item name="moTa" label="Mô tả">
-        <TextArea
-          className="rounded"
-          rows={4}
-          placeholder="Mô tả"
-          disabled={componentDisabled}
-        />
-      </Form.Item> */}
-
       {enableModify === false ? (
         <div
           style={{
