@@ -61,8 +61,6 @@ const StaffInforDetail = ({ staff }) => {
     // dispatch(staffActions.editStaffs(editedStaff));
   };
 
-  const handleModify = () => {};
-
   const handleClose = () => {
     setTimeout(() => {
       dispatch(modalActions.hideModal());
@@ -253,9 +251,7 @@ const StaffInforDetail = ({ staff }) => {
           >
             Hủy
           </Button>
-          <Button onClick={handleModify} htmlType="submit">
-            Lưu
-          </Button>
+          <Button htmlType="submit">Lưu</Button>
         </Form.Item>
       )}
     </FormCustomed>

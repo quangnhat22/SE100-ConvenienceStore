@@ -61,7 +61,6 @@ function* actPutProductItem(action) {
     let res = yield call(() => ProductService.putProductById(editProduct));
 
     if (res.status === 200) {
-     
     } else {
       //yield put(authActions.requestLogFailed());
     }

@@ -40,7 +40,7 @@ const AddStaffForm = () => {
       other: values.staff_other_information,
       password: "12345678",
       avatar: "http://example.com/a.jpg",
-      role: "MANAGER",
+      role: "EMPLOYEE",
     };
     console.log(newStaff);
     dispatch({

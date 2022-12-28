@@ -12,6 +12,13 @@ import * as SagaActionTypes from "../../../../redux/constants/constant";
 const TableStaffs = ({ keyWord, data, loading }) => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const renderRole = (role) => {
+    if (role === "MANAGER") {
+      return "Quản lý";
+    } else {
+      return "Nhân viên bán hàng";
+    }
+  };
 
   const columns = [
     {
@@ -38,7 +45,10 @@ const TableStaffs = ({ keyWord, data, loading }) => {
           String(record.phoneNumber)
             .toLowerCase()
             .includes(value.toLowerCase()) ||
-          String(record.email).toLowerCase().includes(value.toLowerCase())
+          String(record.email).toLowerCase().includes(value.toLowerCase()) ||
+          String(renderRole(record.role))
+            .toLowerCase()
+            .includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
@@ -69,6 +79,16 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       showOnDesktop: true,
       width: "15%",
       ellipsis: true,
+    },
+    {
+      title: "Vai trò",
+      dataIndex: "role",
+      key: "role",
+      showOnResponse: true,
+      showOnDesktop: true,
+      width: "10%",
+      ellipsis: true,
+      render: (role) => renderRole(role),
     },
     {
       title: "Thao tác",
@@ -105,12 +125,22 @@ const TableStaffs = ({ keyWord, data, loading }) => {
             }}
             onConfirm={() => handleRemoveStaff(record)}
           >
-            <button
-              type="button"
-              className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
-            >
-              <DeleteFilled />
-            </button>
+            {record.role === "MANAGER" ? (
+              <button
+                type="button"
+                className="bg-slate-400 text-white font-bold py-2 px-3 rounded inline-flex items-center"
+                disabled
+              >
+                <DeleteFilled />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
+              >
+                <DeleteFilled />
+              </button>
+            )}
           </Popconfirm>
         </Space>
       ),
