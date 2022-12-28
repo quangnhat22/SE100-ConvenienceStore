@@ -13,6 +13,8 @@ import * as ProductExpireSaga from "./sagaActions/ProductExpireSaga";
 export default function* rootSaga() {
   yield all([
     AuthenticationSaga.followActLoginWithEmailAndPassword(),
+    AuthenticationSaga.followActForgotPassword(),
+    AuthenticationSaga.followActResetPassword(),
     ProductsSaga.followActGetListProducts(),
     ProductsSaga.followActPostProducts(),
     ProductsSaga.followActPutProducts(),
