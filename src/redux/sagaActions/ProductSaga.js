@@ -65,11 +65,17 @@ function* actPutProductItem(action) {
       AlertCustom({ type: "error", title: "Chỉnh sửa sản phẩm thất bại" });
       //yield put(authActions.requestLogFailed());
     }
-    yield call(() => ProductService.getProductById(id));
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA,
+      id: id,
+    });
   } catch (err) {
     //yield put(authActions.requestLogFailed());
     AlertCustom({ type: "error", title: "Chỉnh sửa sản phẩm thất bại" });
-    yield call(() => ProductService.getProductById(id));
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA,
+      id: id,
+    });
   }
 }
 
