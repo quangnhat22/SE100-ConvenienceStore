@@ -23,7 +23,7 @@ const AddProductLineInProvider = () => {
   const optionsProductLines = products.map(function (productLine) {
     return {
       value: productLine.id,
-      label: `${productLine.title} - ${productLine.id}`,
+      label: `${productLine.id} - ${productLine.title}`,
     };
   });
   const onFinish = (values) => {
@@ -35,6 +35,7 @@ const AddProductLineInProvider = () => {
       listIdProduct: values.title,
     });
   };
+
   return (
     <FormCustomed
       name="add_product_line_provider"

@@ -9,13 +9,14 @@ import ListItem from "./components/ListItem";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../redux/constants/constant";
 
-
 const SalePage = () => {
   const dispatch = useDispatch();
+  const uid = localStorage.getItem("id");
   const { listProduct, loading } = useSelector((state) => state.productSlice);
   const { cartItems } = useSelector((state) => state.cartSlice);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
+    dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
   }, []);
 
   return (

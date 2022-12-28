@@ -53,7 +53,7 @@ const AddNewProduct = () => {
       name="add_product_form"
       form={form}
       onFinish={onFinish}
-      initialValues={{ description: "", image: "" }}
+      initialValues={{ product_description: "" }}
     >
       <Form.Item
         name="product_name"

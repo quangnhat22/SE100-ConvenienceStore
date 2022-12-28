@@ -10,11 +10,13 @@ export const InvoiceService = {
   },
   postInvoice: (newInvoice) => {
     let { date, userId, total, details } = newInvoice;
-    return Axios.post(UrlApi.URL_POST_INVOICES, {
+    let currentUserId = parseInt(userId);
+    const d = {
       date: date,
-      userId: userId,
+      userId: currentUserId,
       total: total,
       details: details,
-    });
+    };
+    return Axios.post(UrlApi.URL_POST_INVOICES, d);
   },
 };
