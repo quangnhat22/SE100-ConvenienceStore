@@ -9,12 +9,12 @@ import * as SagaActionTypes from "../../../../../redux/constants/constant";
 import DetailProviderForm from "./components/DetailProviderForm";
 import AddProductLineInProvider from "./components/AddProductLineInProvider";
 import { modalActions } from "../../../../../redux/reducer/ModalReducer";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-const DetailProviderPage = (props) => {
+const DetailProviderPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { id } = props.match.params;
+  const { id } = useParams();
   let { provider, productOfProvider, loading } = useSelector(
     (state) => state.providerSlice
   );

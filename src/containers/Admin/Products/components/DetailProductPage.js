@@ -13,15 +13,15 @@ import {
 } from "antd";
 import { InfoCircleTwoTone, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import DetailProductForm from "./DetailProductForm";
 
-const DetailProductPage = (props) => {
+const DetailProductPage = () => {
   const history = useHistory();
-  const { id } = props.match.params;
+  const { id } = useParams();
 
   // Get data by id
   const dispatch = useDispatch();
