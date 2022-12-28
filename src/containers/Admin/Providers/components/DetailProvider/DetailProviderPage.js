@@ -55,7 +55,7 @@ const DetailProviderPage = (props) => {
     <>
       <div className="ml-3 mt-5 mr-3 mb-8">
         <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
-          Thông tin của nhà cung cấp
+          Nhà cung cấp: {id} - {provider.name}
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">
           <DetailProviderForm provider={provider} loading={loading} />

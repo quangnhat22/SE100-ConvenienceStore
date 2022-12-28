@@ -64,7 +64,7 @@ const DeliveryNoteDetailPage = (props) => {
     <>
       <div className="ml-3 mt-5 mr-3 mb-8">
         <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
-          Tạo phiếu nhập hàng
+          Phiếu nhập hàng: {id}
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">
           <Form name="add_delivery_note_form" initialValues={initialValues}>

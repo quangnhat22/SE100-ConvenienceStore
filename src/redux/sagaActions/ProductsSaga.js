@@ -62,8 +62,8 @@ function* actPutProducts(action) {
 }
 
 function* actDeleteProducts(action) {
+  let { id } = action;
   try {
-    let { id } = action;
     yield put(productsActions.getListProductsLoading());
 
     let res = yield call(() => ProductsService.deleteProductsById(id));
@@ -78,6 +78,7 @@ function* actDeleteProducts(action) {
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
     AlertCustom({ type: "error", title: err });
+    yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }
 }
 

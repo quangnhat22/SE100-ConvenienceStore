@@ -32,6 +32,7 @@ const DetailProductLinesForm = ({ productLine }) => {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
+    console.log(values);
     let newProductLine = {
       title: values.title,
       tax: values.tax,
@@ -48,10 +49,22 @@ const DetailProductLinesForm = ({ productLine }) => {
       form={form}
       onFinish={onFinish}
       initialValues={{
+        id: productLine.id,
         title: productLine.title,
         tax: productLine.tax,
       }}
     >
+      <Form.Item
+        label="Mã dòng sản phẩm"
+        name="id"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input placeholder="Mã dòng sản phẩm" disabled={true} />
+      </Form.Item>
       <Form.Item
         label="Tên dòng sản phẩm"
         name="title"
@@ -116,7 +129,7 @@ const DetailProductLinesForm = ({ productLine }) => {
           >
             Hủy
           </Button>
-          <Button onClick={handleModify} htmltype="submit">
+          <Button onClick={handleModify} htmlType="submit">
             Lưu
           </Button>
         </Form.Item>

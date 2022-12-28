@@ -22,7 +22,8 @@ const TableProductLines = ({ data, keyWord, loading }) => {
       title: "Mã dòng sản phẩm",
       dataIndex: "id",
       key: "id",
-      sorter: (item1, item2) => item1.id.localeCompare(item2.maDongSanPham),
+      // sorter: (item1, item2) => item1.id.localeCompare(item2.maDongSanPham),
+      sorter: (a, b) => a.id - b.id,
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
