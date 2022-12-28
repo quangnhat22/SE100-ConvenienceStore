@@ -4,52 +4,54 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import { object, string } from "yup";
+import { object, string, ref } from "yup";
 import AlertCustom from "../../../common/Notification/Alert";
 import * as SagaActionTypes from "../../../redux/constants/constant";
 import "../style/index.css";
 
-const LoginForm = () => {
+const ResetPasswordForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.authSlice);
+  //   const { isLoggedIn } = useSelector((state) => state.authSlice);
 
   const handleSubmit = (values) => {
-    let { username, password } = values;
-    dispatch({
-      type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
-      data: {
-        username: username,
-        password: password,
-      },
-    });
+    // let { username, password } = values;
+    // dispatch({
+    //   type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
+    //   data: {
+    //     username: username,
+    //     password: password,
+    //   },
+    // });
   };
 
-  useEffect(() => {
-    if (isLoggedIn && localStorage.getItem("access_token") != null) {
-      console.log(localStorage.getItem("role"));
-      if (localStorage.getItem("role") === "MANAGER") {
-        history.replace("/dash-board");
-      }
-      if (localStorage.getItem("role") === "EMPLOYEE") {
-        history.replace("/sales");
-      }
-    }
-  }, [isLoggedIn]);
+  //   useEffect(() => {
+  //     if (isLoggedIn && localStorage.getItem("access_token") != null) {
+  //       console.log(localStorage.getItem("role"));
+  //       if (localStorage.getItem("role") === "MANAGER") {
+  //         history.replace("/dash-board");
+  //       }
+  //       if (localStorage.getItem("role") === "EMPLOYEE") {
+  //         history.replace("/sales");
+  //       }
+  //     }
+  //   }, [isLoggedIn]);
 
   const RegisterValidation = object().shape({
-    username: string().max(255).required("Vui lòng nhập tên đăng nhập"),
-    password: string()
+    newPassword: string()
       .min(8, "Phải có ít nhất 8 ký tự")
-      .required("Vui lòng nhập mật khẩu"),
+      .required("Vui lòng nhập mật khẩu mới"),
+    repeatPassword: string()
+      .required("Vui lòng nhập lại mật khẩu mới")
+      .oneOf([ref("newPassword"), null], "Phải giống mật khẩu mới"),
   });
 
   return (
     <>
       <Formik
         initialValues={{
-          username: "",
-          password: "",
+          newPassword: "",
+          repeatPassword: "",
         }}
         validationSchema={RegisterValidation}
         onSubmit={(values) => handleSubmit(values)}
@@ -68,17 +70,17 @@ const LoginForm = () => {
                 <UserOutlined />
               </div>
               <input
-                type="text"
-                placeholder="Username"
+                type="password"
+                placeholder="Mật khẩu mới"
                 required
-                name="username"
-                value={values.username}
+                name="newPassword"
+                value={values.newPassword}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
-              {touched.username && errors.username && (
+              {touched.newPassword && errors.newPassword && (
                 <ErrorMessage
-                  name="username"
+                  name="newPassword"
                   component="div"
                   className="text-red-500 text-xs pl-12 pt-2"
                 />
@@ -90,23 +92,23 @@ const LoginForm = () => {
               </div>
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Xác nhận lại mật khẩu"
                 required
-                name="password"
-                value={values.password}
+                name="repeatPassword"
+                value={values.repeatPassword}
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
-              {touched.password && errors.password && (
+              {touched.repeatPassword && errors.repeatPassword && (
                 <ErrorMessage
-                  name="password"
+                  name="repeatPassword"
                   component="div"
                   className="text-red-500 text-xs pl-12 pt-2"
                 />
               )}
             </div>
             <div className="row button mt-10 mb-10">
-              <input type="submit" value="Login" />
+              <input type="submit" value="Xác nhận" />
             </div>
           </form>
         )}
@@ -115,4 +117,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ResetPasswordForm;

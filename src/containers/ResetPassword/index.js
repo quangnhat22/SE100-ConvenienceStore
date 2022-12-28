@@ -1,20 +1,20 @@
 import React from "react";
-import LoginForm from "./components/LoginForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 import "./style/index.css";
 
-const LoginPage = () => {
+const ResetPasswordPage = () => {
   return (
     <div className="container-auth">
       <div className="container-form">
         <div className="wrapper">
           <div className="title">
-            <span>Đăng nhập</span>
+            <span>Thay đổi mật khẩu</span>
           </div>
-          <LoginForm />
+          <ResetPasswordForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default ResetPasswordPage;

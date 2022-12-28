@@ -4,6 +4,7 @@ import AdminTemplate from "./layout/AdminLayout";
 import { routesAdmin } from "./routes/AdminRoutes";
 import "./index.css";
 import ForgotPasswordPage from "./containers/ForgotPassword";
+import ResetPasswordPage from "./containers/ResetPassword";
 
 function App() {
   const renderRoutesAdmin = (routes) => {
@@ -19,12 +20,17 @@ function App() {
         );
       });
     }
-  }
+  };
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+        <Route
+          exact
+          path="/reset-password/:token"
+          component={ResetPasswordPage}
+        />
         {renderRoutesAdmin(routesAdmin)}
         {/* <Route component={PageNotFound}></Route> */}
       </Switch>
