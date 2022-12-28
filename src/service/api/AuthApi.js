@@ -21,13 +21,13 @@ export const UserService = {
       },
     });
   },
-  resetPassword: (token, email) => {
+  resetPassword: (token, password) => {
     return axios({
       url: UrlApi.URL_RESET_PASSWORD,
       method: "POST",
       data: {
         token: token,
-        email: email,
+        password: password,
       },
     });
   },

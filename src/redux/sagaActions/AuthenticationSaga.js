@@ -35,12 +35,15 @@ function* actLoginWithEmailAndPassword(payload) {
 }
 
 function* actForgotPassword(payload) {
-  let {email} = payload.data;
+  let { email } = payload.data;
   try {
     let res = yield call(() => UserService.forgotPassword(email));
 
     if (res.status === 200) {
-      AlertCustom({ type: "success", title: "Gửi email khôi phục mật khẩu thành công! Vui lòng check email" });
+      AlertCustom({
+        type: "success",
+        title: "Gửi email khôi phục mật khẩu thành công! Vui lòng check email",
+      });
     } else {
       AlertCustom({
         type: "error",
@@ -56,12 +59,15 @@ function* actForgotPassword(payload) {
 }
 
 function* actResetPassword(payload) {
-  let {token, email} = payload.data;
+  let { token, password } = payload.data;
   try {
-    let res = yield call(() => UserService.resetPassword(token, email));
+    let res = yield call(() => UserService.resetPassword(token, password));
 
     if (res.status === 200) {
-      AlertCustom({ type: "success", title: "Khôi phục mật khẩu mới thành công" });
+      AlertCustom({
+        type: "success",
+        title: "Khôi phục mật khẩu mới thành công",
+      });
     } else {
       AlertCustom({
         type: "error",
@@ -80,19 +86,13 @@ export function* followActLoginWithEmailAndPassword() {
   yield takeLatest(
     SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
     actLoginWithEmailAndPassword
-  )
+  );
 }
 
 export function* followActForgotPassword() {
-  yield takeLatest(
-    SagaActionTypes.FORGOT_PASSWORD_SAGA,
-    actForgotPassword
-  );
+  yield takeLatest(SagaActionTypes.FORGOT_PASSWORD_SAGA, actForgotPassword);
 }
 
 export function* followActResetPassword() {
-  yield takeLatest(
-    SagaActionTypes.RESET_PASSWORD_SAGA,
-    actResetPassword
-  );
+  yield takeLatest(SagaActionTypes.RESET_PASSWORD_SAGA, actResetPassword);
 }
