@@ -59,6 +59,10 @@ const DetailProductForm = ({ product }) => {
     onReset();
   };
 
+  const handleClose = () => {
+    history.goBack();
+  };
+
   const onReset = () => {
     form.resetFields();
   };
@@ -78,7 +82,6 @@ const DetailProductForm = ({ product }) => {
       id: product.id,
       editProduct: editProduct,
     });
-    history.go(0);
   };
 
   return (
@@ -175,8 +178,8 @@ const DetailProductForm = ({ product }) => {
               min={0}
               addonAfter={<div>VNĐ</div>}
               placeholder="Giá nhập"
-              //   formatter={(value) => formatterPrice(value)}
-              //   parser={(value) => parserPrice(value)}
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
               disabled={true}
             />
           </Form.Item>
@@ -196,8 +199,8 @@ const DetailProductForm = ({ product }) => {
               min={0}
               addonAfter={<div>VNĐ</div>}
               placeholder="Giá bán"
-              //   formatter={(value) => formatterPrice(value)}
-              //   parser={(value) => parserPrice(value)}
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
               disabled={componentDisabled}
             />
           </Form.Item>
@@ -217,8 +220,8 @@ const DetailProductForm = ({ product }) => {
               className="w-full rounded"
               min={1}
               placeholder="Số lượng"
-              // formatter={(value) => formatterNumber(value)}
-              // parser={(value) => parserNumber(value)}
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
               disabled={true}
             />
           </Form.Item>
@@ -277,9 +280,13 @@ const DetailProductForm = ({ product }) => {
             textAlign: "end",
           }}
         >
-          <Button className="edit-reader-button" onClick={handleEnableModify}>
+          <Button
+            className="edit-reader-button mr-4"
+            onClick={() => handleEnableModify()}
+          >
             Chỉnh sửa
           </Button>
+          <Button onClick={() => handleClose()}>Đóng</Button>
         </div>
       ) : (
         <div
