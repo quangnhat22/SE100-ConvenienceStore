@@ -50,14 +50,15 @@ const DetailProductPage = (props) => {
     },
   };
 
-  // //Set view
+  //Set view
   // const [isView, setIsView] = useState(true);
 
-  const handleExit = () => {
-    history.goBack();
-  };
+  // const handleExit = () => {
+  //   history.goBack();
+  // };
 
   // const handleSetView = () => {
+  //   history.go(0);
   //   setIsView(true);
   // };
 
@@ -83,6 +84,21 @@ const DetailProductPage = (props) => {
     );
   };
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  // const onFinish = (values) => {
+  //   let editProduct = {
+  //     price: values.price,
+  //     description: values.description,
+  //     // image: values.image.filename,
+  //     image: "http://example.com/a.jpg", /////////////Cần sửa ở đây
+  //   };
+  //   console.log(values);
+  //   dispatch({
+  //     type: SagaActionTypes.PUT_PRODUCT_ITEM_SAGA,
+  //     id: id,
+  //     editProduct: editProduct,
+  //   });
+  // };
 
   const initialValues = {
     productId: productById.product.title,
@@ -131,6 +147,7 @@ const DetailProductPage = (props) => {
       layout="vertical"
       validateMessages={validateMessages}
       initialValues={initialValues}
+      // onFinish={onFinish}
     >
       <div className="flex justify-center items-center">
         <div className="gap-8 mt-10 flex w-full lg:w-3/5 flex-col md:flex-row mx-10">
@@ -269,12 +286,18 @@ const DetailProductPage = (props) => {
                       placeholder="Giá bán"
                       formatter={(value) => formatterPrice(value)}
                       parser={(value) => parserPrice(value)}
+                      // disabled={isView}
                     />
                   </Form.Item>
                 </Space>
               </Form.Item>
               <Form.Item name="description" label="Mô tả">
-                <TextArea className="rounded" placeholder="Mô tả..." rows={4} />
+                <TextArea
+                  className="rounded"
+                  placeholder="Mô tả..."
+                  rows={4}
+                  // disabled={isView}
+                />
               </Form.Item>
               <Form.Item className="w-fit rounded" label="Hình ảnh sản phẩm">
                 <>
@@ -288,6 +311,7 @@ const DetailProductPage = (props) => {
                     onPreview={handlePreview}
                     onChange={handleChange}
                     maxCount="1"
+                    // disabled={isView}
                   >
                     <Space className="flex flex-col text-base">
                       <PlusOutlined />
@@ -316,18 +340,17 @@ const DetailProductPage = (props) => {
             <div className="flex justify-end">
               {/* <Space
                 size={[15]}
-                hidden={isView}
                 className="w-full py-2 lg:w-3/5 flex justify-end"
               >
                 <button
-                  className="border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300"
+                  className="a border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300"
                   onClick={handleSetView}
                 >
                   Trở lại
                 </button>
                 <button
-                  className="rounded py-2 px-3 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-                  htmlType="submit"
+                  className="b rounded py-2 px-3 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                  htmltype="submit"
                 >
                   Lưu
                 </button>
@@ -336,15 +359,15 @@ const DetailProductPage = (props) => {
                 size={[15]}
                 className="w-full py-2 lg:w-3/5 flex justify-end"
               >
-                {/* <button
+                <button
                   className="border rounded border-gray-300 py-2 px-3 bg-gray-100 hover:bg-gray-200 shadow-md hover:border-gray-300 whitespace-nowrap"
-                  onClick={handleSetEdit}
+                  // onClick={handleSetEdit}
                 >
                   Chỉnh sửa
-                </button> */}
+                </button>
                 <button
                   className="rounded border border-gray-400 text-gray-600 py-2 px-3 bg-gray-100 opacity-90 hover:opacity-100 hover:text-gray-800 hover:border-gray-500 shadow-md"
-                  onClick={handleExit}
+                  // onClick={handleExit}
                 >
                   Thoát
                 </button>

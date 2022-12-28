@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { productActions } from "../reducer/ProductReducer";
 import { ProductService } from "../../service/api/ProductApi";
+import AlertCustom from "../../common/Notification/Alert";
 
 function* actGetListProductItem() {
   try {
@@ -55,17 +56,20 @@ function* actPostProductItem(action) {
 }
 
 function* actPutProductItem(action) {
+  let { id, editProduct } = action;
   try {
-    let { editProduct } = action;
-
-    let res = yield call(() => ProductService.putProductById(editProduct));
-
+    let res = yield call(() => ProductService.putProductById(id, editProduct));
     if (res.status === 200) {
+      AlertCustom({ type: "success", title: "Chỉnh sửa sản phẩm thành công" });
     } else {
+      AlertCustom({ type: "error", title: "Chỉnh sửa sản phẩm thất bại" });
       //yield put(authActions.requestLogFailed());
     }
+    yield call(() => ProductService.getProductById(id));
   } catch (err) {
     //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: "Chỉnh sửa sản phẩm thất bại" });
+    yield call(() => ProductService.getProductById(id));
   }
 }
 
