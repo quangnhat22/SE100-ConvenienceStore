@@ -21,7 +21,8 @@ import PrintPaymentForm from "./PrintPaymentForm";
 import { Paper } from "@mui/material";
 import ReactToPrint from "react-to-print";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
-import printInvoiceActions from "../../../../redux/reducer/printInvoiceReducer";
+import { printInvoiceActions } from "../../../../redux/reducer/printInvoiceReducer";
+import { cartActions } from "../../../../redux/reducer/CartReducer";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -43,8 +44,7 @@ const PaymentForm = ({ data }) => {
   const { staff } = useSelector((state) => state.staffsSlice);
   const { invoice } = useSelector((state) => state.printInvoiceSlice);
   console.log(invoice);
-  // if invoice.id != "-1"
-  // (printComponentRef.current.click());
+
   const componentRef = useRef(null);
   const printComponentRef = useRef(null);
   const validateMessages = {
@@ -74,8 +74,10 @@ const PaymentForm = ({ data }) => {
   }, [form, defaultValues]);
 
   useEffect(() => {
-    // printComponentRef.current.click();
-  }, []);
+    if (invoice.id !== "-1") {
+      printComponentRef.current.click();
+    }
+  }, [invoice]);
 
   const onFinish = (values) => {
     let newInvoice = {
@@ -105,6 +107,9 @@ const PaymentForm = ({ data }) => {
   };
 
   const onAfterPrint = () => {
+    dispatch(printInvoiceActions.removeInvoice());
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
+    dispatch(cartActions.removeAllItem());
     console.log("In In In");
   };
 
@@ -266,17 +271,18 @@ const PaymentForm = ({ data }) => {
             offset: 10,
           }}
         >
+          <Button className="mr-4" htmlType="submit">
+            Thanh toán
+          </Button>
+        </Form.Item>
+        <div style={{ display: "none" }}>
           <ReactToPrint
-            onAfterPrint={onAfterPrint()}
+            onAfterPrint={() => onAfterPrint()}
             trigger={() => (
               // <IconButton variant="text" size="large" color="info">
               //   <PrintIcon />
               // </IconButton>
-              <Button
-                className="mr-4"
-                htmlType="submit"
-                ref={printComponentRef}
-              >
+              <Button className="mr-4" ref={printComponentRef}>
                 Thanh toán
               </Button>
             )}
@@ -284,11 +290,11 @@ const PaymentForm = ({ data }) => {
               return componentRef.current;
             }}
           />
-        </Form.Item>
+        </div>
       </Form>
 
       {/* printer template */}
-      <div style={{ display: "none" }}>
+      <div>
         <Paper ref={componentRef}>
           <PrintPaymentForm data={invoice} />
         </Paper>

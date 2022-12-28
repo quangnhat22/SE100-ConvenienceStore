@@ -12,7 +12,9 @@ import * as SagaActionTypes from "../../../redux/constants/constant";
 const SalePage = () => {
   const dispatch = useDispatch();
   const uid = localStorage.getItem("id");
-  const { listProduct, loading } = useSelector((state) => state.productSlice);
+  const { listProductSale, listProduct, loading } = useSelector(
+    (state) => state.productSlice
+  );
   const { cartItems } = useSelector((state) => state.cartSlice);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
@@ -28,7 +30,7 @@ const SalePage = () => {
           className="flex justify-end items-center"
         >
           <div className="mr-auto grow flex justify-center items-center bg-transparent z-10">
-            <SearchHeader data={listProduct} />
+            <SearchHeader data={listProductSale} />
           </div>
           <div className="flex items-center justify-end mr-7 bg-transparent">
             <UserOutlined

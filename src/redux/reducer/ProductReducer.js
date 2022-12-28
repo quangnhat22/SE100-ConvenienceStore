@@ -114,6 +114,7 @@ const initialState = {
     //   moTa: "",
     // },
   ],
+  listProductSale: [],
   productById: {
     id: "",
     product: {
@@ -149,6 +150,9 @@ const productSlice = createSlice({
     },
     getListProductSuccess: (state, action) => {
       state.listProduct = action.payload.listProduct;
+      state.listProductSale = action.payload.listProduct.filter(
+        (item) => item.quantity > 0
+      );
       state.loading = false;
     },
     getProductByIdSuccess: (state, action) => {

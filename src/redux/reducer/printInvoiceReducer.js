@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  invoice: {},
+  invoice: {
+    id: "-1",
+    date: "",
+    creator: {},
+    total: 0,
+    invoiceDetails: [],
+  },
 };
 
 const printInvoiceSlice = createSlice({
@@ -14,7 +20,13 @@ const printInvoiceSlice = createSlice({
     // dùng tạm
     //input : reader
     removeInvoice: (state, action) => {
-      state.invoice = {};
+      state.invoice = {
+        id: "-1",
+        date: "",
+        creator: {},
+        total: 0,
+        invoiceDetails: [],
+      };
     },
   },
 });
