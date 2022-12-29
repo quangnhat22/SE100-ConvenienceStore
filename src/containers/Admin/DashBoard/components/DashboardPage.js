@@ -164,7 +164,7 @@ const DashboardPage = () => {
           </Card>
         </div>
         {/* Bảng biểu */}
-        <div className="bg-white mt-10 md:mt-12 flex flex-col border-box shadow-md">
+        <div className="bg-white mt-10 md:mt-12 flex flex-col border-box shadow-md min-h-[600px] overflow-hidden">
           {/* Biểu đồ */}
           <div className="m-5 box-border flex flex-wrap gap-y-10 gap-x-32">
             <div className="mr-x6-scroll-box-auto-hide flex flex-col grow gap-y-10">
@@ -182,7 +182,7 @@ const DashboardPage = () => {
                   </Link>
                 </span>
               </div>
-              <PieChart />
+              <PieChart className="grow h-full min-h-[500px]" />
             </div>
             <div className="flex flex-col grow">
               <div className="flex justify-between items-center gap-10">

@@ -74,6 +74,10 @@ const cartSlice = createSlice({
         (cartItem) => cartItem.id !== action.payload.id
       );
     },
+
+    removeAllItem: (state, action) => {
+      state.cartItems = [];
+    },
   },
 });
 

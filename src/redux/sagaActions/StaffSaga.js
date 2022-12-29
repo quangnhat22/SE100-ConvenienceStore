@@ -34,7 +34,11 @@ function* actPostStaff(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({ type: "error", title: "Email đã được sử dụng" });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -54,7 +58,7 @@ function* actPutStaff(action) {
       AlertCustom({ type: "error", title: "Chỉnh sửa nhân viên thất bại" });
     }
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -71,7 +75,14 @@ function* actDeleteStaff(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({
+        type: "error",
+        title: "Không thể xóa nhân viên này vì đã thực hiện thanh toán",
+      });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -82,7 +93,7 @@ function* actGetStaffById(action) {
     let { id } = action;
     let res = yield call(() => UserService.getUsersById(id));
     let { data, status } = res;
-    
+
     if (status === 200) {
       yield put(staffActions.getListStaffByIdSuccess({ staff: data }));
     } else {

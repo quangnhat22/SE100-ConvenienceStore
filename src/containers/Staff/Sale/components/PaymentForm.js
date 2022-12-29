@@ -15,11 +15,14 @@ import {
   Checkbox,
   Upload,
 } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./style/CustomInputNumber.css";
 import PrintPaymentForm from "./PrintPaymentForm";
 import { Paper } from "@mui/material";
 import ReactToPrint from "react-to-print";
+import * as SagaActionTypes from "../../../../redux/constants/constant";
+import { printInvoiceActions } from "../../../../redux/reducer/printInvoiceReducer";
+import { cartActions } from "../../../../redux/reducer/CartReducer";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -36,6 +39,12 @@ const totalPrice = (cartItems) => {
 };
 
 const PaymentForm = ({ data }) => {
+  console.log(data);
+  const uid = localStorage.getItem("id");
+  const { staff } = useSelector((state) => state.staffsSlice);
+  const { invoice } = useSelector((state) => state.printInvoiceSlice);
+  console.log(invoice);
+
   const componentRef = useRef(null);
   const printComponentRef = useRef(null);
   const validateMessages = {
@@ -54,28 +63,58 @@ const PaymentForm = ({ data }) => {
   const defaultValues = {
     store_name: "Convenience Store",
     bill_date: moment(),
-    bill_creater: "Quang Kotex",
+    bill_creater: staff.fullname,
     bill_price: totalPrice(data),
     bill_tax: 8,
     bill_finalprice: (totalPrice(data) * 108) / 100,
-    bill_note: "",
+    bill_customer_pay: 0,
+    bill_customer_repay: 0,
   };
   useEffect(() => {
     form.setFieldsValue(defaultValues);
   }, [form, defaultValues]);
 
   useEffect(() => {
-    printComponentRef.current.click();
-  }, []);
+    if (invoice.id !== "-1") {
+      printComponentRef.current.click();
+    }
+  }, [invoice]);
 
   const onFinish = (values) => {
-    console.log(values);
+    let newInvoice = {
+      date: values.bill_date.toISOString(),
+      userId: uid,
+      total: values.bill_finalprice,
+      details: data.map(function (item) {
+        return {
+          productItemId: item.id,
+          price: item.price,
+          quantity: item.quantity,
+        };
+      }),
+    };
+    //POST_INVOICES_SAGA
+    console.log(newInvoice);
+    dispatch({
+      type: SagaActionTypes.POST_INVOICES_SAGA,
+      newInvoice: newInvoice,
+    });
   };
 
-  const onChange = (value) => {
+  const onChange = () => {
     form.setFieldsValue({
-      bill_customer_repay: value - form.getFieldValue().bill_finalprice,
+      bill_customer_repay:
+        form.getFieldValue().bill_customer_pay -
+        form.getFieldValue().bill_finalprice,
     });
+  };
+
+  const onAfterPrint = () => {
+    dispatch(printInvoiceActions.removeInvoice());
+    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
+    dispatch(cartActions.removeAllItem());
+
+    console.log("In In In");
   };
 
   return (
@@ -87,7 +126,8 @@ const PaymentForm = ({ data }) => {
         wrapperCol={{
           span: 20,
         }}
-        className="PaymentForm my-4 sm:mx-8 mx-2"
+        labelWrap
+        className="PaymentForm my-4 sm:mx-8 mx-2 "
         form={form}
         onFinish={onFinish}
         initialValues={defaultValues}
@@ -195,17 +235,18 @@ const PaymentForm = ({ data }) => {
             {
               required: true,
               type: "number",
+              min: (totalPrice(data) * 108) / 100,
             },
           ]}
         >
           <InputNumber
             className="input-number-right"
             addonAfter={"VNĐ"}
-            min={(totalPrice(data) * 108) / 100}
+            min={0}
             placeholder="Tiền khách trả"
             formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            onChange={(value) => onChange(value)}
+            onChange={() => onChange()}
           />
         </Form.Item>
         <Form.Item
@@ -230,19 +271,17 @@ const PaymentForm = ({ data }) => {
         <Form.Item name="bill_note" label="Ghi chú">
           <TextArea rows={2} placeholder="Ghi chú" />
         </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            span: 20,
-            offset: 10,
-          }}
-        >
+        <div className="block text-center">
+          <Button htmlType="submit">Thanh toán</Button>
+        </div>
+        <div style={{ display: "none" }}>
           <ReactToPrint
-            
+            onAfterPrint={() => onAfterPrint()}
             trigger={() => (
               // <IconButton variant="text" size="large" color="info">
               //   <PrintIcon />
               // </IconButton>
-              <Button className="mr-4" htmlType="submit" ref={printComponentRef}>
+              <Button className="mr-4" ref={printComponentRef}>
                 Thanh toán
               </Button>
             )}
@@ -250,13 +289,13 @@ const PaymentForm = ({ data }) => {
               return componentRef.current;
             }}
           />
-        </Form.Item>
+        </div>
       </Form>
 
       {/* printer template */}
       <div style={{ display: "none" }}>
         <Paper ref={componentRef}>
-          <PrintPaymentForm data={data} />
+          <PrintPaymentForm data={invoice} />
         </Paper>
       </div>
     </>

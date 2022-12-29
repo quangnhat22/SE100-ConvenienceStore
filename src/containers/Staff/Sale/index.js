@@ -1,21 +1,25 @@
 import ReactToPrint from "react-to-print";
 import { useRef, useState, useEffect } from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { Layout } from "antd";
+import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { Layout, Space, Dropdown } from "antd";
 import { Content, Header, Footer } from "antd/lib/layout/layout";
 import SearchHeader from "./components/SearchHeader";
 import PaymentForm from "./components/PaymentForm";
 import ListItem from "./components/ListItem";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../redux/constants/constant";
-
+import DropDownAvatar from "./components/DropDownAvatar";
 
 const SalePage = () => {
   const dispatch = useDispatch();
-  const { listProduct, loading } = useSelector((state) => state.productSlice);
+  const uid = localStorage.getItem("id");
+  const { listProductSale, listProduct, loading } = useSelector(
+    (state) => state.productSlice
+  );
   const { cartItems } = useSelector((state) => state.cartSlice);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
+    dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
   }, []);
 
   return (
@@ -27,13 +31,10 @@ const SalePage = () => {
           className="flex justify-end items-center"
         >
           <div className="mr-auto grow flex justify-center items-center bg-transparent z-10">
-            <SearchHeader data={listProduct} />
+            <SearchHeader data={listProductSale} />
           </div>
           <div className="flex items-center justify-end mr-7 bg-transparent">
-            <UserOutlined
-              className="p-2 rounded-full bg-blue-300"
-              style={{ color: "#9900FF" }}
-            />
+            <DropDownAvatar />
             <p className="mb-0 ml-1 text-white">Nguyễn Văn A</p>
           </div>
         </Header>
@@ -42,7 +43,7 @@ const SalePage = () => {
           <div className="w-3/5 bg-slate-300">
             <ListItem data={cartItems} />
           </div>
-          <div className="w-2/5 min-w-200">
+          <div className="w-2/5 min-w-[200px]">
             <PaymentForm data={cartItems} />
           </div>
         </Content>

@@ -6,22 +6,6 @@ import "./style/CustomInputNumber.css";
 
 const ListItem = ({ data }) => {
   const dispatch = useDispatch();
-  // const onChangeUD = (val, info, item) => {
-  //   let newCartItem = {
-  //     id: item.id,
-  //     productName: item.productName,
-  //     price: item.price,
-  //     quantity: item.quantity,
-  //     tax: item.tax,
-  //     image: item.image,
-  //     maxQuantity: item.maxQuantity,
-  //   };
-  //   if (info === "up") {
-  //     dispatch(cartActions.addNewCartItem(newCartItem));
-  //   } else if (newCartItem.quantity > 1) {
-  //     dispatch(cartActions.reduceCartItem(newCartItem));
-  //   }
-  // };
 
   const onChange = (e, item) => {
     console.log(e);
@@ -65,7 +49,7 @@ const ListItem = ({ data }) => {
         >
           <Skeleton avatar title={false} loading={false} active>
             <List.Item.Meta
-              // avatar={<Avatar src={item.picture.large} />}
+              avatar={<img className="w-16" src={item.image} alt="" />}
               title={item.productName}
               description={item.price}
             />

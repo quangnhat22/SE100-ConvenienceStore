@@ -9,12 +9,12 @@ import * as SagaActionTypes from "../../../../../redux/constants/constant";
 import DetailProviderForm from "./components/DetailProviderForm";
 import AddProductLineInProvider from "./components/AddProductLineInProvider";
 import { modalActions } from "../../../../../redux/reducer/ModalReducer";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-const DetailProviderPage = (props) => {
+const DetailProviderPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { id } = props.match.params;
+  const { id } = useParams();
   let { provider, productOfProvider, loading } = useSelector(
     (state) => state.providerSlice
   );
@@ -58,7 +58,7 @@ const DetailProviderPage = (props) => {
           Nhà cung cấp: {id} - {provider.name}
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">
-          <DetailProviderForm provider={provider} loading={loading} />
+          <DetailProviderForm provider={provider} />
         </div>
         <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
           <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-lg">

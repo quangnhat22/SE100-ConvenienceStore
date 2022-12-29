@@ -12,11 +12,11 @@ const InvoicePage = () => {
   const [keyWord, setKeyWord] = useState("");
   const { listInvoice } = useSelector((state) => state.invoiceSlice);
   useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    dispatch({ type: SagaActionTypes.GET_LIST_INVOICES_SAGA });
   }, []);
 
   return (
-    <div className="bg-white pb-5">
+    <div className="pb-5">
       <Space className="flex justify-between border-b p-5">
         <div className="inline-block content-around font-semibold text-2xl whitespace-nowrap">
           Hóa đơn sản phẩm

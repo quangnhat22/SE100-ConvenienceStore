@@ -8,25 +8,29 @@ import { Segmented } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 const RevenuePage = () => {
-  const TimeReal = new Date();
+  const TimeReal = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  };
   const dispatch = useDispatch();
   const [selectedYear, setSelectedYear] = useState({
-    year: TimeReal.getFullYear(),
+    year: TimeReal.year,
   });
   const [selectedMonth, setSelectedMonth] = useState({
-    year: TimeReal.getFullYear(),
-    month: TimeReal.getMonth(),
+    year: TimeReal.year,
+    month: TimeReal.month,
   });
   const [selectedWeek, setSelectedWeek] = useState({
-    year: TimeReal.getFullYear(),
-    month: TimeReal.getMonth(),
-    day: TimeReal.getDate(),
+    year: TimeReal.year,
+    month: TimeReal.month,
+    day: TimeReal.day,
   });
   const { loading, reports } = useSelector((state) => state.reportsSlice);
   const [time, setTime] = useState({
-    year: TimeReal.getFullYear(),
-    month: TimeReal.getMonth(),
-    day: TimeReal.getDate(),
+    year: TimeReal.year,
+    month: TimeReal.month,
+    day: TimeReal.day,
   });
   const [valueFilter, setValueFilter] = useState("WEEK");
   useEffect(() => {
@@ -62,7 +66,7 @@ const RevenuePage = () => {
   const [yearHidden, setYearHidden] = useState(true);
 
   return (
-    <div className="bg-white">
+    <div>
       {/* Option */}
       <Space className="flex flex-wrap justify-between border-b py-3 gap-x-4 gap-y-2">
         <div className="inline-block content-around font-semibold text-2xl whitespace-nowrap ml-5">
@@ -112,17 +116,17 @@ const RevenuePage = () => {
               disabledDate={(currentDate) => {
                 return currentDate && currentDate.valueOf() > Date.now();
               }}
-              defaultValue={moment(TimeReal)}
+              defaultValue={moment()}
               onChange={(date) => {
                 setSelectedWeek({
-                  year: moment(date).getFullYear(),
-                  month: moment(date).getMonth(),
-                  day: moment(date).getDate(),
+                  year: moment(date).year(),
+                  month: moment(date).month() + 1,
+                  day: moment(date).date(),
                 });
                 setTime({
-                  year: moment(date).getFullYear(),
-                  month: moment(date).getMonth(),
-                  day: moment(date).getDate(),
+                  year: moment(date).year(),
+                  month: moment(date).month() + 1,
+                  day: moment(date).date(),
                 });
               }}
             />
@@ -136,15 +140,15 @@ const RevenuePage = () => {
                 return currentDate && currentDate.valueOf() > Date.now();
               }}
               format={"MM-YYYY"}
-              defaultValue={moment(TimeReal)}
+              defaultValue={moment()}
               onChange={(date) => {
                 setSelectedMonth({
-                  year: moment(date).getFullYear(),
-                  month: moment(date).getMonth(),
+                  year: moment(date).year(),
+                  month: moment(date).month() + 1,
                 });
                 setTime({
-                  year: moment(date).getFullYear(),
-                  month: moment(date).getMonth(),
+                  year: moment(date).year(),
+                  month: moment(date).month() + 1,
                 });
               }}
             />
@@ -158,13 +162,13 @@ const RevenuePage = () => {
                 return currentDate && currentDate.valueOf() > Date.now();
               }}
               format={"YYYY"}
-              defaultValue={moment(TimeReal)}
+              defaultValue={moment()}
               onChange={(date) => {
                 setSelectedYear({
-                  year: moment(date).getFullYear(),
+                  year: moment(date).year(),
                 });
                 setTime({
-                  year: moment(date).getFullYear(),
+                  year: moment(date).year(),
                 });
               }}
             />

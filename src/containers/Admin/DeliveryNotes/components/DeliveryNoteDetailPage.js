@@ -21,15 +21,15 @@ import Search from "antd/lib/input/Search";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import TableProducts from "../../Products/components/TableProducts";
 
 const dateFormat = "DD/MM/YYYY";
 
-const DeliveryNoteDetailPage = (props) => {
+const DeliveryNoteDetailPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { id } = props.match.params;
+  const { id } = useParams();
   const [keyWord, setKeyWord] = useState("");
   const { deliveryNote, loading } = useSelector(
     (state) => state.deliveryNotesSlice

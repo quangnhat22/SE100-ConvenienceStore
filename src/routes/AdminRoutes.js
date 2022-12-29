@@ -7,7 +7,6 @@ import StaffsPage from "../containers/Admin/Staffs";
 import ProvidersPage from "../containers/Admin/Providers";
 import ProductLinesPage from "../containers/Admin/ProductLines";
 import DeliveryNotes from "../containers/Admin/DeliveryNotes";
-import AddProductPage from "../containers/Admin/Products/components/AddProductPage";
 import DetailProductPage from "../containers/Admin/Products/components/DetailProductPage";
 import Invoice from "../containers/Admin/Invoice";
 import SalePage from "../containers/Staff/Sale";
@@ -26,11 +25,7 @@ const routesAdmin = [
     path: "/products",
     component: ProductsPage,
   },
-  // {
-  //   exact: false,
-  //   path: "/add_product",
-  //   component: AddProductPage,
-  // },
+
   {
     exact: false,
     path: "/detail_product/:id",
@@ -79,7 +74,6 @@ const routesAdmin = [
   {
     exact: false,
     path: "/sales",
-    component: SalePage,
   },
   {
     exact: false,

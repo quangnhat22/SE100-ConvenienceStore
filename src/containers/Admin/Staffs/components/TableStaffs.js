@@ -109,39 +109,39 @@ const TableStaffs = ({ keyWord, data, loading }) => {
           >
             <EyeFilled />
           </button>
-          <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa nhân viên này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            okType="default"
-            okButtonProps={{
-              className:
-                "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
-            }}
-            cancelButtonProps={{
-              className:
-                "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
-            }}
-            onConfirm={() => handleRemoveStaff(record)}
-          >
-            {record.role === "MANAGER" ? (
-              <button
-                type="button"
-                className="bg-slate-400 text-white font-bold py-2 px-3 rounded inline-flex items-center"
-                disabled
-              >
-                <DeleteFilled />
-              </button>
-            ) : (
+          {record.role === "MANAGER" ? (
+            <button
+              type="button"
+              className="bg-slate-400 text-white font-bold py-3 px-3 rounded inline-flex items-center"
+              disabled
+            >
+              <DeleteFilled />
+            </button>
+          ) : (
+            <Popconfirm
+              placement="top"
+              title="Bạn có chắc muốn xóa nhân viên này?"
+              okText="Xác nhận"
+              cancelText="Hủy"
+              okType="default"
+              okButtonProps={{
+                className:
+                  "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
+              }}
+              cancelButtonProps={{
+                className:
+                  "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
+              }}
+              onConfirm={() => handleRemoveStaff(record)}
+            >
               <button
                 type="button"
                 className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
               >
                 <DeleteFilled />
               </button>
-            )}
-          </Popconfirm>
+            </Popconfirm>
+          )}
         </Space>
       ),
     },

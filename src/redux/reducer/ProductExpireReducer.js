@@ -5,9 +5,9 @@ const initialState = {
   productItemsExpire: [],
   productItemExpire: {
     id: 0,
-  stateName: "",
-  val: 0,
-  color: ""
+    stateName: "",
+    val: 0,
+    color: "",
   },
 };
 

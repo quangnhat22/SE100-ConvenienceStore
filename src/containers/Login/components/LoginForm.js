@@ -2,7 +2,7 @@ import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
 import { ErrorMessage, Formik } from "formik";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { object, string } from "yup";
 import AlertCustom from "../../../common/Notification/Alert";
@@ -38,7 +38,10 @@ const LoginForm = () => {
   }, [isLoggedIn]);
 
   const RegisterValidation = object().shape({
-    username: string().max(255).required("Vui lòng nhập tên đăng nhập"),
+    username: string()
+      .max(255)
+      .required("Vui lòng nhập tên đăng nhập")
+      .email("Email không hợp lệ!"),
     password: string()
       .min(8, "Phải có ít nhất 8 ký tự")
       .required("Vui lòng nhập mật khẩu"),
@@ -105,7 +108,10 @@ const LoginForm = () => {
                 />
               )}
             </div>
-            <div className="row button mt-10 mb-10">
+            <div className="text-blue-400 py-2 flex justify-center hover:text-blue-600 hover:italic cursor-pointer hover:drop-shadow-sm">
+              <Link to="/forgot-password">Forgot Password?</Link>
+            </div>
+            <div className="row button mt-5 mb-10">
               <input type="submit" value="Login" />
             </div>
           </form>

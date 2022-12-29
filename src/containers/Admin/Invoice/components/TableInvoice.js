@@ -1,4 +1,4 @@
-import { EyeOutlined } from "@ant-design/icons";
+import { EyeFilled } from "@ant-design/icons";
 import { Space, Spin, Tooltip } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
@@ -48,6 +48,7 @@ const TableInvoice = ({ keyWord, data, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
       sorter: (item1, item2) => item1.date > item2.date,
+      render: (MFG) => `${moment(MFG).format("DD/MM/YYYY")}`,
     },
     {
       title: "Người lập",
@@ -106,7 +107,7 @@ const TableInvoice = ({ keyWord, data, loading }) => {
               className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
               onClick={() => handleViewContent(record.invoiceDetails)}
             >
-              <EyeOutlined />
+              <EyeFilled />
             </button>
           </Space>
         </Tooltip>

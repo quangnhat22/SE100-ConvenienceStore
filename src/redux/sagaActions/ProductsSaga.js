@@ -34,7 +34,7 @@ function* actPostProducts(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }
 }
@@ -56,7 +56,7 @@ function* actPutProducts(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }
 }
@@ -77,7 +77,14 @@ function* actDeleteProducts(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({
+        type: "error",
+        title: "Không thể xóa dòng sản phẩm vì đã được dùng",
+      });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_PRODUCTS_SAGA });
   }
 }

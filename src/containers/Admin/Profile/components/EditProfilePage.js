@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 import moment from "moment";
+import axios from "axios";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -17,6 +18,8 @@ const getBase64 = (file) =>
 const EditProfilePage = ({ data }) => {
   const { Option } = Select;
   const dispatch = useDispatch();
+  const [progress, setProgress] = useState(0);
+
   const validateMessages = {
     required: "Cần nhập ${label}!",
     types: {
@@ -33,7 +36,10 @@ const EditProfilePage = ({ data }) => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState([{ url: data.avatar }]);
+  const [imageChange, setImageChange] = useState(data.avatar);
+
   const handleCancel = () => setPreviewOpen(false);
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -45,10 +51,7 @@ const EditProfilePage = ({ data }) => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-  const handleChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    console.log(fileList[0]);
-  };
+
 
   const onFinish = (values) => {
     Modal.confirm({
@@ -68,23 +71,66 @@ const EditProfilePage = ({ data }) => {
 
   const handleSave = (values) => {
     let editedProfile = {
-      fullname: values.staff_name,
+      fullname: values.fullname,
       birthday: values.birthday.toISOString(),
       identityNumber: values.identityNumber,
       gender: values.gender,
       phoneNumber: values.phoneNumber,
-      email: values.staff_email,
+      email: values.email,
       address: values.address,
       other: values.other,
-      role: data.role,
-      avatar: "",
+      role: localStorage.getItem("role"),
+      avatar: imageChange,
     };
-    console.log(data);
+    console.log(editedProfile);
     dispatch({
       type: SagaActionTypes.PUT_USER_SAGA,
       id: data.id,
       staff: editedProfile,
     });
+  };
+
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost/image/upload",
+        data: fmData,
+        ...config,
+      });
+
+      let { data, status } = res;
+      console.log("server res: ", res);
+      setImageChange(data["path"]);
+      onSuccess("Ok");
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    //console.log(fileList);
+    setFileList(fileList);
+    //filelist - [{uid: "-1",url:'Some url to image'}]
   };
 
   const initialvalue = {
@@ -217,15 +263,13 @@ const EditProfilePage = ({ data }) => {
             >
               <>
                 <Upload
-                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  listType="picture-card"
-                  beforeUpload={(file) => {
-                    return false;
-                  }}
-                  fileList={fileList}
-                  onPreview={handlePreview}
-                  onChange={handleChange}
-                  maxCount="1"
+                   accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+                   listType="picture-card"
+                   fileList={fileList}
+                   onPreview={handlePreview}
+                   customRequest={uploadImage}
+                   onChange={handleOnChange}
+                   maxCount="1"
                 >
                   <Space className="flex flex-col text-base">
                     <PlusOutlined />

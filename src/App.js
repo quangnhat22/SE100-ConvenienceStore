@@ -28,7 +28,7 @@ function App() {
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         <Route
           exact
-          path="/reset-password/:token"
+          path="/reset-password/"
           component={ResetPasswordPage}
         />
         {renderRoutesAdmin(routesAdmin)}

@@ -65,11 +65,17 @@ function* actPutProductItem(action) {
       AlertCustom({ type: "error", title: "Chỉnh sửa sản phẩm thất bại" });
       //yield put(authActions.requestLogFailed());
     }
-    yield call(() => ProductService.getProductById(id));
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA,
+      id: id,
+    });
   } catch (err) {
     //yield put(authActions.requestLogFailed());
     AlertCustom({ type: "error", title: "Chỉnh sửa sản phẩm thất bại" });
-    yield call(() => ProductService.getProductById(id));
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_BY_ID_SAGA,
+      id: id,
+    });
   }
 }
 
@@ -77,14 +83,29 @@ function* actDeleteProductItem(action) {
   try {
     let { id } = action;
     yield put(productActions.getListProductLoading());
-
     let res = yield call(() => ProductService.deleteProductById(id));
     if (res.status === 200) {
+      AlertCustom({ type: "success", title: "Xóa sản phẩm thành công" });
       yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
     } else {
+      AlertCustom({ type: "error", title: "Xóa sản phẩm thất bại" });
       //yield put(authActions.requestLogFailed());
     }
+    yield put({
+      type: SagaActionTypes.GET_LIST_PRODUCT_SAGA,
+    });
   } catch (err) {
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({
+        type: "error",
+        title: "Không thể xóa sản phẩm vì sản phẩm đã được bán",
+      });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
+    yield put({
+      type: SagaActionTypes.GET_LIST_PRODUCT_SAGA,
+    });
     //yield put(authActions.requestLogFailed());
   }
 }

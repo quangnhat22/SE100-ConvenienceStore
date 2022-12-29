@@ -1,41 +1,26 @@
 import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
 import { ErrorMessage, Formik } from "formik";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import Swal from "sweetalert2";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { object, string, ref } from "yup";
-import AlertCustom from "../../../common/Notification/Alert";
 import * as SagaActionTypes from "../../../redux/constants/constant";
 import "../style/index.css";
 
-const ResetPasswordForm = () => {
-  const history = useHistory();
+const ResetPasswordForm = (props) => {
+  console.log(props.token);
   const dispatch = useDispatch();
   //   const { isLoggedIn } = useSelector((state) => state.authSlice);
 
   const handleSubmit = (values) => {
-    // let { username, password } = values;
-    // dispatch({
-    //   type: SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
-    //   data: {
-    //     username: username,
-    //     password: password,
-    //   },
-    // });
+    let { repeatPassword } = values;
+    dispatch({
+      type: SagaActionTypes.RESET_PASSWORD_SAGA,
+      data: {
+        token: props.token,
+        password: repeatPassword,
+      },
+    });
   };
-
-  //   useEffect(() => {
-  //     if (isLoggedIn && localStorage.getItem("access_token") != null) {
-  //       console.log(localStorage.getItem("role"));
-  //       if (localStorage.getItem("role") === "MANAGER") {
-  //         history.replace("/dash-board");
-  //       }
-  //       if (localStorage.getItem("role") === "EMPLOYEE") {
-  //         history.replace("/sales");
-  //       }
-  //     }
-  //   }, [isLoggedIn]);
 
   const RegisterValidation = object().shape({
     newPassword: string()
