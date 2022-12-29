@@ -33,10 +33,7 @@ const SalePage = () => {
           <div className="mr-auto grow flex justify-center items-center bg-transparent z-10">
             <SearchHeader data={listProductSale} />
           </div>
-          <div className="flex items-center justify-end mr-7 bg-transparent">
-            <DropDownAvatar />
-            <p className="mb-0 ml-1 text-white">Nguyễn Văn A</p>
-          </div>
+          <DropDownAvatar />
         </Header>
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
         <Content className="flex z-0">

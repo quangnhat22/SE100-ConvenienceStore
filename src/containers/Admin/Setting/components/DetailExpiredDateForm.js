@@ -3,13 +3,10 @@ import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { Colorpicker } from "antd-colorpicker";
 import { useDispatch } from "react-redux";
-import { regulationActions } from "../../../../redux/reducer/RegulationSlice";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import moment from "moment";
-import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const DetailRegulationForm = ({ productItemQuantity }) => {
+const DetailExpiredDateForm = ({ productItemExpire }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [enableModify, setEnableModify] = useState(false);
@@ -35,42 +32,29 @@ const DetailRegulationForm = ({ productItemQuantity }) => {
   };
 
   const onFinish = (values) => {
-    let { stateName, minVal, maxVal, color } = values;
-    if (minVal > maxVal) {
-      Swal.fire({
-        width: "400",
-        height: "100",
-        backdrop: "none",
-        icon: "warning",
-        title: "Giá trị tối thiểu không thể lớn hơn giá trị tối đa",
-        showConfirmButton: false,
-        timer: 1000,
-        timerProgressBar: true,
-      });
-      return;
-    }
+    let { stateName, val, color } = values;
     dispatch({
-      type: SagaActionTypes.PUT_PRODUCT_ITEM_QUANTITY_RULE_SAGA,
-      id: productItemQuantity.id,
+      type: SagaActionTypes.PUT_PRODUCT_EXPIRE_SAGA,
+      id: productItemExpire.id,
       productItemQuantityState: {
         stateName,
-        minVal,
-        maxVal,
+        val,
         color: isColorChange ? color.hex : color,
       },
     });
+    setTimeout(() => {
+      dispatch(modalActions.hideModal());
+    }, 300);
   };
 
   return (
     <FormCustomed
-      name="add_product_form"
       form={form}
       onFinish={onFinish}
       initialValues={{
-        stateName: productItemQuantity.stateName,
-        minVal: productItemQuantity.minVal,
-        maxVal: productItemQuantity.maxVal,
-        color: productItemQuantity.color,
+        stateName: productItemExpire.stateName,
+        val: productItemExpire.val,
+        color: productItemExpire.color,
       }}
     >
       <Form.Item
@@ -85,8 +69,8 @@ const DetailRegulationForm = ({ productItemQuantity }) => {
         <Input placeholder="Tên trạng thái" disabled={componentDisabled} />
       </Form.Item>
       <Form.Item
-        name="minVal"
-        label="Số lượng tối thiểu"
+        name="val"
+        label="Giá trị"
         rules={[
           {
             required: true,
@@ -99,26 +83,7 @@ const DetailRegulationForm = ({ productItemQuantity }) => {
           style={{
             width: "50%",
           }}
-          placeholder="Số lượng tối thiểu"
-          disabled={componentDisabled}
-        />
-      </Form.Item>
-      <Form.Item
-        name="maxVal"
-        label="Số lượng tối đa"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 0,
-          },
-        ]}
-      >
-        <InputNumber
-          style={{
-            width: "50%",
-          }}
-          placeholder="Số lượng tối đa"
+          placeholder="Giá trị"
           disabled={componentDisabled}
         />
       </Form.Item>
@@ -168,4 +133,4 @@ const DetailRegulationForm = ({ productItemQuantity }) => {
     </FormCustomed>
   );
 };
-export default DetailRegulationForm;
+export default DetailExpiredDateForm;

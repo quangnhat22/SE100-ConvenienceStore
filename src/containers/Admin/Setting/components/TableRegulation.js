@@ -1,14 +1,13 @@
 import { hover } from "@testing-library/user-event/dist/hover";
-import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import { DeleteFilled, EyeFilled } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import ModalForm from "../../../../HOC/ModalForm";
 import TableTemplate from "../../../../common/Table/TableTemplate";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
-import { Popconfirm, Space, Spin, Tag, Loading } from "antd";
+import { Popconfirm, Space, Spin, Tag, Loading, Table } from "antd";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
-import RegulationForm from "./RegulationForm";
 import DetailRegulationForm from "./DetailRegulationForm";
 
 const TableRegulation = ({ productItemsQuantity }) => {
@@ -24,8 +23,9 @@ const TableRegulation = ({ productItemsQuantity }) => {
       key: "id",
       width: "10%",
       //defaultSortOrder: ["descend"],
-      sorter: (item1, item2) => item1.id.localeCompare(item2.id),
-      //sortOrder: sortedInfo.columnKey === "id" && sortedInfo.order,
+      sorter: (item1, item2) => {
+        item1.id.localeCompare(item2.id);
+      },
       showOnResponse: true,
       showOnDesktop: true,
     },
@@ -85,7 +85,7 @@ const TableRegulation = ({ productItemsQuantity }) => {
             className="text-white font-bold py-3 px-3 rounded inline-flex items-center edit-button"
             onClick={() => handleEditRegulation(record)}
           >
-            <EditFilled />
+            <EyeFilled />
           </button>
           <Popconfirm
             placement="top"
@@ -139,29 +139,27 @@ const TableRegulation = ({ productItemsQuantity }) => {
   const handleEditRegulation = (record) => {
     dispatch(
       modalActions.showModal({
-        ComponentContent: (
-          <DetailRegulationForm
-            productItemQuantity={record}
-          ></DetailRegulationForm>
-        ),
+        ComponentContent: <DetailRegulationForm productItemQuantity={record} />,
       })
     );
   };
 
   return (
     <>
-      <TableTemplate
+      <Table
+        className="header-style m-3 drop-shadow-lg"
         columns={columns}
         dataSource={productItemsQuantity}
         pagination={{
           onChange(current) {
             setPage(current);
           },
-          defaultPageSize: 6,
+          defaultPageSize: 2,
           showSizeChanger: false,
-          pageSizeOptions: ["6"],
+          pageSizeOptions: ["2"],
         }}
         rowKey={"id"}
+        scroll={{ x: 1100 }}
       />
       <ModalForm isModalOpen={isOpen} />
     </>

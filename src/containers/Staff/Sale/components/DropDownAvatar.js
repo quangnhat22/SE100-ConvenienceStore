@@ -48,10 +48,15 @@ const DropDownAvatar = () => {
   );
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
-      <UserOutlined
-        className="p-2 rounded-full bg-blue-300"
-        style={{ color: "#9900FF" }}
-      />
+      <div className="flex items-center justify-end mr-2 sm:mr-7 bg-transparent cursor-pointer">
+        <UserOutlined
+          className="p-2 rounded-full bg-blue-300"
+          style={{ color: "#9900FF" }}
+        />
+        <p className="mb-0 ml-1 text-white hidden sm:inline-block">
+          Nguyễn Văn A
+        </p>
+      </div>
     </Dropdown>
   );
 };

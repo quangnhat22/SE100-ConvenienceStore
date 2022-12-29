@@ -43,7 +43,7 @@ const SearchHeader = ({ data }) => {
     {
       dataIndex: "id",
       key: "id",
-      width: "20%",
+      width: "40%",
       ellipsis: true,
       filteredValue: [searchedText],
       onFilter: (value, record) => {
@@ -59,6 +59,7 @@ const SearchHeader = ({ data }) => {
       dataIndex: ["product", "title"],
       key: "title",
       ellipsis: true,
+      width: "40%",
     },
     {
       dataIndex: "quantity",
@@ -78,7 +79,7 @@ const SearchHeader = ({ data }) => {
             {record.price.toLocaleString(undefined, {
               maximumFractionDigits: 2,
             })}
-            <sup className="flex flex-col justify-center">vnđ</sup>
+            <sup className="flex flex-col justify-center">đ</sup>
           </Space>
         );
       },

@@ -2,19 +2,19 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { productItemsExpireActions } from "../reducer/ProductExpireReducer";
 import { ProductItemExpireService } from "../../service/api/ProductItemExpireApi";
+import { modalActions } from "../reducer/ModalReducer";
+import AlertCustom from "../../common/Notification/Alert";
 
 function* actGetListProductItemsExpire() {
   try {
     yield put(productItemsExpireActions.getProductItemsExpireLoading());
 
-    let res = yield call(() =>
-      ProductItemExpireService.getProductItemExpire()
-    );
+    let res = yield call(() => ProductItemExpireService.getProductItemExpire());
     let { status, data } = res;
     if (status === 200) {
       yield put(
         productItemsExpireActions.getProductItemsExpireSuccess({
-            productItemsExpire: data,
+          productItemsExpire: data,
         })
       );
     } else {
@@ -30,19 +30,20 @@ function* actPostProductItemsExpire(action) {
     let { newProductItemExpireState } = action;
     yield put(productItemsExpireActions.getProductItemsExpireLoading());
     let res = yield call(() =>
-      ProductItemExpireService.postProductItemExpire(
-        newProductItemExpireState
-      )
+      ProductItemExpireService.postProductItemExpire(newProductItemExpireState)
     );
     if (res.status === 201) {
-      yield put({
-        type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA,
-      });
+      AlertCustom({ type: "success", title: "Thêm nhà quy định thành công" });
+      yield put(modalActions.hideModal());
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Thêm nhà quy định thất bại" });
     }
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA,
+    });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err.message });
+    yield put({ type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA });
   }
 }
 
@@ -58,14 +59,19 @@ function* actPutProductItemsExpire(action) {
       )
     );
     if (res.status === 200) {
-      yield put({
-        type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA,
+      AlertCustom({
+        type: "success",
+        title: "Chỉnh sửa trạng thái thành công",
       });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Chỉnh sửa trạng thái thất bại" });
     }
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_EXPIRE_BY_ID_SAGA,
+      id: id,
+    });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err.message });
   }
 }
 
@@ -78,14 +84,16 @@ function* actDeleteProductItemsExpire(action) {
       ProductItemExpireService.deleteProductItemExpireById(id)
     );
     if (res.status === 200) {
-      yield put({
-        type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA,
-      });
+      AlertCustom({ type: "success", title: "Xóa trạng thái thành công" });
     } else {
-      //yield put(authActions.requestLogFailed());
+      AlertCustom({ type: "error", title: "Xóa trạng thái thất bại" });
     }
+    yield put({
+      type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA,
+    });
   } catch (err) {
-    //yield put(authActions.requestLogFailed());
+    AlertCustom({ type: "error", title: err.message });
+    yield put({ type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA });
   }
 }
 
@@ -99,7 +107,7 @@ function* actGetProductItemExpireById(action) {
     if (status === 200) {
       yield put(
         productItemsExpireActions.getProductItemExpireByIdSuccess({
-            productItemExpire: data,
+          productItemExpire: data,
         })
       );
     } else {

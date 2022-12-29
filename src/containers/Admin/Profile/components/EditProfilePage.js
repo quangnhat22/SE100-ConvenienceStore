@@ -52,7 +52,6 @@ const EditProfilePage = ({ data }) => {
     );
   };
 
-
   const onFinish = (values) => {
     Modal.confirm({
       title: "Xác nhận",
@@ -247,7 +246,7 @@ const EditProfilePage = ({ data }) => {
               label="Email"
               rules={[{ type: "email", required: true }]}
             >
-              <Input placeholder="Email" />
+              <Input disabled={true} placeholder="Email" />
             </Form.Item>
             <Form.Item
               name="address"
@@ -263,13 +262,13 @@ const EditProfilePage = ({ data }) => {
             >
               <>
                 <Upload
-                   accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
-                   listType="picture-card"
-                   fileList={fileList}
-                   onPreview={handlePreview}
-                   customRequest={uploadImage}
-                   onChange={handleOnChange}
-                   maxCount="1"
+                  accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+                  listType="picture-card"
+                  fileList={fileList}
+                  onPreview={handlePreview}
+                  customRequest={uploadImage}
+                  onChange={handleOnChange}
+                  maxCount="1"
                 >
                   <Space className="flex flex-col text-base">
                     <PlusOutlined />
