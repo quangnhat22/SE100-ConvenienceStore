@@ -17,7 +17,10 @@ const ForgotPasswordPage = () => {
     });
   };
   const RegisterValidation = object().shape({
-    email: string().max(255).required("Vui lòng nhập email!"),
+    email: string()
+      .max(255)
+      .required("Vui lòng nhập email!")
+      .email("Email không hợp lệ!"),
   });
   return (
     <div className="flex justify-center h-full">

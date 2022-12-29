@@ -8,6 +8,7 @@ import { store } from "./redux";
 import { Provider } from "react-redux";
 import { ConfigProvider } from "antd";
 import viVN from "antd/lib/locale/vi_VN";
+import SettingPage from "./containers/Admin/Setting";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,6 +18,7 @@ root.render(
       <BrowserRouter>
         <ConfigProvider locale={viVN}>
           <App />
+          {/* <SettingPage /> */}
         </ConfigProvider>
       </BrowserRouter>
     </React.StrictMode>

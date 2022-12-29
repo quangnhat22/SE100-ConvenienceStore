@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { Colorpicker } from "antd-colorpicker";

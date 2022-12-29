@@ -6,34 +6,19 @@ import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const RegulationForm = () => {
+const ExpiredDateForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    if (values.min > values.max) {
-      Swal.fire({
-        width: "400",
-        height: "100",
-        backdrop: "none",
-        icon: "error",
-        title: "Giá trị tối thiểu không được phép lớn hơn giá trị max",
-        showConfirmButton: false,
-        timer: 1000,
-        timerProgressBar: true,
-      });
-      return;
-    }
-
-    let newRegulation = {
+    let newExpiredDate = {
       stateName: values.stateName,
-      minVal: values.minVal,
-      maxVal: values.maxVal,
+      val: values.val,
       color: values.color.hex,
     };
     dispatch({
-      type: SagaActionTypes.POST_PRODUCT_ITEM_QUANTITY_RULE_SAGA,
-      newProductItemQuantityState: newRegulation,
+      type: SagaActionTypes.POST_PRODUCT_EXPIRE_SAGA,
+      newProductItemExpireState: newExpiredDate,
     });
   };
   //const initialValues = { color: { r: 26, g: 14, b: 85, a: 1 } };
@@ -42,7 +27,7 @@ const RegulationForm = () => {
     <FormCustomed name="add_product_form" form={form} onFinish={onFinish}>
       <Form.Item
         name="stateName"
-        label="Tên trạng thái"
+        label="Tên quy định"
         rules={[
           {
             required: true,
@@ -52,8 +37,8 @@ const RegulationForm = () => {
         <Input placeholder="Tên trạng thái" />
       </Form.Item>
       <Form.Item
-        name="minVal"
-        label="Số lượng tối thiểu"
+        name="val"
+        label="Giá trị"
         rules={[
           {
             required: true,
@@ -66,25 +51,7 @@ const RegulationForm = () => {
           style={{
             width: "50%",
           }}
-          placeholder="Số lượng tối thiểu"
-        />
-      </Form.Item>
-      <Form.Item
-        name="maxVal"
-        label="Số lượng tối đa"
-        rules={[
-          {
-            required: true,
-            type: "number",
-            min: 0,
-          },
-        ]}
-      >
-        <InputNumber
-          style={{
-            width: "50%",
-          }}
-          placeholder="Số lượng tối đa"
+          placeholder="Giá trị"
         />
       </Form.Item>
 
@@ -103,4 +70,4 @@ const RegulationForm = () => {
     </FormCustomed>
   );
 };
-export default RegulationForm;
+export default ExpiredDateForm;

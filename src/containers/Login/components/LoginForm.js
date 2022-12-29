@@ -38,7 +38,10 @@ const LoginForm = () => {
   }, [isLoggedIn]);
 
   const RegisterValidation = object().shape({
-    username: string().max(255).required("Vui lòng nhập tên đăng nhập"),
+    username: string()
+      .max(255)
+      .required("Vui lòng nhập tên đăng nhập")
+      .email("Email không hợp lệ!"),
     password: string()
       .min(8, "Phải có ít nhất 8 ký tự")
       .required("Vui lòng nhập mật khẩu"),

@@ -99,7 +99,7 @@ const PieChart = (props) => {
     ],
   };
 
-  return <Pie className="grow" {...config} />;
+  return <Pie className={props.className} {...config} />;
 };
 
 export default PieChart;
