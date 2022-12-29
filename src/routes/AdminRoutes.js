@@ -74,7 +74,6 @@ const routesAdmin = [
   {
     exact: false,
     path: "/sales",
-    component: SalePage,
   },
   {
     exact: false,
