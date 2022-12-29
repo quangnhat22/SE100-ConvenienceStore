@@ -65,7 +65,15 @@ function* actDeleteDeliveryNotes(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err.message });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({
+        type: "error",
+        title:
+          "Không thể xóa phiếu nhập hàng vì sản phẩm của phiếu đã được dùng",
+      });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_DELIVERY_NOTES_SAGA });
   }
 }

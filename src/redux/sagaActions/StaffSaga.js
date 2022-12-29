@@ -34,7 +34,11 @@ function* actPostStaff(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err.message });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({ type: "error", title: "Email đã được sử dụng" });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }
@@ -71,7 +75,14 @@ function* actDeleteStaff(action) {
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
-    AlertCustom({ type: "error", title: err.message });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({
+        type: "error",
+        title: "Không thể xóa nhân viên này vì đã thực hiện thanh toán",
+      });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   }
 }

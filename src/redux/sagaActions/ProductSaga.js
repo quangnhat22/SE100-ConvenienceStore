@@ -95,7 +95,14 @@ function* actDeleteProductItem(action) {
       type: SagaActionTypes.GET_LIST_PRODUCT_SAGA,
     });
   } catch (err) {
-    AlertCustom({ type: "error", title: "Không thể xóa sản phẩm" });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({
+        type: "error",
+        title: "Không thể xóa sản phẩm vì sản phẩm đã được bán",
+      });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({
       type: SagaActionTypes.GET_LIST_PRODUCT_SAGA,
     });

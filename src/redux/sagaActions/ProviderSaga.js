@@ -160,7 +160,11 @@ function* actAddProductOfProvider(action) {
     });
     yield put(providerActions.hideLoading());
   } catch (err) {
-    AlertCustom({ type: "error", title: err.message });
+    if (err.response.data.statusCode === 409) {
+      AlertCustom({ type: "error", title: "Có dòng sản phẩm đã được thêm!" });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({
       type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
       id: providerId,
@@ -195,7 +199,7 @@ function* actRemoveProductOfProvider(action) {
     });
     yield put(providerActions.hideLoading());
   } catch (err) {
-    AlertCustom({ type: "error", title: err.message });
+    AlertCustom({ type: "error", title: "Không thể xóa nhà cung cấp" });
     yield put({
       type: SagaActionTypes.GET_PROVIDER_BY_ID_SAGA,
       id: providerId,
