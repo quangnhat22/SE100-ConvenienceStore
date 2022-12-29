@@ -50,3 +50,6 @@ export const URL_GET_INVOICES_BY_ID = (id) => `${DOMAIN_NAME}/invoices/${id}`;
 export const URL_PRODUCT_ITEM_EXPIRE_STATE = `${DOMAIN_NAME}/product-item-expire-state-rule`;
 export const URL_PRODUCT_ITEM_EXPIRE_STATE_BY_ID = (id) =>
   `${DOMAIN_NAME}/product-item-expire-state-rule/${id}`;
+
+//VAT
+export const URL_VAT = `${DOMAIN_NAME}/vat`;

@@ -9,6 +9,7 @@ import * as ProductItemQuantityStateSaga from "./sagaActions/ProductItemQuantity
 import * as ReportSaga from "./sagaActions/ReportSaga";
 import * as InvoiceSaga from "./sagaActions/InvoiceSaga";
 import * as ProductExpireSaga from "./sagaActions/ProductExpireSaga";
+import * as VatSaga from "./sagaActions/VatSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -58,5 +59,7 @@ export default function* rootSaga() {
     ProductExpireSaga.followActPutProductItemsExpire(),
     ProductExpireSaga.followActPostProductItemsExpire(),
     ProductExpireSaga.followActDeleteProductItemsExpire(),
+    VatSaga.followActGetVat(),
+    VatSaga.followActPutVat(),
   ]);
 }
