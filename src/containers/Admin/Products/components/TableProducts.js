@@ -60,7 +60,13 @@ const TableProducts = ({ data, keyWord, loading }) => {
           String(record.price).toLowerCase().includes(value.toLowerCase()) ||
           record.state.find((item) =>
             item.stateName.toLowerCase().includes(value.toLowerCase())
-          )
+          ) ||
+          String(moment(record.EXP).format("DD/MM/YYYY"))
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
+          String(moment(record.MFG).format("DD/MM/YYYY"))
+            .toLowerCase()
+            .includes(value.toLowerCase())
         );
       },
       showOnResponse: true,
@@ -139,6 +145,7 @@ const TableProducts = ({ data, keyWord, loading }) => {
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
+      sorter: (a, b) => a.MFG > b.MFG,
       render: (MFG) => `${moment(MFG).format("DD/MM/YYYY")}`,
     },
     {
@@ -148,6 +155,7 @@ const TableProducts = ({ data, keyWord, loading }) => {
       width: "10%",
       showOnResponse: true,
       showOnDesktop: true,
+      sorter: (a, b) => a.EXP > b.EXP,
       render: (EXP) => `${moment(EXP).format("DD/MM/YYYY")}`,
     },
     {
