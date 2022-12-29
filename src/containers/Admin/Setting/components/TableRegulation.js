@@ -11,7 +11,7 @@ import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import RegulationForm from "./RegulationForm";
 import DetailRegulationForm from "./DetailRegulationForm";
 
-const TableRegulation = ({productItemsQuantity}) => {
+const TableRegulation = ({ productItemsQuantity }) => {
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +64,7 @@ const TableRegulation = ({productItemsQuantity}) => {
       render: (text, record, index) => {
         return (
           <Tag key={index} color={text} className="w-2/4 min-w-max text-center">
-            Demo
+            {record.stateName}
           </Tag>
         );
       },
@@ -140,7 +140,9 @@ const TableRegulation = ({productItemsQuantity}) => {
     dispatch(
       modalActions.showModal({
         ComponentContent: (
-          <DetailRegulationForm productItemQuantity={record}></DetailRegulationForm>
+          <DetailRegulationForm
+            productItemQuantity={record}
+          ></DetailRegulationForm>
         ),
       })
     );
