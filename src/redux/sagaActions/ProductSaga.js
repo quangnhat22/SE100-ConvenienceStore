@@ -83,14 +83,22 @@ function* actDeleteProductItem(action) {
   try {
     let { id } = action;
     yield put(productActions.getListProductLoading());
-
     let res = yield call(() => ProductService.deleteProductById(id));
     if (res.status === 200) {
+      AlertCustom({ type: "success", title: "Xóa sản phẩm thành công" });
       yield put({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
     } else {
+      AlertCustom({ type: "error", title: "Xóa sản phẩm thất bại" });
       //yield put(authActions.requestLogFailed());
     }
+    yield put({
+      type: SagaActionTypes.GET_LIST_PRODUCT_SAGA,
+    });
   } catch (err) {
+    AlertCustom({ type: "error", title: "Không thể xóa sản phẩm" });
+    yield put({
+      type: SagaActionTypes.GET_LIST_PRODUCT_SAGA,
+    });
     //yield put(authActions.requestLogFailed());
   }
 }
