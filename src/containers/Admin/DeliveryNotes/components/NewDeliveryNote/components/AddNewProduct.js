@@ -19,12 +19,28 @@ import FormCustomed from "../../../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { editDeliveryNotesActions } from "../../../../../../redux/reducer/EditDeliveryNotesReducer";
 import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
+import axios from "axios";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+  });
+
 const AddNewProduct = () => {
   let { productOfProvider } = useSelector((state) => state.providerSlice);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState([]);
+  const [imageChange, setImageChange] = useState("");
+  const [progress, setProgress] = useState(0);
+
+
   const optionsProductLines = productOfProvider.map(function (productLine) {
     return {
       value: productLine.id,
@@ -33,6 +49,7 @@ const AddNewProduct = () => {
   });
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+
   const onFinish = (values) => {
     let newProduct = {
       productId: values.product_name,
@@ -42,12 +59,68 @@ const AddNewProduct = () => {
       EXP: values.product_expiry_date[1].toISOString(),
       quantity: values.product_quantity,
       description: values.product_description,
-      image: "string", // fix sau
+      image: imageChange, // fix sau
     };
     console.log(newProduct);
     dispatch(editDeliveryNotesActions.addNewProductItem(newProduct));
     dispatch(modalActions.hideModal());
   };
+
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+      console.log(file.preview);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  };
+
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost/image/upload",
+        data: fmData,
+        ...config,
+      });
+
+      let { data, status } = res;
+      console.log("server res: ", res);
+      setImageChange(data["path"]);
+      onSuccess("Ok");
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    //console.log(fileList);
+    setFileList(fileList);
+    //filelist - [{uid: "-1",url:'Some url to image'}]
+  };
+
   return (
     <FormCustomed
       name="add_product_form"
@@ -160,11 +233,19 @@ const AddNewProduct = () => {
         <TextArea rows={4} placeholder="Mô tả" />
       </Form.Item>
       <Form.Item
-        name="product_images"
+        name="images"
         label="Ảnh sản phẩm"
-        valuePropName="fileList"
+        //valuePropName="fileList"
       >
-        <Upload action="/upload.do" listType="picture-card">
+        <Upload
+         accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+         listType="picture-card"
+         fileList={fileList}
+         onPreview={handlePreview}
+         customRequest={uploadImage}
+         onChange={handleOnChange}
+         maxCount="1"
+        >
           <div>
             <PlusOutlined />
             <div

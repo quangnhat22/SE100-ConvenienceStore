@@ -21,6 +21,14 @@ import { useDispatch } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+  });
 
 const DetailProductForm = ({ product }) => {
   const history = useHistory();
@@ -35,7 +43,6 @@ const DetailProductForm = ({ product }) => {
       range: "${label} phải trong khoảng từ ${min} đến ${max}",
     },
   };
-  console.log("product:", product);
   const defaultValues = {
     productId: `${product.product.id} - ${product.product.title}`,
     deliveryNoteId: `${product.deliveryNote.id} - ${product.deliveryNote.provider.name}`,
@@ -49,6 +56,13 @@ const DetailProductForm = ({ product }) => {
   const [form] = Form.useForm();
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
+  const [fileList, setFileList] = useState([{ url: product.image }]);
+  const [imageChange, setImageChange] = useState(product.iamge);
+  const [progress, setProgress] = useState(0);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+
   const handleEnableModify = () => {
     setEnableModify(true);
     setComponentDisabled(false);
@@ -66,7 +80,63 @@ const DetailProductForm = ({ product }) => {
   const onReset = () => {
     form.resetFields();
   };
+
   const handleModify = () => {};
+
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+      console.log(file.preview);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  };
+
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost/image/upload",
+        data: fmData,
+        ...config,
+      });
+
+      let { data, status } = res;
+      console.log("server res: ", res);
+      setImageChange(data["path"]);
+      onSuccess("Ok");
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    //console.log(fileList);
+    setFileList(fileList);
+    //filelist - [{uid: "-1",url:'Some url to image'}]
+  };
 
   const dispatch = useDispatch();
   const onFinish = (values) => {
@@ -74,9 +144,9 @@ const DetailProductForm = ({ product }) => {
       price: values.price,
       description: values.description,
       // image: values.image.filename,
-      image: "http://example.com/a.jpg", /////////////Cần sửa ở đây
+      image: imageChange, /////////////Cần sửa ở đây
     };
-    console.log(values);
+    console.log("values: ",editProduct);
     dispatch({
       type: SagaActionTypes.PUT_PRODUCT_ITEM_SAGA,
       id: product.id,
@@ -240,14 +310,12 @@ const DetailProductForm = ({ product }) => {
           <Form.Item className="w-fit rounded" label="Hình ảnh sản phẩm">
             <>
               <Upload
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
                 listType="picture-card"
-                beforeUpload={() => {
-                  return false;
-                }}
-                // fileList={fileList}
-                // onPreview={handlePreview}
-                // onChange={handleChange}
+                fileList={fileList}
+                onPreview={handlePreview}
+                customRequest={uploadImage}
+                onChange={handleOnChange}
                 maxCount="1"
                 disabled={componentDisabled}
               >
