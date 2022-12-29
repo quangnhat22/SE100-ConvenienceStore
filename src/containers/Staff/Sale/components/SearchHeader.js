@@ -32,14 +32,14 @@ const SearchHeader = ({ data }) => {
   };
 
   const columns = [
-    // {
-    //   dataIndex: "hinhAnh",
-    //   key: "hinhAnh",
-    //   width: "100px",
-    //   render: (value, record) => {
-    //     return <img className="w-16" src={`${record.hinhAnh}`} alt="" />;
-    //   },
-    // },
+    {
+      dataIndex: "hinhAnh",
+      key: "hinhAnh",
+      width: "100px",
+      render: (value, record) => {
+        return <img className="w-16" src={`${record.image}`} alt="" />;
+      },
+    },
     {
       dataIndex: "id",
       key: "id",

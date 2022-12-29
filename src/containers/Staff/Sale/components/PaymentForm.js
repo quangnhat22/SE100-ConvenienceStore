@@ -126,7 +126,8 @@ const PaymentForm = ({ data }) => {
         wrapperCol={{
           span: 20,
         }}
-        className="PaymentForm my-4 sm:mx-8 mx-2"
+        labelWrap
+        className="PaymentForm my-4 sm:mx-8 mx-2 "
         form={form}
         onFinish={onFinish}
         initialValues={defaultValues}
@@ -270,16 +271,9 @@ const PaymentForm = ({ data }) => {
         <Form.Item name="bill_note" label="Ghi chú">
           <TextArea rows={2} placeholder="Ghi chú" />
         </Form.Item>
-        <Form.Item
-          wrapperCol={{
-            span: 20,
-            offset: 10,
-          }}
-        >
-          <Button className="mr-4" htmlType="submit">
-            Thanh toán
-          </Button>
-        </Form.Item>
+        <div className="block text-center">
+          <Button htmlType="submit">Thanh toán</Button>
+        </div>
         <div style={{ display: "none" }}>
           <ReactToPrint
             onAfterPrint={() => onAfterPrint()}
@@ -299,7 +293,7 @@ const PaymentForm = ({ data }) => {
       </Form>
 
       {/* printer template */}
-      <div>
+      <div style={{ display: "none" }}>
         <Paper ref={componentRef}>
           <PrintPaymentForm data={invoice} />
         </Paper>

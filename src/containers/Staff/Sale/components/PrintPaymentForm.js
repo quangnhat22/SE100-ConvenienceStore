@@ -93,7 +93,7 @@ const PrintPaymentForm = ({ data }) => {
       <Row gutter={24}>
         <Col span={24}>
           <Divider>
-            <b className="sm:text-2xl">Hoá đơn</b>
+            <b className="text-2xl">Hoá đơn</b>
           </Divider>
         </Col>
       </Row>

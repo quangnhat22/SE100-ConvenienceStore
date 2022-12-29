@@ -45,7 +45,7 @@ const SalePage = () => {
           <div className="w-3/5 bg-slate-300">
             <ListItem data={cartItems} />
           </div>
-          <div className="w-2/5 min-w-200">
+          <div className="w-2/5 min-w-[200px]">
             <PaymentForm data={cartItems} />
           </div>
         </Content>
