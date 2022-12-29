@@ -6,7 +6,7 @@ import { Redirect, Route } from "react-router-dom";
 import DrawerCustomed from "../common/Drawer/Drawer";
 import SiderCustomed from "../common/Sider/Sider";
 import SalePage from "../containers/Staff/Sale";
-
+import ProfilePage from "../containers/Admin/Profile";
 const AdminLayout = (props) => {
   // const location = useLocation();
   // console.log(location);
@@ -59,7 +59,12 @@ export default function AdminTemplate({ Component, ...props }) {
             );
           }
           if (localStorage.getItem("role") === "EMPLOYEE") {
-            return <Route exact path="/sales" component={SalePage} />;
+            return (
+              <Route>
+                <Route exact path="/sales" component={SalePage} />
+                <Route exact path="/profile" component={ProfilePage} />
+              </Route>
+            );
           }
         }
 

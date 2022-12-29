@@ -1,13 +1,14 @@
 import ReactToPrint from "react-to-print";
 import { useRef, useState, useEffect } from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { Layout } from "antd";
+import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { Layout, Space, Dropdown } from "antd";
 import { Content, Header, Footer } from "antd/lib/layout/layout";
 import SearchHeader from "./components/SearchHeader";
 import PaymentForm from "./components/PaymentForm";
 import ListItem from "./components/ListItem";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../redux/constants/constant";
+import DropDownAvatar from "./components/DropDownAvatar";
 
 const SalePage = () => {
   const dispatch = useDispatch();
@@ -33,10 +34,7 @@ const SalePage = () => {
             <SearchHeader data={listProductSale} />
           </div>
           <div className="flex items-center justify-end mr-7 bg-transparent">
-            <UserOutlined
-              className="p-2 rounded-full bg-blue-300"
-              style={{ color: "#9900FF" }}
-            />
+            <DropDownAvatar />
             <p className="mb-0 ml-1 text-white">Nguyễn Văn A</p>
           </div>
         </Header>
