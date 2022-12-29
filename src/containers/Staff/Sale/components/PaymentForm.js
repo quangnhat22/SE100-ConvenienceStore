@@ -67,7 +67,8 @@ const PaymentForm = ({ data }) => {
     bill_price: totalPrice(data),
     bill_tax: 8,
     bill_finalprice: (totalPrice(data) * 108) / 100,
-    bill_note: "",
+    bill_customer_pay: 0,
+    bill_customer_repay: 0,
   };
   useEffect(() => {
     form.setFieldsValue(defaultValues);
@@ -100,9 +101,11 @@ const PaymentForm = ({ data }) => {
     });
   };
 
-  const onChange = (value) => {
+  const onChange = () => {
     form.setFieldsValue({
-      bill_customer_repay: value - form.getFieldValue().bill_finalprice,
+      bill_customer_repay:
+        form.getFieldValue().bill_customer_pay -
+        form.getFieldValue().bill_finalprice,
     });
   };
 
@@ -110,6 +113,7 @@ const PaymentForm = ({ data }) => {
     dispatch(printInvoiceActions.removeInvoice());
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
     dispatch(cartActions.removeAllItem());
+
     console.log("In In In");
   };
 
@@ -230,17 +234,18 @@ const PaymentForm = ({ data }) => {
             {
               required: true,
               type: "number",
+              min: (totalPrice(data) * 108) / 100,
             },
           ]}
         >
           <InputNumber
             className="input-number-right"
             addonAfter={"VNĐ"}
-            min={(totalPrice(data) * 108) / 100}
+            min={0}
             placeholder="Tiền khách trả"
             formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            onChange={(value) => onChange(value)}
+            onChange={() => onChange()}
           />
         </Form.Item>
         <Form.Item

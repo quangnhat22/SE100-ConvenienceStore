@@ -19,7 +19,7 @@ const dateFormat = "DD/MM/YYYY";
 
 const PrintPaymentForm = ({ data }) => {
   const [form] = Form.useForm();
-  console.log(data.id);
+  console.log(data);
   const totalPrice = (cartItems) => {
     if (cartItems) {
       let total = 0;
@@ -29,104 +29,134 @@ const PrintPaymentForm = ({ data }) => {
       return total;
     }
   };
+  console.log(new Date());
 
-  const defaultValues = {
-    store_name: "Convenience Store",
-    bill_date: moment(),
-    bill_creater: "Quang Kotex",
-    bill_price: totalPrice(data),
-    bill_tax: 8,
-    bill_finalprice: (totalPrice(data) * 108) / 100,
-    bill_note: "",
-  };
+  const columns = [
+    {
+      title: "Mã sản phẩm",
+      dataIndex: ["productItem", "id"],
+      key: "id",
+    },
+    {
+      title: "Sản phẩm",
+      dataIndex: ["productItem", "product", "title"],
+      key: "title",
+    },
+    {
+      title: "Số lượng",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.quantity
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+          </div>
+        );
+      },
+    },
+    {
+      title: "Giá bán",
+      dataIndex: "price",
+      key: "price",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.price
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            <sup>đ</sup>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Thành tiền",
+      dataIndex: "total",
+      key: "total",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {(record.price * record.quantity)
+              .toString()
+              .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            <sup>đ</sup>
+          </div>
+        );
+      },
+    },
+  ];
 
   return (
-    // <div className="p-5">
-    //   <Row>
-    //     <Col>
-    //       <Divider>Hoá đơn</Divider>
-    //     </Col>
-    //   </Row>
+    <div className="p-5">
+      <Row gutter={24}>
+        <Col span={24}>
+          <Divider>
+            <b className="sm:text-2xl">Hoá đơn</b>
+          </Divider>
+        </Col>
+      </Row>
 
-    //   <Row gutter={24} style={{ marginTop: 32 }}>
-    //     <Col span={8}>
-    //       <h3>Tên cửa hàng: Convenience Store</h3>
-    //       <div>Người lập hoá đơn: ABC</div>
-    //     </Col>
-    //     <Col span={8} offset={8}>
-    //       <table>
-    //         <tr>
-    //           <th>Mã hoá đơn # :</th>
-    //           <td>{data.id}</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Ngày lập: </th>
-    //           <td>
-    //             {`${new Date().getHours()}:${new Date().getMinutes()} - ${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`}
-    //           </td>
-    //         </tr>
-    //       </table>
-    //     </Col>
-    //   </Row>
+      <Row gutter={24} style={{ marginTop: 32 }}>
+        <Col span={8}>
+          <h3>Tên cửa hàng: Convenience Store</h3>
+          <div>Người lập hoá đơn: {data.creator.fullname}</div>
+        </Col>
+        <Col span={8} offset={8}>
+          <table>
+            <tr>
+              {/* <th>Mã hoá đơn # :</th> */}
+              <td>
+                <b>Mã hóa đơn: </b>
+                {data.id}
+              </td>
+            </tr>
+            <tr>
+              {/* <th>Ngày lập: </th> */}
+              <td>
+                <b>Ngày lập: </b>
+                {`${new Date().getHours()}:${new Date().getMinutes()} - ${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`}
+              </td>
+            </tr>
+          </table>
+        </Col>
+      </Row>
+      {/* 
+      <Col style={{ marginTop: 48 }}>
+        <div>
+          Khách hàng: <strong>Khách vãng lai</strong>
+        </div>
+        <div>Ghi chú: </div>
+      </Col> */}
 
-    //   <Col style={{ marginTop: 48 }}>
-    //     <div>
-    //       Khách hàng: <strong>Khách vãng lai</strong>
-    //     </div>
-    //     <div>Ghi chú: </div>
-    //   </Col>
+      <Table
+        className="mt-10"
+        dataSource={data.invoiceDetails}
+        pagination={false}
+        columns={columns}
+      ></Table>
 
-    //   <Row style={{ marginTop: 48 }}>
-    //     <Table
-    //       dataSource={[
-    //         {
-    //           id: 1,
-    //           name: "Accommodation (Single Occupancy)",
-    //           description: "Accommodation",
-    //           price: 1599,
-    //           quantity: 1,
-    //         },
-    //       ]}
-    //       pagination={false}
-    //     >
-    //       <Table.Column title="Items" dataIndex="name" />
-    //       <Table.Column title="Description" dataIndex="description" />
-    //       <Table.Column title="Quantity" dataIndex="quantity" />
-    //       <Table.Column title="Price" dataIndex="price" />
-    //       <Table.Column title="Line Total" />
-    //     </Table>
-    //   </Row>
+      <Row style={{ marginTop: 48 }}>
+        <Col span={8} offset={16}>
+          <Row gutter={[16, 2]}>
+            <Col className="text-end" span={12}>
+              <b>Tổng tiền hàng:</b>
+            </Col>
+            <Col className="text-end" span={12}>
+              {data.total
+                .toString()
+                .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+            </Col>
+            <Col className="text-end" span={12}>
+              <i>(Tổng tiền hàng sau thuế GTGT)</i>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
-    //   <Row style={{ marginTop: 48 }}>
-    //     <Col span={8} offset={16}>
-    //       <table>
-    //         <tr>
-    //           <th>Tổng tiền hàng :</th>
-    //           <td>Rs. 1599</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Thuế VAT :</th>
-    //           <td>Rs. 95.94</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Tiền sau thuế :</th>
-    //           <td>Rs. 95.94</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Tiền khách trả :</th>
-    //           <td>Rs. 1790.88</td>
-    //         </tr>
-    //         <tr>
-    //           <th>Tiền trả lại cho khách :</th>
-    //           <td>Rs. 1790.88</td>
-    //         </tr>
-    //       </table>
-    //     </Col>
-    //   </Row>
-
-    //   <Row style={{ marginTop: 48, textAlign: "left" }}>Ghi chú</Row>
-    // </div>
-    <div>{data.id}</div>
+      <Row style={{ marginTop: 48, textAlign: "left" }}>Ghi chú</Row>
+    </div>
   );
 };
 
