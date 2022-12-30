@@ -38,7 +38,15 @@ const SearchHeader = ({ data }) => {
       key: "hinhAnh",
       width: "100px",
       render: (value, record) => {
-        return <img className="w-16" src={`${record.image}`} alt="" />;
+        return (
+          <div className="rounded">
+            <img
+              className="object-scale-down h-16 w-20"
+              src={`${record.image}`}
+              alt=""
+            />
+          </div>
+        );
       },
     },
     {
@@ -110,7 +118,7 @@ const SearchHeader = ({ data }) => {
   ];
 
   return (
-    <div className="relative w-full mx-3 md:w-3/5 lg:w-2/5">
+    <div className="relative w-full mx-3 md:w-4/5 lg:w-3/5">
       <Input
         type="text"
         size="large"

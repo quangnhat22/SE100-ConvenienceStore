@@ -1,4 +1,4 @@
-import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
+import { UnlockOutlined, UserOutlined, LockOutlined } from "@ant-design/icons";
 import { ErrorMessage, Formik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -52,7 +52,7 @@ const ResetPasswordForm = (props) => {
           <form noValidate onSubmit={handleSubmit}>
             <div className="row">
               <div className="icon">
-                <UserOutlined />
+                <UnlockOutlined />
               </div>
               <input
                 type="password"
@@ -73,7 +73,7 @@ const ResetPasswordForm = (props) => {
             </div>
             <div className="row mt-10">
               <div className="icon">
-                <UnlockOutlined />
+                <LockOutlined />
               </div>
               <input
                 type="password"

@@ -54,7 +54,7 @@ const SalePage = () => {
         </Header>
         {/* Hóa đơn bán hàng và danh mục sản phẩm đang chọn */}
         <Content className="flex z-0">
-          <div className="w-3/5 bg-slate-300">
+          <div className="w-3/5 bg-slate-300 min-w-[250px]">
             <ListItem data={cartItems} />
           </div>
           <div className="w-2/5 min-w-[200px]">

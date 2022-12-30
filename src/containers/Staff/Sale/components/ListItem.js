@@ -49,17 +49,33 @@ const ListItem = ({ data }) => {
         >
           <Skeleton avatar title={false} loading={false} active>
             <List.Item.Meta
-              avatar={<img className="w-16" src={item.image} alt="" />}
-              title={item.productName}
-              description={item.price}
+              avatar={
+                <div className="bg-slate-200 rounded">
+                  <img
+                    className="object-scale-down h-16 w-20 hidden sm:inline-block"
+                    src={item.image}
+                    alt=""
+                  />
+                </div>
+              }
+              title={<b>{item.productName}</b>}
+              description={item.price
+                .toString()
+                .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
             />
             <InputNumber
               className="custom-input-number"
+              style={{
+                maxWidth: "100px",
+                width: "20%",
+              }}
               min={1}
               max={item.maxQuantity}
               value={item.quantity}
               // onStep={(val, info) => onChange(val, info.type, item)}
               onChange={(e) => onChange(e, item)}
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             />
           </Skeleton>
         </List.Item>
