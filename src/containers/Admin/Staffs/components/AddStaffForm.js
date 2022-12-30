@@ -14,6 +14,8 @@ import {
   Switch,
   Checkbox,
   Upload,
+  Space,
+  Modal,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
@@ -55,6 +57,8 @@ const AddStaffForm = () => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
+
+  const handleCancelPreview = () => setPreviewOpen(false);
 
   const uploadImage = async (options) => {
     const { onSuccess, onError, file, onProgress } = options;
@@ -230,31 +234,37 @@ const AddStaffForm = () => {
       <Form.Item name="staff_other_information" label="Khác">
         <TextArea rows={2} placeholder="Khác" />
       </Form.Item>
-      <Form.Item
-        className="w-fit rounded"
-        name="avatar"
-        label="Ảnh nhân viên"
-      >
-        <Upload 
-        accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
-        listType="picture-card"
-        fileList={fileList}
-        onPreview={handlePreview}
-        customRequest={uploadImage}
-        onChange={handleOnChange}
-        maxCount="1"
-        >
-          <div>
-            <PlusOutlined />
-            <div
+      <Form.Item name="avatar" label="Ảnh nhân viên">
+        <>
+          <Upload
+            accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            customRequest={uploadImage}
+            onChange={handleOnChange}
+            maxCount="1"
+          >
+            <Space className="flex flex-col text-base">
+              <PlusOutlined />
+              Tải ảnh
+            </Space>
+          </Upload>
+          <Modal
+            open={previewOpen}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancelPreview}
+          >
+            <img
+              alt="example"
               style={{
-                marginTop: 8,
+                width: "100%",
               }}
-            >
-              Tải lên
-            </div>
-          </div>
-        </Upload>
+              src={previewImage}
+            />
+          </Modal>
+        </>
       </Form.Item>
       <Form.Item
         wrapperCol={{

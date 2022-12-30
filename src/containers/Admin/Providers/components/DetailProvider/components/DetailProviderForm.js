@@ -79,8 +79,15 @@ const DetailProviderForm = ({ provider }) => {
       validateMessages={validateMessages}
       initialValues={defaultValues}
     >
-      <Row gutter={24}>
-        <Col span={12} key={1}>
+      <Row
+        gutter={{
+          xs: 8,
+          sm: 16,
+          md: 24,
+          lg: 32,
+        }}
+      >
+        <Col xs={24} sm={12} md={24} lg={12} key={1}>
           <Form.Item
             name="name"
             label="Tên nhà cung cấp"
@@ -96,7 +103,7 @@ const DetailProviderForm = ({ provider }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={12} key={2}>
+        <Col xs={24} sm={12} md={24} lg={12} key={2}>
           <Form.Item
             name="phoneNumber"
             label="Số Điện Thoại"
@@ -111,7 +118,7 @@ const DetailProviderForm = ({ provider }) => {
             <Input placeholder="Số điện thoại" disabled={componentDisabled} />
           </Form.Item>
         </Col>
-        <Col span={12} key={3}>
+        <Col xs={24} sm={12} md={24} lg={12} key={3}>
           <Form.Item
             name="email"
             label="Email"
@@ -128,7 +135,7 @@ const DetailProviderForm = ({ provider }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={12} key={4}>
+        <Col xs={24} sm={12} md={24} lg={12} key={4}>
           <Form.Item name="representative" label="Người đại diện">
             <Input
               className="rounded"

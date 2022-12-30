@@ -43,6 +43,7 @@ const DetailProductForm = ({ product }) => {
       range: "${label} phải trong khoảng từ ${min} đến ${max}",
     },
   };
+
   const defaultValues = {
     productId: `${product.product.id} - ${product.product.title}`,
     deliveryNoteId: `${product.deliveryNote.id} - ${product.deliveryNote.provider.name}`,
@@ -72,6 +73,8 @@ const DetailProductForm = ({ product }) => {
     setComponentDisabled(true);
     onReset();
   };
+
+  const handleCancelPreview = () => setPreviewOpen(false);
 
   const handleClose = () => {
     history.goBack();
@@ -136,7 +139,9 @@ const DetailProductForm = ({ product }) => {
     //console.log(fileList);
     setFileList(fileList);
     if (fileList.length == 0) {
-      setImageChange("https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png");
+      setImageChange(
+        "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
+      );
     }
     //filelist - [{uid: "-1",url:'Some url to image'}]
   };
@@ -336,17 +341,17 @@ const DetailProductForm = ({ product }) => {
                 </Space>
               </Upload>
               <Modal
-                // open={previewOpen}
-                // title={previewTitle}
+                open={previewOpen}
+                title={previewTitle}
                 footer={null}
-                onCancel={handleCancel}
+                onCancel={handleCancelPreview}
               >
                 <img
                   alt="example"
                   style={{
                     width: "100%",
                   }}
-                  //   src={previewImage}
+                  src={previewImage}
                 />
               </Modal>
             </>

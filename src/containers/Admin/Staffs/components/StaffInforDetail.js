@@ -15,6 +15,7 @@ import {
   Checkbox,
   Upload,
   Space,
+  Modal,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,7 +34,6 @@ const getBase64 = (file) =>
     reader.onload = () => resolve(reader.result);
   });
 
-
 const StaffInforDetail = ({ staff }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -43,8 +43,9 @@ const StaffInforDetail = ({ staff }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([{ url:  staff.avatar}]);
+  const [fileList, setFileList] = useState([{ url: staff.avatar }]);
   const [imageChange, setImageChange] = useState(staff.avatar);
+  const handleCancelPreview = () => setPreviewOpen(false);
 
   const handleEnableModify = () => {
     setEnableModify(true);
@@ -295,32 +296,38 @@ const StaffInforDetail = ({ staff }) => {
       <Form.Item name="staff_other_information" label="Khác">
         <TextArea rows={2} placeholder="Khác" disabled={componentDisabled} />
       </Form.Item>
-      <Form.Item
-        name="staff_image"
-        label="Ảnh nhân viên"
-        className="w-fit rounded"
-      >
-        <Upload
-          accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
-          listType="picture-card"
-          fileList={fileList}
-          onPreview={handlePreview}
-          customRequest={uploadImage}
-          onChange={handleOnChange}
-          maxCount="1"
-          disabled={componentDisabled}
-        >
-          <div>
-            <PlusOutlined />
-            <div
+      <Form.Item name="avatar" label="Ảnh nhân viên">
+        <>
+          <Upload
+            accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            customRequest={uploadImage}
+            onChange={handleOnChange}
+            maxCount="1"
+            disabled={componentDisabled}
+          >
+            <Space className="flex flex-col text-base">
+              <PlusOutlined />
+              Tải ảnh
+            </Space>
+          </Upload>
+          <Modal
+            open={previewOpen}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancelPreview}
+          >
+            <img
+              alt="example"
               style={{
-                marginTop: 8,
+                width: "100%",
               }}
-            >
-              Tải lên
-            </div>
-          </div>
-        </Upload>
+              src={previewImage}
+            />
+          </Modal>
+        </>
       </Form.Item>
       {enableModify === false ? (
         <Form.Item
