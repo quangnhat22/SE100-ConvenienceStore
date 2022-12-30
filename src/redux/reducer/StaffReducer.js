@@ -17,6 +17,20 @@ const initialState = {
     role: "",
     updatedAt: "",
   },
+  staffLogin: {
+    id: -1,
+    email: "",
+    fullname: "",
+    birthday: "",
+    identityNumber: "",
+    gender: "",
+    phoneNumber: "",
+    address: "",
+    other: "",
+    avatar: "",
+    role: "",
+    updatedAt: "",
+  },
 };
 
 const staffsSlice = createSlice({
@@ -33,10 +47,14 @@ const staffsSlice = createSlice({
       state.staffs = action.payload.staffs;
     },
     getListStaffByIdSuccess: (state, action) => {
-      console.log(action);
       state.loading = false;
       // state.submitSuccess = true;
       state.staff = action.payload.staff;
+    },
+    getStaffLoginByIdSuccess: (state, action) => {
+      state.loading = false;
+      // state.submitSuccess = true;
+      state.staffLogin = action.payload.staffLogin;
     },
   },
 });
