@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import * as SagaActionTypes from "../constants/constant";
 import { UserService } from "../../service/api/AuthApi";
 import { authActions } from "../reducer/authSlice";
+import { modalActions } from "../reducer/ModalReducer";
 import AlertCustom from "../../common/Notification/Alert";
 
 function* actLoginWithEmailAndPassword(payload) {
@@ -82,16 +83,17 @@ function* actResetPassword(payload) {
   }
 }
 
-function * actNewPassword(payload) {
-  let { data } = payload.data;
+function * actNewPassword(action) {
+  let { id, password } = action;
   try {
-    let res = yield call(() => UserService.postNewPassword(data));
+    let res = yield call(() => UserService.postNewPassword(id, password));
 
     if (res.status === 201) {
       AlertCustom({
         type: "success",
         title: "Cập nhật mật khẩu thành công!",
       });
+      yield put(modalActions.hideModal());
     } else {
       AlertCustom({
         type: "error",

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GrPowerReset } from "react-icons/gr";
 import {
   Button,
   DatePicker,
@@ -11,11 +12,13 @@ import {
 } from "antd";
 import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-import { useHistory } from "react-router-dom";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 import axios from "axios";
+import { modalActions } from "../../../../redux/reducer/ModalReducer";
+import ModalForm from "../../../../HOC/ModalForm";
+import ResetPasswordForm from "./ResetPasswordForm";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -319,18 +322,36 @@ const EditProfilePage = ({ data }) => {
 
             {/* Action */}
             <Form.Item className="flex justify-end right-5 bottom-0">
-              <Button
-                className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-                size="large"
-                type="primary"
-                htmlType="submit"
-              >
-                Lưu
-              </Button>
+              <Space className="flex justify-end">
+                <Button
+                  className="flex whitespace-nowrap items-center gap-2 rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                  size="large"
+                  type="primary"
+                  onClick={() => {
+                    dispatch(
+                      modalActions.showModal({
+                        ComponentContent: <ResetPasswordForm />,
+                      })
+                    );
+                  }}
+                >
+                  <GrPowerReset className="text-white" />
+                  Đổi mật khẩu
+                </Button>
+                <Button
+                  className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Lưu
+                </Button>
+              </Space>
             </Form.Item>
           </div>
         </div>
       </div>
+      <ModalForm />
     </Form>
   );
 };

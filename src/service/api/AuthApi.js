@@ -31,16 +31,13 @@ export const UserService = {
       },
     });
   },
-  postNewPassword: (newUser) => {
-    let {
-      id,
-      password
-    } = newUser;
+  postNewPassword: (id, password) => {
+    console.log(UrlApi.URL_NEW_PASSWORD);
     return axios({
       url: UrlApi.URL_NEW_PASSWORD,
       method: "POST",
       data: {
-        id: id,
+        id: Number.parseInt(id),
         password: password,
       },
     });
