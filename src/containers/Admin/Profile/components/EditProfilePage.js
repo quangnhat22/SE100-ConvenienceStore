@@ -178,9 +178,9 @@ const EditProfilePage = ({ data }) => {
       initialValues={initialvalue}
     >
       <div className="flex justify-center items-center">
-        <div className="gap-8 mt-10 flex flex-col w-full lg:w-3/5 md:flex-row mx-10">
+        <div className="gap-8 mt-10 flex flex-col w-full lg:w-3/5 lg:flex-row mx-10">
           {/* Thông tin cá nhân */}
-          <div className="rounded bg-white shadow-xl px-5 py-8 w-2/5">
+          <div className="rounded bg-white shadow-xl px-5 py-8 lg:w-2/5 grow">
             <header className="font-bold text-xl mb-5">
               Thông tin cá nhân
             </header>
