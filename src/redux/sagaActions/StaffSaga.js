@@ -35,7 +35,15 @@ function* actPostStaff(action) {
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
     if (err.response.data.statusCode === 409) {
-      AlertCustom({ type: "error", title: "Email đã được sử dụng" });
+      if (err.response.data.message === "Identity number must be unique") {
+        AlertCustom({ type: "error", title: "Trùng mã CCCD" });
+      } else if (
+        err.response.data.message === "User with provided email has existed"
+      ) {
+        AlertCustom({ type: "error", title: "Email đã được sử dụng" });
+      } else {
+        AlertCustom({ type: "error", title: err.response.data.message });
+      }
     } else {
       AlertCustom({ type: "error", title: err.message });
     }
@@ -63,7 +71,11 @@ function* actPutStaff(action) {
       id: localStorage.getItem("id"),
     });
   } catch (err) {
-    AlertCustom({ type: "error", title: err.message });
+    if (err.response.data.message === "Identity number must be unique") {
+      AlertCustom({ type: "error", title: "Trùng mã CCCD" });
+    } else {
+      AlertCustom({ type: "error", title: err.message });
+    }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
     yield put({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: id });
     yield put({
