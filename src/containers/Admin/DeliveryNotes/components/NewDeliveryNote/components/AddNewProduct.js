@@ -19,6 +19,7 @@ import FormCustomed from "../../../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { editDeliveryNotesActions } from "../../../../../../redux/reducer/EditDeliveryNotesReducer";
 import { modalActions } from "../../../../../../redux/reducer/ModalReducer";
+import "./style/CustomInputNumber.css";
 import axios from "axios";
 
 const { RangePicker } = DatePicker;
@@ -33,6 +34,10 @@ const getBase64 = (file) =>
 
 const AddNewProduct = () => {
   let { productOfProvider } = useSelector((state) => state.providerSlice);
+  let { newDeliveryNote } = useSelector(
+    (state) => state.editDeliveryNotesSlice
+  );
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -118,7 +123,9 @@ const AddNewProduct = () => {
     //console.log(fileList);
     setFileList(fileList);
     if (fileList.length == 0) {
-      setImageChange("https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png");
+      setImageChange(
+        "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
+      );
     }
     //filelist - [{uid: "-1",url:'Some url to image'}]
   };
@@ -162,6 +169,7 @@ const AddNewProduct = () => {
         ]}
       >
         <InputNumber
+          className="input-number-right"
           addonAfter={"VNĐ"}
           style={{
             width: "60%",
@@ -184,6 +192,7 @@ const AddNewProduct = () => {
         ]}
       >
         <InputNumber
+          className="input-number-right"
           addonAfter={"VNĐ"}
           style={{
             width: "60%",
@@ -228,6 +237,8 @@ const AddNewProduct = () => {
             width: "30%",
           }}
           placeholder="Số lượng"
+          formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
           min={1}
         />
       </Form.Item>

@@ -39,6 +39,9 @@ const NewDeliveryNotePage = () => {
   );
   console.log(newDeliveryNote);
   const uid = localStorage.getItem("id");
+  let { isCreateNewDeliveryNote } = useSelector(
+    (state) => state.deliveryNotesSlice
+  );
   let { provider, loading } = useSelector((state) => state.providerSlice);
   let staffSlice = useSelector((state) => state.staffsSlice);
   useEffect(() => {
@@ -51,6 +54,12 @@ const NewDeliveryNotePage = () => {
       history.push("/delivery_notes");
     }
   }, []);
+
+  useEffect(() => {
+    if (isCreateNewDeliveryNote) {
+      history.push("/delivery_notes");
+    }
+  }, [isCreateNewDeliveryNote]);
 
   const layout = {
     labelCol: {
