@@ -13,9 +13,6 @@ const TableExpiredDate = () => {
   const { productItemsExpire } = useSelector(
     (state) => state.productItemsExpireSlice
   );
-  useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA });
-  });
 
   const [isOpen, setIsOpen] = useState(false);
 

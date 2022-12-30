@@ -10,9 +10,7 @@ import OtherRegulationForm from "./OtherRegulationForm";
 const TableOtherRegulation = () => {
   const dispatch = useDispatch();
   const { vat } = useSelector((state) => state.vatSlice);
-  useEffect(() => {
-    dispatch({type: SagaActionTypes.GET_VAT_SAGA})
-  }, []);
+
   console.log(vat);
   const [isOpen, setIsOpen] = useState(false);
   const columns = [
@@ -27,7 +25,7 @@ const TableOtherRegulation = () => {
     {
       title: "Tên quy định",
       render: () => {
-        return (<div>VAT</div>);
+        return <div>VAT</div>;
       },
     },
     {
