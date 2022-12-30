@@ -117,6 +117,9 @@ const AddNewProduct = () => {
     //Using Hooks to update the state to the current filelist
     //console.log(fileList);
     setFileList(fileList);
+    if (fileList.length == 0) {
+      setImageChange("https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png");
+    }
     //filelist - [{uid: "-1",url:'Some url to image'}]
   };
 
