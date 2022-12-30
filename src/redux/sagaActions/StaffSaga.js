@@ -56,6 +56,7 @@ function* actPutStaff(action) {
     } else {
       AlertCustom({ type: "error", title: "Chỉnh sửa nhân viên thất bại" });
     }
+    yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
   } catch (err) {
     AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });

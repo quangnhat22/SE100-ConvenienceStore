@@ -33,10 +33,7 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       dataIndex: "id",
       key: "id",
       width: "10%",
-      //defaultSortOrder: ["descend"],
-      // sorter: (item1, item2) => item1.id.localeCompare(item2.id),
       sorter: (a, b) => a.id - b.id,
-      //sortOrder: sortedInfo.columnKey === "id" && sortedInfo.order,
       filteredValue: [keyWord],
       onFilter: (value, record) => {
         return (
@@ -89,6 +86,22 @@ const TableStaffs = ({ keyWord, data, loading }) => {
       width: "10%",
       ellipsis: true,
       render: (role) => renderRole(role),
+    },
+    {
+      title: "Trạng thái tài khoản",
+      dataIndex: "active",
+      key: "active",
+      showOnResponse: true,
+      showOnDesktop: true,
+      width: "10%",
+      ellipsis: true,
+      render: (active) => {
+        if (active) {
+          return "Đang hoạt động";
+        } else {
+          return "Tạm ngừng";
+        }
+      },
     },
     {
       title: "Thao tác",
