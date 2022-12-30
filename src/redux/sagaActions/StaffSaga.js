@@ -44,8 +44,8 @@ function* actPostStaff(action) {
 }
 
 function* actPutStaff(action) {
+  let { id, staff } = action;
   try {
-    let { id, staff } = action;
     yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.putUsersById(id, staff));
     console.log(res);
@@ -57,9 +57,19 @@ function* actPutStaff(action) {
       AlertCustom({ type: "error", title: "Chỉnh sửa nhân viên thất bại" });
     }
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    yield put({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: id });
+    yield put({
+      type: SagaActionTypes.GET_USER_LOGIN_SAGA,
+      id: localStorage.getItem("id"),
+    });
   } catch (err) {
     AlertCustom({ type: "error", title: err.message });
     yield put({ type: SagaActionTypes.GET_LIST_USER_SAGA });
+    yield put({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: id });
+    yield put({
+      type: SagaActionTypes.GET_USER_LOGIN_SAGA,
+      id: localStorage.getItem("id"),
+    });
   }
 }
 

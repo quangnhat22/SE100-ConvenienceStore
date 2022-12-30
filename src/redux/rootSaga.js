@@ -26,6 +26,7 @@ export default function* rootSaga() {
     StaffSaga.followActPutStaff(),
     StaffSaga.followActDeleteStaff(),
     StaffSaga.followActGetStaffById(),
+    StaffSaga.followActGetStaffLoginById(),
     DeliveryNotesSaga.followActGetDeliveryNotes(),
     DeliveryNotesSaga.followActPostDeliveryNotes(),
     DeliveryNotesSaga.followActDeleteDeliveryNotes(),

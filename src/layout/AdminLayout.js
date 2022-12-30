@@ -13,10 +13,11 @@ import * as SagaActionTypes from "../redux/constants/constant";
 const AdminLayout = (props) => {
   const dispatch = useDispatch();
   const uid = localStorage.getItem("id");
-  const { staff } = useSelector((state) => state.staffsSlice);
+  const { staffLogin } = useSelector((state) => state.staffsSlice);
+  console.log(staffLogin);
   useEffect(() => {
     dispatch({
-      type: SagaActionTypes.GET_USER_BY_ID_SAGA,
+      type: SagaActionTypes.GET_USER_LOGIN_SAGA,
       id: uid,
     });
   }, []);
@@ -45,10 +46,12 @@ const AdminLayout = (props) => {
           <div className="flex items-center justify-end mr-7">
             <Avatar
               className=" bg-black"
-              src={staff.avatar}
+              src={staffLogin.avatar}
               icon={<UserOutlined style={{ color: "#999" }} />}
             />
-            {!visibleButton && <p className="mb-0 ml-1">{staff.fullname}</p>}
+            {!visibleButton && (
+              <p className="mb-0 ml-1">{staffLogin.fullname}</p>
+            )}
           </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>{props.children}</Content>

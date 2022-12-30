@@ -338,25 +338,39 @@ const StaffInforDetail = ({ staff }) => {
             textAlign: "end",
           }}
         >
-          <Space className="flex justify-end">
-            <Button
-              className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-              type="primary"
-              size="large"
-              onClick={handleEnableModify}
-            >
-              Chỉnh sửa
-            </Button>
-            <Button
-              className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
-              size="large"
-              type="primary"
-              danger
-              onClick={handleClose}
-            >
-              Đóng
-            </Button>
-          </Space>
+          {staff.role !== "MANAGER" ? (
+            <Space className="flex justify-end">
+              <Button
+                className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                type="primary"
+                size="large"
+                onClick={handleEnableModify}
+              >
+                Chỉnh sửa
+              </Button>
+              <Button
+                className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                size="large"
+                type="primary"
+                danger
+                onClick={handleClose}
+              >
+                Đóng
+              </Button>
+            </Space>
+          ) : (
+            <Space className="flex justify-end">
+              <Button
+                className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                size="large"
+                type="primary"
+                danger
+                onClick={handleClose}
+              >
+                Đóng
+              </Button>
+            </Space>
+          )}
         </Form.Item>
       ) : (
         <Form.Item
