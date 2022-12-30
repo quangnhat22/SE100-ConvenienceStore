@@ -1,13 +1,25 @@
 import { MenuUnfoldOutlined, UserOutlined } from "@ant-design/icons";
-import { Layout } from "antd";
+import { Layout, Avatar } from "antd";
 import { Content, Header } from "antd/lib/layout/layout";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, Route } from "react-router-dom";
 import DrawerCustomed from "../common/Drawer/Drawer";
 import SiderCustomed from "../common/Sider/Sider";
 import SalePage from "../containers/Staff/Sale";
 import ProfilePage from "../containers/Admin/Profile";
+import { useDispatch, useSelector } from "react-redux";
+import * as SagaActionTypes from "../redux/constants/constant";
+
 const AdminLayout = (props) => {
+  const dispatch = useDispatch();
+  const uid = localStorage.getItem("id");
+  const { staff } = useSelector((state) => state.staffsSlice);
+  useEffect(() => {
+    dispatch({
+      type: SagaActionTypes.GET_USER_BY_ID_SAGA,
+      id: uid,
+    });
+  }, []);
   // const location = useLocation();
   // console.log(location);
   const [collapsed, setCollapsed] = useState(false);
@@ -31,11 +43,12 @@ const AdminLayout = (props) => {
             )}
           </div>
           <div className="flex items-center justify-end mr-7">
-            <UserOutlined
-              className="p-2  rounded-full bg-black"
-              style={{ color: "#999" }}
+            <Avatar
+              className=" bg-black"
+              src={staff.avatar}
+              icon={<UserOutlined style={{ color: "#999" }} />}
             />
-            {!visibleButton && <p className="mb-0 ml-1">Quản trị viên</p>}
+            {!visibleButton && <p className="mb-0 ml-1">{staff.fullname}</p>}
           </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>{props.children}</Content>

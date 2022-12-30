@@ -52,8 +52,8 @@ const DropDownAvatar = () => {
     <Dropdown overlay={menu} trigger={["click"]}>
       <div className="flex items-center justify-end mr-2 sm:mr-7 bg-transparent cursor-pointer">
         <Avatar
-          className="pb-2 bg-blue-300"
-          src={staff.image}
+          className="bg-blue-300"
+          src={staff.avatar}
           icon={<UserOutlined style={{ color: "#9900FF" }} />}
         />
 
