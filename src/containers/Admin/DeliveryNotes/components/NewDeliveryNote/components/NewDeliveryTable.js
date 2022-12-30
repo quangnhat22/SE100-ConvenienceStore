@@ -68,6 +68,8 @@ const NewDeliveryTable = ({ data, keyWord }) => {
       showOnResponse: true,
       showOnDesktop: true,
       sorter: (a, b) => a.cost - b.cost,
+      render: (cost) =>
+        cost.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
     },
     {
       title: "Giá bán",
@@ -78,6 +80,8 @@ const NewDeliveryTable = ({ data, keyWord }) => {
       width: "15%",
       ellipsis: true,
       sorter: (a, b) => a.price - b.price,
+      render: (price) =>
+        price.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
     },
     {
       title: "Ngày sản xuất",
@@ -106,6 +110,8 @@ const NewDeliveryTable = ({ data, keyWord }) => {
       width: "10%",
       ellipsis: true,
       sorter: (a, b) => a.quantity - b.quantity,
+      render: (quantity) =>
+        quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
     },
     {
       title: "Thao tác",

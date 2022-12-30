@@ -22,10 +22,6 @@ const DeliveryNotes = () => {
     dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
   }, []);
 
-  useEffect(() => {
-    // back
-  }, [isCreateNewDeliveryNote]);
-
   const handleAddDeliveryNote = () => {
     dispatch(
       modalActions.showModal({
