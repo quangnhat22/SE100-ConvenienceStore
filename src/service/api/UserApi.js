@@ -18,6 +18,7 @@ export const UserService = {
       other,
       avatar,
       role,
+      active,
     } = newUser;
     return Axios.post(UrlApi.URL_USERS, {
       email: email,
@@ -31,6 +32,7 @@ export const UserService = {
       other: other,
       avatar: avatar,
       role: role,
+      active: active,
     });
   },
   putUsersById: (id, user) => {
@@ -45,11 +47,11 @@ export const UserService = {
       other,
       avatar,
       role,
-      active
+      active,
     } = user;
     console.log(id, user);
     return Axios.put(UrlApi.URL_USERS, {
-      id:parseInt(id),
+      id: parseInt(id),
       email: email,
       fullname: fullname,
       birthday: birthday,

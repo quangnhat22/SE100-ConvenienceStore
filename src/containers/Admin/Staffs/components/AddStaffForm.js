@@ -115,6 +115,7 @@ const AddStaffForm = () => {
       password: "12345678",
       avatar: imageChange,
       role: "EMPLOYEE",
+      active: true,
     };
     console.log(newStaff);
     dispatch({
