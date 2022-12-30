@@ -68,7 +68,11 @@ const StaffsPage = () => {
           </button>
         </div>
       </div>
-      <TableStaffs keyWord={keyWord} data={staffs} loading={loading} />
+      <TableStaffs
+        keyWord={keyWord}
+        data={staffs}
+        loading={loading}
+      />
       <ModalForm />
     </>
   );

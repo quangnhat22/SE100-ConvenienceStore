@@ -16,6 +16,7 @@ const initialState = {
     avatar: "",
     role: "",
     updatedAt: "",
+    active: false,
   },
   staffLogin: {
     id: -1,
