@@ -52,6 +52,7 @@ const StaffInforDetail = ({ staff }) => {
       other: values.staff_other_information,
       avatar: staff.avatar,
       role: staff.role,
+      active: values.staff_active,
     };
     console.log(staff);
     dispatch({
@@ -96,6 +97,7 @@ const StaffInforDetail = ({ staff }) => {
         staff_email: staff.email,
         staff_address: staff.address,
         staff_other_information: staff.other,
+        staff_active: staff.active,
       }}
     >
       <Form.Item name="staff_id" label="Mã nhân viên">
@@ -106,6 +108,27 @@ const StaffInforDetail = ({ staff }) => {
           placeholder="Mã nhân viên"
           disabled={true}
         />
+      </Form.Item>
+      <Form.Item
+        name="staff_active"
+        label="Trạng thái tài khoản"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Select
+          placeholder="Trạng thái"
+          allowClear
+          style={{
+            width: "60%",
+          }}
+          disabled={componentDisabled}
+        >
+          <Option value={true}>Đang hoat động</Option>
+          <Option value={false}>Tạm ngừng</Option>
+        </Select>
       </Form.Item>
       <Form.Item
         name="staff_name"

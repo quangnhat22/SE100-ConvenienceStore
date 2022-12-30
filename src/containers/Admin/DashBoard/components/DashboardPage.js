@@ -144,7 +144,7 @@ const DashboardPage = () => {
         {/* Bảng biểu */}
         <div className="bg-white flex flex-wrap mt-10 md:mt-12 shadow-md min-h-[400px] gap-20 p-3 justify-between">
           {/* Biểu đồ */}
-          <div className="flex flex-col justify-center sm:w-[800px] sm:h-[600px] grow">
+          <div className="flex flex-col justify-center sm:w-[800px] sm:h-[600px] grow gap-5">
             <div className="flex justify-between gap-5 ">
               <span className="text-[25px] font-bold inline-block">
                 Doanh thu tháng này
@@ -160,7 +160,7 @@ const DashboardPage = () => {
             </div>
             <PieChart />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-5">
             <div className="flex justify-between items-center gap-5">
               <span className="text-[25px] font-bold inline-block whitespace-nowrap">
                 Bán chạy trong tuần
