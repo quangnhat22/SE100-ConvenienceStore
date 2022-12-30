@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Form, Input, Button, DatePicker, InputNumber, Upload } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  InputNumber,
+  Upload,
+  Space,
+} from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { Colorpicker } from "antd-colorpicker";
 import { useDispatch } from "react-redux";
@@ -96,39 +104,45 @@ const DetailExpiredDateForm = ({ productItemExpire }) => {
         />
       </Form.Item>
       {enableModify === false ? (
-        <Form.Item
-          wrapperCol={{
-            span: 26,
-          }}
-          style={{
-            textAlign: "end",
-          }}
-        >
+        <Space className="flex justify-end">
           <Button
-            className="edit-reader-button mr-4"
-            onClick={handleEnableModify}
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            type="primary"
+            size="large"
+            onClick={() => handleEnableModify()}
           >
             Chỉnh sửa
           </Button>
-          <Button onClick={handleClose}>Đóng</Button>
-        </Form.Item>
-      ) : (
-        <Form.Item
-          wrapperCol={{
-            span: 26,
-          }}
-          style={{
-            textAlign: "end",
-          }}
-        >
           <Button
-            className="cancel-edit-reader-button mr-4"
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
+            onClick={() => handleClose()}
+          >
+            Đóng
+          </Button>
+        </Space>
+      ) : (
+        <Space className="flex justify-end">
+          <Button
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
             onClick={handleCancel}
           >
             Hủy
           </Button>
-          <Button htmlType="submit">Lưu</Button>
-        </Form.Item>
+          <Button
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            htmlType="submit"
+          >
+            Lưu
+          </Button>
+        </Space>
       )}
     </FormCustomed>
   );

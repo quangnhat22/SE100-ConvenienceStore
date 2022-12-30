@@ -61,7 +61,7 @@ const DetailProductPage = () => {
       <div className="ml-7 mt-5 mr-3 mb-8">
         <div className="search-container flex flex-col md:flex-row justify-end items-center gap-x-4 gap-y-2 w-full">
           <div className="inline-block font-semibold md:mr-auto whitespace-nowrap text-2xl">
-            Sản phẩm: {id}
+            ID sản phẩm: {id}
           </div>
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">

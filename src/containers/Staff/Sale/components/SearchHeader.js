@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Input, Table, Image, Space } from "antd";
+import { Input, Table, Image, Space, Button } from "antd";
 import {
   CloseOutlined,
   SearchOutlined,
   FileSearchOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import "../../../../common/Table/TableTemplate";
 import { cartActions } from "../../../../redux/reducer/CartReducer";
@@ -90,12 +91,19 @@ const SearchHeader = ({ data }) => {
       width: "100px",
       align: "center",
       render: (value, record) => (
+        // <button
+        //   type="button"
+        //   className="text-white font-bold p-2 bg-blue-500"
+        //
+        // >
+        //   Chọn mua
+        // </button>
         <button
           type="button"
-          className="text-blue-500 bg-white border border-blue-500 p-1 rounded whitespace-nowrap ml-1 hover:bg-sky-500"
+          className="text-white font-bold py-3 px-3 inline-flex items-center edit-button rounded"
           onClick={() => handleSelect(record)}
         >
-          Chọn mua
+          <ShoppingCartOutlined className="text-xl flex justify-center items-center" />
         </button>
       ),
     },

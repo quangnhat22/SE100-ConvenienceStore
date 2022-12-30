@@ -275,7 +275,14 @@ const PaymentForm = ({ data }) => {
           <TextArea rows={2} placeholder="Ghi chú" />
         </Form.Item>
         <div className="block text-center">
-          <Button htmlType="submit">Thanh toán</Button>
+          <Button
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            htmlType="submit"
+          >
+            Thanh toán
+          </Button>
         </div>
         <div style={{ display: "none" }}>
           <ReactToPrint

@@ -161,26 +161,36 @@ const DetailProviderForm = ({ provider }) => {
             textAlign: "end",
           }}
         >
-          <Button className="edit-reader-button" onClick={handleEnableModify}>
+          <Button
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            type="primary"
+            size="large"
+            onClick={handleEnableModify}
+          >
             Chỉnh sửa
           </Button>
         </div>
       ) : (
-        <div
-          style={{
-            textAlign: "end",
-          }}
-        >
+        <Space className="flex justify-end">
           <Button
-            className="cancel-edit-reader-button mr-4"
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
             onClick={handleCancel}
           >
             Hủy
           </Button>
-          <Button onClick={handleModify} htmlType="submit">
+          <Button
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            onClick={handleModify}
+            htmlType="submit"
+          >
             Lưu
           </Button>
-        </div>
+        </Space>
       )}
     </Form>
   );

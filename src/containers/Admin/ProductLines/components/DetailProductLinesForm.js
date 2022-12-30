@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, InputNumber } from "antd";
+import { Form, Input, Button, InputNumber, Space } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useDispatch } from "react-redux";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
@@ -98,41 +98,46 @@ const DetailProductLinesForm = ({ productLine }) => {
         />
       </Form.Item>
       {enableModify === false ? (
-        <Form.Item
-          wrapperCol={{
-            span: 26,
-          }}
-          style={{
-            textAlign: "end",
-          }}
-        >
+        <Space className="flex justify-end">
           <Button
-            className="edit-reader-button mr-4"
-            onClick={handleEnableModify}
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            type="primary"
+            size="large"
+            onClick={() => handleEnableModify()}
           >
             Chỉnh sửa
           </Button>
-          <Button onClick={handleClose}>Đóng</Button>
-        </Form.Item>
-      ) : (
-        <Form.Item
-          wrapperCol={{
-            span: 26,
-          }}
-          style={{
-            textAlign: "end",
-          }}
-        >
           <Button
-            className="cancel-edit-reader-button mr-4"
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
+            onClick={() => handleClose()}
+          >
+            Đóng
+          </Button>
+        </Space>
+      ) : (
+        <Space className="flex justify-end">
+          <Button
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
             onClick={handleCancel}
           >
             Hủy
           </Button>
-          <Button onClick={handleModify} htmlType="submit">
+          <Button
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            onClick={handleModify}
+            htmlType="submit"
+          >
             Lưu
           </Button>
-        </Form.Item>
+        </Space>
       )}
     </FormCustomed>
   );

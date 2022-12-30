@@ -48,8 +48,11 @@ const ProductLinesPage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            onSearch={(value) => {
-              setKeyWord(value);
+            // onSearch={(value) => {
+            //   setKeyWord(value);
+            // }}
+            onChange={(e) => {
+              setKeyWord(e.target.value);
             }}
           />
           {/* button search */}

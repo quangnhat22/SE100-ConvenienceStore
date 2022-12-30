@@ -40,7 +40,6 @@ const AddNewProduct = () => {
   const [imageChange, setImageChange] = useState("");
   const [progress, setProgress] = useState(0);
 
-
   const optionsProductLines = productOfProvider.map(function (productLine) {
     return {
       value: productLine.id,
@@ -238,13 +237,13 @@ const AddNewProduct = () => {
         //valuePropName="fileList"
       >
         <Upload
-         accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
-         listType="picture-card"
-         fileList={fileList}
-         onPreview={handlePreview}
-         customRequest={uploadImage}
-         onChange={handleOnChange}
-         maxCount="1"
+          accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          customRequest={uploadImage}
+          onChange={handleOnChange}
+          maxCount="1"
         >
           <div>
             <PlusOutlined />
@@ -264,7 +263,14 @@ const AddNewProduct = () => {
           offset: 20,
         }}
       >
-        <Button htmlType="submit">Submit</Button>
+        <Button
+          className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+          size="large"
+          type="primary"
+          htmlType="submit"
+        >
+          Lưu
+        </Button>
       </Form.Item>
     </FormCustomed>
   );

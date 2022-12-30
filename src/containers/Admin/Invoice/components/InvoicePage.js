@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 const InvoicePage = () => {
   const dispatch = useDispatch();
   const [keyWord, setKeyWord] = useState("");
-  const { listInvoice } = useSelector((state) => state.invoiceSlice);
+  const { loading, listInvoice } = useSelector((state) => state.invoiceSlice);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_INVOICES_SAGA });
   }, []);
@@ -37,7 +37,7 @@ const InvoicePage = () => {
           moment(new Date()).format("DD/MM/YYYY  HH:MM")}
       </div>
 
-      <TableInvoice keyWord={keyWord} data={listInvoice} loading={false} />
+      <TableInvoice keyWord={keyWord} data={listInvoice} loading={loading} />
       <ModalForm />
     </div>
   );

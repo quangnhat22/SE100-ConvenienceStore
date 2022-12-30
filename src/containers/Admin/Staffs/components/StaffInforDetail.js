@@ -14,6 +14,7 @@ import {
   Switch,
   Checkbox,
   Upload,
+  Space,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
@@ -228,13 +229,25 @@ const StaffInforDetail = ({ staff }) => {
             textAlign: "end",
           }}
         >
-          <Button
-            className="edit-reader-button mr-4"
-            onClick={handleEnableModify}
-          >
-            Chỉnh sửa
-          </Button>
-          <Button onClick={handleClose}>Đóng</Button>
+          <Space className="flex justify-end">
+            <Button
+              className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+              type="primary"
+              size="large"
+              onClick={handleEnableModify}
+            >
+              Chỉnh sửa
+            </Button>
+            <Button
+              className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+              size="large"
+              type="primary"
+              danger
+              onClick={handleClose}
+            >
+              Đóng
+            </Button>
+          </Space>
         </Form.Item>
       ) : (
         <Form.Item
@@ -245,13 +258,25 @@ const StaffInforDetail = ({ staff }) => {
             textAlign: "end",
           }}
         >
-          <Button
-            className="cancel-edit-reader-button mr-4"
-            onClick={handleCancel}
-          >
-            Hủy
-          </Button>
-          <Button htmlType="submit">Lưu</Button>
+          <Space>
+            <Button
+              className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+              size="large"
+              type="primary"
+              danger
+              onClick={handleCancel}
+            >
+              Hủy
+            </Button>
+            <Button
+              className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+              size="large"
+              type="primary"
+              htmlType="submit"
+            >
+              Lưu
+            </Button>
+          </Space>
         </Form.Item>
       )}
     </FormCustomed>

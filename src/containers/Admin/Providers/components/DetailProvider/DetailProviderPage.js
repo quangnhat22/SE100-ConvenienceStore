@@ -99,11 +99,17 @@ const DetailProviderPage = () => {
         </div>
       </div>
       <DetailProviderTable data={productOfProvider} keyWord={keyWord} />
-      <div className="flex justify-end w-full">
-        <Button className="mx-3 mb-3" onClick={() => handleClose()}>
+      <Space className="flex justify-end w-full px-5 pb-5">
+        <Button
+          className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+          size="large"
+          type="primary"
+          danger
+          onClick={() => handleClose()}
+        >
           Đóng
         </Button>
-      </div>
+      </Space>
       <ModalForm />
     </>
   );

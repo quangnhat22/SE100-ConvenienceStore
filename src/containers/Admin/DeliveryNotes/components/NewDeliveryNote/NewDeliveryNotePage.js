@@ -186,8 +186,11 @@ const NewDeliveryNotePage = () => {
             name="search"
             placeholder="Tìm kiếm..."
             allowClear
-            onSearch={(value) => {
-              setKeyWord(value);
+            // onSearch={(value) => {
+            //   setKeyWord(value);
+            // }}
+            onChange={(e) => {
+              setKeyWord(e.target.value);
             }}
           />
           {/* button search */}
@@ -217,7 +220,12 @@ const NewDeliveryNotePage = () => {
       </div>
       <NewDeliveryTable keyWord={keyWord} data={newDeliveryNote.productItems} />
       <div className="flex justify-end w-full">
-        <Button onClick={() => handleSubmit()} className="mx-3 mb-3">
+        <Button
+          className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md mr-3 mb-3"
+          size="large"
+          type="primary"
+          onClick={() => handleSubmit()}
+        >
           Lưu
         </Button>
       </div>

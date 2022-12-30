@@ -145,8 +145,14 @@ const DeliveryNoteDetailPage = () => {
         </div>
       </div>
       <TableProducts keyWord={keyWord} data={deliveryNote.productItems} />
-      <div className="flex justify-end w-full">
-        <Button onClick={() => handleExit()} className="mx-3 mb-3">
+      <div className="flex justify-end w-full px-5">
+        <Button
+          className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+          size="large"
+          type="primary"
+          danger
+          onClick={() => handleExit()}
+        >
           Đóng
         </Button>
       </div>

@@ -65,7 +65,14 @@ const ExpiredDateForm = () => {
           offset: 20,
         }}
       >
-        <Button htmlType="submit">Lưu</Button>
+        <Button
+          className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+          size="large"
+          type="primary"
+          htmlType="submit"
+        >
+          Lưu
+        </Button>
       </Form.Item>
     </FormCustomed>
   );

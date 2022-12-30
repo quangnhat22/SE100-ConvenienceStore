@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { DatePicker, Form, Input, Modal, Select, Space, Upload } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Select,
+  Space,
+  Upload,
+} from "antd";
 import { ExclamationCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { useHistory } from "react-router-dom";
@@ -54,11 +63,24 @@ const EditProfilePage = ({ data }) => {
 
   const onFinish = (values) => {
     Modal.confirm({
-      title: "Xác nhận",
+      title: <div className="font-bold text-yellow-500 text-xl">Xác nhận</div>,
       icon: <ExclamationCircleOutlined />,
       content: "Xác nhận thay đổi?",
-      okText: "Ok",
+      okText: "Xác nhận",
       cancelText: "Hủy",
+      okButtonProps: {
+        size: "large",
+        type: "primary",
+        className:
+          "rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md",
+      },
+      cancelButtonProps: {
+        className:
+          "rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md",
+        size: "large",
+        type: "primary",
+        danger: "true",
+      },
       destroyOnClose: true,
       centered: true,
       maskClosable: true,
@@ -294,12 +316,14 @@ const EditProfilePage = ({ data }) => {
 
             {/* Action */}
             <Form.Item className="flex justify-end right-5 bottom-0">
-              <button
-                className="rounded py-2 px-4 bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
-                type="submit"
+              <Button
+                className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+                size="large"
+                type="primary"
+                htmlType="submit"
               >
                 Lưu
-              </button>
+              </Button>
             </Form.Item>
           </div>
         </div>

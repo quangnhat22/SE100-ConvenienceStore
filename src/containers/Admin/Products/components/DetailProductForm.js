@@ -57,7 +57,7 @@ const DetailProductForm = ({ product }) => {
   const [enableModify, setEnableModify] = useState(false);
   const [componentDisabled, setComponentDisabled] = useState(true);
   const [fileList, setFileList] = useState([{ url: product.image }]);
-  const [imageChange, setImageChange] = useState(product.iamge);
+  const [imageChange, setImageChange] = useState(product.image);
   const [progress, setProgress] = useState(0);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -146,7 +146,7 @@ const DetailProductForm = ({ product }) => {
       // image: values.image.filename,
       image: imageChange, /////////////Cần sửa ở đây
     };
-    console.log("values: ",editProduct);
+    console.log("values: ", editProduct);
     dispatch({
       type: SagaActionTypes.PUT_PRODUCT_ITEM_SAGA,
       id: product.id,
@@ -343,35 +343,46 @@ const DetailProductForm = ({ product }) => {
         </Col>
       </Row>
       {enableModify === false ? (
-        <div
-          style={{
-            textAlign: "end",
-          }}
-        >
+        <Space className="flex justify-end">
           <Button
-            className="edit-reader-button mr-4"
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            type="primary"
+            size="large"
             onClick={() => handleEnableModify()}
           >
             Chỉnh sửa
           </Button>
-          <Button onClick={() => handleClose()}>Đóng</Button>
-        </div>
-      ) : (
-        <div
-          style={{
-            textAlign: "end",
-          }}
-        >
           <Button
-            className="cancel-edit-reader-button mr-4"
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
+            onClick={() => handleClose()}
+          >
+            Đóng
+          </Button>
+        </Space>
+      ) : (
+        <Space className="flex justify-end">
+          <Button
+            className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            danger
             onClick={handleCancel}
           >
             Hủy
           </Button>
-          <Button onClick={handleModify} htmlType="submit">
+          <Button
+            className="rounded bg-blue-500 opacity-90 text-white hover:opacity-100 shadow-md"
+            size="large"
+            type="primary"
+            onClick={handleModify}
+            htmlType="submit"
+          >
             Lưu
           </Button>
-        </div>
+        </Space>
       )}
     </Form>
   );
