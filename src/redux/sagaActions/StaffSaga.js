@@ -103,6 +103,23 @@ function* actGetStaffById(action) {
   }
 }
 
+function* actGetStaffLoginById(action) {
+  try {
+    yield put(staffActions.getListStaffsInLoading());
+    let { id } = action;
+    let res = yield call(() => UserService.getUsersById(id));
+    let { data, status } = res;
+
+    if (status === 200) {
+      yield put(staffActions.getStaffLoginByIdSuccess({ staffLogin: data }));
+    } else {
+      //yield put(authActions.requestLogFailed());
+    }
+  } catch (err) {
+    //yield put(authActions.requestLogFailed());
+  }
+}
+
 export function* followActGetListStaffs() {
   yield takeLatest(SagaActionTypes.GET_LIST_USER_SAGA, actGetListStaffs);
 }
@@ -121,4 +138,8 @@ export function* followActDeleteStaff() {
 
 export function* followActGetStaffById() {
   yield takeLatest(SagaActionTypes.GET_USER_BY_ID_SAGA, actGetStaffById);
+}
+
+export function* followActGetStaffLoginById() {
+  yield takeLatest(SagaActionTypes.GET_USER_LOGIN_SAGA, actGetStaffLoginById);
 }
