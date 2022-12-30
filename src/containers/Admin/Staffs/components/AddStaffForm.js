@@ -14,20 +14,98 @@ import {
   Switch,
   Checkbox,
   Upload,
+  Space,
+  Modal,
 } from "antd";
 import FormCustomed from "../../../../common/Form/FormCustomed";
 import { useSelector, useDispatch } from "react-redux";
 import { staffActions } from "../../../../redux/reducer/StaffReducer";
 import { modalActions } from "../../../../redux/reducer/ModalReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
+import axios from "axios";
 
 const { Option } = Select;
 const { TextArea } = Input;
 const dateFormat = "DD/MM/YYYY";
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+  });
+
 const AddStaffForm = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { submitSuccess } = useSelector((state) => state.staffsSlice);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState([]);
+  const [imageChange, setImageChange] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+      console.log(file.preview);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
+  };
+
+  const handleCancelPreview = () => setPreviewOpen(false);
+
+  const uploadImage = async (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost/image/upload",
+        data: fmData,
+        ...config,
+      });
+
+      let { data, status } = res;
+      console.log("server res: ", res);
+      setImageChange(data["path"]);
+      onSuccess("Ok");
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    //console.log(fileList);
+    setFileList(fileList);
+    if (fileList.length == 0) {
+      setImageChange("");
+    }
+    //filelist - [{uid: "-1",url:'Some url to image'}]
+  };
+
   const onFinish = (values) => {
     let newStaff = {
       fullname: values.staff_name,
@@ -39,7 +117,7 @@ const AddStaffForm = () => {
       address: values.staff_address,
       other: values.staff_other_information,
       password: "12345678",
-      avatar: "http://example.com/a.jpg",
+      avatar: imageChange,
       role: "EMPLOYEE",
       active: true,
     };
@@ -156,23 +234,37 @@ const AddStaffForm = () => {
       <Form.Item name="staff_other_information" label="Khác">
         <TextArea rows={2} placeholder="Khác" />
       </Form.Item>
-      <Form.Item
-        name="staff_image"
-        label="Ảnh nhân viên"
-        valuePropName="fileList"
-      >
-        <Upload action="/upload.do" listType="picture-card">
-          <div>
-            <PlusOutlined />
-            <div
+      <Form.Item name="avatar" label="Ảnh nhân viên">
+        <>
+          <Upload
+            accept=".png, .jpg, .jpeg, tiff, .nef, .gif, .svg, .psd, .pdf, .eps, .ai, .heic, .raw, .bmp"
+            listType="picture-card"
+            fileList={fileList}
+            onPreview={handlePreview}
+            customRequest={uploadImage}
+            onChange={handleOnChange}
+            maxCount="1"
+          >
+            <Space className="flex flex-col text-base">
+              <PlusOutlined />
+              Tải ảnh
+            </Space>
+          </Upload>
+          <Modal
+            open={previewOpen}
+            title={previewTitle}
+            footer={null}
+            onCancel={handleCancelPreview}
+          >
+            <img
+              alt="example"
               style={{
-                marginTop: 8,
+                width: "100%",
               }}
-            >
-              Tải lên
-            </div>
-          </div>
-        </Upload>
+              src={previewImage}
+            />
+          </Modal>
+        </>
       </Form.Item>
       <Form.Item
         wrapperCol={{

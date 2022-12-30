@@ -43,6 +43,7 @@ const DetailProductForm = ({ product }) => {
       range: "${label} phải trong khoảng từ ${min} đến ${max}",
     },
   };
+
   const defaultValues = {
     productId: `${product.product.id} - ${product.product.title}`,
     deliveryNoteId: `${product.deliveryNote.id} - ${product.deliveryNote.provider.name}`,
@@ -72,6 +73,8 @@ const DetailProductForm = ({ product }) => {
     setComponentDisabled(true);
     onReset();
   };
+
+  const handleCancelPreview = () => setPreviewOpen(false);
 
   const handleClose = () => {
     history.goBack();
@@ -135,6 +138,11 @@ const DetailProductForm = ({ product }) => {
     //Using Hooks to update the state to the current filelist
     //console.log(fileList);
     setFileList(fileList);
+    if (fileList.length == 0) {
+      setImageChange(
+        "https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png"
+      );
+    }
     //filelist - [{uid: "-1",url:'Some url to image'}]
   };
 
@@ -162,8 +170,15 @@ const DetailProductForm = ({ product }) => {
       validateMessages={validateMessages}
       initialValues={defaultValues}
     >
-      <Row gutter={24}>
-        <Col span={12} key={1}>
+      <Row
+        gutter={{
+          xs: 8,
+          sm: 16,
+          md: 24,
+          lg: 32,
+        }}
+      >
+        <Col xs={24} sm={24} lg={12} key={1}>
           <Form.Item
             name="productId"
             label="Dòng sản phẩm"
@@ -180,7 +195,7 @@ const DetailProductForm = ({ product }) => {
             ></Input>
           </Form.Item>
         </Col>
-        <Col span={12} key={2}>
+        <Col xs={24} sm={24} lg={12} key={2}>
           <Form.Item
             name="deliveryNoteId"
             label="Mã phiếu nhập kho"
@@ -197,7 +212,7 @@ const DetailProductForm = ({ product }) => {
             ></Input>
           </Form.Item>
         </Col>
-        <Col span={12} key={3}>
+        <Col xs={24} sm={12} key={3}>
           <Form.Item
             name="MFG"
             label="Ngày sản xuất"
@@ -215,7 +230,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={12} key={4}>
+        <Col xs={24} sm={12} key={4}>
           <Form.Item
             name="EXP"
             label="Ngày hết hạn"
@@ -233,7 +248,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={8} key={5}>
+        <Col xs={24} sm={12} md={24} lg={12} xl={8} key={5}>
           <Form.Item
             name="cost"
             label="Giá nhập"
@@ -254,7 +269,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={8} key={6}>
+        <Col xs={24} sm={12} md={24} lg={12} xl={8} key={6}>
           <Form.Item
             name="price"
             label="Giá bán"
@@ -275,7 +290,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={8} key={7}>
+        <Col xs={24} sm={12} md={24} lg={12} xl={8} key={7}>
           <Form.Item
             name="quantity"
             label="Số lượng"
@@ -287,7 +302,8 @@ const DetailProductForm = ({ product }) => {
             ]}
           >
             <InputNumber
-              className="w-full rounded"
+              className="rounded"
+              addonAfter={""}
               min={1}
               placeholder="Số lượng"
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -306,7 +322,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col span={8} key={9}>
+        <Col span={24} key={9}>
           <Form.Item className="w-fit rounded" label="Hình ảnh sản phẩm">
             <>
               <Upload
@@ -325,17 +341,17 @@ const DetailProductForm = ({ product }) => {
                 </Space>
               </Upload>
               <Modal
-                // open={previewOpen}
-                // title={previewTitle}
+                open={previewOpen}
+                title={previewTitle}
                 footer={null}
-                onCancel={handleCancel}
+                onCancel={handleCancelPreview}
               >
                 <img
                   alt="example"
                   style={{
                     width: "100%",
                   }}
-                  //   src={previewImage}
+                  src={previewImage}
                 />
               </Modal>
             </>

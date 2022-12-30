@@ -68,8 +68,15 @@ const DeliveryNoteDetailPage = () => {
         </div>
         <div className="rounded bg-white py-5 px-3 my-5">
           <Form name="add_delivery_note_form" initialValues={initialValues}>
-            <Row gutter={24}>
-              <Col span={12} key={1}>
+            <Row
+              gutter={{
+                xs: 8,
+                sm: 16,
+                md: 24,
+                lg: 32,
+              }}
+            >
+              <Col xs={24} sm={12} md={24} lg={12} key={1}>
                 <Form.Item
                   name="delivery_note_provider"
                   label="Nhà cung cấp"
@@ -82,7 +89,7 @@ const DeliveryNoteDetailPage = () => {
                   <Input placeholder="Nhà cung cấp" disabled={true}></Input>
                 </Form.Item>
               </Col>
-              <Col span={12} key={2}>
+              <Col xs={24} sm={12} md={24} lg={12} key={2}>
                 <Form.Item
                   name="delivery_note_date"
                   label="Ngày nhập kho"
@@ -100,7 +107,7 @@ const DeliveryNoteDetailPage = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12} key={3}>
+              <Col xs={24} sm={12} md={24} lg={12} key={3}>
                 <Form.Item
                   name="delivery_note_staff"
                   label="Nhân viên kiểm hàng"
@@ -116,7 +123,7 @@ const DeliveryNoteDetailPage = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12} key={4}>
+              <Col xs={24} sm={12} md={24} lg={12} key={4}>
                 <Form.Item name="delivery_note_shipper" label="Người giao hàng">
                   <Input
                     className="rounded"
