@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
+  isCreateNewDeliveryNote: false,
   deliveryNotes: [],
   deliveryNote: {
     id: 0,
@@ -43,12 +44,16 @@ const deliveryNotesSlice = createSlice({
     },
     getDeliveryNotesSuccess: (state, action) => {
       state.loading = false;
+      state.isCreateNewDeliveryNote = false;
       state.deliveryNotes = action.payload.deliveryNotes;
     },
     getDeliveryNotesByIdSuccess: (state, action) => {
       state.deliveryNote = action.payload.deliveryNote;
       state.loading = false;
     },
+    createNewDeliveryNote: (state, action) => {
+      state.isCreateNewDeliveryNote = true;
+    }
   },
 });
 

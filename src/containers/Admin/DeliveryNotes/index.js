@@ -11,7 +11,7 @@ import AddDeliveryNoteForm from "./components/AddDeliveryNoteForm";
 
 const DeliveryNotes = () => {
   const dispatch = useDispatch();
-  const { deliveryNotes, loading } = useSelector(
+  const { deliveryNotes, loading, isCreateNewDeliveryNote } = useSelector(
     (state) => state.deliveryNotesSlice
   );
   const uid = localStorage.getItem("id");
@@ -21,6 +21,10 @@ const DeliveryNotes = () => {
     dispatch({ type: SagaActionTypes.GET_LIST_PROVIDER_SAGA });
     dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
   }, []);
+
+  useEffect(() => {
+    // back
+  }, [isCreateNewDeliveryNote]);
 
   const handleAddDeliveryNote = () => {
     dispatch(

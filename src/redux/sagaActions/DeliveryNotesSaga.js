@@ -36,6 +36,7 @@ function* actPostDeliveryNotes(action) {
         type: "success",
         title: "Thêm phiếu nhập hàng thành công",
       });
+      yield put(deliveryNotesActions.createNewDeliveryNote());
       yield put(modalActions.hideModal());
     } else {
       AlertCustom({ type: "error", title: "Thêm phiếu nhập hàng thất bại" });
