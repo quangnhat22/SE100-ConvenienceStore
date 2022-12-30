@@ -164,7 +164,10 @@ const TableRevenue = ({ keyWord, data, loading }) => {
               </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell>
-              <Text className="text-2xl" type="success">
+              <Text
+                className="text-2xl"
+                type={totalProfit >= 0 ? "success" : "danger"}
+              >
                 <div>
                   {totalProfit
                     .toString()

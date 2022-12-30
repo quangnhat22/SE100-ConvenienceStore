@@ -199,7 +199,7 @@ const RevenuePage = () => {
       {/* Cập nhật thời gian thực */}
       <div className="flex justify-between items-center flex-wrap px-5 py-2">
         <button
-          className="border-none flex justify-center items-center gap-2 p-1 rounded bg-gray-200 hover:bg-gray-300"
+          className="border-none flex justify-center items-center gap-2 p-2 rounded bg-gray-200 hover:bg-gray-300"
           type="button"
           onClick={exportFile}
         >
