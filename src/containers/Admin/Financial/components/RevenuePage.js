@@ -6,6 +6,7 @@ import * as SagaActionTypes from "../../../../redux/constants/constant";
 import TableRevenue from "./TableRevenue";
 import { Segmented } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { UploadOutlined } from "@ant-design/icons";
 
 const RevenuePage = () => {
   const TimeReal = {
@@ -40,7 +41,9 @@ const RevenuePage = () => {
           ? SagaActionTypes.GET_REPORT_WEEK_SAGA
           : valueFilter === "MONTH"
           ? SagaActionTypes.GET_REPORT_MONTH_SAGA
-          : SagaActionTypes.GET_REPORT_YEAR_SAGA,
+          : valueFilter === "YEAR"
+          ? SagaActionTypes.GET_REPORT_YEAR_SAGA
+          : "",
       year: time.year,
       month: time.month,
       day: time.day,
@@ -64,6 +67,23 @@ const RevenuePage = () => {
   const [weekHidden, setWeekHidden] = useState(false);
   const [monthHidden, setMonthHidden] = useState(true);
   const [yearHidden, setYearHidden] = useState(true);
+
+  // Xuất Excel
+  const exportFile = () => {
+    dispatch({
+      type:
+        valueFilter === "WEEK"
+          ? SagaActionTypes.GET_REPORT_WEEK_EXCEL_SAGA
+          : valueFilter === "MONTH"
+          ? SagaActionTypes.GET_REPORT_MONTH_EXCEL_SAGA
+          : valueFilter === "YEAR"
+          ? SagaActionTypes.GET_REPORT_YEAR_EXCEL_SAGA
+          : "",
+      year: time.year,
+      month: time.month,
+      day: time.day,
+    });
+  };
 
   return (
     <div>
@@ -177,9 +197,19 @@ const RevenuePage = () => {
       </Space>
 
       {/* Cập nhật thời gian thực */}
-      <div className="flex flex-row justify-end items-center px-5 py-2 text-gray-500 opacity-80 italic cursor-default">
-        {"Dữ liệu đươc cập nhật lần cuối lúc: " +
-          moment(new Date()).format("DD/MM/YYYY  HH:MM")}
+      <div className="flex justify-between items-center flex-wrap px-5 py-2">
+        <button
+          className="border-none flex justify-center items-center gap-2 p-1 rounded bg-gray-200 hover:bg-gray-300"
+          type="button"
+          onClick={exportFile}
+        >
+          <UploadOutlined />
+          Xuất File
+        </button>
+        <div className="flex flex-row justify-end items-center text-gray-500 opacity-80 italic cursor-default">
+          {"Dữ liệu đươc cập nhật lần cuối lúc: " +
+            moment(new Date()).format("DD/MM/YYYY  HH:MM")}
+        </div>
       </div>
 
       <TableRevenue keyWord={keyWord} data={reports} loading={loading} />

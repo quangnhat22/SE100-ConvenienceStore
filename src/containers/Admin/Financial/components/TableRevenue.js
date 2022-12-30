@@ -83,6 +83,7 @@ const TableRevenue = ({ keyWord, data, loading }) => {
       showOnDesktop: true,
       width: "10%",
       ellipsis: true,
+      fixed: "right",
       sorter: (a, b) => a.revenue - b.revenue,
       render: (text, record, index) => {
         return (
@@ -103,6 +104,7 @@ const TableRevenue = ({ keyWord, data, loading }) => {
       showOnDesktop: true,
       width: "10%",
       ellipsis: true,
+      fixed: "right",
       sorter: (a, b) => a.profit - b.profit,
       render: (text, record, index) => {
         return (
@@ -140,6 +142,7 @@ const TableRevenue = ({ keyWord, data, loading }) => {
         pageSizeOptions: ["6"],
       }}
       rowKey={"id"}
+      scroll={{ x: 1100 }}
       summary={(data) => {
         let totalRevenue = 0;
         let totalProfit = 0;
@@ -148,7 +151,7 @@ const TableRevenue = ({ keyWord, data, loading }) => {
           totalProfit += profit;
         });
         return (
-          <Table.Summary.Row>
+          <Table.Summary.Row fixed>
             <Table.Summary.Cell colSpan={5}>
               <div className="w-full text-center text-2xl">Tổng:</div>
             </Table.Summary.Cell>

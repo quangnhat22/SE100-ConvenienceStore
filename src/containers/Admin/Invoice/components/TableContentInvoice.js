@@ -63,15 +63,32 @@ const TableInvoice = ({ listItem }) => {
       },
     },
     {
+      title: "VAT",
+      dataIndex: ["productItem", "product", "tax"],
+      key: "tax",
+      width: "20%",
+      showOnResponse: true,
+      showOnDesktop: true,
+      render: (text, record, index) => {
+        return <div>{text + "%"}</div>;
+      },
+    },
+    {
       title: "Thành tiền",
       showOnResponse: true,
       showOnDesktop: true,
       width: "20%",
+      fixed: "right",
       ellipsis: true,
       render: (text, record, index) => {
         return (
           <div>
-            {(record.price * record.quantity)
+            {Number.parseFloat(
+              record.price *
+                record.quantity *
+                (1 + record.productItem.product.tax / 100)
+            )
+              .toFixed(3)
               .toString()
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
             <sup>đ</sup>
