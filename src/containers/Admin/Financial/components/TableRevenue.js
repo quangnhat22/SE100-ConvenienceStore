@@ -156,17 +156,15 @@ const TableRevenue = ({ keyWord, data, loading }) => {
               <div className="w-full text-center text-2xl">Tổng:</div>
             </Table.Summary.Cell>
             <Table.Summary.Cell>
-              <Text type="secondary">
-                <div>
-                  {totalRevenue
-                    .toString()
-                    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
-                  <sup>đ</sup>
-                </div>
-              </Text>
+              <div className="text-2xl">
+                {totalRevenue
+                  .toString()
+                  .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
+                <sup>đ</sup>
+              </div>
             </Table.Summary.Cell>
             <Table.Summary.Cell>
-              <Text type="success">
+              <Text className="text-2xl" type="success">
                 <div>
                   {totalProfit
                     .toString()

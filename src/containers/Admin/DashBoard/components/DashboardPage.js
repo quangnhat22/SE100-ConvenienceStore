@@ -11,25 +11,18 @@ import moment from "moment";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
-  const { reports } = useSelector((state) => state.reportsSlice);
+  const { reportsYear } = useSelector((state) => state.reportsSlice);
   const { staffs } = useSelector((state) => state.staffsSlice);
   const { listProduct } = useSelector((state) => state.productSlice);
   const [outOfStock, setOutOfStock] = useState(0);
   const [numberOfStaff, setNumberOfStaff] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
-  const [expiredSoon, setExpiredSoon] = useState(0);
 
   const [year, setYear] = useState(new Date().getFullYear());
-
-  useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_USER_SAGA });
-  }, []);
+  const [productNumber, setProductNumber] = useState(0);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_REPORT_YEAR_SAGA, year: year });
   }, [year]);
-  useEffect(() => {
-    dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
-  }, []);
 
   useEffect(() => {
     console.log("staffs", staffs);
@@ -43,38 +36,29 @@ const DashboardPage = () => {
   }, [staffs]);
 
   useEffect(() => {
-    console.log("reports", reports);
+    console.log("reports", reportsYear);
     var revenue = totalRevenue;
-    if (reports.length === 0) return;
+    if (reportsYear.length === 0) return;
     else {
-      reports.forEach((element) => {
+      reportsYear.forEach((element) => {
         revenue = revenue + element.revenue;
       });
       setTotalRevenue(revenue);
     }
     setYear(year - 1);
-  }, [reports]);
+  }, [reportsYear]);
 
   useEffect(() => {
-    console.log("listProduct", listProduct);
     var number = 0;
-    var expiredSoon = 0;
+    var product = 0;
     listProduct.forEach((element) => {
+      ++product;
       if (element.quantity === 0) {
         ++number;
       }
-      var startDay = element.EXP;
-      var space = 0;
-      while (moment(startDay).valueOf() < moment(Date.now()).valueOf()) {
-        startDay = moment(startDay).add(1, "days");
-        ++space;
-      }
-      if (space <= 10) {
-        ++expiredSoon;
-      }
     });
     setOutOfStock(number);
-    setExpiredSoon(expiredSoon);
+    setProductNumber(product);
   }, [listProduct]);
 
   return (
@@ -89,7 +73,6 @@ const DashboardPage = () => {
             headStyle={{ fontWeight: "bold", fontSize: "25px" }}
             extra={
               <Link
-                /* onClick={() => handleCardProductDetail(source)} */
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
                 to="products"
               >
@@ -97,13 +80,10 @@ const DashboardPage = () => {
               </Link>
             }
           >
-            {/* <div className="font-bold text-2xl py-2">
-              {productTypes + " loại"}
-            </div> */}
             <div className="text-yellow-400 opacity-80 font-bold text-lg py-2">
-              {"Sắp hết hạn: "}
+              {"Đang kinh doanh: "}
               <span class="text-lg text-black">
-                {expiredSoon
+                {productNumber
                   .toString()
                   .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
               </span>
@@ -126,7 +106,6 @@ const DashboardPage = () => {
             headStyle={{ fontWeight: "bold", fontSize: "25px" }}
             extra={
               <Link
-                /* onClick={() => handleCardStaffDetail(source)} */
                 to="/staffs"
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
               >
@@ -149,7 +128,6 @@ const DashboardPage = () => {
             headStyle={{ fontWeight: "bold", fontSize: "25px" }}
             extra={
               <Link
-                /* onClick={() => handleCardRevenueDetail(source)} */
                 className="text-blue-500 cursor-pointer hover:text-blue-600"
                 to="financial"
               >
@@ -164,43 +142,39 @@ const DashboardPage = () => {
           </Card>
         </div>
         {/* Bảng biểu */}
-        <div className="bg-white mt-10 md:mt-12 flex flex-col border-box shadow-md min-h-[600px] overflow-hidden">
+        <div className="bg-white flex flex-wrap mt-10 md:mt-12 shadow-md min-h-[400px] gap-20 p-3 justify-between">
           {/* Biểu đồ */}
-          <div className="m-5 box-border flex flex-wrap gap-y-10 gap-x-32">
-            <div className="mr-x6-scroll-box-auto-hide flex flex-col grow gap-y-10">
-              <div className="flex justify-end items-center">
-                <span className="text-[25px] font-bold inline-block mr-auto">
-                  Doanh thu tháng này
-                </span>
-                <span className="inline-block ml-5">
-                  <Link
-                    /* onClick={() => handleCardProductDetail(source)} */
-                    className="text-blue-500 cursor-pointer hover:text-blue-600 hover:underline"
-                    to="financial"
-                  >
-                    Xem thêm
-                  </Link>
-                </span>
-              </div>
-              <PieChart className="grow h-full min-h-[500px]" />
+          <div className="flex flex-col justify-center sm:w-[800px] sm:h-[600px] grow">
+            <div className="flex justify-between gap-5 ">
+              <span className="text-[25px] font-bold inline-block">
+                Doanh thu tháng này
+              </span>
+              <span className="inline-block whitespace-nowrap">
+                <Link
+                  className="text-blue-500 cursor-pointer hover:text-blue-600 whitespace-nowrap"
+                  to="financial"
+                >
+                  Xem thêm
+                </Link>
+              </span>
             </div>
-            <div className="flex flex-col grow">
-              <div className="flex justify-between items-center gap-10">
-                <span className="text-[25px] font-bold inline-block font-2xl">
-                  Bán chạy trong tuần
-                </span>
-                <span className="inline-block">
-                  <Link
-                    /* onClick={() => handleCardProductDetail(source)} */
-                    className="text-blue-500 cursor-pointer hover:text-blue-600"
-                    to="financial"
-                  >
-                    Xem thêm
-                  </Link>
-                </span>
-              </div>
-              <BestSellingTable />
+            <PieChart />
+          </div>
+          <div className="flex flex-col">
+            <div className="flex justify-between items-center gap-5">
+              <span className="text-[25px] font-bold inline-block whitespace-nowrap">
+                Bán chạy trong tuần
+              </span>
+              <span className="inline-block whitespace-nowrap">
+                <Link
+                  className="text-blue-500 cursor-pointer hover:text-blue-600"
+                  to="financial"
+                >
+                  Xem thêm
+                </Link>
+              </span>
             </div>
+            <BestSellingTable className="grow" />
           </div>
         </div>
       </div>

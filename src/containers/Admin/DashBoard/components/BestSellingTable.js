@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 
-const BestSellingTable = () => {
+const BestSellingTable = (props) => {
   const dispatch = useDispatch();
-  const { reports } = useSelector((state) => state.reportsSlice);
+  const { reportsWeek } = useSelector((state) => state.reportsSlice);
   useEffect(() => {
     dispatch({
       type: SagaActionTypes.GET_REPORT_WEEK_SAGA,
       year: new Date().getFullYear(),
-      month: new Date().getMonth(),
+      month: new Date().getMonth() + 1,
       day: new Date().getDate(),
     });
   }, []);
@@ -31,21 +31,21 @@ const BestSellingTable = () => {
       key: "title",
     },
     {
-      dataIndex: "quanlity",
-      key: "quanlity",
-      sorter: (a, b) => a.quanlity - b.quanlity,
+      dataIndex: "quantity",
+      key: "quantity",
+      sorter: (a, b) => a.quantity - b.quantity,
       defaultSortOrder: "descend",
     },
   ];
   return (
     <Table
-      className="customTable mt-2"
+      className={props.className}
       rowKey={"id"}
       size="small"
       showHeader={false}
       pagination={false}
       columns={columnsTopSale}
-      dataSource={reports.slice(0, 10)}
+      dataSource={reportsWeek.slice(0, 10)}
     />
   );
 };

@@ -5,28 +5,31 @@ import * as SagaActionTypes from "../../../../redux/constants/constant";
 
 const PieChart = (props) => {
   const dispatch = useDispatch();
-  const [revenue, setRevenue] = useState(0);
+  const [revenue, setRevenue] = useState(5);
   const [cost, setCost] = useState(0);
   const [profit, setProfit] = useState(0);
-  const { reports } = useSelector((state) => state.reportsSlice);
+  const { reportsMonth } = useSelector((state) => state.reportsSlice);
   useEffect(() => {
     dispatch({
       type: SagaActionTypes.GET_REPORT_MONTH_SAGA,
       year: new Date().getFullYear(),
-      month: new Date().getMonth(),
+      month: new Date().getMonth() + 1,
     });
   }, []);
   useEffect(() => {
+    console.log("reportsMonth", reportsMonth);
     var totalRevenue = 0;
     var totalProfit = 0;
-    reports.forEach((element) => {
+    reportsMonth.forEach((element) => {
       totalRevenue += element.revenue;
+      console.log("total", totalRevenue);
       totalProfit += element.profit;
     });
+    console.log("totalRevenue", totalRevenue);
     setRevenue(totalRevenue);
     setProfit(totalProfit);
     setCost(totalRevenue - totalProfit);
-  }, [reports]);
+  }, [reportsMonth]);
   const dataRevenue = [
     {
       name: "Doanh thu",
@@ -43,6 +46,7 @@ const PieChart = (props) => {
   ];
   const G = G2.getEngine("canvas");
   const config = {
+    className: props.className,
     data: dataRevenue,
     appendPadding: 10,
     angleField: "number",
@@ -84,7 +88,9 @@ const PieChart = (props) => {
                 .toString()
                 .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") +
               " VNĐ" +
-              ` → ${(Math.round(data.percent * 100) / 100) * 100}%`,
+              ` → ${
+                Math.round(data.percent * 100)
+              }%`,
             fill: "rgba(0, 0, 0, 0.65)",
             fontWeight: 700,
           },
@@ -99,7 +105,7 @@ const PieChart = (props) => {
     ],
   };
 
-  return <Pie className={props.className} {...config} />;
+  return <Pie {...config} />;
 };
 
 export default PieChart;
