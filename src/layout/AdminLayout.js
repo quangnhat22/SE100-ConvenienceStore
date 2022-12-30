@@ -9,6 +9,7 @@ import SalePage from "../containers/Staff/Sale";
 import ProfilePage from "../containers/Admin/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../redux/constants/constant";
+import StaffProfilePage from "../containers/Staff/StaffProfile/StaffProfilePage";
 
 const AdminLayout = (props) => {
   const dispatch = useDispatch();
@@ -78,7 +79,7 @@ export default function AdminTemplate({ Component, ...props }) {
             return (
               <Route>
                 <Route exact path="/sales" component={SalePage} />
-                <Route exact path="/profile" component={ProfilePage} />
+                <Route exact path="/profile" component={StaffProfilePage} />
               </Route>
             );
           }
