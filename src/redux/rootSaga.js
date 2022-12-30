@@ -16,6 +16,7 @@ export default function* rootSaga() {
     AuthenticationSaga.followActLoginWithEmailAndPassword(),
     AuthenticationSaga.followActForgotPassword(),
     AuthenticationSaga.followActResetPassword(),
+    AuthenticationSaga.followActNewPassword(),
     ProductsSaga.followActGetListProducts(),
     ProductsSaga.followActPostProducts(),
     ProductsSaga.followActPutProducts(),

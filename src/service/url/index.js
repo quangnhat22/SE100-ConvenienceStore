@@ -8,6 +8,7 @@ export const URL_RESET_PASSWORD = `${DOMAIN_NAME}/auth/reset-password`;
 //USERS
 export const URL_USERS = `${DOMAIN_NAME}/users`;
 export const URL_USERS_ID = (id) => `${DOMAIN_NAME}/users/${id}`;
+export const URL_NEW_PASSWORD = `${DOMAIN_NAME}/users/password`;
 
 //PROVIDERS
 export const URL_PROVIDERS = `${DOMAIN_NAME}/providers`;

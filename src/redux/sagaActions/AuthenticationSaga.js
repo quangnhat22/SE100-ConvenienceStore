@@ -82,6 +82,30 @@ function* actResetPassword(payload) {
   }
 }
 
+function * actNewPassword(payload) {
+  let { data } = payload.data;
+  try {
+    let res = yield call(() => UserService.postNewPassword(data));
+
+    if (res.status === 201) {
+      AlertCustom({
+        type: "success",
+        title: "Cập nhật mật khẩu thành công!",
+      });
+    } else {
+      AlertCustom({
+        type: "error",
+        title: "Cập nhật mật khẩu thất bại!",
+      });
+    }
+  } catch (err) {
+    AlertCustom({
+      type: "error",
+      title: "Cập nhật mật khẩu thất bại!",
+    });
+  }
+}
+
 export function* followActLoginWithEmailAndPassword() {
   yield takeLatest(
     SagaActionTypes.LOGIN_WITH_EMAIL_PASSWORD_SAGA,
@@ -95,4 +119,8 @@ export function* followActForgotPassword() {
 
 export function* followActResetPassword() {
   yield takeLatest(SagaActionTypes.RESET_PASSWORD_SAGA, actResetPassword);
+}
+
+export function* followActNewPassword() {
+  yield takeLatest(SagaActionTypes.POST_NEW_PASSWORD_SAGA, actNewPassword);
 }
