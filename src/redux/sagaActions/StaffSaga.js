@@ -46,7 +46,6 @@ function* actPostStaff(action) {
 function* actPutStaff(action) {
   try {
     let { id, staff } = action;
-    console.log(action);
     yield put(staffActions.getListStaffsInLoading());
     let res = yield call(() => UserService.putUsersById(id, staff));
     console.log(res);

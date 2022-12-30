@@ -45,7 +45,9 @@ export const UserService = {
       other,
       avatar,
       role,
+      active
     } = user;
+    console.log(id, user);
     return Axios.put(UrlApi.URL_USERS, {
       id:parseInt(id),
       email: email,
@@ -58,6 +60,7 @@ export const UserService = {
       other: other,
       avatar: avatar,
       role: role,
+      active: active,
     });
   },
   getUsersById: (id) => {
