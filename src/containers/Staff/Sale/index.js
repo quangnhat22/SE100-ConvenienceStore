@@ -1,7 +1,7 @@
 import ReactToPrint from "react-to-print";
 import { useRef, useState, useEffect } from "react";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
-import { Layout, Space, Dropdown } from "antd";
+import { Layout, Space, Dropdown, Spin } from "antd";
 import { Content, Header, Footer } from "antd/lib/layout/layout";
 import SearchHeader from "./components/SearchHeader";
 import PaymentForm from "./components/PaymentForm";
@@ -16,11 +16,28 @@ const SalePage = () => {
   const { listProductSale, listProduct, loading } = useSelector(
     (state) => state.productSlice
   );
+  const staffsSlice = useSelector((state) => state.staffsSlice);
+  const vatSlice = useSelector((state) => state.vatSlice);
   const { cartItems } = useSelector((state) => state.cartSlice);
   useEffect(() => {
     dispatch({ type: SagaActionTypes.GET_LIST_PRODUCT_SAGA });
     dispatch({ type: SagaActionTypes.GET_USER_BY_ID_SAGA, id: uid });
+    dispatch({ type: SagaActionTypes.GET_VAT_SAGA });
   }, []);
+
+  if (
+    loading === true ||
+    staffsSlice.loading === true ||
+    vatSlice.loading === true
+  ) {
+    return (
+      <div className="w-full flex items-center justify-center mb-12 h-4/5">
+        <Space size="middle ">
+          <Spin size="large" tip="Loading..." />
+        </Space>
+      </div>
+    );
+  }
 
   return (
     <>

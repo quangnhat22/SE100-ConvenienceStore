@@ -15,10 +15,16 @@ const SettingPage = () => {
   let { loading, productItemsQuantity } = useSelector(
     (state) => state.productItemsQuantitySlice
   );
+  let vatSlice = useSelector((state) => state.vatSlice);
+  let productItemsExpireSlice = useSelector(
+    (state) => state.productItemsExpireSlice
+  );
   useEffect(() => {
     dispatch({
       type: SagaActionTypes.GET_LIST_PRODUCTS_ITEM_QUANTITY_RULE_SAGA,
     });
+    dispatch({ type: SagaActionTypes.GET_VAT_SAGA });
+    dispatch({ type: SagaActionTypes.GET_PRODUCT_EXPIRE_SAGA });
   }, []);
 
   const handleAddNewRegulation = () => {
@@ -39,7 +45,11 @@ const SettingPage = () => {
     );
   };
 
-  if (loading === true) {
+  if (
+    loading === true ||
+    productItemsExpireSlice.loading === true ||
+    vatSlice.loading === true
+  ) {
     return (
       <div className="w-full flex items-center justify-center mb-12 h-4/5">
         <Space size="middle ">

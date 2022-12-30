@@ -5,12 +5,14 @@ import {
   UserOutlined,
   ExportOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Space, Menu } from "antd";
+import { Dropdown, Space, Menu, Avatar } from "antd";
 import { useHistory, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import AlertCustom from "../../../../common/Notification/Alert";
+import { useSelector, useDispatch } from "react-redux";
 
 const DropDownAvatar = () => {
+  const { staff } = useSelector((state) => state.staffsSlice);
   const history = useHistory();
   const handleLogout = () => {
     Swal.fire({
@@ -49,12 +51,14 @@ const DropDownAvatar = () => {
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
       <div className="flex items-center justify-end mr-2 sm:mr-7 bg-transparent cursor-pointer">
-        <UserOutlined
-          className="p-2 rounded-full bg-blue-300"
-          style={{ color: "#9900FF" }}
+        <Avatar
+          className="pb-2 bg-blue-300"
+          src={staff.image}
+          icon={<UserOutlined style={{ color: "#9900FF" }} />}
         />
+
         <p className="mb-0 ml-1 text-white hidden sm:inline-block">
-          Nguyễn Văn A
+          {staff.fullname}
         </p>
       </div>
     </Dropdown>

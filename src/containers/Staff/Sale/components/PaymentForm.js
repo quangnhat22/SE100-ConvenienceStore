@@ -40,6 +40,7 @@ const totalPrice = (cartItems) => {
 
 const PaymentForm = ({ data }) => {
   console.log(data);
+  const { vat } = useSelector((state) => state.vatSlice);
   const uid = localStorage.getItem("id");
   const { staff } = useSelector((state) => state.staffsSlice);
   const { invoice } = useSelector((state) => state.printInvoiceSlice);
@@ -65,8 +66,10 @@ const PaymentForm = ({ data }) => {
     bill_date: moment(),
     bill_creater: staff.fullname,
     bill_price: totalPrice(data),
-    bill_tax: 8,
-    bill_finalprice: (totalPrice(data) * 108) / 100,
+    bill_tax: vat.val,
+    bill_finalprice: Number.parseInt(
+      (totalPrice(data) * (100 + vat.val)) / 100
+    ),
     bill_customer_pay: 0,
     bill_customer_repay: 0,
   };
@@ -235,7 +238,7 @@ const PaymentForm = ({ data }) => {
             {
               required: true,
               type: "number",
-              min: (totalPrice(data) * 108) / 100,
+              min: Number.parseInt((totalPrice(data) * (100 + vat.val)) / 100),
             },
           ]}
         >
