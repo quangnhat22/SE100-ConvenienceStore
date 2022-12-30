@@ -80,8 +80,8 @@ const EditProfilePage = ({ data }) => {
       other: values.other,
       role: localStorage.getItem("role"),
       avatar: imageChange,
+      active: true,
     };
-    console.log(editedProfile);
     dispatch({
       type: SagaActionTypes.PUT_USER_SAGA,
       id: data.id,
@@ -129,6 +129,9 @@ const EditProfilePage = ({ data }) => {
     //Using Hooks to update the state to the current filelist
     //console.log(fileList);
     setFileList(fileList);
+    if (fileList.length == 0) {
+      setImageChange("");
+    }
     //filelist - [{uid: "-1",url:'Some url to image'}]
   };
 
