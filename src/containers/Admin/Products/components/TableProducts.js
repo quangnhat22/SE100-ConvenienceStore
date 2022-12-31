@@ -194,41 +194,12 @@ const TableProducts = ({ data, keyWord, loading }) => {
           >
             <EyeFilled />
           </button>
-          <Popconfirm
-            placement="top"
-            title="Bạn có chắc muốn xóa sản phẩm này?"
-            okText="Xác nhận"
-            cancelText="Hủy"
-            okType="default"
-            okButtonProps={{
-              className:
-                "text-red-400 border-red-400 hover:text-red-600 hover:border-red-600",
-            }}
-            cancelButtonProps={{
-              className:
-                "text-gray-400 border-gray-400 hover:text-gray-500 hover:border-gray-500",
-            }}
-            onConfirm={() => handleRemoveProduct(record)}
-          >
-            <button
-              type="button"
-              className="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-3 rounded inline-flex items-center"
-            >
-              <DeleteFilled />
-            </button>
-          </Popconfirm>
         </Space>
       ),
     },
   ];
   const handleEditProduct = (record) => {
     history.push("/detail_product/" + record.id);
-  };
-  const handleRemoveProduct = (record) => {
-    dispatch({
-      type: SagaActionTypes.DELETE_PRODUCT_ITEM_SAGA,
-      id: record.id,
-    });
   };
 
   if (loading === true) {
