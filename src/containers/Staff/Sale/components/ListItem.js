@@ -58,7 +58,11 @@ const ListItem = ({ data }) => {
                   />
                 </div>
               }
-              title={<b>{item.productName}</b>}
+              title={
+                <p class="break-words">
+                  <b>{item.productName}</b>
+                </p>
+              }
               description={item.price
                 .toString()
                 .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
