@@ -124,13 +124,15 @@ const PaymentForm = ({ data }) => {
     <>
       <Form
         labelCol={{
-          span: 8,
+          sm: { span: 24 },
+          md: { span: 8 },
         }}
         wrapperCol={{
-          span: 20,
+          sm: { span: 24 },
+          md: { span: 16 },
         }}
         labelWrap
-        className="PaymentForm my-4 sm:mx-8 mx-2 "
+        className="PaymentForm my-4 md:mx-8 mx-2 "
         form={form}
         onFinish={onFinish}
         initialValues={defaultValues}
