@@ -1,4 +1,5 @@
 import { Avatar, Button, List, Skeleton, InputNumber } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { cartActions } from "../../../../redux/reducer/CartReducer";
 import { useSelector, useDispatch } from "react-redux";
@@ -45,7 +46,14 @@ const ListItem = ({ data }) => {
       renderItem={(item) => (
         <List.Item
           className="bg-slate-50 mb-2 p-5 rounded-lg"
-          actions={[<a onClick={() => handleDelete(item)}>Xóa</a>]}
+          actions={[
+            <a
+              className="hover:text-red-600"
+              onClick={() => handleDelete(item)}
+            >
+              <DeleteOutlined className="text-lg" />
+            </a>,
+          ]}
         >
           <Skeleton avatar title={false} loading={false} active>
             <List.Item.Meta
