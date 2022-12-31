@@ -22,7 +22,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useHistory, useParams } from "react-router-dom";
-import TableProducts from "../../Products/components/TableProducts";
+import TableProductsDetail from "./TableProductsDetail";
 
 const dateFormat = "DD/MM/YYYY";
 
@@ -151,7 +151,7 @@ const DeliveryNoteDetailPage = () => {
           {/* button search */}
         </div>
       </div>
-      <TableProducts keyWord={keyWord} data={deliveryNote.productItems} />
+      <TableProductsDetail keyWord={keyWord} data={deliveryNote.productItems} />
       <div className="flex justify-end w-full px-5">
         <Button
           className="rounded bg-red-500 opacity-90 text-white hover:opacity-100 shadow-md"

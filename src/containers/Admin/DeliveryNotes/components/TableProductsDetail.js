@@ -11,7 +11,7 @@ import { productActions } from "../../../../redux/reducer/ProductReducer";
 import * as SagaActionTypes from "../../../../redux/constants/constant";
 import { useHistory } from "react-router-dom";
 
-const TableProducts = ({ data, keyWord, loading }) => {
+const TableProductsDetail = ({ data, keyWord, loading }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   // const { products } = useSelector((state) => state.productSlice);
@@ -58,7 +58,9 @@ const TableProducts = ({ data, keyWord, loading }) => {
             .includes(value.toLowerCase()) ||
           String(record.cost).toLowerCase().includes(value.toLowerCase()) ||
           String(record.price).toLowerCase().includes(value.toLowerCase()) ||
-          String(record.quantity).toLowerCase().includes(value.toLowerCase()) ||
+          String(record.initialQuantity)
+            .toLowerCase()
+            .includes(value.toLowerCase()) ||
           record.state.find((item) =>
             item.stateName.toLowerCase().includes(value.toLowerCase())
           ) ||
@@ -121,18 +123,18 @@ const TableProducts = ({ data, keyWord, loading }) => {
       },
     },
     {
-      title: "Còn lại",
-      dataIndex: "quantity",
-      key: "quantity",
+      title: "Số lượng nhập",
+      dataIndex: "initialQuantity",
+      key: "initialQuantity",
       showOnResponse: true,
       showOnDesktop: true,
       width: "10%",
       ellipsis: true,
-      sorter: (a, b) => a.quantity - b.quantity,
+      sorter: (a, b) => a.initialQuantity - b.initialQuantity,
       render: (text, record, index) => {
         return (
           <div>
-            {record.quantity
+            {record.initialQuantity
               .toString()
               .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}
           </div>
@@ -232,4 +234,4 @@ const TableProducts = ({ data, keyWord, loading }) => {
   );
 };
 
-export default TableProducts;
+export default TableProductsDetail;
