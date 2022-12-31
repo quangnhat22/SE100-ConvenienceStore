@@ -75,6 +75,8 @@ const SearchHeader = ({ data }) => {
       width: "10%",
       key: "quantity",
       ellipsis: true,
+      render: (quantity) =>
+        quantity.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","),
     },
     {
       dataIndex: "price",

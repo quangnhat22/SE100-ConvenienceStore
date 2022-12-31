@@ -50,7 +50,7 @@ const ListItem = ({ data }) => {
           <Skeleton avatar title={false} loading={false} active>
             <List.Item.Meta
               avatar={
-                <div className="bg-slate-200 rounded">
+                <div className="bg-slate-200 rounded overflow-hidden bg-opacity-60">
                   <img
                     className="object-scale-down h-16 w-20 hidden sm:inline-block"
                     src={item.image}
@@ -59,7 +59,7 @@ const ListItem = ({ data }) => {
                 </div>
               }
               title={
-                <p class="break-words">
+                <p class="break-words line-clamp-2">
                   <b>{item.productName}</b>
                 </p>
               }
