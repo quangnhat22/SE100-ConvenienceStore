@@ -42,16 +42,16 @@ const TableProductLines = ({ data, keyWord, loading }) => {
       showOnResponse: true,
       showOnDesktop: true,
     },
-    {
-      title: "Thuế",
-      dataIndex: "tax",
-      key: "tax",
-      showOnResponse: true,
-      showOnDesktop: true,
-      render: (value, record) => {
-        return <div>{record.tax + "%"}</div>;
-      },
-    },
+    // {
+    //   title: "Thuế",
+    //   dataIndex: "tax",
+    //   key: "tax",
+    //   showOnResponse: true,
+    //   showOnDesktop: true,
+    //   render: (value, record) => {
+    //     return <div>{record.tax + "%"}</div>;
+    //   },
+    // },
     {
       title: "Thao tác",
       key: "action",

@@ -52,6 +52,7 @@ const DetailProductForm = ({ product }) => {
     cost: product.cost,
     price: product.price,
     quantity: product.quantity,
+    initialQuantity: product.initialQuantity,
     description: product.description,
   };
   const [form] = Form.useForm();
@@ -248,7 +249,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} xl={8} key={5}>
+        <Col xs={24} sm={12} md={24} lg={12} key={5}>
           <Form.Item
             name="cost"
             label="Giá nhập"
@@ -269,7 +270,7 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} xl={8} key={6}>
+        <Col xs={24} sm={12} md={24} lg={12} key={6}>
           <Form.Item
             name="price"
             label="Giá bán"
@@ -290,10 +291,10 @@ const DetailProductForm = ({ product }) => {
             />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={24} lg={12} xl={8} key={7}>
+        <Col xs={24} sm={12} md={24} lg={12} key={7}>
           <Form.Item
-            name="quantity"
-            label="Số lượng"
+            name="initialQuantity"
+            label="Số lượng nhập"
             min={1}
             rules={[
               {
@@ -305,7 +306,29 @@ const DetailProductForm = ({ product }) => {
               className="rounded"
               addonAfter={""}
               min={1}
-              placeholder="Số lượng"
+              placeholder="Số lượng nhập"
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+              disabled={true}
+            />
+          </Form.Item>
+        </Col>
+        <Col xs={24} sm={12} md={24} lg={12} key={7}>
+          <Form.Item
+            name="quantity"
+            label="Số lượng còn lại"
+            min={1}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+            <InputNumber
+              className="rounded"
+              addonAfter={""}
+              min={1}
+              placeholder="Số lượng còn lại"
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
               disabled={true}

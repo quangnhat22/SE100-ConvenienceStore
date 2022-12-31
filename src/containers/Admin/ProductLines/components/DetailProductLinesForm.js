@@ -35,7 +35,7 @@ const DetailProductLinesForm = ({ productLine }) => {
     console.log(values);
     let newProductLine = {
       title: values.title,
-      tax: values.tax,
+      tax: 0,
     };
     dispatch({
       type: SagaActionTypes.PUT_PRODUCTS_SAGA,
@@ -76,7 +76,7 @@ const DetailProductLinesForm = ({ productLine }) => {
       >
         <Input placeholder="Tên dòng sản phẩm" disabled={componentDisabled} />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         name="tax"
         label="Thuế"
         rules={[
@@ -96,7 +96,7 @@ const DetailProductLinesForm = ({ productLine }) => {
           min={0}
           disabled={componentDisabled}
         />
-      </Form.Item>
+      </Form.Item> */}
       {enableModify === false ? (
         <Space className="flex justify-end">
           <Button

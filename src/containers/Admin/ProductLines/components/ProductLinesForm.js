@@ -11,7 +11,7 @@ const ProductLinesForm = () => {
   const onFinish = (values) => {
     let newProductLine = {
       title: values.title,
-      tax: values.tax,
+      tax: 0,
     };
     dispatch({
       type: SagaActionTypes.POST_PRODUCTS_SAGA,
@@ -31,7 +31,7 @@ const ProductLinesForm = () => {
       >
         <Input placeholder="Tên dòng sản phẩm" />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         name="tax"
         label="Thuế"
         rules={[
@@ -50,7 +50,7 @@ const ProductLinesForm = () => {
           }}
           placeholder="Thuế"
         />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         wrapperCol={{
           span: 20,
